@@ -1,6 +1,10 @@
 # Quran JSON
 
-Quran text and translations from [tanzil.net](http://tanzil.net) in JSON format. The translations are available in English and Indonesian languages.
+Quran text and translations from [tanzil.net](http://tanzil.net) in JSON format. The translations are available in English and Indonesian.
+
+## Related Packages
+
+* [tanzil-downloader](https://github.com/risan/tanzil-downloader)
 
 ## License
 
