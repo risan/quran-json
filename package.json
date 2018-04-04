@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "rimraf": "^2.6.2"
+  }
+}
