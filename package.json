@@ -1,5 +1,47 @@
 {
+  "name": "quran-json",
+  "version": "1.0.0",
+  "description": "Quran text and translations in JSON format",
+  "keywords": [
+    "tanzil",
+    "translations",
+    "quran"
+  ],
+  "homepage": "https://github.com/risan/quran-json#readme",
+  "bugs": {
+    "url": "https://github.com/risan/quran-json/issues"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Risan Bagja Pradana",
+    "email": "risanbagja@gmail.com",
+    "url": "https://risan.io"
+  },
+  "main": "json/quran/en-id.pretty.json",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/risan/quran-json.git"
+  },
+  "scripts": {
+    "build": "scripts/build.js",
+    "lint": "eslint ./",
+    "lint-fix": "eslint ./ --fix",
+    "prepublishOnly": "npm run lint && npm run build"
+  },
+  "devDependencies": {
+    "eslint": "^5.9.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-config-prettier": "^3.3.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "prettier": "^1.15.2"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
   "dependencies": {
-    "rimraf": "^2.6.2"
+    "lodash.groupby": "^4.6.0",
+    "rimraf": "^2.6.2",
+    "write-to-file": "^1.0.1"
   }
 }
