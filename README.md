@@ -1,8 +1,12 @@
 # Quran JSON
 
+[![Build Status](https://badgen.net/travis/risan/quran-json)](https://travis-ci.org/risan/quran-json)
+[![Greenkeeper](https://badges.greenkeeper.io/risan/quran-json.svg)](https://greenkeeper.io)
+[![Latest Version](https://badgen.net/npm/v/quran-json)](https://www.npmjs.com/package/quran-json)
+
 Quran text and translations in JSON format. Both Quran text and the translations are provided by [tanzil.net](http://tanzil.net).
 
-## Quran JSON CDN
+## CDN
 
 Check the [json directory](https://github.com/risan/quran-json/tree/master/json) to see all available JSON files. The JSON files are also available through [UNPKG](https://unpkg.com/) CDN.
 
@@ -70,9 +74,6 @@ $ cd quran-json
 
 # Install the dependencies
 $ npm install
-
-# Or if you use Yarn
-$ yarn
 ```
 
 ### 3. Generate the JSON Files
@@ -81,9 +82,6 @@ Run the following command to generate the JSON files:
 
 ```bash
 $ npm run build
-
-# Or if you use Yarn
-$ yarn build
 ```
 
 ## Related
@@ -92,7 +90,7 @@ $ yarn build
 
 ## License
 
-CC-BY-SA 4.0 · [Risan Bagja Pradana](https://bagja.net)
+[CC-BY-SA 4.0](https://github.com/risan/quran-json/blob/master/LICENSE.txt) · [Risan Bagja Pradana](https://bagja.net)
 
 ## Legal
 

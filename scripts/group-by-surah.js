@@ -1,3 +1,4 @@
+/* eslint import/no-extraneous-dependencies: "off" */
 const groupBy = require("lodash.groupby");
 const writeJson = require("./write-json");
 

@@ -1,3 +1,4 @@
+/* eslint import/no-extraneous-dependencies: "off" */
 const writeToFile = require("write-to-file");
 
 const writeJson = (data, path) =>

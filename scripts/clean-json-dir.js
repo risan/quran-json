@@ -1,3 +1,4 @@
+/* eslint import/no-extraneous-dependencies: "off" */
 const rimraf = require("rimraf");
 
 const cleanJsonDir = () =>
