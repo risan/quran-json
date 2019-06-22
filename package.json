@@ -30,7 +30,7 @@
     "test": "npm run build && jest"
   },
   "devDependencies": {
-    "eslint": "^5.9.0",
+    "eslint": "^6.0.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^4.1.0",
     "eslint-plugin-import": "^2.14.0",
