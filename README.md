@@ -1,7 +1,6 @@
 # Quran JSON
 
 [![Build Status](https://badgen.net/travis/risan/quran-json)](https://travis-ci.org/risan/quran-json)
-[![Greenkeeper](https://badges.greenkeeper.io/risan/quran-json.svg)](https://greenkeeper.io)
 [![Latest Version](https://badgen.net/npm/v/quran-json)](https://www.npmjs.com/package/quran-json)
 
 Quran text and translations in JSON format. Both Quran text and the translations are provided by [tanzil.net](http://tanzil.net).
