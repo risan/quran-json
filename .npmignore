@@ -1,8 +1,3 @@
-__tests__
+data
 scripts
-tanzil
-.eslintignore
-.eslintrc.js
-.travis.yml
-jest.config.js
 yarn.lock

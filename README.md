@@ -1,55 +1,39 @@
 # Quran JSON
 
-[![Build Status](https://badgen.net/travis/risan/quran-json)](https://travis-ci.org/risan/quran-json)
 [![Latest Version](https://badgen.net/npm/v/quran-json)](https://www.npmjs.com/package/quran-json)
 
-Quran text and translations in JSON format. Both Quran text and the translations are provided by [tanzil.net](http://tanzil.net).
+Quran text and translations in JSON format. Both Quran text and the translations are provided by [Al Quran Cloud](https://alquran.cloud/).
 
 ## CDN
 
-Check the [json directory](https://github.com/risan/quran-json/tree/master/json) to see all available JSON files. The JSON files are also available through [UNPKG](https://unpkg.com/) CDN.
+Check the [surahs directory](https://github.com/risan/quran-json/tree/master/surahs) to see all available JSON files. The JSON files are also available through [UNPKG](https://unpkg.com/) CDN.
 
-### List of Surah
+### List of Surahs
 
-* List of surah: [unpkg.com/quran-json@latest/json/surahs.json](https://unpkg.com/quran-json@latest/json/surahs.json)
+* List of surahs: [unpkg.com/quran-json@latest/surahs/index.json](https://unpkg.com/quran-json@latest/surahs/index.json)
 
 ### Quran Text
 
-* Quran Text: [unpkg.com/quran-json@latest/json/quran/text.json](https://unpkg.com/quran-json@latest/json/quran/text.json)
-
-### Translations
-
-* English translation (Saheeh International): [unpkg.com/quran-json@latest/json/translations/en.json](https://unpkg.com/quran-json@latest/json/translations/en.json)
-* Indonesian translation (Indonesian Ministry of Religious Affairs): [unpkg.com/quran-json@latest/json/translations/id.json](https://unpkg.com/quran-json@latest/json/translations/id.json)
-
-### Quran Text with Translations
-
-* Quran text with English translation (Saheeh International): [unpkg.com/quran-json@latest/json/quran/en.json](https://unpkg.com/quran-json@latest/json/quran/en.json)
-* Quran text with Indonesian translation (Indonesian Ministry of Religious Affairs): [unpkg.com/quran-json@latest/json/quran/id.json](https://unpkg.com/quran-json@latest/json/quran/id.json)
-* Quran text with English and Indonesian translations: [unpkg.com/quran-json@latest/json/quran/en-id.json](https://unpkg.com/quran-json@latest/json/quran/en-id.json)
-
-### Quran Text with Translations per Surah
-
-Each Surah is available under the following URL format:
+You can get the Quran text based on the surah number. Where the `surahNumber` is an integer from `1` (Al-Faatiha) all the way to `144` (An-Naas).
 
 ```
-https://unpkg.com/quran-json@latest/json/surahs/{surahNumber}.json
+https://unpkg.com/quran-json@latest/surahs/{surahNumber}.json
 ```
 
-`surahNumber` is an integer from `1` (Al-Faatiha) to `144` (An-Naas). For example:
+For example:
 
-* Al-Faatiha: [unpkg.com/quran-json@latest/json/surahs/1.json](https://unpkg.com/quran-json@latest/json/surahs/1.json)
-* Ar-Rahmaan: [unpkg.com/quran-json@latest/json/surahs/55.json](https://unpkg.com/quran-json@latest/json/surahs/55.json)
-* Al-Aadiyaat: [unpkg.com/quran-json@latest/json/surahs/100.json](https://unpkg.com/quran-json@latest/json/surahs/100.json)
+* Al-Faatiha: [unpkg.com/quran-json@latest/surahs/1.json](https://unpkg.com/quran-json@latest/surahs/1.json)
+* Ar-Rahmaan: [unpkg.com/quran-json@latest/surahs/55.json](https://unpkg.com/quran-json@latest/surahs/55.json)
+* Al-Ikhlaas: [unpkg.com/quran-json@latest/surahs/112.json](https://unpkg.com/quran-json@latest/surahs/112.json)
 
-### Pretty JSON Version
+### Translation
 
-All of the JSON files above are the minified version. Each one of them also has the pretty version with spacing. For example:
+There are several translations available:
 
-* List of surah: [unpkg.com/quran-json@latest/json/surahs.pretty.json](https://unpkg.com/quran-json@latest/json/surahs.pretty.json)
-* Quran Text: [unpkg.com/quran-json@latest/json/quran/text.pretty.json](https://unpkg.com/quran-json@latest/json/quran/text.pretty.json)
-* Quran text with English and Indonesian translations: [unpkg.com/quran-json@latest/json/quran/en-id.pretty.json](https://unpkg.com/quran-json@latest/json/quran/en-id.pretty.json)
-* Al-Faatiha: [unpkg.com/quran-json@latest/json/surahs/1.pretty.json](https://unpkg.com/quran-json@latest/json/surahs/1.pretty.json)
+1. Chinese: [unpkg.com/quran-json@latest/surahs/112.zh.json](https://unpkg.com/quran-json@latest/surahs/112.zh.json)
+2. English: [unpkg.com/quran-json@latest/surahs/112.en.json](https://unpkg.com/quran-json@latest/surahs/112.en.json)
+3. Indonesian: [unpkg.com/quran-json@latest/surahs/112.id.json](https://unpkg.com/quran-json@latest/surahs/112.id.json)
+4. Spanish: [unpkg.com/quran-json@latest/surahs/112.es.json](https://unpkg.com/quran-json@latest/surahs/112.es.json)
 
 ## Generate the JSON
 
@@ -83,33 +67,12 @@ Run the following command to generate the JSON files:
 $ npm run build
 ```
 
-## Related
-
-* [tanzil-downloader](https://github.com/risan/tanzil-downloader)
-
 ## License
 
-[CC-BY-SA 4.0](https://github.com/risan/quran-json/blob/master/LICENSE.txt) · [Risan Bagja Pradana](https://bagja.net)
+[CC-BY-SA 4.0](https://github.com/risan/quran-json/blob/master/LICENSE.txt) · [Risan Bagja Pradana](https://risanb.com)
 
 ## Legal
 
-This repository is in no way affiliated with, authorized, maintained, sponsored or endorsed by [Tanzil.net](http://tanzil.net) or any of its affiliates or subsidiaries. This is an independent and unofficial library.
+This repository is in no way affiliated with, authorized, maintained, sponsored or endorsed by [Al Quran Cloud](https://alquran.cloud/) or any of its affiliates or subsidiaries. This is an independent and unofficial library.
 
-By using this Quran text from [Tanzil.net](http://tanzil.net) you agree to Tanzil's terms of use:
-
-```
-#  - This quran text is distributed under the terms of a
-#    Creative Commons Attribution 3.0 License.
-#
-#  - Permission is granted to copy and distribute verbatim copies
-#    of this text, but CHANGING IT IS NOT ALLOWED.
-#
-#  - This quran text can be used in any website or application,
-#    provided its source (Tanzil.net) is clearly indicated, and
-#    a link is made to http://tanzil.net to enable users to keep
-#    track of changes.
-#
-#  - This copyright notice shall be included in all verbatim copies
-#    of the text, and shall be reproduced appropriately in all files
-#    derived from or containing substantial portion of this text.
-```
+By using this library you agree to Al Quran Cloud's [terms and conditions](https://alquran.cloud/terms-and-conditions).
