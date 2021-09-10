@@ -2,42 +2,60 @@
 
 [![Latest Version](https://badgen.net/npm/v/quran-json)](https://www.npmjs.com/package/quran-json)
 
-Quran text and translations in JSON format. Both Quran text and the translations are provided by [Al Quran Cloud](https://alquran.cloud/).
+Quran text and translations in JSON format.
 
 ## CDN
 
-Check the [surahs directory](https://github.com/risan/quran-json/tree/master/surahs) to see all available JSON files. The JSON files are also available through [UNPKG](https://unpkg.com/) CDN.
+Check out the [`/dist`](https://github.com/risan/quran-json/tree/master/dist) to see all available JSON files. The JSON files are also available through [JSDELIVR](https://www.jsdelivr.com/package/npm/quran-json?path=surahs) CDN.
 
-### List of Surahs
+### Get The Entire Quran Text & Translation
 
-* List of surahs: [unpkg.com/quran-json@latest/surahs/index.json](https://unpkg.com/quran-json@latest/surahs/index.json)
+This project is using the Uthmani Quran text from the [The Noble Qur'an Encyclopedia](https://quranenc.com/en/home). The translations are available in two languages: English & Indonesia. The English translation is authored by Umm Muhammad (Saheeh International). While the Indonesian translation is made by Indonesian Islamic Affairs Ministry.
 
-### Quran Text
+- Quran text only: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran.json)
+- With English translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_en.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_en.json)
+- With Indonesian translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_id.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_id.json)
 
-You can get the Quran text based on the surah number. Where the `surahNumber` is an integer from `1` (Al-Faatiha) all the way to `144` (An-Naas).
+### Get the List of Chapters
+
+* Arabic only: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/index.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/index.json)
+* With English translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/index.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/index.json)
+* With Indonesian translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/index.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/index.json)
+
+### Get a Chapter
+
+You can get a single chapter (surah) by providing its `chapterNumber` (`1-114`).
 
 ```
-https://unpkg.com/quran-json@latest/surahs/{surahNumber}.json
+https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/{chapterNumber}.json
+https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/{chapterNumber}.json
+https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/{chapterNumber}.json
 ```
 
 For example:
 
-* Al-Faatiha: [unpkg.com/quran-json@latest/surahs/1.json](https://unpkg.com/quran-json@latest/surahs/1.json)
-* Ar-Rahmaan: [unpkg.com/quran-json@latest/surahs/55.json](https://unpkg.com/quran-json@latest/surahs/55.json)
-* Al-Ikhlaas: [unpkg.com/quran-json@latest/surahs/112.json](https://unpkg.com/quran-json@latest/surahs/112.json)
+* *Al-Fatihah* Quran text only: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/1.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/1.json)
+* *Al-Rahman* with English translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/55.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/55.json)
+* *Al-Ikhlas* with Indonesian translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/112.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/112.json)
 
-### Translation
+### Get a Verse
 
-There are several translations available:
+You can get a single verse (ayah) by providing its `verseNumber` (`1-6236`).
 
-1. Chinese: [unpkg.com/quran-json@latest/surahs/112.zh.json](https://unpkg.com/quran-json@latest/surahs/112.zh.json)
-2. English: [unpkg.com/quran-json@latest/surahs/112.en.json](https://unpkg.com/quran-json@latest/surahs/112.en.json)
-3. Indonesian: [unpkg.com/quran-json@latest/surahs/112.id.json](https://unpkg.com/quran-json@latest/surahs/112.id.json)
-4. Spanish: [unpkg.com/quran-json@latest/surahs/112.es.json](https://unpkg.com/quran-json@latest/surahs/112.es.json)
+```
+https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/{verseNumber}.json
+```
+
+Unlike the rest of the JSON files, a single verse JSON file contains both English & Indonesian translations.
+
+For example:
+
+* *Al-Fatihah* verse #1: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/1.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/1.json)
+* *An-Nas* verse #6: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/6236.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/6236.json)
 
 ## Generate the JSON
 
-If you want to generate the JSON by yourself:
+If you want to generate the JSON files by yourself:
 
 ### 1. Clone the Repository
 
@@ -67,12 +85,12 @@ Run the following command to generate the JSON files:
 $ npm run build
 ```
 
+## Data Source
+
+* The Uthmani Quran text is from [The Noble Qur'an Encyclopedia](https://quranenc.com/en/home).
+* The English translation is authored by Umm Muhammad (Saheeh International) and it's sourced from [tanzil.net](https://tanzil.net/trans/).
+* The Indonesian translation is authored by Indonesian Islamic Affairs Ministry and it's sourced from [The Noble Qur'an Encyclopedia](https://quranenc.com/en/browse/indonesian_affairs).
+
 ## License
 
 [CC-BY-SA 4.0](https://github.com/risan/quran-json/blob/master/LICENSE.txt) · [Risan Bagja Pradana](https://risanb.com)
-
-## Legal
-
-This repository is in no way affiliated with, authorized, maintained, sponsored or endorsed by [Al Quran Cloud](https://alquran.cloud/) or any of its affiliates or subsidiaries. This is an independent and unofficial library.
-
-By using this library you agree to Al Quran Cloud's [terms and conditions](https://alquran.cloud/terms-and-conditions).

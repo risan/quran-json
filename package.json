@@ -1,6 +1,6 @@
 {
   "name": "quran-json",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "Quran text and translations in JSON format.",
   "keywords": [
     "translations",
@@ -16,7 +16,7 @@
     "email": "risanbagja@gmail.com",
     "url": "https://risanb.com"
   },
-  "main": "surahs/index.json",
+  "main": "dist/chapters/en/index.json",
   "repository": {
     "type": "git",
     "url": "https://github.com/risan/quran-json.git"
@@ -25,7 +25,9 @@
     "build": "node ./scripts/build.js"
   },
   "devDependencies": {
-    "fs-extra": "^10.0.0"
+    "axios": "^0.21.4",
+    "fs-extra": "^10.0.0",
+    "lodash": "^4.17.21"
   },
   "engines": {
     "node": ">=14.0.0"
