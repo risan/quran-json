@@ -12,15 +12,15 @@ Check out the [`/dist`](https://github.com/risan/quran-json/tree/master/dist) to
 
 This project is using the Uthmani Quran text from the [The Noble Qur'an Encyclopedia](https://quranenc.com/en/home). The translations are available in two languages: English & Indonesia. The English translation is authored by Umm Muhammad (Saheeh International). While the Indonesian translation is made by Indonesian Islamic Affairs Ministry.
 
-- Quran text only: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran.json)
-- With English translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_en.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_en.json)
-- With Indonesian translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_id.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_id.json)
+- Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran.json)
+- With English translation: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_en.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_en.json)
+- With Indonesian translation: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_id.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/quran_id.json)
 
 ### Get the List of Chapters
 
-* Arabic only: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/index.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/index.json)
-* With English translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/index.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/index.json)
-* With Indonesian translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/index.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/index.json)
+* Arabic only: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/index.json)
+* With English translation: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/index.json)
+* With Indonesian translation: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/index.json)
 
 ### Get a Chapter
 
@@ -34,9 +34,9 @@ https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/id/{chapterNumber}.j
 
 For example:
 
-* *Al-Fatihah* Quran text only: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/1.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/1.json)
-* *Al-Rahman* with English translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/55.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/55.json)
-* *Al-Ikhlas* with Indonesian translation: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/112.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/112.json)
+* *Al-Fatihah* Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/1.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/1.json)
+* *Al-Rahman* with English translation: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/55.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/55.json)
+* *Al-Ikhlas* with Indonesian translation: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/112.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/chapters/en/112.json)
 
 ### Get a Verse
 
@@ -50,8 +50,8 @@ Unlike the rest of the JSON files, a single verse JSON file contains both Englis
 
 For example:
 
-* *Al-Fatihah* verse #1: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/1.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/1.json)
-* *An-Nas* verse #6: [cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/6236.json](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/6236.json)
+* *Al-Fatihah* verse #1: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/1.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/1.json)
+* *An-Nas* verse #6: [`cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/6236.json`](https://cdn.jsdelivr.net/npm/quran-json@3.0.0/dist/verses/6236.json)
 
 ## Generate the JSON
 
