@@ -55,15 +55,25 @@ const downloadEdition = async (edition, file) => {
     await fs.emptyDir('data');
   }
 
-  await Promise.all(['en', 'id'].map(langCode => downloadChapterList(langCode)));
+  const langCodes = ['bn', 'en', 'id', 'ru', 'tr', 'ur'];
+
+  await Promise.all(langCodes.map(langCode => downloadChapterList(langCode)));
 
   await Promise.all([
+    // Bengali, Author: Muhiuddin Khan, Source: https://tanzil.net
+    downloadEdition('ben-muhiuddinkhan', 'data/translations/bn.json'),
     // Quran Uthmani, Source: https://quranenc.com
     downloadEdition('ara-quranuthmanienc', 'data/quran.json'),
-    // Author: Umm Muhammad (Saheeh International), Source: https://tanzil.net
+    // English, Author: Umm Muhammad (Saheeh International), Source: https://tanzil.net
     downloadEdition('eng-ummmuhammad', 'data/translations/en.json'),
-    // Author: Indonesian Islamic Affairs Ministry, Source: https://quranenc.com/en/browse/indonesian_affairs/
+    // Indonesian, Author: Indonesian Islamic Affairs Ministry, Source: https://quranenc.com/en/browse/indonesian_affairs/
     downloadEdition('ind-indonesianislam', 'data/translations/id.json'),
+    // Russian, Author: Elmir Kuliev, Source: https://tanzil.net
+    downloadEdition('rus-elmirkuliev', 'data/translations/ru.json'),
+    // Turkish, Author: Directorate of Religious Affairs, Source: https://tanzil.net
+    downloadEdition('tur-diyanetisleri', 'data/translations/tr.json'),
+    // Urdu, Author: Abul A'la Maududi, Source: https://tanzil.net
+    downloadEdition('urd-abulaalamaududi', 'data/translations/ur.json'),
   ]);
 
   await downloadEdition('ara-quranuthmanienc', 'data/quran.json');

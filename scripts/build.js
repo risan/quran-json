@@ -2,7 +2,7 @@ const fs = require('fs-extra');
 const _ = require('lodash');
 const meta = require('../package.json');
 
-const generateQuran = async (lang = null) => {
+const generateQuran = async (lang = null, pretty = false) => {
   const filename = lang ? `quran_${lang}.json` : 'quran.json';
 
   console.log(`+ Generating ${filename}...`);
@@ -42,18 +42,18 @@ const generateQuran = async (lang = null) => {
     return chapter;
   });
 
-  await fs.outputJson(`dist/${filename}`, data);
+  await fs.outputJson(`dist/${filename}`, data, { spaces: pretty ? 2 : 0 });
 
   return data;
 };
 
-const generateByChapter = async (chapters, lang = null) => {
+const generateByChapter = async (chapters, lang = null, pretty = false) => {
   await Promise.all(chapters.map(chapter => {
     const filename = lang ? `${lang}/${chapter.id}.json` : `${chapter.id}.json`;
 
     console.log(`+ Generating chapter: ${filename}...`);
 
-    return fs.outputJson(`dist/chapters/${filename}`, chapter);
+    return fs.outputJson(`dist/chapters/${filename}`, chapter, { spaces: pretty ? 2 : 0 });
   }));
 
   const indexFilename = lang ? `${lang}/index.json` : 'index.json';
@@ -67,33 +67,31 @@ const generateByChapter = async (chapters, lang = null) => {
     };
   });
 
-  await fs.outputJson(`dist/chapters/${indexFilename}`, index);
+  await fs.outputJson(`dist/chapters/${indexFilename}`, index, { spaces: pretty ? 2 : 0 });
 };
 
-const generateByVerses = async (enChapters, idChapters) => {
+const generateByVerses = async (quran, transQurans, pretty = false) => {
   let id = 1;
 
-  const verses = _.flatten(enChapters.map((enChapter, chapterIdx) => {
-    const idChapter = idChapters[chapterIdx];
-
-    return enChapter.verses.map((enVerse, verseIdx) => {
+  const verses = _.flatten(quran.chapters.map((chapter, chapterIdx) => {
+    return chapter.verses.map((verse, verseIdx) => {
       return {
         id: id++,
-        number: enVerse.id,
-        text: enVerse.text,
-        translation: {
-          en: enVerse.translation,
-          id: idChapter.verses[verseIdx].translation,
-        },
+        number: verse.id,
+        text: verse.text,
+        translations: _.zipObject(
+          transQurans.map(transQuran => transQuran.lang),
+          transQurans.map(transQuran => transQuran.chapters[chapterIdx].verses[verseIdx].translation)
+        ),
         chapter: {
-          id: enChapter.id,
-          name: enChapter.name,
-          transliteration: enChapter.transliteration,
-          translation: {
-            en: enChapter.translation,
-            id: idChapter.translation,
-          },
-          type: enChapter.type,
+          id: chapter.id,
+          name: chapter.name,
+          transliteration: chapter.transliteration,
+          translations: _.zipObject(
+            transQurans.map(transQuran => transQuran.lang),
+            transQurans.map(transQuran => transQuran.chapters[chapterIdx].translation)
+          ),
+          type: chapter.type,
         },
       };
     });
@@ -107,21 +105,32 @@ const generateByVerses = async (enChapters, idChapters) => {
 
       console.log(`+ Generating verse: ${filename}...`);
 
-      return fs.outputJson(`dist/verses/${filename}`, verse);
+      return fs.outputJson(`dist/verses/${filename}`, verse, { spaces: pretty ? 2 : 0 });
     }));
   }
 };
 
 (async () => {
+  const args = process.argv.slice(2);
+
+  const pretty = args.length > 0 && args[0] === '--pretty';
+
   await fs.emptyDir('dist');
 
-  const langCodes = [null, 'en', 'id'];
+  const langCodes = [null, 'bn', 'en', 'id', 'ru', 'tr', 'ur'];
 
-  const results = await Promise.all(langCodes.map(lang => generateQuran(lang)));
+  const chaptersList = await Promise.all(langCodes.map(lang => generateQuran(lang, pretty)));
 
-  await Promise.all(results.map((chapters, idx) => generateByChapter(chapters, langCodes[idx])));
+  const qurans = chaptersList.map((chapters, idx) => {
+    return {
+      lang: langCodes[idx],
+      chapters,
+    };
+  });
 
-  await generateByVerses(results[1], results[2]);
+  await Promise.all(qurans.map(quran => generateByChapter(quran.chapters, quran.lang, pretty)));
+
+  await generateByVerses(qurans[0], qurans.slice(1), pretty);
 
   console.log('✓ Done');
 })();
