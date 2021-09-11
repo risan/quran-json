@@ -14,9 +14,13 @@ This project is using the Uthmani Quran text from the [The Noble Qur'an Encyclop
 
 - Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran.json)
 - `bn` Bengali: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_bn.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_bn.json)
+- `zh` Chinese: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_zh.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_zh.json)
 - `en` English: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_en.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_en.json)
+- `es` Spanish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_es.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_es.json)
+- `fr` French: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_fr.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_fr.json)
 - `id` Indonesian: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_id.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_id.json)
 - `ru` Russian: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ru.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ru.json)
+- `sv` Swedish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_sv.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_sv.json)
 - `tr` Turkish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_tr.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_tr.json)
 - `ur` Urdu: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ur.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ur.json)
 
@@ -24,9 +28,13 @@ This project is using the Uthmani Quran text from the [The Noble Qur'an Encyclop
 
 - Arabic only: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/index.json)
 - Bengali: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/bn/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/bn/index.json)
+- Chinese: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/zh/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/zh/index.json)
 - English: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/en/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/en/index.json)
+- Spanish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/es/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/es/index.json)
+- French: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/fr/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/fr/index.json)
 - Indonesian: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/id/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/id/index.json)
 - Russian: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ru/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ru/index.json)
+- Swedish: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/sv/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/sv/index.json)
 - Turkish: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/tr/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/tr/index.json)
 - Urdu: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ur/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ur/index.json)
 
@@ -95,11 +103,16 @@ $ npm run build
 ## Data Source
 
 * The Uthmani Quran text is from [The Noble Qur'an Encyclopedia](https://quranenc.com/en/home).
+* The Bengali translation is authored by Muhiuddin Khan, and it's sourced from [tanzil.net](https://tanzil.net/trans/bn.bengali).
 * The English translation is authored by Umm Muhammad (Saheeh International), and it's sourced from [tanzil.net](https://tanzil.net/trans/en.sahih).
+* The Spanish translation is authored by Muhammad Isa García, and it's sourced from [tanzil.net](https://tanzil.net/trans/es.garcia).
+* The French translation is authored by Muhammad Hamidullah, and it's sourced from [tanzil.net](https://tanzil.net/trans/fr.hamidullah).
 * The Indonesian translation is authored by Indonesian Islamic Affairs Ministry, and it's sourced from [The Noble Qur'an Encyclopedia](https://quranenc.com/en/browse/indonesian_affairs).
 * The Russian translation is authored by Elmir Kuliev, and it's sourced from [tanzil.net](https://tanzil.net/trans/ru.kuliev).
+* The Swedish translation is authored by Knut Bernström, and it's sourced from [tanzil.net](https://tanzil.net/trans/sv.bernstrom).
 * The Turkish translation is authored by Turkish Directorate of Religious Affairs, and it's sourced from [tanzil.net](https://tanzil.net/trans/tr.diyanet).
 * The Urdu translation is authored by Abul A'la Maududi, and it's sourced from [tanzil.net](https://tanzil.net/trans/ur.maududi).
+* The Chinese translation is authored by Muhammad Makin, and it's sourced from [The Noble Qur'an Encyclopedia](https://quranenc.com/en/browse/chinese_makin).
 
 ## License
 

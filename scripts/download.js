@@ -55,7 +55,7 @@ const downloadEdition = async (edition, file) => {
     await fs.emptyDir('data');
   }
 
-  const langCodes = ['bn', 'en', 'id', 'ru', 'tr', 'ur'];
+  const langCodes = ['bn', 'en', 'es', 'fr', 'id', 'ru', 'sv', 'tr', 'ur', 'zh'];
 
   await Promise.all(langCodes.map(langCode => downloadChapterList(langCode)));
 
@@ -66,14 +66,22 @@ const downloadEdition = async (edition, file) => {
     downloadEdition('ara-quranuthmanienc', 'data/quran.json'),
     // English, Author: Umm Muhammad (Saheeh International), Source: https://tanzil.net
     downloadEdition('eng-ummmuhammad', 'data/translations/en.json'),
+    // Spanish, Author: Muhammad Isa García, Source: https://tanzil.net
+    downloadEdition('spa-muhammadisagarc', 'data/translations/es.json'),
+    // French, Author: Muhammad Hamidullah, Source: https://tanzil.net
+    downloadEdition('fra-muhammadhamidul', 'data/translations/fr.json'),
     // Indonesian, Author: Indonesian Islamic Affairs Ministry, Source: https://quranenc.com/en/browse/indonesian_affairs/
     downloadEdition('ind-indonesianislam', 'data/translations/id.json'),
     // Russian, Author: Elmir Kuliev, Source: https://tanzil.net
     downloadEdition('rus-elmirkuliev', 'data/translations/ru.json'),
+    // Swedish, Author: Knut Bernstrom, Source: https://tanzil.net
+    downloadEdition('swe-knutbernstrom', 'data/translations/sv.json'),
     // Turkish, Author: Directorate of Religious Affairs, Source: https://tanzil.net
     downloadEdition('tur-diyanetisleri', 'data/translations/tr.json'),
     // Urdu, Author: Abul A'la Maududi, Source: https://tanzil.net
     downloadEdition('urd-abulaalamaududi', 'data/translations/ur.json'),
+    // Chinese (simplified), Author: Muhammad Makin, Source: https://quranenc.com/en/browse/chinese_makin
+    downloadEdition('zho-muhammadmakin', 'data/translations/zh.json'),
   ]);
 
   await downloadEdition('ara-quranuthmanienc', 'data/quran.json');

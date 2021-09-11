@@ -117,7 +117,7 @@ const generateByVerses = async (quran, transQurans, pretty = false) => {
 
   await fs.emptyDir('dist');
 
-  const langCodes = [null, 'bn', 'en', 'id', 'ru', 'tr', 'ur'];
+  const langCodes = [null, 'bn', 'en', 'es', 'fr', 'id', 'ru', 'sv', 'tr', 'ur', 'zh'];
 
   const chaptersList = await Promise.all(langCodes.map(lang => generateQuran(lang, pretty)));
 
