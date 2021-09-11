@@ -1,7 +1,7 @@
 {
   "name": "quran-json",
-  "version": "3.1.1",
-  "description": "Quran text and translations in JSON format.",
+  "version": "3.1.2",
+  "description": "Quran text, transliteration, and translations in JSON format.",
   "keywords": [
     "translations",
     "quran"
@@ -10,7 +10,7 @@
   "bugs": {
     "url": "https://github.com/risan/quran-json/issues"
   },
-  "license": "MIT",
+  "license": "CC-BY-4.0",
   "author": {
     "name": "Risan Bagja Pradana",
     "email": "risanbagja@gmail.com",
