@@ -8,9 +8,9 @@ const generateQuran = async (lang = null, pretty = false) => {
   console.log(`+ Generating ${filename}...`);
 
   const [chapters, quran, trans] = await Promise.all([
-    fs.readJson(`data/chapters/${lang ? lang : 'en'}.json`),
+    fs.readJson(`data/chapters/${lang === null || lang === 'transliteration' ? 'en' : lang}.json`),
     fs.readJson('data/quran.json'),
-    lang ? fs.readJson(`data/translations/${lang}.json`) : null,
+    lang ? fs.readJson(`data/editions/${lang}.json`) : null,
   ]);
 
   const data = chapters.map(item => {
@@ -28,7 +28,7 @@ const generateQuran = async (lang = null, pretty = false) => {
         };
 
         if (trans) {
-          verse.translation = trans[item.id][idx].text;
+          verse[lang === 'transliteration' ? 'transliteration' : 'translation'] = trans[item.id][idx].text;
         }
 
         return verse;
@@ -83,6 +83,7 @@ const generateByVerses = async (quran, transQurans, pretty = false) => {
           transQurans.map(transQuran => transQuran.lang),
           transQurans.map(transQuran => transQuran.chapters[chapterIdx].verses[verseIdx].translation)
         ),
+        transliteration: verse.transliteration,
         chapter: {
           id: chapter.id,
           name: chapter.name,
@@ -119,18 +120,30 @@ const generateByVerses = async (quran, transQurans, pretty = false) => {
 
   const langCodes = [null, 'bn', 'en', 'es', 'fr', 'id', 'ru', 'sv', 'tr', 'ur', 'zh'];
 
-  const chaptersList = await Promise.all(langCodes.map(lang => generateQuran(lang, pretty)));
+  const [transliterationChapters, ...chaptersList] = await Promise.all(
+    ['transliteration', ...langCodes].map(lang => generateQuran(lang, pretty))
+  );
 
   const qurans = chaptersList.map((chapters, idx) => {
     return {
       lang: langCodes[idx],
-      chapters,
+      chapters: chapters.map((chapter, chapterIdx) => {
+        return {
+          ...chapter,
+          verses: chapter.verses.map((verse, verseIdx) => {
+            return {
+              ...verse,
+              transliteration: transliterationChapters[chapterIdx].verses[verseIdx].transliteration,
+            };
+          }),
+        };
+      }),
     };
   });
 
   await Promise.all(qurans.map(quran => generateByChapter(quran.chapters, quran.lang, pretty)));
 
-  await generateByVerses(qurans[0], qurans.slice(1), pretty);
+  await generateByVerses(qurans[0], qurans.slice(2), pretty);
 
   console.log('✓ Done');
 })();
