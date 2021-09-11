@@ -12,32 +12,32 @@ Check out the [`/dist`](https://github.com/risan/quran-json/tree/master/dist) to
 
 This project is using the Uthmani Quran text from the [The Noble Qur'an Encyclopedia](https://quranenc.com/en/home). While the English transliteration is sourced from [Tanzil.net](https://tanzil.net/trans/en.transliteration). The translations are available in several languages:
 
-- Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran.json)
-- Quran English transliteration: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_transliteration.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran.json)
-- `bn` Bengali: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_bn.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_bn.json)
-- `zh` Chinese: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_zh.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_zh.json)
-- `en` English: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_en.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_en.json)
-- `es` Spanish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_es.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_es.json)
-- `fr` French: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_fr.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_fr.json)
-- `id` Indonesian: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_id.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_id.json)
-- `ru` Russian: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ru.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ru.json)
-- `sv` Swedish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_sv.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_sv.json)
-- `tr` Turkish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_tr.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_tr.json)
-- `ur` Urdu: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ur.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/quran_ur.json)
+- Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran.json)
+- Quran English transliteration: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_transliteration.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran.json)
+- `bn` Bengali: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_bn.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_bn.json)
+- `zh` Chinese: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_zh.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_zh.json)
+- `en` English: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_en.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_en.json)
+- `es` Spanish: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_es.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_es.json)
+- `fr` French: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_fr.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_fr.json)
+- `id` Indonesian: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_id.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_id.json)
+- `ru` Russian: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_ru.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_ru.json)
+- `sv` Swedish: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_sv.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_sv.json)
+- `tr` Turkish: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_tr.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_tr.json)
+- `ur` Urdu: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_ur.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/quran_ur.json)
 
 ### Get the List of Chapters
 
-- Arabic only: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/index.json)
-- Bengali: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/bn/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/bn/index.json)
-- Chinese: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/zh/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/zh/index.json)
-- English: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/en/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/en/index.json)
-- Spanish: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/es/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/es/index.json)
-- French: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/fr/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/fr/index.json)
-- Indonesian: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/id/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/id/index.json)
-- Russian: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ru/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ru/index.json)
-- Swedish: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/sv/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/sv/index.json)
-- Turkish: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/tr/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/tr/index.json)
-- Urdu: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ur/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/ur/index.json)
+- Arabic only: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/index.json)
+- Bengali: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/bn/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/bn/index.json)
+- Chinese: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/zh/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/zh/index.json)
+- English: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/en/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/en/index.json)
+- Spanish: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/es/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/es/index.json)
+- French: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/fr/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/fr/index.json)
+- Indonesian: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/id/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/id/index.json)
+- Russian: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/ru/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/ru/index.json)
+- Swedish: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/sv/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/sv/index.json)
+- Turkish: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/tr/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/tr/index.json)
+- Urdu: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/ur/index.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/ur/index.json)
 
 ### Get a Chapter
 
@@ -45,32 +45,32 @@ You can get a single chapter (surah) by providing its `chapterNumber` (`1-114`).
 
 ```
 # Quran text & transliteration:
-https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/{chapterNumber}.json
+https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/{chapterNumber}.json
 
 # Quran text, transliteration, and translation:
-https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/{langCode}/{chapterNumber}.json
+https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/{langCode}/{chapterNumber}.json
 ```
 
 For example:
 
-* *Al-Fatihah* Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/1.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/chapters/1.json)
-* *Al-Rahman* with English translation: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/en/55.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/en/55.json)
-* *Al-Ikhlas* with Indonesian translation: [`cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/id/112.json`](https://cdn.jsdelivr.net/npm/quran-json@3.010/dist/chapters/id/112.json)
+* *Al-Fatihah* Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/1.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/1.json)
+* *Al-Rahman* with English translation: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/en/55.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/en/55.json)
+* *Al-Ikhlas* with Indonesian translation: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/id/112.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/chapters/id/112.json)
 
 ### Get a Verse
 
 You can get a single verse (ayah) by providing its `verseNumber` (`1-6236`).
 
 ```
-https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/verses/{verseNumber}.json
+https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/verses/{verseNumber}.json
 ```
 
 Unlike the rest of the JSON files, a single verse JSON file contains all available translations.
 
 For example:
 
-* *Al-Fatihah* verse #1: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/verses/1.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/verses/1.json)
-* *An-Nas* verse #6: [`cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/verses/6236.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.0/dist/verses/6236.json)
+* *Al-Fatihah* verse #1: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/verses/1.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/verses/1.json)
+* *An-Nas* verse #6: [`cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/verses/6236.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.1/dist/verses/6236.json)
 
 ## Generate the JSON
 
