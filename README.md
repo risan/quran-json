@@ -6,7 +6,7 @@ Quran text, transliteration, and translations in JSON format.
 
 ## CDN
 
-Check out the [`/dist`](https://github.com/risan/quran-json/tree/master/dist) to see all available JSON files. The JSON files are also available through [JSDELIVR](https://www.jsdelivr.com/package/npm/quran-json?path=surahs) CDN.
+Check out the [`/dist`](https://github.com/risan/quran-json/tree/master/dist) to see all available JSON files. The JSON files are also available through [JSDELIVR](https://www.jsdelivr.com/package/npm/quran-json?path=dist) CDN.
 
 ### Get The Entire Quran Text & Translations
 
