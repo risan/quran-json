@@ -13,7 +13,7 @@ Check out the [`/dist`](https://github.com/risan/quran-json/tree/master/dist) to
 This project is using the Uthmani Quran text from the [The Noble Qur'an Encyclopedia](https://quranenc.com/en/home). While the English transliteration is sourced from [Tanzil.net](https://tanzil.net/trans/en.transliteration). The translations are available in several languages:
 
 - Quran text only: [`cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json)
-- Quran English transliteration: [`cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_transliteration.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json)
+- Quran English transliteration: [`cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_transliteration.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_transliteration.json)
 - `bn` Bengali: [`cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_bn.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_bn.json)
 - `zh` Chinese: [`cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_zh.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_zh.json)
 - `en` English: [`cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_en.json`](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran_en.json)
