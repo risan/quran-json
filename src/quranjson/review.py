@@ -1,0 +1,341 @@
+"""The licensing review record.
+
+Every source investigated for redistribution rights, with the verdict and the evidence
+behind it, so the research does not have to be repeated and a decision to publish
+something new starts from facts rather than a fresh web search.
+
+`quran-json licenses --write` regenerates `data/meta/licensing-review.json`; the test
+suite asserts every entry carries an evidence URL. Adding a source to the dataset means
+changing a verdict here, deliberately.
+"""
+
+from __future__ import annotations
+
+from dataclasses import asdict, dataclass
+from typing import Any
+
+from . import config
+
+__all__ = ["REVIEWED", "SourceReview", "review_manifest"]
+
+#: When the review below was last carried out.
+REVIEWED = "2026-09-14"
+
+
+@dataclass(frozen=True, slots=True)
+class SourceReview:
+    """One investigated source."""
+
+    name: str
+    kind: str
+    status: config.Status
+    license_url: str
+    evidence: str
+    #: What would have to happen to move this to `granted`.
+    blocker: str = ""
+
+
+CANDIDATES: tuple[SourceReview, ...] = (
+    SourceReview(
+        name="Tanzil.net Quran text (uthmani, simple) and chapter metadata",
+        kind="text",
+        status="granted",
+        license_url="https://tanzil.net/docs/text_license",
+        evidence=(
+            "CC-BY 3.0: 'Permission is granted to copy and distribute verbatim copies of "
+            "this text, but CHANGING IT IS NOT ALLOWED.'"
+        ),
+    ),
+    SourceReview(
+        name="QuranEnc.com translations",
+        kind="translation",
+        status="granted",
+        license_url="https://quranenc.com/en/home/api",
+        evidence=(
+            "'Contents of the translations can be downloaded and re-published' under 7 "
+            "conditions: verbatim, credit publisher + QuranEnc.com, state the version, "
+            "keep transcripts, report notes, keep current, no inappropriate advertising."
+        ),
+    ),
+    SourceReview(
+        name="QuranEnc.com bulk download (zipped SQLite per translation)",
+        kind="translation",
+        status="granted",
+        license_url="https://quranenc.com/en/home/api",
+        evidence="database_url field per catalogue entry; 75 translations, 56 languages.",
+    ),
+    SourceReview(
+        name="Tanzil.net en.transliteration",
+        kind="transliteration",
+        status="restricted",
+        license_url="https://tanzil.net/trans/",
+        evidence=(
+            "'The translations provided at this page are for non-commercial purposes only. "
+            "If used otherwise, you need to obtain necessary permission from the "
+            "translator or the publisher.' and 'Redistributing the following list in "
+            "another website is not allowed, unless direct permission is granted by the "
+            "Tanzil Project.' Tanzil's CC-BY-3.0 notice covers its Arabic text only."
+        ),
+        blocker=(
+            "Written permission from the Tanzil Project (admin@tanzil.net). Their terms "
+            "explicitly contemplate granting it and the file is machine-readable, so this "
+            "is the cheapest route to a high-quality transliteration."
+        ),
+    ),
+    SourceReview(
+        name="Talal Itani, ClearQuran (english_itani, english_itani_allah)",
+        kind="translation",
+        status="granted",
+        license_url="https://blog.clearquran.com/download",
+        evidence=(
+            "'free to use, share, and distribute - including in commercial projects - with "
+            "no permission or authorization required. When sharing, please keep the files "
+            "unmodified and credit the source as shown below. They are released under the "
+            "Creative Commons Attribution-NoDerivatives 4.0 International License.' "
+            "Fetched from the translator's own verse-by-verse archive (6,236 files), not a "
+            "packager."
+        ),
+    ),
+    SourceReview(
+        name="Public-domain English translations: Sale 1734, Palmer 1880, Pickthall 1930, "
+        "Yusuf Ali 1934",
+        kind="translation",
+        status="granted",
+        license_url="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions.json",
+        evidence=(
+            "Public domain by the death of the author: Sale d.1736, Palmer d.1882, "
+            "Pickthall d.1936, Yusuf Ali d.1953 -- all out of copyright in life+70 "
+            "jurisdictions, and pre-1929 US publication for Sale/Palmer/Rodwell. "
+            "VERIFIED 2026-09-14: each edition returns 200 with 6,236 verses across 114 "
+            "chapters and the expected opening wording. For a PD work the distribution "
+            "channel is irrelevant, so the packager's lack of a per-edition licence "
+            "field does not apply."
+        ),
+        blocker="",
+    ),
+    SourceReview(
+        name="Rodwell 1861 (public domain, but unavailable)",
+        kind="translation",
+        status="unknown",
+        license_url="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions.json",
+        evidence=(
+            "The work is public domain (J. M. Rodwell d.1900), and the catalogue lists "
+            "eng-johnmedowsrodwe, but that file returns HTTP 403. Project Gutenberg's "
+            "Rodwell (#2800/#3434) is continuous prose with NO per-ayah numbering."
+        ),
+        blocker="Needs a verse-numbered digitisation; the prose Gutenberg text would "
+        "require ayah alignment.",
+    ),
+    SourceReview(
+        name="Shakir (do not ship)",
+        kind="translation",
+        status="unknown",
+        license_url="https://www.gutenberg.org/cache/epub/16955/pg16955.txt",
+        evidence=(
+            "Project Gutenberg #16955 bundles Yusuf Ali, Pickthall and Shakir side by side "
+            "with clean NNN.NNN verse numbering, but its own header says the text "
+            "'originates from a file whose origins we don't know'. Shakir's death year is "
+            "contradictory across sources (1959 vs a 1866-1939 record), so his copyright "
+            "status cannot be established."
+        ),
+        blocker="Establish Shakir's copyright status, or use the Yusuf Ali/Pickthall "
+        "selections from the same file with a proper provenance chain.",
+    ),
+    SourceReview(
+        name="Islamic Bulletin 'Quran Transliteration' PDF (also on archive.org)",
+        kind="transliteration",
+        status="restricted",
+        license_url="https://islamicbulletin.org/en/ebooks/quran/quran_transliteration.pdf",
+        evidence=(
+            "The document carries a reuse line -- 'This work is free for use to everyone as "
+            "long as no changes that might distort it are done to it' -- but it credits 'The "
+            "Calgary Islamic Homepage', whose own archived footer reads 'Copyright 1997 - "
+            "2004 The Calgary Islamic Homepage, All Rights Reserved.' A downstream "
+            "compiler's grant cannot override the credited author's reservation, so the "
+            "only apparent grant on this text is contradicted."
+        ),
+        blocker=(
+            "Written permission from the Calgary Islamic Homepage (or whoever holds the "
+            "rights to the transliteration text they published)."
+        ),
+    ),
+    SourceReview(
+        name="Roman transliteration bundled with Pickthall (M. A. Haleem Eliasii)",
+        kind="transliteration",
+        status="restricted",
+        license_url="https://archive.org/details/TheNobleQuran",
+        evidence=(
+            "First published 1983, so still in copyright; not a public-domain work despite "
+            "accompanying Pickthall's 1930 translation."
+        ),
+        blocker="Permission from the author or publisher.",
+    ),
+    SourceReview(
+        name="Pre-1929 public-domain Arabic transliteration",
+        kind="transliteration",
+        status="unknown",
+        license_url="https://archive.org/",
+        evidence=(
+            "Searched for and found NONE. The only pre-1929 'Roman' Qur'an located is the "
+            "1844 Allahabad / 1876 Ludhiana Roman-URDU Qur'an, which is an Urdu translation "
+            "in Latin letters, not a transliteration of the Arabic."
+        ),
+        blocker="No such work exists; this route is closed.",
+    ),
+    SourceReview(
+        name="MostafaOsmanFathi/QuranPhoneticSearch (claimed MIT transliteration data)",
+        kind="transliteration",
+        status="restricted",
+        license_url="https://github.com/MostafaOsmanFathi/QuranPhoneticSearch",
+        evidence=(
+            "MIT covers the code, but the data derives from the Islamic Bulletin/Calgary "
+            "text (see above), ships no verse identifiers, and is INCOMPLETE: the CSV ends "
+            "inside al-A'raf 7:135, i.e. surahs 1-7 of 114."
+        ),
+        blocker="Upstream text rights plus an incomplete, unaligned dataset.",
+    ),
+    SourceReview(
+        name="Self-generated transliteration from a CC BY-SA Arabic text (Wikisource)",
+        kind="transliteration",
+        status="unknown",
+        license_url="https://ar.wikisource.org/wiki/%D8%A7%D9%84%D9%82%D8%B1%D8%A2%D9%86_%D8%A7%D9%84%D9%83%D8%B1%D9%8A%D9%85_(%D8%AD%D9%81%D8%B5%D8%8C_%D8%A7%D9%84%D9%85%D8%AF%D9%8A%D9%86%D8%A9_%D8%A7%D9%84%D9%86%D8%A8%D9%88%D9%8A%D8%A9)",
+        evidence=(
+            "This is the most promising route: generate the transliteration ourselves from "
+            "an Arabic text that permits adaptation, sidestepping Tanzil's verbatim-only "
+            "term. VERIFIED 2026-09-14: ar.wikisource.org hosts the Hafs/Madinah and imlaei "
+            "script texts organised by surah, and Wikisource content is CC BY-SA -- the "
+            "same licence this repository ships under, so no permission email is needed. "
+            "Caveat: the surah pages only transclude a Lua table ({{#invoke:Quran|...}}), so "
+            "the text must be extracted from Module:Quran. Also VERIFIED 2026-09-14: the two "
+            "MIT phonemizer projects previously credited for this work do NOT exist "
+            "(obadx/quran-transcript and Hetchy/Quranic-Phonemizer both 404), so the "
+            "grapheme-to-phoneme step would have to be written, and the result reviewed."
+        ),
+        blocker=(
+            "Build and validate the transliteration engine. Tanzil's en.transliteration "
+            "remains the one-email fallback and would be the reference for spot-checking "
+            "our output."
+        ),
+    ),
+    SourceReview(
+        name="QUL / Tarteel Quranic Universal Library transliterations (8 resources)",
+        kind="transliteration",
+        status="unknown",
+        license_url="https://qul.tarteel.ai/resources/transliteration",
+        evidence=(
+            "VERIFIED 2026-09-14 by sweeping EVERY resource id 1-1760 at "
+            "/resources/{id}/copyright: of about 591 published resources, only 2 carry any "
+            "licence statement and both are restrictive (permission required / exclusive "
+            "licence held by a third party). The other ~589, including all 8 "
+            "transliterations (477, 468, 475, 476, 469, 71, 72, 478), render 'We don't have "
+            "copyright information for this resource.' QUL renders only the free-text "
+            "copyright_notice; the permission_to_host / permission_to_share enums are "
+            "login-only. Bulk download requires authentication."
+        ),
+        blocker=(
+            "QUL publishes no grant for any transliteration, and nothing in its catalogue "
+            "is cleared by its own records."
+        ),
+    ),
+    SourceReview(
+        name="fawazahmed0/quran-api transliteration editions (-la / -lad slugs)",
+        kind="transliteration",
+        status="unknown",
+        license_url="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions.json",
+        evidence=(
+            "Repo is Unlicense, but the catalogue carries NO per-edition licence field, "
+            "and most `-la` entries are romanised translations rather than "
+            "transliterations. Only a handful of ara-* entries are true transliterations, "
+            "and those declare tanzil.net as their source."
+        ),
+        blocker="Per-edition grants do not exist; the upstream rights holders must be asked.",
+    ),
+    SourceReview(
+        name="Quran.com API v4 (transliteration id 57, chapter metadata, tafsirs)",
+        kind="transliteration",
+        status="restricted",
+        license_url="https://quran.com/terms-and-conditions",
+        evidence=(
+            "'FOR YOUR PERSONAL, NON-COMMERCIAL USE ONLY' and no 'compiling a collection "
+            "of listings or data for any purpose'."
+        ),
+        blocker="Contradicts the open-redistribution goal entirely.",
+    ),
+    SourceReview(
+        name="Self-generated transliteration from the Arabic text",
+        kind="transliteration",
+        status="unknown",
+        license_url="https://tanzil.net/docs/text_license",
+        evidence=(
+            "Technically solved: obadx/quran-transcript and Hetchy/Quranic-Phonemizer are "
+            "MIT-licensed phonemizers covering our exact Uthmani codepoints; the remaining "
+            "work is a phoneme-to-Latin table. Legally ambiguous: Tanzil's notice forbids "
+            "non-verbatim renderings, while the same notice grants CC-BY 3.0 (which permits "
+            "adaptations), and Tanzil files its own transliteration under its Translations "
+            "repository rather than under the text licence. US Copyright Office Compendium "
+            "709.1 says a mechanical transliteration cannot be registered."
+        ),
+        blocker=(
+            "Either a written adaptation grant from Tanzil, or generate from a non-Tanzil "
+            "Arabic text. Would also need a 6,236-verse review pass."
+        ),
+    ),
+    SourceReview(
+        name="EveryAyah per-ayah audio",
+        kind="audio",
+        status="unknown",
+        license_url="https://everyayah.com/data/",
+        evidence=(
+            "No licence published anywhere: license, terms and readme paths all 404. "
+            "Verified serving: HTTP/2 200/206, accept-ranges, access-control-allow-origin "
+            "'*', filename {SSS}{AAA}.mp3 with surah-relative ayah numbers."
+        ),
+        blocker="We link to these files rather than redistribute them, so this gates nothing.",
+    ),
+    SourceReview(
+        name="MP3Quran API v3 (whole-surah audio)",
+        kind="audio",
+        status="granted",
+        license_url="https://mp3quran.net/eng/",
+        evidence=(
+            "Permits copying and redistribution with attribution to the site; reciter "
+            "rights retained. 242 reciters / 288 moshaf; verified 206 with CORS."
+        ),
+    ),
+    SourceReview(
+        name="Islamic Network CDN (per-ayah and per-surah audio)",
+        kind="audio",
+        status="granted",
+        license_url="https://islamic.network/",
+        evidence=(
+            "Free non-commercial redistribution, reciter copyrights retained. 69 per-ayah "
+            "and 159 per-surah editions; global ayah numbering (6236.mp3); verified NO "
+            "CORS header."
+        ),
+    ),
+)
+
+
+def review_manifest() -> dict[str, Any]:
+    """The committed record of every source reviewed and its verdict."""
+    return {
+        "reviewed": REVIEWED,
+        "note": (
+            "Verdicts are derived from the rights holders' own terms, not from aggregator "
+            "or packager licences. `unknown` is not permission. Only `granted` sources may "
+            "be published; see quranjson.licensing."
+        ),
+        "sources": [asdict(review) for review in CANDIDATES],
+        "published": {
+            "quranenc": "all 75 catalogue editions (see data/quranenc/catalogue.json)",
+            "extra": [
+                {
+                    "lang": edition.lang,
+                    "author": edition.author,
+                    "status": edition.license.status,
+                }
+                for edition in config.EXTRA_EDITIONS
+            ],
+            "text": "tanzil-uthmani (CC-BY 3.0 verbatim)",
+        },
+    }

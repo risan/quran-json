@@ -1,0 +1,48 @@
+[project]
+name = "quran-json"
+version = "4.0.0"
+description = "Quran text, transliteration, translations, and audio references in JSON format."
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",
+    "orjson>=3.10",
+    "tenacity>=8.3",
+    "typer>=0.12",
+]
+
+[dependency-groups]
+dev = [
+    "mypy>=1.11",
+    "pytest>=8.2",
+    "ruff>=0.6",
+]
+
+[project.scripts]
+quran-json = "quranjson.__main__:app"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/quranjson"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+
+[tool.ruff.lint.per-file-ignores]
+# `_INDEX` is an HTML document held in a string; its markup lines are not code.
+"src/quranjson/cdn.py" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+files = ["src"]

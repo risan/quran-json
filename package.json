@@ -1,16 +1,21 @@
 {
   "name": "quran-json",
   "version": "3.1.2",
+  "private": false,
   "description": "Quran text, transliteration, and translations in JSON format.",
   "keywords": [
+    "quran",
+    "islam",
     "translations",
-    "quran"
+    "transliteration",
+    "dataset",
+    "json"
   ],
   "homepage": "https://github.com/risan/quran-json#readme",
   "bugs": {
     "url": "https://github.com/risan/quran-json/issues"
   },
-  "license": "CC-BY-4.0",
+  "license": "CC-BY-SA-4.0",
   "author": {
     "name": "Risan Bagja Pradana",
     "email": "risanbagja@gmail.com",
@@ -21,15 +26,17 @@
     "type": "git",
     "url": "https://github.com/risan/quran-json.git"
   },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE.txt"
+  ],
   "scripts": {
-    "build": "node ./scripts/build.js"
-  },
-  "devDependencies": {
-    "axios": "^0.21.4",
-    "fs-extra": "^10.0.0",
-    "lodash": "^4.17.21"
-  },
-  "engines": {
-    "node": ">=14.0.0"
+    "build": "uv run quran-json build",
+    "cdn": "uv run quran-json cdn",
+    "deploy": "wrangler pages deploy",
+    "licenses": "uv run quran-json licenses",
+    "test": "uv run pytest",
+    "lint": "uv run ruff check . && uv run ruff format --check . && uv run mypy"
   }
 }

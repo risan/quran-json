@@ -1,3 +1,20 @@
 .idea
 node_modules
 yarn.lock
+
+# Python toolchain
+.venv
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Local scratch (never the committed data/ snapshots)
+.cache/
+
+# Generated deploy artifact, rebuilt from data/ in ~1s
+cdn/
+
+# Cloudflare local state (wrangler pages dev)
+.wrangler/

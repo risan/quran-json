@@ -1,0 +1,510 @@
+"""Paths, edition registry, licensing, and provenance for everything this project publishes.
+
+The registry is the single source of truth for *where* each edition comes from and
+*under which licence* it may be redistributed. Nothing is published without an entry
+here -- this is what stops an unlicensed translation from being vendored by accident.
+
+Licence status is recorded per edition as ``granted`` / ``restricted`` / ``unknown``.
+Only ``granted`` editions may be published; ``restricted`` and ``unknown`` are blocked
+by `quranjson.licensing`. See `data/meta/sources.json` and the README for the evidence.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass
+from pathlib import Path
+from typing import Final, Literal
+
+ROOT: Final = Path(__file__).resolve().parents[2]
+
+#: Committed upstream snapshots -- the build inputs. Tracked in git so that builds
+#: are offline and reproducible even if an upstream API disappears.
+DATA: Final = ROOT / "data"
+
+#: Frozen v3 artifacts, published to npm and served by jsDelivr. Byte-identical
+#: reference tree; regenerating it must produce a clean `git diff`.
+DIST: Final = ROOT / "dist"
+
+#: New artifact tree, deployed to Cloudflare Pages.
+CDN: Final = ROOT / "cdn"
+
+#: The verse text used by the frozen tree.
+TEXT_EDITION: Final = "ara-quranuthmanienc"
+
+#: `transliteration` is generated like a language but has no chapter directory.
+TRANSLITERATION: Final = "transliteration"
+
+#: Order matters: it determines key order in `verses/*.json`.
+LANG_CODES: Final = (
+    None,
+    "bn",
+    "en",
+    "es",
+    "fr",
+    "id",
+    "ru",
+    "sv",
+    "tr",
+    "ur",
+    "zh",
+)
+
+#: Languages that get a verse-level translation in `verses/*.json`.
+#: NOTE: upstream `scripts/build.js` passed `qurans.slice(2)`, which silently skipped
+#: `bn` -- Bengali is absent from every one of the 6,236 verse files it produced.
+#: `LEGACY_VERSE_LANGS` reproduces that bug so the frozen `dist/` tree can be proven
+#: byte-identical; published trees use `VERSE_LANGS` and include Bengali.
+VERSE_LANGS: Final = tuple(lang for lang in LANG_CODES if lang is not None)
+LEGACY_VERSE_LANGS: Final = tuple(LANG_CODES[2:])
+
+#: One translation per language for the licensed generation's per-verse index, in
+#: preference order. Every other QuranEnc translation is still published per chapter.
+FEATURED_LANGS: Final = (
+    "en",
+    "fr",
+    "es",
+    "de",
+    "id",
+    "tr",
+    "ur",
+    "zh",
+    "pt",
+    "fa",
+    "ru",
+    "hi",
+)
+
+DEFAULT_LINK_BASE: Final = "https://cdn.jsdelivr.net/npm/quran-json@{version}/dist/chapters/"
+
+#: Version baked into the frozen `dist/` tree's chapter links. It is the npm package
+#: version that was current when those files were generated; it is NOT a free variable.
+#: Changing it would rewrite every `link` field and break the byte-parity gate.
+LEGACY_VERSION: Final = "3.1.2"
+
+#: Version of the new, corrected dataset generation served from the CDN. It differs from
+#: the frozen tree because it fixes the dropped Bengali translation in every verse file.
+DATASET_VERSION: Final = "4.0.0"
+
+Status = Literal["granted", "restricted", "unknown"]
+
+
+@dataclass(frozen=True, slots=True)
+class License:
+    """A redistribution verdict with the evidence behind it."""
+
+    status: Status
+    text: str
+    url: str
+
+    @property
+    def allows_publication(self) -> bool:
+        return self.status == "granted"
+
+
+#: Tanzil hosts translations but grants nothing for them. Its CC-BY-3.0 notice covers
+#: the Arabic *text* only; the Terms of Use on the translations page restrict them to
+#: non-commercial use and forbid redistribution of the list.
+#: https://tanzil.net/trans/  (verified 2026-09-14)
+TANZIL_TRANSLATION = License(
+    status="restricted",
+    text=(
+        "Tanzil translations: 'for non-commercial purposes only. If used otherwise, you "
+        "need to obtain necessary permission from the translator or the publisher.' and "
+        "'Redistributing the following list in another website is not allowed, unless "
+        "direct permission is granted by the Tanzil Project.' The CC-BY-3.0 Tanzil Quran "
+        "text licence covers Tanzil's Arabic text, NOT its translations."
+    ),
+    url="https://tanzil.net/trans/",
+)
+
+#: The one source whose terms grant re-publication on their face.
+#: https://quranenc.com/en/home/api  ("Terms and Policies")
+QURANENC = License(
+    status="granted",
+    text=(
+        "QuranEnc.com permits download and re-publication of translation contents on 7 "
+        "conditions: no modification/addition/deletion; credit the publisher and "
+        "QuranEnc.com; state the version number; keep the transcript information; report "
+        "notes back; keep up to date with the latest version; no inappropriate advertising."
+    ),
+    url="https://quranenc.com/en/home/api",
+)
+
+#: Talal Itani's ClearQuran -- an explicit open grant, including commercial use.
+ITANI = License(
+    status="granted",
+    text=(
+        "CC BY-ND 4.0. Free to use, share and distribute including in commercial projects, "
+        "no permission required. Keep the files unmodified and credit the work as "
+        "'Translation by Talal Itani, ClearQuran.com'."
+    ),
+    url="https://blog.clearquran.com/download",
+)
+
+#: Saheeh International. No grant exists and the publisher's domain is gone.
+SAHEEH_INTERNATIONAL = License(
+    status="restricted",
+    text=(
+        "Saheeh International (Umm Muhammad, Dar Abul-Qasim): all rights reserved, no "
+        "redistribution grant found. Both Tanzil (non-commercial, permission required) and "
+        "Quran.com (personal, non-commercial, no compilation) restrict the copies in "
+        "circulation. Written permission from the publisher is required."
+    ),
+    url="https://tanzil.net/trans/",
+)
+
+#: The Arabic text currently shipped. VERIFIED 2026-09-14: the `ara-quranuthmanienc`
+#: edition is itself a copy of `ara-quranacademy`, whose upstream repo states it is
+#: "derived from Tanzil's Uthmani text" with systematic re-encoding (Farsi yeh U+06CC,
+#: U+06E1 sukun, open tanween, tatweel). That upstream carries NO licence, and Tanzil's
+#: licence forbids modification. So this is a modified derivative with no grant -- the
+#: README's "text from The Noble Qur'an Encyclopedia" attribution is not accurate.
+SHIPPED_TEXT = License(
+    status="unknown",
+    text=(
+        "Modified derivative with no grant. The ara-quranuthmanienc edition is a copy of "
+        "ara-quranacademy, which states it is derived from Tanzil's Uthmani text with "
+        "systematic re-encoding; that upstream has no LICENSE file. Tanzil's text licence "
+        "permits verbatim copies only: 'CHANGING IT IS NOT ALLOWED'."
+    ),
+    url="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranuthmanienc.json",
+)
+
+#: Tanzil's own text -- the recommended replacement for the shipped derivative. Explicit
+#: CC-BY 3.0 verbatim-redistribution grant. Note: its first ayah of every surah except
+#: At-Tawbah carries the basmala, unlike the text shipped today.
+TANZIL_TEXT = License(
+    status="granted",
+    text=(
+        "Tanzil Quran Text / Copyright (C) 2007-2021 Tanzil Project / Creative Commons "
+        "Attribution 3.0. Permission is granted to copy and distribute verbatim copies of "
+        "this text, but CHANGING IT IS NOT ALLOWED."
+    ),
+    url="https://tanzil.net/docs/text_license",
+)
+
+TANZIL_DOWNLOAD = (
+    "https://tanzil.net/pub/download/index.php?quranType={variant}&outType=txt-2&agree=true"
+)
+
+#: Tanzil text variants offered by the download endpoint.
+TANZIL_VARIANTS: Final = (
+    "uthmani",
+    "uthmani-min",
+    "simple",
+    "simple-plain",
+    "simple-min",
+    "simple-clean",
+)
+
+#: Chapter metadata snapshotted from the Quran.com API.
+QURAN_COM_METADATA = License(
+    status="restricted",
+    text=(
+        "Quran.com terms: content is 'FOR YOUR PERSONAL, NON-COMMERCIAL USE ONLY' and "
+        "users 'shall not ... use the Service for data mining, scraping, crawling, "
+        "redirecting, or compiling a collection of listings or data for any purpose'. The "
+        "chapter metadata in data/chapters/ is snapshotted for the existing published "
+        "build and is not cleared for re-publication."
+    ),
+    url="https://quran.com/terms-and-conditions",
+)
+
+
+def public_domain(work: str, basis: str, url: str) -> License:
+    """A public-domain verdict, with the basis that makes it one."""
+    return License(status="granted", text=f"Public domain. {work}. {basis}", url=url)
+
+
+#: Public-domain English translations, all verified verse-numbered and complete
+#: (6,236 verses / 114 chapters) from the sources recorded below. For a public-domain
+#: work the distribution channel is irrelevant -- what matters is that the work is free.
+SALE = public_domain(
+    "George Sale, first published 1734",
+    "Author died 1736, so out of copyright in life+70 jurisdictions and in the US.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-georgesale.json",
+)
+
+PALMER = public_domain(
+    "E. H. Palmer, Sacred Books of the East, 1880",
+    "Author died 1882, so out of copyright in life+70 jurisdictions and in the US.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-edwardhenrypalm.json",
+)
+
+PICKTHALL = public_domain(
+    "Marmaduke Pickthall, The Meaning of the Glorious Koran, 1930",
+    "Author died 1936, so out of copyright in life+70 jurisdictions since 2007 and in "
+    "the US since 1 January 2026.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-mohammedmarmadu.json",
+)
+
+YUSUF_ALI = public_domain(
+    "Abdullah Yusuf Ali, The Holy Qur'an, 1934",
+    "Author died 1953, so out of copyright in life+70 jurisdictions since 2024.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-abdullahyusufal.json",
+)
+
+
+SABLUKOV = public_domain(
+    "Gordy Semyonovich Sablukov, 1878 -- the first Russian translation of the Quran",
+    "Author died 1880, so out of copyright in life+70 jurisdictions and in the US.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/rus-gordysemyonovic.json",
+)
+
+KRACHKOVSKY = public_domain(
+    "Ignaty Yulianovich Krachkovsky, 1963 (posthumous)",
+    "Author died 1951, so out of copyright in life+70 jurisdictions since 2022.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/rus-ignatyyulianovi.json",
+)
+
+
+#: Audio hosts. We publish URL templates and never mirror audio bytes, so these record
+#: the host's own terms for the consumer rather than gating our output.
+MP3QURAN_AUDIO = License(
+    status="granted",
+    text=(
+        "mp3quran.net permits copying, publishing and redistribution of its recitations "
+        "with attribution to the site; the reciter's rights are retained."
+    ),
+    url="https://mp3quran.net/eng/",
+)
+
+ISLAMIC_NETWORK_AUDIO = License(
+    status="granted",
+    text=(
+        "islamic.network audio is free to redistribute for non-commercial use; each "
+        "recitation's copyright remains with its reciter."
+    ),
+    url="https://islamic.network/",
+)
+
+EVERYAYAH_AUDIO = License(
+    status="unknown",
+    text=(
+        "everyayah.com states no licence: its license, terms and readme paths all return "
+        "404 and the homepage carries no matching terms. Treated as unknown -- we link to "
+        "the files rather than redistribute them."
+    ),
+    url="https://everyayah.com/data/",
+)
+
+
+@dataclass(frozen=True, slots=True)
+class Edition:
+    """A translation the dataset ships, with its verified licence status."""
+
+    lang: str
+    slug: str
+    author: str
+    source: str
+    license: License
+    #: How the snapshot is parsed: "quran-api" (JSON, grouped by chapter),
+    #: "clearquran" (zip of per-verse text files), or "quranenc" (zip of SQLite).
+    kind: str = "quran-api"
+
+    @property
+    def redistributable(self) -> bool:
+        return self.license.allows_publication
+
+
+#: The editions the frozen `dist/` tree was built from. Slugs are frozen too: changing one
+#: changes the published bytes, so the parity gate pins this list.
+EDITIONS: Final[tuple[Edition, ...]] = (
+    Edition(
+        lang=TRANSLITERATION,
+        slug="ara-quran-la",
+        author="Tanzil.net",
+        source="https://tanzil.net/trans/en.transliteration",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="bn",
+        slug="ben-muhiuddinkhan",
+        author="Muhiuddin Khan",
+        source="https://tanzil.net/trans/bn.bengali",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="en",
+        slug="eng-ummmuhammad",
+        author="Umm Muhammad (Saheeh International)",
+        source="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-ummmuhammad.json",
+        license=SAHEEH_INTERNATIONAL,
+    ),
+    Edition(
+        lang="es",
+        slug="spa-muhammadisagarc",
+        author="Muhammad Isa Garcia",
+        source="https://tanzil.net/trans/es.garcia",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="fr",
+        slug="fra-muhammadhamidul",
+        author="Muhammad Hamidullah",
+        source="https://tanzil.net/trans/fr.hamidullah",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="id",
+        slug="ind-indonesianislam",
+        author="Indonesian Islamic Affairs Ministry",
+        source="https://quranenc.com/en/browse/indonesian_affairs/",
+        license=QURANENC,
+    ),
+    Edition(
+        lang="ru",
+        slug="rus-elmirkuliev",
+        author="Elmir Kuliev",
+        source="https://tanzil.net/trans/ru.kuliev",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="sv",
+        slug="swe-knutbernstrom",
+        author="Knut Bernstrom",
+        source="https://tanzil.net/trans/sv.bernstrom",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="tr",
+        slug="tur-diyanetisleri",
+        author="Turkish Directorate of Religious Affairs",
+        source="https://tanzil.net/trans/tr.diyanet",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="ur",
+        slug="urd-abulaalamaududi",
+        author="Abul A'la Maududi",
+        source="https://tanzil.net/trans/ur.maududi",
+        license=TANZIL_TRANSLATION,
+    ),
+    Edition(
+        lang="zh",
+        slug="zho-muhammadmakin",
+        author="Muhammad Makin",
+        source="https://quranenc.com/en/browse/chinese_makin/",
+        license=QURANENC,
+    ),
+)
+
+
+def chapter_list_path(lang: str | None) -> Path:
+    """Path to the committed chapter-list snapshot for ``lang``."""
+    return DATA / "chapters" / f"{'en' if lang in (None, TRANSLITERATION) else lang}.json"
+
+
+def edition_path(lang: str) -> Path:
+    """Path to the committed translation snapshot for ``lang``."""
+    return DATA / "editions" / f"{lang}.json"
+
+
+def text_path() -> Path:
+    """Path to the committed Uthmani text snapshot."""
+    return DATA / "quran.json"
+
+
+def tanzil_text_path(variant: str) -> Path:
+    """Path to a committed Tanzil text snapshot (licence: CC-BY 3.0, verbatim)."""
+    return DATA / "tanzil" / f"{variant}.json"
+
+
+def tanzil_chapters_path() -> Path:
+    """Path to the committed Tanzil chapter metadata snapshot."""
+    return DATA / "tanzil" / "chapters.json"
+
+
+def quranenc_catalogue_path() -> Path:
+    """Path to the committed QuranEnc translation catalogue."""
+    return DATA / "quranenc" / "catalogue.json"
+
+
+def quranenc_path(key: str) -> Path:
+    """Path to a committed QuranEnc translation snapshot."""
+    return DATA / "quranenc" / f"{key}.json"
+
+
+#: Record of upstream transcription defects restored on load (see `quranjson.qa`).
+QA_PATH: Final = DATA / "meta" / "qa.json"
+
+
+CLEARQURAN_DOWNLOADS: Final = "https://www.clearquran.com/downloads/{file}"
+
+#: Base for a single Quran.com-API-shaped edition JSON, as mirrored by quran-api.
+QURAN_API_EDITION: Final = "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions"
+
+
+def clearquran_url(filename: str) -> str:
+    """Download URL for one of Talal Itani's verse-by-verse archives."""
+    return CLEARQURAN_DOWNLOADS.format(file=filename)
+
+
+def extra_edition_path(key: str) -> Path:
+    """Path to a committed snapshot for an edition sourced outside QuranEnc."""
+    return DATA / "extra" / f"{key}.json"
+
+
+#: Editions sourced outside QuranEnc, each carrying its own grant from the rights holder.
+#: Fetching from the translator's own site is preferred over an aggregator, because the
+#: grant then travels with the distribution.
+EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
+    Edition(
+        lang="english_itani",
+        slug="clearquran-verse-by-verse",
+        author="Talal Itani",
+        source="https://www.clearquran.com/downloads/quran-verse-by-verse-text.zip",
+        license=ITANI,
+        kind="clearquran",
+    ),
+    Edition(
+        lang="english_itani_allah",
+        slug="clearquran-verse-by-verse-allah",
+        author="Talal Itani",
+        source=clearquran_url("quran-in-english-clearquran-verse-by-verse-txt-edition-allah.zip"),
+        license=ITANI,
+        kind="clearquran",
+    ),
+    Edition(
+        lang="english_pickthall",
+        slug="eng-mohammedmarmadu",
+        author="Marmaduke Pickthall (1930)",
+        source=f"{QURAN_API_EDITION}/eng-mohammedmarmadu.json",
+        license=PICKTHALL,
+    ),
+    Edition(
+        lang="english_yusuf_ali",
+        slug="eng-abdullahyusufal",
+        author="Abdullah Yusuf Ali (1934)",
+        source=f"{QURAN_API_EDITION}/eng-abdullahyusufal.json",
+        license=YUSUF_ALI,
+    ),
+    Edition(
+        lang="english_palmer",
+        slug="eng-edwardhenrypalm",
+        author="E. H. Palmer (1880)",
+        source=f"{QURAN_API_EDITION}/eng-edwardhenrypalm.json",
+        license=PALMER,
+    ),
+    Edition(
+        lang="english_sale",
+        slug="eng-georgesale",
+        author="George Sale (1734)",
+        source=f"{QURAN_API_EDITION}/eng-georgesale.json",
+        license=SALE,
+    ),
+    Edition(
+        lang="russian_sablukov",
+        slug="rus-gordysemyonovic",
+        author="Gordy Semyonovich Sablukov (1878)",
+        source=f"{QURAN_API_EDITION}/rus-gordysemyonovic.json",
+        license=SABLUKOV,
+    ),
+    Edition(
+        lang="russian_krachkovsky",
+        slug="rus-ignatyyulianovi",
+        author="Ignaty Yulianovich Krachkovsky (1963)",
+        source=f"{QURAN_API_EDITION}/rus-ignatyyulianovi.json",
+        license=KRACHKOVSKY,
+    ),
+)
