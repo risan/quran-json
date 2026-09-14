@@ -1,0 +1,40 @@
+name: ci
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - run: uv sync --locked
+
+      # The published dist/ tree is a public contract. Rebuilding it must not change a
+      # single byte; a failure here means the artefact changed for real consumers.
+      - name: rebuild the frozen tree
+        run: uv run quran-json build
+
+      - name: assert the frozen tree is byte-identical
+        run: git diff --exit-code -- dist/
+
+      - name: snapshots and licences are intact
+        run: uv run quran-json verify
+
+      - run: uv run pytest
+
+      - run: uv run ruff check .
+
+      - run: uv run ruff format --check .
+
+      - run: uv run mypy
+
+      - name: build the CDN site
+        run: uv run quran-json cdn --version 4.0.0
