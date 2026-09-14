@@ -1,0 +1,87 @@
+{
+  "bitrates": {
+    "128": {
+      "ar.ahmedajamy": 6236,
+      "ar.alafasy": 6236,
+      "ar.alafasy-2": 6236,
+      "ar.hudhaify": 6236,
+      "ar.hudhaify-2": 6236,
+      "ar.husary": 6235,
+      "ar.husary-2": 6235,
+      "ar.husarymujawwad": 6236,
+      "ar.husarymujawwad-2": 6236,
+      "ar.mahermuaiqly": 6236,
+      "ar.mahermuaiqly-2": 6236,
+      "ar.minshawi": 6235,
+      "ar.minshawi-2": 6235,
+      "ar.muhammadayyoub": 6236,
+      "ar.muhammadayyoub-2": 6236,
+      "ar.muhammadjibreel": 6236,
+      "ar.muhammadjibreel-2": 6236,
+      "ar.shaatree": 6236,
+      "ar.shaatree-2": 6236,
+      "fr.leclerc": 6236,
+      "ru.kuliev-audio": 6236,
+      "zh.chinese": 6236
+    },
+    "192": {
+      "ar.abdulbasitmurattal": 6236,
+      "ar.abdulbasitmurattal-2": 6236,
+      "ar.abdullahbasfar": 6235,
+      "ar.abdullahbasfar-2": 6235,
+      "ar.abdurrahmaansudais": 6236,
+      "ar.abdurrahmaansudais-2": 6236,
+      "ar.hanirifai": 6236,
+      "ar.hanirifai-2": 6236,
+      "en.walk": 6236
+    },
+    "32": {
+      "ar.abdullahbasfar": 6236,
+      "ar.abdullahbasfar-2": 6236,
+      "ar.hudhaify": 6236,
+      "ar.hudhaify-2": 6236,
+      "ar.ibrahimakhbar": 6236
+    },
+    "320": {
+      "ru.kuliev-audio-2": 6236
+    },
+    "40": {
+      "fa.hedayatfarfooladvand": 6236
+    },
+    "48": {
+      "ar.parhizgar": 6236
+    },
+    "64": {
+      "ar.abdulbasitmurattal": 6236,
+      "ar.abdulbasitmurattal-2": 6236,
+      "ar.abdullahbasfar": 6236,
+      "ar.abdullahbasfar-2": 6236,
+      "ar.abdulsamad": 6236,
+      "ar.abdurrahmaansudais": 6236,
+      "ar.abdurrahmaansudais-2": 6236,
+      "ar.ahmedajamy": 6236,
+      "ar.alafasy": 6236,
+      "ar.alafasy-2": 6236,
+      "ar.aymanswoaid": 6236,
+      "ar.aymanswoaid-2": 6236,
+      "ar.hanirifai": 6236,
+      "ar.hanirifai-2": 6236,
+      "ar.hudhaify": 6236,
+      "ar.hudhaify-2": 6236,
+      "ar.hudhaify.2": 1,
+      "ar.husary": 6236,
+      "ar.husary-2": 6236,
+      "ar.husarymujawwad": 6236,
+      "ar.husarymujawwad-2": 6216,
+      "ar.mahermuaiqly": 6232,
+      "ar.mahermuaiqly-2": 6232,
+      "ar.minshawimujawwad": 6237,
+      "ar.minshawimujawwad-2": 6237,
+      "ar.saoodshuraym": 6236,
+      "ar.saoodshuraym-2": 6236,
+      "ar.shaatree": 6236,
+      "ar.shaatree-2": 6236,
+      "ur.khan": 6236
+    }
+  }
+}

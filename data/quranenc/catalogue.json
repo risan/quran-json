@@ -1,0 +1,679 @@
+{
+  "translations": [
+    {
+      "key": "english_rwwad",
+      "lang": "en",
+      "direction": "ltr",
+      "version": "1.0.19",
+      "title": "English Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/english_rwwad.zip"
+    },
+    {
+      "key": "english_saheeh",
+      "lang": "en",
+      "direction": "ltr",
+      "version": "1.1.2",
+      "title": "English Translation - Noor International Center",
+      "description": "Issued by Noor International Center.",
+      "database_url": "https://quranenc.com/downloads/sqlite/english_saheeh.zip"
+    },
+    {
+      "key": "english_hilali_khan",
+      "lang": "en",
+      "direction": "ltr",
+      "version": "1.1.2",
+      "title": "English Translation - Hilali and Khan",
+      "description": "Translated by Taqi-ud-Din al-Hilali and Muhammad Muhsin Khan.",
+      "database_url": "https://quranenc.com/downloads/sqlite/english_hilali_khan.zip"
+    },
+    {
+      "key": "french_rashid",
+      "lang": "fr",
+      "direction": "ltr",
+      "version": "1.0.3",
+      "title": "French Translation - Rachid Maach",
+      "description": "Translated by Rashid Ma’ash",
+      "database_url": "https://quranenc.com/downloads/sqlite/french_rashid.zip"
+    },
+    {
+      "key": "french_montada",
+      "lang": "fr",
+      "direction": "ltr",
+      "version": "1.0.0",
+      "title": "French translation - Noor International Center",
+      "description": "Translated by Dr. Nabil Rudwan - issued by Noor International Center",
+      "database_url": "https://quranenc.com/downloads/sqlite/french_montada.zip"
+    },
+    {
+      "key": "spanish_garcia",
+      "lang": "es",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Spanish Translation - Isa Garcia",
+      "description": "Translated by Muhammad Isa Garcia",
+      "database_url": "https://quranenc.com/downloads/sqlite/spanish_garcia.zip"
+    },
+    {
+      "key": "spanish_montada_eu",
+      "lang": "es",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Spanish Translation - Noor International Center",
+      "description": "Issued by Noor International",
+      "database_url": "https://quranenc.com/downloads/sqlite/spanish_montada_eu.zip"
+    },
+    {
+      "key": "spanish_montada_latin",
+      "lang": "es",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Spanish Translation (Latin American) - issued by Noor International",
+      "description": "Latin American version issued by Noor International Center",
+      "database_url": "https://quranenc.com/downloads/sqlite/spanish_montada_latin.zip"
+    },
+    {
+      "key": "portuguese_nasr",
+      "lang": "pt",
+      "direction": "ltr",
+      "version": "1.4.1",
+      "title": "Portuguese Translation - Helmi Nasr",
+      "description": "Translated by Dr. Helmi Nasr, developed under the supervision of Rowwad Translation Center",
+      "database_url": "https://quranenc.com/downloads/sqlite/portuguese_nasr.zip"
+    },
+    {
+      "key": "german_rwwad",
+      "lang": "de",
+      "direction": "ltr",
+      "version": "1.0.15",
+      "title": "German Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/german_rwwad.zip"
+    },
+    {
+      "key": "german_bubenheim",
+      "lang": "de",
+      "direction": "ltr",
+      "version": "1.1.4",
+      "title": "German Translation - Frank Bubenheim",
+      "description": "Translated by ‘Abdullah as-Sāmit (Frank Bubenheim) and Dr. Nadim Elias.",
+      "database_url": "https://quranenc.com/downloads/sqlite/german_bubenheim.zip"
+    },
+    {
+      "key": "romanian_project",
+      "lang": "ro",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Romanian Translation - Islam4ro.com",
+      "description": "Translation of the Noble Quran's meanings into Romanian; issued by islam4ro.com",
+      "database_url": "https://quranenc.com/downloads/sqlite/romanian_project.zip"
+    },
+    {
+      "key": "dutch_center",
+      "lang": "nl",
+      "direction": "ltr",
+      "version": "2.0.10",
+      "title": "Dutch Translation - Rowwad Translation Center",
+      "description": "Issued by the Dutch Islamic Center and developed under the supervision of Rowwad Translation Center",
+      "database_url": "https://quranenc.com/downloads/sqlite/dutch_center.zip"
+    },
+    {
+      "key": "swedish_rwwad",
+      "lang": "sv",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Swedish Translation - Rowad Translation",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/swedish_rwwad.zip"
+    },
+    {
+      "key": "turkish_rwwad",
+      "lang": "tr",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Turkish Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/turkish_rwwad.zip"
+    },
+    {
+      "key": "turkish_shaban",
+      "lang": "tr",
+      "direction": "ltr",
+      "version": "1.1.0",
+      "title": "Turkish Translation - Shaaban British",
+      "description": "Translated by Shaaban British, developed under the supervision of Rowad Translation Center. The original translation is available for expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/turkish_shaban.zip"
+    },
+    {
+      "key": "turkish_shahin",
+      "lang": "tr",
+      "direction": "ltr",
+      "version": "1.0.0",
+      "title": "Turkish Translation - Dr. Ali Ozek and others",
+      "description": "Translated by Ali Ozek and others, developed under the supervision of Rowad Translation Center. The original translation is available for expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/turkish_shahin.zip"
+    },
+    {
+      "key": "azeri_musayev",
+      "lang": "az",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Azerbaijani Translation - Ali Khan Musayev",
+      "description": "Translated by Ali Khan Musayev, developed under the supervision of the Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/azeri_musayev.zip"
+    },
+    {
+      "key": "macedonian_group",
+      "lang": "mk",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Macedonian Translation - a group of Macedonian scholars",
+      "description": "Translated and reviewed by a group of Macedonian scholars",
+      "database_url": "https://quranenc.com/downloads/sqlite/macedonian_group.zip"
+    },
+    {
+      "key": "albanian_rwwad",
+      "lang": "sq",
+      "direction": "ltr",
+      "version": "1.0.5",
+      "title": "Albanian Translation - Rowwad Translation Center",
+      "description": "Translated by the team of Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/albanian_rwwad.zip"
+    },
+    {
+      "key": "albanian_nahi",
+      "lang": "sq",
+      "direction": "ltr",
+      "version": "1.1.0",
+      "title": "Albanian Translation - Hassan Nahi",
+      "description": "Translated by Hassan Nahi, issued by the Albanian Institute for Islamic Thought and Civilization.",
+      "database_url": "https://quranenc.com/downloads/sqlite/albanian_nahi.zip"
+    },
+    {
+      "key": "bosnian_rwwad",
+      "lang": "bs",
+      "direction": "ltr",
+      "version": "2.0.4",
+      "title": "Bosnian Translation - Rowwad Translation Centre",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/bosnian_rwwad.zip"
+    },
+    {
+      "key": "bosnian_mihanovich",
+      "lang": "bs",
+      "direction": "ltr",
+      "version": "1.1.0",
+      "title": "Bosnian Translation - Muhammad Mahanovic",
+      "description": "Translated by Muhammad Mahanovic, developed under the supervision of Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/bosnian_mihanovich.zip"
+    },
+    {
+      "key": "serbian_rwwad",
+      "lang": "sr",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Serbian Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/serbian_rwwad.zip"
+    },
+    {
+      "key": "croatian_rwwad",
+      "lang": "hr",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Croatian Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/croatian_rwwad.zip"
+    },
+    {
+      "key": "lithuanian_rwwad",
+      "lang": "lt",
+      "direction": "ltr",
+      "version": "1.0.8",
+      "title": "Lithuanian Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/lithuanian_rwwad.zip"
+    },
+    {
+      "key": "uzbek_rwwad",
+      "lang": "uz",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Uzbek Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/uzbek_rwwad.zip"
+    },
+    {
+      "key": "uzbek_mansour",
+      "lang": "uz",
+      "direction": "ltr",
+      "version": "1.0.0",
+      "title": "Uzbek Translation - Alaauddin Mansour",
+      "description": "Translated by Alaauddin Mansour. Developed under the supervision of Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/uzbek_mansour.zip"
+    },
+    {
+      "key": "tajik_arifi",
+      "lang": "tg",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Tajiki Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/tajik_arifi.zip"
+    },
+    {
+      "key": "kyrgyz_hakimov",
+      "lang": "ky",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Kyrgyz Translation - Shamsuddin Hakimov",
+      "description": "Translated by Shamsuddin Hakimov Abdulkhaliq and developed under the supervision of Rowwad Translation Center",
+      "database_url": "https://quranenc.com/downloads/sqlite/kyrgyz_hakimov.zip"
+    },
+    {
+      "key": "indonesian_sabiq",
+      "lang": "id",
+      "direction": "ltr",
+      "version": "1.1.3",
+      "title": "Indonesian Translation - Sabiq Company",
+      "description": "Issued by Sabiq Company, developed under the supervision of Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/indonesian_sabiq.zip"
+    },
+    {
+      "key": "indonesian_affairs",
+      "lang": "id",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Indonesian Translation - Ministry of Religious Affairs",
+      "description": "Issued by the Indonesian Ministry of Religious Affairs. Developed under the supervision of Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/indonesian_affairs.zip"
+    },
+    {
+      "key": "indonesian_complex",
+      "lang": "id",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Indonesian Translation - The Complex",
+      "description": "Issued by the Indonesian Ministry of Religious Affairs. Developed under the supervision of Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/indonesian_complex.zip"
+    },
+    {
+      "key": "tagalog_rwwad",
+      "lang": "tl",
+      "direction": "ltr",
+      "version": "1.1.4",
+      "title": "Filipino Translation (Tagalog) - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/tagalog_rwwad.zip"
+    },
+    {
+      "key": "bisayan_rwwad",
+      "lang": "ceb",
+      "direction": "ltr",
+      "version": "1.1.3",
+      "title": "Filipino Translation (Bisayan) - Rowwad Translation Center",
+      "description": "Translated by the team of Rowwad Translation Center, in cooperation with the Dawah Association in Rabwah, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/bisayan_rwwad.zip"
+    },
+    {
+      "key": "maguindanao_rwwad",
+      "lang": "mdh",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Filipino Translation (Maguindanaon) - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/maguindanao_rwwad.zip"
+    },
+    {
+      "key": "chinese_suliman",
+      "lang": "zh",
+      "direction": "ltr",
+      "version": "1.0.8",
+      "title": "Chinese Translation - Muhammad Suleiman",
+      "description": "Translated by Muhammad Makeen. Reviewed by Muhammad Sulaiman and other language experts",
+      "database_url": "https://quranenc.com/downloads/sqlite/chinese_suliman.zip"
+    },
+    {
+      "key": "chinese_makin",
+      "lang": "zh",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Chinese Translation - Muhammad Makeen",
+      "description": "Translated by Muhammad Makeen, developed under the supervision of the Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/chinese_makin.zip"
+    },
+    {
+      "key": "uyghur_saleh",
+      "lang": "ug",
+      "direction": "rtl",
+      "version": "1.0.2",
+      "title": "Uyghur Translation - Muhammad Saleh",
+      "description": "Translated by Muhammad Saleh, developed under the supervision of the Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/uyghur_saleh.zip"
+    },
+    {
+      "key": "japanese_saeedsato",
+      "lang": "ja",
+      "direction": "ltr",
+      "version": "1.0.13",
+      "title": "Japanese Translation - Saeed Sato",
+      "description": "Translated by Saeed Sato, developed under the supervision of the Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/japanese_saeedsato.zip"
+    },
+    {
+      "key": "vietnamese_rwwad",
+      "lang": "vi",
+      "direction": "ltr",
+      "version": "1.0.8",
+      "title": "Vietnamese Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/vietnamese_rwwad.zip"
+    },
+    {
+      "key": "thai_rwwad",
+      "lang": "th",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Thai Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/thai_rwwad.zip"
+    },
+    {
+      "key": "khmer_rwwad",
+      "lang": "km",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Khmer Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/khmer_rwwad.zip"
+    },
+    {
+      "key": "khmer_cambodia",
+      "lang": "km",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Khmer Translation - Islamic Community Development Association",
+      "description": "Issued by the Cambodian Islamic Community Development Association",
+      "database_url": "https://quranenc.com/downloads/sqlite/khmer_cambodia.zip"
+    },
+    {
+      "key": "persian_ih",
+      "lang": "fa",
+      "direction": "rtl",
+      "version": "1.1.3",
+      "title": "Persian Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/persian_ih.zip"
+    },
+    {
+      "key": "kurdish_bamoki",
+      "lang": "ku",
+      "direction": "rtl",
+      "version": "1.1.1",
+      "title": "Kurdish Translation - Muhammad Salih Bamoki",
+      "description": "Translated by Muhammad Salih Bamoki. Developed under the supervision of the Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/kurdish_bamoki.zip"
+    },
+    {
+      "key": "pashto_rwwad",
+      "lang": "ps",
+      "direction": "rtl",
+      "version": "1.0.1",
+      "title": "Pashto Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/pashto_rwwad.zip"
+    },
+    {
+      "key": "urdu_junagarhi",
+      "lang": "ur",
+      "direction": "rtl",
+      "version": "1.1.3",
+      "title": "Urdu Translation - Muhammad Junagarhi",
+      "description": "Translated by Muhammad Ibrahim Junagarhi, developed under the supervision of the Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/urdu_junagarhi.zip"
+    },
+    {
+      "key": "hindi_omari",
+      "lang": "hi",
+      "direction": "ltr",
+      "version": "1.1.5",
+      "title": "Hindi Translation - Azizul Haq Al-Omari",
+      "description": "Translated by Azizul Haq Al-Omari",
+      "database_url": "https://quranenc.com/downloads/sqlite/hindi_omari.zip"
+    },
+    {
+      "key": "telugu_muhammad",
+      "lang": "te",
+      "direction": "ltr",
+      "version": "1.0.7",
+      "title": "Telugu Translation - Abdurrahim ibn Muhammad",
+      "description": "Translated by Abdurrahim ibn Muhammad",
+      "database_url": "https://quranenc.com/downloads/sqlite/telugu_muhammad.zip"
+    },
+    {
+      "key": "gujarati_omari",
+      "lang": "gu",
+      "direction": "ltr",
+      "version": "1.1.3",
+      "title": "Gujarati Translation - Rabella Al-Omari",
+      "description": "Translated by Rabella Al-Omari. Developed under the supervision of the Rowwad Translation Center.",
+      "database_url": "https://quranenc.com/downloads/sqlite/gujarati_omari.zip"
+    },
+    {
+      "key": "malayalam_kunhi",
+      "lang": "ml",
+      "direction": "ltr",
+      "version": "1.0.3",
+      "title": "Malayalam Translation - Abdul Hamid Haidar and Kunhi Muhammad",
+      "description": "Translated by Abdul Hamid Haidar Al-Madani and Kunhi Muhammad.",
+      "database_url": "https://quranenc.com/downloads/sqlite/malayalam_kunhi.zip"
+    },
+    {
+      "key": "kannada_hamza",
+      "lang": "kn",
+      "direction": "ltr",
+      "version": "1.0.3",
+      "title": "Kannada Translation - Hamza Butur",
+      "description": "Translated by Muhammad Hamza Batur and developed under the supervision of Rowwad Translation Center",
+      "database_url": "https://quranenc.com/downloads/sqlite/kannada_hamza.zip"
+    },
+    {
+      "key": "assamese_rafeeq",
+      "lang": "as",
+      "direction": "ltr",
+      "version": "1.0.5",
+      "title": "Assamese Translation - Rafiqul Islam Habibur-Rahman",
+      "description": "Translated by Rafiqul Islam Habibur-Rahman",
+      "database_url": "https://quranenc.com/downloads/sqlite/assamese_rafeeq.zip"
+    },
+    {
+      "key": "punjabi_arif",
+      "lang": "pa",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Punjabi Translation - Arif Haleem",
+      "description": "Translated by Arif Haleem",
+      "database_url": "https://quranenc.com/downloads/sqlite/punjabi_arif.zip"
+    },
+    {
+      "key": "tamil_omar_brief",
+      "lang": "ta",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Tamil Translation - Omar Sharif - Abridged Version",
+      "description": "Translated by Shaykh Omar Sharif ibn Abdussalam",
+      "database_url": "https://quranenc.com/downloads/sqlite/tamil_omar_brief.zip"
+    },
+    {
+      "key": "tamil_omar",
+      "lang": "ta",
+      "direction": "ltr",
+      "version": "1.0.3",
+      "title": "Tamil Translation - Omar Sharif",
+      "description": "Translated by Shaykh Omar Sharif ibn Abdussalam",
+      "database_url": "https://quranenc.com/downloads/sqlite/tamil_omar.zip"
+    },
+    {
+      "key": "tamil_baqavi",
+      "lang": "ta",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Tamil Translation - Abdulhamid Baqawi",
+      "description": "Translated by Abdulhamid Al-Baqawi",
+      "database_url": "https://quranenc.com/downloads/sqlite/tamil_baqavi.zip"
+    },
+    {
+      "key": "sinhalese_mahir",
+      "lang": "si",
+      "direction": "ltr",
+      "version": "1.0.6",
+      "title": "Sinhalese Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/sinhalese_mahir.zip"
+    },
+    {
+      "key": "swahili_rwwad",
+      "lang": "sw",
+      "direction": "ltr",
+      "version": "1.0.5",
+      "title": "Swahili Translation - Rowad Translation Center",
+      "description": "Issued by the Islamic Content Service Association in Languages",
+      "database_url": "https://quranenc.com/downloads/sqlite/swahili_rwwad.zip"
+    },
+    {
+      "key": "swahili_barawani",
+      "lang": "sw",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Swahili Translation - Ali Mohsin Al-Barwani",
+      "description": "Translated by Ali Mohsen Al-Barwani",
+      "database_url": "https://quranenc.com/downloads/sqlite/swahili_barawani.zip"
+    },
+    {
+      "key": "somali_yacob",
+      "lang": "so",
+      "direction": "ltr",
+      "version": "1.0.26",
+      "title": "Somali Translation - Abdullah Hasan Yaqoub",
+      "description": "Translated by Abdullah Hasan Yaqoub",
+      "database_url": "https://quranenc.com/downloads/sqlite/somali_yacob.zip"
+    },
+    {
+      "key": "amharic_zain",
+      "lang": "am",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Amharic Translation - Africa Academy",
+      "description": "Translated by Muhammad Zain Zahruddin. Published by Africa Academy",
+      "database_url": "https://quranenc.com/downloads/sqlite/amharic_zain.zip"
+    },
+    {
+      "key": "amharic_sadiq",
+      "lang": "am",
+      "direction": "ltr",
+      "version": "1.1.2",
+      "title": "Amharic Translation - Muhammad Sadiq",
+      "description": "Translated by Shaykh Muhammed Sadiq and Muhammed al-Thani Habib, developed under the supervision of Rowwad Translation Center. The original translation is available for expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/amharic_sadiq.zip"
+    },
+    {
+      "key": "yoruba_mikail",
+      "lang": "yo",
+      "direction": "ltr",
+      "version": "1.0.9",
+      "title": "Yoruba Translation - Abu Rahimah Mikael",
+      "description": "Translated by Shaykh Abu Rahimah Mikael Aikoyini",
+      "database_url": "https://quranenc.com/downloads/sqlite/yoruba_mikail.zip"
+    },
+    {
+      "key": "hausa_gummi",
+      "lang": "ha",
+      "direction": "ltr",
+      "version": "1.2.2",
+      "title": "Hausa Translation - Abu Bakr Jumi",
+      "description": "Translated by Abu Bakr Mahmoud Jumi, developed under the supervision of the Rowwad Translation Center. The original translation is available for the purpose of expressing opinion, evaluation, and continuous development.",
+      "database_url": "https://quranenc.com/downloads/sqlite/hausa_gummi.zip"
+    },
+    {
+      "key": "oromo_ababor",
+      "lang": "om",
+      "direction": "ltr",
+      "version": "1.0.3",
+      "title": "Oromo Translation - Gali Ababor",
+      "description": "Translated by Gali Ababor Abaghona",
+      "database_url": "https://quranenc.com/downloads/sqlite/oromo_ababor.zip"
+    },
+    {
+      "key": "afar_hamza",
+      "lang": "aa",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Afar Translation - Mahmoud Abdulqader Hamza",
+      "description": "Translated by a group of scholars headed by Shaykh. Mahmoud Abdulqader Hamza",
+      "database_url": "https://quranenc.com/downloads/sqlite/afar_hamza.zip"
+    },
+    {
+      "key": "ankobambara_dayyan",
+      "lang": "nqo",
+      "direction": "rtl",
+      "version": "1.0.5",
+      "title": "N'ko Translation - Baba Mamadi",
+      "description": "Translated by Karamo, Baba Mamadi Jani",
+      "database_url": "https://quranenc.com/downloads/sqlite/ankobambara_dayyan.zip"
+    },
+    {
+      "key": "kinyarwanda_assoc",
+      "lang": "rw",
+      "direction": "ltr",
+      "version": "1.0.5",
+      "title": "Kinyarwanda Translation - Rwanda Muslim Association",
+      "description": "Issued by Rwanda Muslim Association",
+      "database_url": "https://quranenc.com/downloads/sqlite/kinyarwanda_assoc.zip"
+    },
+    {
+      "key": "ikirundi_gehiti",
+      "lang": "rn",
+      "direction": "ltr",
+      "version": "1.0.4",
+      "title": "Kirundi Translation - Yusuf Gahiti",
+      "description": "Translated by Yusuf Gheti - Issued by African Development Foundation",
+      "database_url": "https://quranenc.com/downloads/sqlite/ikirundi_gehiti.zip"
+    },
+    {
+      "key": "moore_rwwad",
+      "lang": "mos",
+      "direction": "ltr",
+      "version": "1.0.1",
+      "title": "Moore Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/moore_rwwad.zip"
+    },
+    {
+      "key": "asante_harun",
+      "lang": "ak",
+      "direction": "ltr",
+      "version": "1.0.3",
+      "title": "Akan Translation (Asante) - Harun Ismail",
+      "description": "Translated by Shaykh Harun Ismail",
+      "database_url": "https://quranenc.com/downloads/sqlite/asante_harun.zip"
+    },
+    {
+      "key": "fulani_rwwad",
+      "lang": "ff",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Fulani Translation - Rowwad Translation Center",
+      "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
+      "database_url": "https://quranenc.com/downloads/sqlite/fulani_rwwad.zip"
+    },
+    {
+      "key": "lingala_zakaria",
+      "lang": "ln",
+      "direction": "ltr",
+      "version": "1.0.2",
+      "title": "Lingala Translation - Mohammed Balangogo",
+      "description": "Translated by Zakaria Muhammad Balangogo",
+      "database_url": "https://quranenc.com/downloads/sqlite/lingala_zakaria.zip"
+    }
+  ]
+}

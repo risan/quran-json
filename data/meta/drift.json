@@ -1,0 +1,49 @@
+[
+  {
+    "path": "data/quran.json",
+    "url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranuthmanienc.json",
+    "detected_at": "2026-09-14T11:06:33+00:00",
+    "kind": "records",
+    "records": 6236,
+    "changed": 6031,
+    "codepoint_delta": {
+      "added": [
+        "U+06CC ARABIC LETTER FARSI YEH x21912",
+        "U+06DF ARABIC SMALL HIGH ROUNDED ZERO x3988",
+        "U+08F0 ARABIC OPEN FATHATAN x2901",
+        "U+08F2 ARABIC OPEN KASRATAN x1935",
+        "U+08F1 ARABIC OPEN DAMMATAN x1807",
+        "U+00A0 NO-BREAK SPACE x1631",
+        "U+0305 COMBINING OVERLINE x133",
+        "U+06E3 ARABIC SMALL LOW SEEN x2",
+        "U+06EA ARABIC EMPTY CENTRE LOW STOP x1",
+        "U+06EB ARABIC EMPTY CENTRE HIGH STOP x1",
+        "U+08F3 ARABIC SMALL HIGH WAW x1"
+      ],
+      "removed": [
+        "U+064A ARABIC LETTER YEH x21925",
+        "U+0653 ARABIC MADDAH ABOVE x5652",
+        "U+0652 ARABIC SUKUN x3988",
+        "U+0657 ARABIC INVERTED DAMMA x2901",
+        "U+0656 ARABIC SUBSCRIPT ALEF x1935",
+        "U+065E ARABIC FATHA WITH TWO DOTS x1807",
+        "U+0654 ARABIC HAMZA ABOVE x496",
+        "U+0655 ARABIC HAMZA BELOW x14",
+        "U+2009 THIN SPACE x1",
+        "U+065C ARABIC VOWEL SIGN DOT BELOW x1"
+      ]
+    },
+    "previous_sha256": "bd74e2cefe800e2600baa4a6056d1e83a83c771f6ff525064cb08bdccbf128bf",
+    "sha256": "6d5d2d9af6d45088df5305cfc78b91b007cf02804a67e3b1bc724ef26f5f8748"
+  },
+  {
+    "path": "data/chapters/ur.json",
+    "url": "https://api.quran.com/api/v4/chapters?language=ur",
+    "detected_at": "2026-09-14T11:06:41+00:00",
+    "kind": "records",
+    "records": 114,
+    "changed": 1,
+    "previous_sha256": "15ead88f8fc37d035f98d10ee03110ae84d28d9f9551dd0b302b13766a9e8e0b",
+    "sha256": "fb962436935e30b2a6716864aa351d7ff561df5c1a86865a3d07c2d620d8615c"
+  }
+]

@@ -1,0 +1,2020 @@
+{
+  "reciters": [
+    {
+      "id": "1-1",
+      "name": "Ibrahim Al-Akdar",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/akdr/",
+      "surah_total": 114
+    },
+    {
+      "id": "10-10",
+      "name": "Akram Alalaqmi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/akrm/",
+      "surah_total": 114
+    },
+    {
+      "id": "100-100",
+      "name": "Majed Al-Enezi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/majd_onazi/",
+      "surah_total": 113
+    },
+    {
+      "id": "102-133",
+      "name": "Maher Al Meaqli",
+      "recitation": "Almusshaf Al Mojawwad - Almusshaf Al Mojawwad",
+      "server": "https://server12.mp3quran.net/maher/Almusshaf-Al-Mojawwad/",
+      "surah_total": 114
+    },
+    {
+      "id": "102-103",
+      "name": "Maher Al Meaqli",
+      "recitation": "Almusshaf Al Mo'lim - Almusshaf Al Mo'lim",
+      "server": "https://server12.mp3quran.net/maher/Almusshaf-Al-Mo-lim/",
+      "surah_total": 38
+    },
+    {
+      "id": "102-102",
+      "name": "Maher Al Meaqli",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/maher/",
+      "surah_total": 114
+    },
+    {
+      "id": "104-104",
+      "name": "Mohammad Al-Airawy",
+      "recitation": "Rewayat Warsh A'n Nafi' Men Tariq Alazraq - Murattal",
+      "server": "https://server6.mp3quran.net/earawi/",
+      "surah_total": 111
+    },
+    {
+      "id": "105-105",
+      "name": "Mohammed Al-Barrak",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server13.mp3quran.net/braak/",
+      "surah_total": 63
+    },
+    {
+      "id": "106-10912",
+      "name": "Mohammad Al-Tablaway",
+      "recitation": "Almusshaf Al Mojawwad - Almusshaf Al Mojawwad",
+      "server": "https://server12.mp3quran.net/tblawi/Al-Mojawwad/",
+      "surah_total": 114
+    },
+    {
+      "id": "106-106",
+      "name": "Mohammad Al-Tablaway",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/tblawi/",
+      "surah_total": 114
+    },
+    {
+      "id": "107-107",
+      "name": "Mohammed Al-Lohaidan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/lhdan/",
+      "surah_total": 114
+    },
+    {
+      "id": "108-108",
+      "name": "Mohammed Al-Muhasny",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/mhsny/",
+      "surah_total": 114
+    },
+    {
+      "id": "109-320",
+      "name": "Mohammed Ayyub",
+      "recitation": "Rewayat Hafs A'n Assem - Featured Recitation",
+      "server": "https://server16.mp3quran.net/ayyoub2/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "109-109",
+      "name": "Mohammed Ayyub",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/ayyub/",
+      "surah_total": 114
+    },
+    {
+      "id": "11-11",
+      "name": "Alhusayni Al-Azazi",
+      "recitation": "Almusshaf Al Mo'lim - Almusshaf Al Mo'lim",
+      "server": "https://server8.mp3quran.net/3zazi/",
+      "surah_total": 57
+    },
+    {
+      "id": "110-110",
+      "name": "Mohammad Saleh Alim Shah",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/shah/",
+      "surah_total": 114
+    },
+    {
+      "id": "111-111",
+      "name": "Mohammed Jibreel",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/jbrl/",
+      "surah_total": 114
+    },
+    {
+      "id": "112-10924",
+      "name": "Mohammed Siddiq Al-Minshawi",
+      "recitation": "Rewayat Hafs A'n Assem - Recorded in 1387 AH (1967 CE)",
+      "server": "https://server10.mp3quran.net/minsh1387/",
+      "surah_total": 110
+    },
+    {
+      "id": "112-114",
+      "name": "Mohammed Siddiq Al-Minshawi",
+      "recitation": "Almusshaf Al Mo'lim - Almusshaf Al Mo'lim",
+      "server": "https://server10.mp3quran.net/minsh/Almusshaf-Al-Mo-lim/",
+      "surah_total": 114
+    },
+    {
+      "id": "112-113",
+      "name": "Mohammed Siddiq Al-Minshawi",
+      "recitation": "Almusshaf Al Mojawwad - Almusshaf Al Mojawwad",
+      "server": "https://server10.mp3quran.net/minsh/Almusshaf-Al-Mojawwad/",
+      "surah_total": 114
+    },
+    {
+      "id": "112-112",
+      "name": "Mohammed Siddiq Al-Minshawi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/minsh/",
+      "surah_total": 114
+    },
+    {
+      "id": "115-210",
+      "name": "Mohammad Abdullkarem",
+      "recitation": "Rewayat Warsh A'n Nafi' Men  Tariq Abi Baker Alasbahani - Murattal",
+      "server": "https://server12.mp3quran.net/m_krm/Rewayat-Warsh-A-n-Nafi-Men-Tariq-Abi-Baker-Alasbahani/",
+      "surah_total": 114
+    },
+    {
+      "id": "115-115",
+      "name": "Mohammad Abdullkarem",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/m_krm/",
+      "surah_total": 114
+    },
+    {
+      "id": "116-117",
+      "name": "Mohammad Al-Abdullah",
+      "recitation": "Rewayat AlDorai A'n Al-Kisa'ai - Murattal",
+      "server": "https://server9.mp3quran.net/abdullah/Rewayat-AlDorai-A-n-Al-Kisa-ai/",
+      "surah_total": 114
+    },
+    {
+      "id": "116-116",
+      "name": "Mohammad Al-Abdullah",
+      "recitation": "Rewayat Albizi and Qunbol A'n Ibn Katheer - Murattal",
+      "server": "https://server9.mp3quran.net/abdullah/",
+      "surah_total": 114
+    },
+    {
+      "id": "118-270",
+      "name": "Mahmoud Khalil Al-Hussary",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server13.mp3quran.net/husr/Rewayat-Qalon-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "118-269",
+      "name": "Mahmoud Khalil Al-Hussary",
+      "recitation": "Rewayat Aldori A'n Abi Amr - Murattal",
+      "server": "https://server13.mp3quran.net/husr/Rewayat-Aldori-A-n-Abi-Amr/",
+      "surah_total": 114
+    },
+    {
+      "id": "118-120",
+      "name": "Mahmoud Khalil Al-Hussary",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server13.mp3quran.net/husr/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "118-119",
+      "name": "Mahmoud Khalil Al-Hussary",
+      "recitation": "Almusshaf Al Mojawwad - Almusshaf Al Mojawwad",
+      "server": "https://server13.mp3quran.net/husr/Almusshaf-Al-Mojawwad/",
+      "surah_total": 114
+    },
+    {
+      "id": "118-118",
+      "name": "Mahmoud Khalil Al-Hussary",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server13.mp3quran.net/husr/",
+      "surah_total": 114
+    },
+    {
+      "id": "12-12",
+      "name": "Idrees Abkr",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/abkr/",
+      "surah_total": 114
+    },
+    {
+      "id": "121-122",
+      "name": "Mahmoud Ali  Albanna",
+      "recitation": "Almusshaf Al Mojawwad - Almusshaf Al Mojawwad",
+      "server": "https://server8.mp3quran.net/bna/Almusshaf-Al-Mojawwad/",
+      "surah_total": 114
+    },
+    {
+      "id": "121-121",
+      "name": "Mahmoud Ali  Albanna",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/bna/",
+      "surah_total": 114
+    },
+    {
+      "id": "123-124",
+      "name": "Mishary Alafasi",
+      "recitation": "Rewayat AlDorai A'n Al-Kisa'ai - Murattal",
+      "server": "https://server8.mp3quran.net/afs/Rewayat-AlDorai-A-n-Al-Kisa-ai/",
+      "surah_total": 6
+    },
+    {
+      "id": "123-123",
+      "name": "Mishary Alafasi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/afs/",
+      "surah_total": 114
+    },
+    {
+      "id": "125-288",
+      "name": "Mustafa Ismail",
+      "recitation": "Almusshaf Al Mojawwad - Almusshaf Al Mojawwad",
+      "server": "https://server8.mp3quran.net/mustafa/Almusshaf-Al-Mojawwad/",
+      "surah_total": 114
+    },
+    {
+      "id": "125-125",
+      "name": "Mustafa Ismail",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/mustafa/",
+      "surah_total": 114
+    },
+    {
+      "id": "126-126",
+      "name": "Mustafa Al-Lahoni",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/lahoni/",
+      "surah_total": 114
+    },
+    {
+      "id": "127-127",
+      "name": "Mustafa raad Alazawy",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/ra3ad/",
+      "surah_total": 114
+    },
+    {
+      "id": "128-128",
+      "name": "Muamar (From Indonesia)",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/muamr/",
+      "surah_total": 8
+    },
+    {
+      "id": "129-196",
+      "name": "Muftah Alsaltany",
+      "recitation": "Ibn Thakwan A'n Ibn Amer - Murattal",
+      "server": "https://server14.mp3quran.net/muftah_sultany/Rewayat_Ibn-Thakwan-A-n-Ibn-Amer/",
+      "surah_total": 114
+    },
+    {
+      "id": "129-195",
+      "name": "Muftah Alsaltany",
+      "recitation": "Sho'bah A'n Asim - Murattal",
+      "server": "https://server14.mp3quran.net/muftah_sultany/Rewayat_Sho-bah-A-n-Asim/",
+      "surah_total": 77
+    },
+    {
+      "id": "129-182",
+      "name": "Muftah Alsaltany",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/muftah_sultany/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "129-180",
+      "name": "Muftah Alsaltany",
+      "recitation": "Rewayat AlDorai A'n Al-Kisa'ai - Murattal",
+      "server": "https://server14.mp3quran.net/muftah_sultany/Rewayat-AlDorai-A-n-Al-Kisa-ai/",
+      "surah_total": 114
+    },
+    {
+      "id": "129-129",
+      "name": "Muftah Alsaltany",
+      "recitation": "Rewayat Aldori A'n Abi Amr - Murattal",
+      "server": "https://server14.mp3quran.net/muftah_sultany/Rewayat-Aldori-A-n-Abi-Amr/",
+      "surah_total": 114
+    },
+    {
+      "id": "13-13",
+      "name": "Alzain Mohammad Ahmad",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/alzain/",
+      "surah_total": 114
+    },
+    {
+      "id": "134-134",
+      "name": "Mohammad Saayed",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/m_sayed/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "135-135",
+      "name": "Abdulrahman Alsuwayid",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_swaiyd/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 113
+    },
+    {
+      "id": "136-136",
+      "name": "Abdulelah bin Aoun",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_binaoun/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "137-137",
+      "name": "Ahmad Talib bin Humaid",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_binhameed/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 107
+    },
+    {
+      "id": "138-138",
+      "name": "Noreen Mohammad Siddiq",
+      "recitation": "Rewayat Aldori A'n Abi Amr - Murattal",
+      "server": "https://server16.mp3quran.net/nourin_siddig/Rewayat-Aldori-A-n-Abi-Amr/",
+      "surah_total": 114
+    },
+    {
+      "id": "139-139",
+      "name": "Majed Al-Zamil",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/zaml/",
+      "surah_total": 114
+    },
+    {
+      "id": "14-14",
+      "name": "Al-Qaria Yassen",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server11.mp3quran.net/qari/",
+      "surah_total": 114
+    },
+    {
+      "id": "149-149",
+      "name": "Maher Shakhashero",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/shaksh/",
+      "surah_total": 114
+    },
+    {
+      "id": "15-15",
+      "name": "Alashri Omran",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/omran/",
+      "surah_total": 113
+    },
+    {
+      "id": "150-150",
+      "name": "Mohammad AlMonshed",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/monshed/",
+      "surah_total": 110
+    },
+    {
+      "id": "151-151",
+      "name": "Mahmood AlSheimy",
+      "recitation": "Rewayat AlDorai A'n Al-Kisa'ai - Murattal",
+      "server": "https://server10.mp3quran.net/sheimy/",
+      "surah_total": 114
+    },
+    {
+      "id": "152-152",
+      "name": "Yasser Salamah",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/salamah/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "153-153",
+      "name": "Akhil Abdulhayy Rawa",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/akil/",
+      "surah_total": 4
+    },
+    {
+      "id": "154-154",
+      "name": "Ustaz Zamri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/zamri/",
+      "surah_total": 7
+    },
+    {
+      "id": "159-159",
+      "name": "Khalid Almohana",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/mohna/",
+      "surah_total": 114
+    },
+    {
+      "id": "16-16",
+      "name": "Aloyoon Al-Koshi",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server11.mp3quran.net/koshi/",
+      "surah_total": 114
+    },
+    {
+      "id": "160-160",
+      "name": "Adel Al-Khalbany",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/a_klb/",
+      "surah_total": 114
+    },
+    {
+      "id": "161-161",
+      "name": "Mousa Bilal",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/bilal/",
+      "surah_total": 114
+    },
+    {
+      "id": "162-162",
+      "name": "Hussain Alshaik",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/alshaik/",
+      "surah_total": 59
+    },
+    {
+      "id": "163-163",
+      "name": "Hatem Fareed Alwaer",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/hatem/",
+      "surah_total": 114
+    },
+    {
+      "id": "164-164",
+      "name": "Ibrahim Aljormy",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/jormy/",
+      "surah_total": 114
+    },
+    {
+      "id": "165-165",
+      "name": "Mahmood Al rifai",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/mrifai/",
+      "surah_total": 114
+    },
+    {
+      "id": "166-166",
+      "name": "Nasser Al obaid",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/obaid/",
+      "surah_total": 67
+    },
+    {
+      "id": "167-167",
+      "name": "Wasel Almethen",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/wasel/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 9
+    },
+    {
+      "id": "17-17",
+      "name": "Tawfeeq As-Sayegh",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/twfeeq/",
+      "surah_total": 114
+    },
+    {
+      "id": "178-232",
+      "name": "Ibrahim Aldosari",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/ibrahim_dosri/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "178-178",
+      "name": "Ibrahim Aldosari",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server10.mp3quran.net/ibrahim_dosri/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "18-18",
+      "name": "Jamal Shaker Abdullah",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/jamal/",
+      "surah_total": 114
+    },
+    {
+      "id": "181-181",
+      "name": "Jamaan Alosaimi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/jaman/",
+      "surah_total": 114
+    },
+    {
+      "id": "183-183",
+      "name": "Rodziah Abdulrahman",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/rziah/",
+      "surah_total": 4
+    },
+    {
+      "id": "184-184",
+      "name": "Rogayah Sulong",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/rogiah/",
+      "surah_total": 1
+    },
+    {
+      "id": "185-185",
+      "name": "Sapinah Mamat",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/mamat/",
+      "surah_total": 4
+    },
+    {
+      "id": "187-187",
+      "name": "Saidin Abdulrahman",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/sideen/",
+      "surah_total": 4
+    },
+    {
+      "id": "188-188",
+      "name": "Abdulghani Abdullah",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/abdulgani/",
+      "surah_total": 13
+    },
+    {
+      "id": "189-189",
+      "name": "Abdullah Fahmi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/fhmi/",
+      "surah_total": 4
+    },
+    {
+      "id": "19-19",
+      "name": "Hamad Al Daghriri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/hamad/",
+      "surah_total": 88
+    },
+    {
+      "id": "190-190",
+      "name": "Muhammad Al-Hafiz",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/hafz/",
+      "surah_total": 3
+    },
+    {
+      "id": "191-191",
+      "name": "Mohammed Hafas Ali",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/hfs/",
+      "surah_total": 5
+    },
+    {
+      "id": "192-192",
+      "name": "Muhammed Khairul Anuar",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/malaysia/nor/",
+      "surah_total": 4
+    },
+    {
+      "id": "193-193",
+      "name": "Yousef Bin Noah Ahmad",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/noah/",
+      "surah_total": 114
+    },
+    {
+      "id": "194-194",
+      "name": "Jamal Addeen Alzailaie",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/zilaie/",
+      "surah_total": 8
+    },
+    {
+      "id": "197-197",
+      "name": "Moeedh Alharthi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/harthi/",
+      "surah_total": 114
+    },
+    {
+      "id": "198-198",
+      "name": "Mohammad Rashad Alshareef",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/rashad/",
+      "surah_total": 114
+    },
+    {
+      "id": "2-2",
+      "name": "Ibrahim Al-Jebreen",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/jbreen/",
+      "surah_total": 107
+    },
+    {
+      "id": "20-20",
+      "name": "Khalid Al-Jileel",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/jleel/",
+      "surah_total": 114
+    },
+    {
+      "id": "201-201",
+      "name": "Ahmed Al-trabulsi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/trabulsi/",
+      "surah_total": 114
+    },
+    {
+      "id": "201-199",
+      "name": "Ahmed Al-trabulsi",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server10.mp3quran.net/trablsi/",
+      "surah_total": 114
+    },
+    {
+      "id": "202-202",
+      "name": "Abdullah Al-Kandari",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/Abdullahk/",
+      "surah_total": 114
+    },
+    {
+      "id": "203-203",
+      "name": "Ahmed Amer",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/Aamer/",
+      "surah_total": 114
+    },
+    {
+      "id": "204-204",
+      "name": "Ibrahem Assadan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/IbrahemSadan/",
+      "surah_total": 50
+    },
+    {
+      "id": "205-205",
+      "name": "Ahmad Alhuthaifi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/ahmad_huth/",
+      "surah_total": 110
+    },
+    {
+      "id": "206-206",
+      "name": "Mohammed Osman Khan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/khan/",
+      "surah_total": 114
+    },
+    {
+      "id": "207-207",
+      "name": "Youssef Edghouch",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server7.mp3quran.net/dgsh/",
+      "surah_total": 26
+    },
+    {
+      "id": "208-208",
+      "name": "Addokali Mohammad Alalim",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server7.mp3quran.net/dokali/",
+      "surah_total": 114
+    },
+    {
+      "id": "209-209",
+      "name": "Wishear Hayder Arbili",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/wishear/",
+      "surah_total": 2
+    },
+    {
+      "id": "21-21",
+      "name": "Khaled Al-Qahtani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/qht/",
+      "surah_total": 114
+    },
+    {
+      "id": "211-211",
+      "name": "Alfateh Alzubair",
+      "recitation": "Rewayat Aldori A'n Abi Amr - Murattal",
+      "server": "https://server6.mp3quran.net/fateh/",
+      "surah_total": 114
+    },
+    {
+      "id": "21136-10914",
+      "name": "Abdullah Alqarafi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_alqrafi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21148-10915",
+      "name": "Abdulbadi Ghailan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/A-Ghailan/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21181-340",
+      "name": "Muhammad Burhaji",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/M_Burhaji/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21182-10904",
+      "name": "Yusuf ALaidroos",
+      "recitation": "Rewayat Hafs A'n Assem - Featured Recitation",
+      "server": "https://server16.mp3quran.net/Y_ALaidroos/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21183-10905",
+      "name": "Hassan Aldaghriri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/H-Aldaghriri/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21184-10906",
+      "name": "Muhammad Al Faqih",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/M_Alfaqih/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21186-10908",
+      "name": "Junaid Adam Abdullah",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/J-Abdullah/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21187-10909",
+      "name": "Khalid Alziyadi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/K-Alzadi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21188-10910",
+      "name": "Alwaleed Alshamsan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/shamsan/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 71
+    },
+    {
+      "id": "21191-10911",
+      "name": "Ibrahim Al-Shahri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/Ibrahim-Al-Shahri/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 113
+    },
+    {
+      "id": "21193-10913",
+      "name": "Abdul Rahman bin Abdul Razzaq Al Badr",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/A-AlBadr/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21196-10917",
+      "name": "Alijon Qori",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/Alijon/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21197-10918",
+      "name": "Mohammed Al-Zubaidi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/M-AlZubaidi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21199-10920",
+      "name": "Abdelmoujib Benkirane",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/A-Benkirane/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "212-212",
+      "name": "Tareq Abdulgani daawob",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server10.mp3quran.net/tareq/",
+      "surah_total": 114
+    },
+    {
+      "id": "21200-10921",
+      "name": "Mohammad Dibirov",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/m-dibirov/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 24
+    },
+    {
+      "id": "21201-10922",
+      "name": "Asim Al-Luhaidan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server7.mp3quran.net/asim/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "21202-10923",
+      "name": "Mahmoud Harfoush",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/M-Harfoush/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "216-216",
+      "name": "Othman Al-Ansary",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/Othmn/",
+      "surah_total": 76
+    },
+    {
+      "id": "217-217",
+      "name": "Bandar Balilah",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/balilah/",
+      "surah_total": 114
+    },
+    {
+      "id": "218-218",
+      "name": "Khalid Al-Shoraimy",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/shoraimy/",
+      "surah_total": 73
+    },
+    {
+      "id": "219-219",
+      "name": "Wadeea Al-Yamani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/wdee3/",
+      "surah_total": 114
+    },
+    {
+      "id": "22-22",
+      "name": "Khalid Abdulkafi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/kafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "221-221",
+      "name": "Raad Al Kurdi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/kurdi/",
+      "surah_total": 114
+    },
+    {
+      "id": "225-225",
+      "name": "Abdulrahman Aloosi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/aloosi/",
+      "surah_total": 114
+    },
+    {
+      "id": "226-226",
+      "name": "Khalid Algamdi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/ghamdi/",
+      "surah_total": 102
+    },
+    {
+      "id": "227-227",
+      "name": "Ramadan Shakoor",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/shakoor/",
+      "surah_total": 65
+    },
+    {
+      "id": "228-228",
+      "name": "Abdulmajeed Al-Arkani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server7.mp3quran.net/m_arkani/",
+      "surah_total": 49
+    },
+    {
+      "id": "229-229",
+      "name": "Mohammad Khalil Al-Qari",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/m_qari/",
+      "surah_total": 114
+    },
+    {
+      "id": "23-23",
+      "name": "Khalid Al-Wehabi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/whabi/",
+      "surah_total": 25
+    },
+    {
+      "id": "230-230",
+      "name": "Rami Aldeais",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/rami/",
+      "surah_total": 114
+    },
+    {
+      "id": "231-231",
+      "name": "Hazza Al-Balushi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/hazza/",
+      "surah_total": 91
+    },
+    {
+      "id": "236-236",
+      "name": "Abdulrahman Al-Majed",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/a_majed/",
+      "surah_total": 114
+    },
+    {
+      "id": "237-287",
+      "name": "Marwan Alakri",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/m_akri/Rewayat-Qalon-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "24-24",
+      "name": "Khalifa Altunaiji",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/tnjy/",
+      "surah_total": 114
+    },
+    {
+      "id": "240-240",
+      "name": "Salman Alotaibi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/salman/",
+      "surah_total": 76
+    },
+    {
+      "id": "241-241",
+      "name": "Mohammad Refat",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/refat/",
+      "surah_total": 31
+    },
+    {
+      "id": "243-286",
+      "name": "Abdullah Al-Mousa",
+      "recitation": "Almusshaf Al Mo'lim - Almusshaf Al Mo'lim",
+      "server": "https://server14.mp3quran.net/mousa/Almusshaf-Al-Mo-lim/",
+      "surah_total": 38
+    },
+    {
+      "id": "243-243",
+      "name": "Abdullah Al-Mousa",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/mousa/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "244-244",
+      "name": "Abdullah Al-Khalaf",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/khalf/",
+      "surah_total": 114
+    },
+    {
+      "id": "245-245",
+      "name": "Mansour Al-Salemi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/mansor/",
+      "surah_total": 114
+    },
+    {
+      "id": "246-246",
+      "name": "Salah Musali",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/musali/",
+      "surah_total": 49
+    },
+    {
+      "id": "247-247",
+      "name": "Khalid Alsharekh",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/sharekh/",
+      "surah_total": 64
+    },
+    {
+      "id": "248-248",
+      "name": "Nasser Alosfor",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/alosfor/",
+      "surah_total": 114
+    },
+    {
+      "id": "25-25",
+      "name": "Dawood Hamza",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/hamza/",
+      "surah_total": 114
+    },
+    {
+      "id": "250-250",
+      "name": "Mohammad Albukheet",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/bukheet/",
+      "surah_total": 114
+    },
+    {
+      "id": "251-251",
+      "name": "Nasser Almajed",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/nasser_almajed/",
+      "surah_total": 114
+    },
+    {
+      "id": "252-252",
+      "name": "Ahmed Al-Swailem",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/swlim/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "253-253",
+      "name": "Islam Sobhi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server14.mp3quran.net/islam/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 109
+    },
+    {
+      "id": "254-254",
+      "name": "Bader Alturki",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/bader/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "255-255",
+      "name": "Hitham Aljadani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/hitham/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 101
+    },
+    {
+      "id": "256-256",
+      "name": "Ahmad Shaheen",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/shaheen/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "257-257",
+      "name": "Saad Almqren",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/saad/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "259-259",
+      "name": "Ahmad Al Nufais",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/nufais/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "26-26",
+      "name": "Rasheed Ifrad",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server12.mp3quran.net/ifrad/",
+      "surah_total": 50
+    },
+    {
+      "id": "260-260",
+      "name": "Omar Al Darweez",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/darweez/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "263-263",
+      "name": "Abdulaziz Alasiri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/abdulazizasiri/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 72
+    },
+    {
+      "id": "264-264",
+      "name": "Younes Souilass",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/souilass/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 65
+    },
+    {
+      "id": "265-313",
+      "name": "Ahmad Deban",
+      "recitation": "Ibn Jammaz A'n Abi Ja'far - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Ibn-Jammaz-A-n-Abi-Ja-far/",
+      "surah_total": 11
+    },
+    {
+      "id": "265-312",
+      "name": "Ahmad Deban",
+      "recitation": "Hesham A'n Abi A'mer - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Hesham-A-n-Abi-A-mer/",
+      "surah_total": 27
+    },
+    {
+      "id": "265-311",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Khalaf A'n Hamzah - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Khalaf-A-n-Hamzah/",
+      "surah_total": 6
+    },
+    {
+      "id": "265-310",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat AlDorai A'n Al-Kisa'ai - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-AlDorai-A-n-Al-Kisa-ai/",
+      "surah_total": 13
+    },
+    {
+      "id": "265-309",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Assosi A'n Abi Amr - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Assosi-A-n-Abi-Amr/",
+      "surah_total": 19
+    },
+    {
+      "id": "265-308",
+      "name": "Ahmad Deban",
+      "recitation": "Ibn Thakwan A'n Ibn Amer - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Ibn-Thakwan-A-n-Ibn-Amer/",
+      "surah_total": 33
+    },
+    {
+      "id": "265-301",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Warsh A'n Nafi' Men Tariq Alazraq - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Warsh-A-n-Nafi-Men-Tariq-Alazraq/",
+      "surah_total": 114
+    },
+    {
+      "id": "265-285",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Aldori A'n Abi Amr - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Aldori-A-n-Abi-Amr/",
+      "surah_total": 114
+    },
+    {
+      "id": "265-280",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Qalon-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "265-279",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Albizi A'n Ibn Katheer - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Albizi-A-n-Ibn-Katheer/",
+      "surah_total": 114
+    },
+    {
+      "id": "265-278",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Qunbol A'n Ibn Katheer - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Qunbol-A-n-Ibn-Katheer/",
+      "surah_total": 114
+    },
+    {
+      "id": "265-276",
+      "name": "Ahmad Deban",
+      "recitation": "Sho'bah A'n Asim - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Sho-bah-A-n-Asim/",
+      "surah_total": 114
+    },
+    {
+      "id": "265-265",
+      "name": "Ahmad Deban",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/deban/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "267-267",
+      "name": "Abdullah Kamel",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/kamel/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "268-268",
+      "name": "Peshawa Qadr Al-Kurdi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/peshawa/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "27-261",
+      "name": "Rachid Belalya",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/bl3/",
+      "surah_total": 5
+    },
+    {
+      "id": "27-27",
+      "name": "Rachid Belalya",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server6.mp3quran.net/bl3/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "271-271",
+      "name": "Nathier Almalki",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net//nathier/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "272-296",
+      "name": "Okasha Kameny",
+      "recitation": "Rewayat Albizi A'n Ibn Katheer - Murattal",
+      "server": "https://server16.mp3quran.net/okasha/Rewayat-Albizi-A-n-Ibn-Katheer/",
+      "surah_total": 114
+    },
+    {
+      "id": "272-272",
+      "name": "Okasha Kameny",
+      "recitation": "Rewayat AlDorai A'n Al-Kisa'ai - Murattal",
+      "server": "https://server16.mp3quran.net/okasha/Rewayat-AlDorai-A-n-Al-Kisa-ai/",
+      "surah_total": 38
+    },
+    {
+      "id": "273-273",
+      "name": "Haitham Aldukhain",
+      "recitation": "Rewayat Hafs A'n Assem - Featured Recitation",
+      "server": "https://server16.mp3quran.net/h_dukhain/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "274-274",
+      "name": "Muhammad Abu Sneina",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/sneineh/Rewayat-Qalon-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "275-275",
+      "name": "Mohammed Al-Amin Qeniwa",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/qeniwa/Rewayat-Qalon-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "277-277",
+      "name": "Mahmoud Abdul Hakam",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/m_abdelhakam/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "278-290",
+      "name": "Ahmad Issa Al Maasaraawi",
+      "recitation": "Rewayat Rowis and Rawh A'n Yakoob Al Hadrami  - Murattal",
+      "server": "https://server16.mp3quran.net/a_maasaraawi/Rewayat-Rawh-A-n-Yakoob-Alhadrami/",
+      "surah_total": 64
+    },
+    {
+      "id": "278-289",
+      "name": "Ahmad Issa Al Maasaraawi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_maasaraawi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "279-291",
+      "name": "Ibrahim Kshidan",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/i_kshidan/Rewayat-Qalon-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "28-28",
+      "name": "Zakaria Hamamah",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/zakariya/",
+      "surah_total": 7
+    },
+    {
+      "id": "280-292",
+      "name": "Hashim Abu Dalal",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/h_abudalal/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "281-293",
+      "name": "Fouad Alkhamery",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/f_khamery/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "282-294",
+      "name": "Sayed Ahmad Hashemi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/s_hashemi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "283-295",
+      "name": "Khalid Mohammadi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/kh_mohammadi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "284-297",
+      "name": "Mal-Allah Abdulrhman Aljaber",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/mal-allah_jaber/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "285-298",
+      "name": "Salman Alsadeiq",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/s_sadeiq/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "286-299",
+      "name": "Hasan Saleh",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/h_saleh/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "287-302",
+      "name": "Abdulrahman Alshahhat",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_alshahhat/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "288-303",
+      "name": "Issa Omar Sanankoua",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/i_sanankoua/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "289-304",
+      "name": "Haroon Baqai",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/h_baqai/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 51
+    },
+    {
+      "id": "29-281",
+      "name": "Abdullah Bukhari",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_bukhari/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 80
+    },
+    {
+      "id": "290-306",
+      "name": "Saleh Alquraishi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/s_alquraishi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "3-3",
+      "name": "Ibrahim Al-Asiri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/3siri/",
+      "surah_total": 114
+    },
+    {
+      "id": "30-30",
+      "name": "Saad Al-Ghamdi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server7.mp3quran.net/s_gmd/",
+      "surah_total": 114
+    },
+    {
+      "id": "300-300",
+      "name": "Saleh Alshamrani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/shamrani/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "301-307",
+      "name": "Faisal Al-Hajry",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/f_hajry/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "302-314",
+      "name": "Anas Alemadi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_alemadi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "303-315",
+      "name": "Abdulmalik Alaskar",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_alaskar/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 7
+    },
+    {
+      "id": "304-316",
+      "name": "Abdulkareem Alhazmi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_alhazmi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "305-317",
+      "name": "Hicham Lharraz",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/H-Lharraz/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 113
+    },
+    {
+      "id": "306-318",
+      "name": "Abdullah Al-Mishal",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a-almishal/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 11
+    },
+    {
+      "id": "307-319",
+      "name": "Abdelaziz sheim",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server16.mp3quran.net/a_sheim/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 16
+    },
+    {
+      "id": "31-31",
+      "name": "Saud Al-Shuraim",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server7.mp3quran.net/shur/",
+      "surah_total": 114
+    },
+    {
+      "id": "32-32",
+      "name": "Sahl Yassin",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/shl/",
+      "surah_total": 114
+    },
+    {
+      "id": "33-33",
+      "name": "Zaki Daghistani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/zaki/",
+      "surah_total": 114
+    },
+    {
+      "id": "34-34",
+      "name": "Sami Al-Hasn",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/sami_hsn/",
+      "surah_total": 28
+    },
+    {
+      "id": "35-35",
+      "name": "Sami Al-Dosari",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/sami_dosr/",
+      "surah_total": 53
+    },
+    {
+      "id": "36-36",
+      "name": "Sayeed Ramadan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/sayed/",
+      "surah_total": 114
+    },
+    {
+      "id": "37-37",
+      "name": "Shaban Al-Sayiaad",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/shaban/",
+      "surah_total": 65
+    },
+    {
+      "id": "38-38",
+      "name": "Shirazad Taher",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/taher/",
+      "surah_total": 114
+    },
+    {
+      "id": "39-39",
+      "name": "Saber Abdulhakm",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/hkm/",
+      "surah_total": 114
+    },
+    {
+      "id": "4-4",
+      "name": "Shaik Abu Bakr Al Shatri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/shatri/",
+      "surah_total": 114
+    },
+    {
+      "id": "40-40",
+      "name": "Saleh Alsahood",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/sahood/",
+      "surah_total": 114
+    },
+    {
+      "id": "41-41",
+      "name": "Saleh Al-Talib",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/tlb/",
+      "surah_total": 33
+    },
+    {
+      "id": "42-42",
+      "name": "Saleh Al-Habdan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/habdan/",
+      "surah_total": 114
+    },
+    {
+      "id": "43-43",
+      "name": "Salah Albudair",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/s_bud/",
+      "surah_total": 114
+    },
+    {
+      "id": "44-45",
+      "name": "Salah Alhashim",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server12.mp3quran.net/salah_hashim_m/Rewayat-Qalon-A-n-Nafi/",
+      "surah_total": 7
+    },
+    {
+      "id": "44-44",
+      "name": "Salah Alhashim",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/salah_hashim_m/",
+      "surah_total": 114
+    },
+    {
+      "id": "46-46",
+      "name": "Slaah Bukhatir",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/bu_khtr/",
+      "surah_total": 114
+    },
+    {
+      "id": "47-283",
+      "name": "Mukhtar Al-Haj",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/mukhtar_haj/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "48-48",
+      "name": "Adel Ryyan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/ryan/",
+      "surah_total": 114
+    },
+    {
+      "id": "49-49",
+      "name": "Abdelbari Al-Toubayti",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/thubti/",
+      "surah_total": 114
+    },
+    {
+      "id": "5-5",
+      "name": "Ahmad Al-Ajmy",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server10.mp3quran.net/ajm/",
+      "surah_total": 114
+    },
+    {
+      "id": "50-169",
+      "name": "Abdulbari Mohammad",
+      "recitation": "Almusshaf Al Mo'lim - Almusshaf Al Mo'lim",
+      "server": "https://server12.mp3quran.net/bari/Almusshaf-Al-Mo-lim/",
+      "surah_total": 91
+    },
+    {
+      "id": "50-50",
+      "name": "Abdulbari Mohammad",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/bari/",
+      "surah_total": 114
+    },
+    {
+      "id": "51-53",
+      "name": "Abdulbasit Abdulsamad",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server7.mp3quran.net/basit/",
+      "surah_total": 114
+    },
+    {
+      "id": "51-52",
+      "name": "Abdulbasit Abdulsamad",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server7.mp3quran.net/basit/Rewayat-Warsh-A-n-Nafi/",
+      "surah_total": 114
+    },
+    {
+      "id": "51-51",
+      "name": "Abdulbasit Abdulsamad",
+      "recitation": "Almusshaf Al Mojawwad - Almusshaf Al Mojawwad",
+      "server": "https://server7.mp3quran.net/basit/Almusshaf-Al-Mojawwad/",
+      "surah_total": 114
+    },
+    {
+      "id": "54-54",
+      "name": "Abdulrahman Alsudaes",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/sds/",
+      "surah_total": 114
+    },
+    {
+      "id": "55-55",
+      "name": "Abdul Aziz Al-Ahmad",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/a_ahmed/",
+      "surah_total": 114
+    },
+    {
+      "id": "56-56",
+      "name": "Abdulaziz Az-Zahrani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/zahrani/",
+      "surah_total": 114
+    },
+    {
+      "id": "57-57",
+      "name": "Abdullah Al-Burimi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/brmi/",
+      "surah_total": 69
+    },
+    {
+      "id": "58-58",
+      "name": "Abdullah Albuajan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/buajan/",
+      "surah_total": 114
+    },
+    {
+      "id": "59-59",
+      "name": "Abdullah Al-Mattrod",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/mtrod/",
+      "surah_total": 114
+    },
+    {
+      "id": "6-6",
+      "name": "Ahmad Al-Hawashi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/hawashi/",
+      "surah_total": 114
+    },
+    {
+      "id": "60-60",
+      "name": "Abdullah Basfer",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/bsfr/",
+      "surah_total": 114
+    },
+    {
+      "id": "61-61",
+      "name": "Abdullah Khayyat",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/kyat/",
+      "surah_total": 114
+    },
+    {
+      "id": "62-62",
+      "name": "Abdullah Al-Johany",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server13.mp3quran.net/jhn/",
+      "surah_total": 114
+    },
+    {
+      "id": "63-63",
+      "name": "Abdullah Qaulan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/gulan/",
+      "surah_total": 114
+    },
+    {
+      "id": "64-258",
+      "name": "Abdulrasheed Soufi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/soufi/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "64-65",
+      "name": "Abdulrasheed Soufi",
+      "recitation": "Rewayat Assosi A'n Abi Amr - Murattal",
+      "server": "https://server16.mp3quran.net/soufi/Rewayat-Assosi-A-n-Abi-Amr/",
+      "surah_total": 114
+    },
+    {
+      "id": "64-64",
+      "name": "Abdulrasheed Soufi",
+      "recitation": "Rewayat Khalaf A'n Hamzah - Murattal",
+      "server": "https://server16.mp3quran.net/soufi/Rewayat-Khalaf-A-n-Hamzah/",
+      "surah_total": 114
+    },
+    {
+      "id": "66-66",
+      "name": "Abdulmohsin Al-Harthy",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/mohsin_harthi/",
+      "surah_total": 114
+    },
+    {
+      "id": "67-67",
+      "name": "Abdulmohsen Al-Qasim",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/qasm/",
+      "surah_total": 114
+    },
+    {
+      "id": "68-68",
+      "name": "Abdulmohsin Al-Askar",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/askr/",
+      "surah_total": 4
+    },
+    {
+      "id": "69-69",
+      "name": "Abdulmohsin Al-Obaikan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/obk/",
+      "surah_total": 114
+    },
+    {
+      "id": "7-7",
+      "name": "Ahmad Saud",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/saud/",
+      "surah_total": 30
+    },
+    {
+      "id": "70-70",
+      "name": "Abdulhadi Kanakeri",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/kanakeri/",
+      "surah_total": 114
+    },
+    {
+      "id": "71-71",
+      "name": "Abdulwadood Haneef",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/wdod/",
+      "surah_total": 114
+    },
+    {
+      "id": "72-72",
+      "name": "Abdulwali Al-Arkani",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/arkani/",
+      "surah_total": 114
+    },
+    {
+      "id": "73-73",
+      "name": "Ali Abo-Hashim",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/abo_hashim/",
+      "surah_total": 14
+    },
+    {
+      "id": "74-305",
+      "name": "Ali Alhuthaifi",
+      "recitation": "Sho'bah A'n Asim - Murattal",
+      "server": "https://server9.mp3quran.net/hthfi/Rewayat-Sho-bah-A-n-Asim/",
+      "surah_total": 114
+    },
+    {
+      "id": "74-75",
+      "name": "Ali Alhuthaifi",
+      "recitation": "Rewayat Qalon A'n Nafi' - Murattal",
+      "server": "https://server9.mp3quran.net/huthifi_qalon/",
+      "surah_total": 114
+    },
+    {
+      "id": "74-74",
+      "name": "Ali Alhuthaifi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/hthfi/",
+      "surah_total": 114
+    },
+    {
+      "id": "76-76",
+      "name": "Ali Jaber",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/a_jbr/",
+      "surah_total": 114
+    },
+    {
+      "id": "77-77",
+      "name": "Ali Hajjaj Alsouasi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/hajjaj/",
+      "surah_total": 114
+    },
+    {
+      "id": "78-78",
+      "name": "Emad Hafez",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/hafz/",
+      "surah_total": 114
+    },
+    {
+      "id": "79-282",
+      "name": "Abdulaziz Alturki",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_turki/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    },
+    {
+      "id": "8-8",
+      "name": "Ahmad Saber",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/saber/",
+      "surah_total": 114
+    },
+    {
+      "id": "80-80",
+      "name": "Omar Al-Qazabri",
+      "recitation": "Rewayat Warsh A'n Nafi' - Murattal",
+      "server": "https://server9.mp3quran.net/omar_warsh/",
+      "surah_total": 114
+    },
+    {
+      "id": "81-81",
+      "name": "Fares Abbad",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/frs_a/",
+      "surah_total": 114
+    },
+    {
+      "id": "82-82",
+      "name": "Fahad Al-Otaibi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/fahad_otibi/",
+      "surah_total": 8
+    },
+    {
+      "id": "83-83",
+      "name": "Fahad Al-Kandari",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/kndri/",
+      "surah_total": 77
+    },
+    {
+      "id": "84-84",
+      "name": "Fawaz Alkabi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/fawaz/",
+      "surah_total": 49
+    },
+    {
+      "id": "85-85",
+      "name": "Lafi Al-Oni",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/lafi/",
+      "surah_total": 84
+    },
+    {
+      "id": "86-86",
+      "name": "Nasser Alqatami",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/qtm/",
+      "surah_total": 114
+    },
+    {
+      "id": "87-87",
+      "name": "Nabil Al Rifay",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/nabil/",
+      "surah_total": 114
+    },
+    {
+      "id": "88-88",
+      "name": "Neamah Al-Hassan",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/namh/",
+      "surah_total": 114
+    },
+    {
+      "id": "89-89",
+      "name": "Hani Arrifai",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/hani/",
+      "surah_total": 114
+    },
+    {
+      "id": "9-9",
+      "name": "Ahmad Nauina",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/ahmad_nu/",
+      "surah_total": 114
+    },
+    {
+      "id": "90-90",
+      "name": "Walid Al-Dulaimi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server8.mp3quran.net/dlami/",
+      "surah_total": 58
+    },
+    {
+      "id": "91-91",
+      "name": "Waleed Alnaehi",
+      "recitation": "Rewayat Qalon A'n Nafi' Men Tariq Abi Nasheet - Murattal",
+      "server": "https://server9.mp3quran.net/waleed/",
+      "surah_total": 114
+    },
+    {
+      "id": "92-92",
+      "name": "Yasser Al-Dosari",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server11.mp3quran.net/yasser/",
+      "surah_total": 114
+    },
+    {
+      "id": "93-93",
+      "name": "Yasser Al-Qurashi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/qurashi/",
+      "surah_total": 114
+    },
+    {
+      "id": "94-94",
+      "name": "Yasser Al-Faylakawi",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server6.mp3quran.net/fyl/",
+      "surah_total": 88
+    },
+    {
+      "id": "95-95",
+      "name": "Yasser Al-Mazroyee",
+      "recitation": "Rewayat Rowis and Rawh A'n Yakoob Al Hadrami  - Murattal",
+      "server": "https://server9.mp3quran.net/mzroyee/",
+      "surah_total": 114
+    },
+    {
+      "id": "96-96",
+      "name": "Yahya Hawwa",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server12.mp3quran.net/yahya/",
+      "surah_total": 114
+    },
+    {
+      "id": "97-97",
+      "name": "Yousef Alshoaey",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server9.mp3quran.net/yousef/",
+      "surah_total": 114
+    },
+    {
+      "id": "98-284",
+      "name": "Abdullah Abdal",
+      "recitation": "Rewayat Hafs A'n Assem - Murattal",
+      "server": "https://server16.mp3quran.net/a_abdl/Rewayat-Hafs-A-n-Assem/",
+      "surah_total": 114
+    }
+  ]
+}

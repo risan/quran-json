@@ -1,0 +1,14 @@
+{
+  "note": "Upstream transcription defects restored on load. Additive fixes only: the translator's wording is never edited, only repair of damaged text.",
+  "witness": "https://www.gutenberg.org/ebooks/16955",
+  "corrections": [
+    {
+      "lang": "english_yusuf_ali",
+      "chapter": 5,
+      "verse": 94,
+      "defective": "game well within reach of game well within reach of",
+      "restored": "game well within reach of",
+      "evidence": "https://www.gutenberg.org/ebooks/16955 reads 'a little matter of game well within reach of your hands and your lances'; the upstream snapshot repeats the fragment 'game well within reach of', a duplication artefact."
+    }
+  ]
+}

@@ -1,0 +1,5386 @@
+{
+  "chapters": [
+    {
+      "id": 1,
+      "name": "الفاتحة",
+      "transliteration": "Al-Faatiha",
+      "translation": "The Opening",
+      "type": "meccan",
+      "total_verses": 7
+    },
+    {
+      "id": 2,
+      "name": "البقرة",
+      "transliteration": "Al-Baqara",
+      "translation": "The Cow",
+      "type": "medinan",
+      "total_verses": 286
+    },
+    {
+      "id": 3,
+      "name": "آل عمران",
+      "transliteration": "Aal-i-Imraan",
+      "translation": "The Family of Imraan",
+      "type": "medinan",
+      "total_verses": 200
+    },
+    {
+      "id": 4,
+      "name": "النساء",
+      "transliteration": "An-Nisaa",
+      "translation": "The Women",
+      "type": "medinan",
+      "total_verses": 176
+    },
+    {
+      "id": 5,
+      "name": "المائدة",
+      "transliteration": "Al-Maaida",
+      "translation": "The Table",
+      "type": "medinan",
+      "total_verses": 120
+    },
+    {
+      "id": 6,
+      "name": "الأنعام",
+      "transliteration": "Al-An'aam",
+      "translation": "The Cattle",
+      "type": "meccan",
+      "total_verses": 165
+    },
+    {
+      "id": 7,
+      "name": "الأعراف",
+      "transliteration": "Al-A'raaf",
+      "translation": "The Heights",
+      "type": "meccan",
+      "total_verses": 206
+    },
+    {
+      "id": 8,
+      "name": "الأنفال",
+      "transliteration": "Al-Anfaal",
+      "translation": "The Spoils of War",
+      "type": "medinan",
+      "total_verses": 75
+    },
+    {
+      "id": 9,
+      "name": "التوبة",
+      "transliteration": "At-Tawba",
+      "translation": "The Repentance",
+      "type": "medinan",
+      "total_verses": 129
+    },
+    {
+      "id": 10,
+      "name": "يونس",
+      "transliteration": "Yunus",
+      "translation": "Jonas",
+      "type": "meccan",
+      "total_verses": 109
+    },
+    {
+      "id": 11,
+      "name": "هود",
+      "transliteration": "Hud",
+      "translation": "Hud",
+      "type": "meccan",
+      "total_verses": 123
+    },
+    {
+      "id": 12,
+      "name": "يوسف",
+      "transliteration": "Yusuf",
+      "translation": "Joseph",
+      "type": "meccan",
+      "total_verses": 111
+    },
+    {
+      "id": 13,
+      "name": "الرعد",
+      "transliteration": "Ar-Ra'd",
+      "translation": "The Thunder",
+      "type": "medinan",
+      "total_verses": 43
+    },
+    {
+      "id": 14,
+      "name": "ابراهيم",
+      "transliteration": "Ibrahim",
+      "translation": "Abraham",
+      "type": "meccan",
+      "total_verses": 52
+    },
+    {
+      "id": 15,
+      "name": "الحجر",
+      "transliteration": "Al-Hijr",
+      "translation": "The Rock",
+      "type": "meccan",
+      "total_verses": 99
+    },
+    {
+      "id": 16,
+      "name": "النحل",
+      "transliteration": "An-Nahl",
+      "translation": "The Bee",
+      "type": "meccan",
+      "total_verses": 128
+    },
+    {
+      "id": 17,
+      "name": "الإسراء",
+      "transliteration": "Al-Israa",
+      "translation": "The Night Journey",
+      "type": "meccan",
+      "total_verses": 111
+    },
+    {
+      "id": 18,
+      "name": "الكهف",
+      "transliteration": "Al-Kahf",
+      "translation": "The Cave",
+      "type": "meccan",
+      "total_verses": 110
+    },
+    {
+      "id": 19,
+      "name": "مريم",
+      "transliteration": "Maryam",
+      "translation": "Mary",
+      "type": "meccan",
+      "total_verses": 98
+    },
+    {
+      "id": 20,
+      "name": "طه",
+      "transliteration": "Taa-Haa",
+      "translation": "Taa-Haa",
+      "type": "meccan",
+      "total_verses": 135
+    },
+    {
+      "id": 21,
+      "name": "الأنبياء",
+      "transliteration": "Al-Anbiyaa",
+      "translation": "The Prophets",
+      "type": "meccan",
+      "total_verses": 112
+    },
+    {
+      "id": 22,
+      "name": "الحج",
+      "transliteration": "Al-Hajj",
+      "translation": "The Pilgrimage",
+      "type": "medinan",
+      "total_verses": 78
+    },
+    {
+      "id": 23,
+      "name": "المؤمنون",
+      "transliteration": "Al-Muminoon",
+      "translation": "The Believers",
+      "type": "meccan",
+      "total_verses": 118
+    },
+    {
+      "id": 24,
+      "name": "النور",
+      "transliteration": "An-Noor",
+      "translation": "The Light",
+      "type": "medinan",
+      "total_verses": 64
+    },
+    {
+      "id": 25,
+      "name": "الفرقان",
+      "transliteration": "Al-Furqaan",
+      "translation": "The Criterion",
+      "type": "meccan",
+      "total_verses": 77
+    },
+    {
+      "id": 26,
+      "name": "الشعراء",
+      "transliteration": "Ash-Shu'araa",
+      "translation": "The Poets",
+      "type": "meccan",
+      "total_verses": 227
+    },
+    {
+      "id": 27,
+      "name": "النمل",
+      "transliteration": "An-Naml",
+      "translation": "The Ant",
+      "type": "meccan",
+      "total_verses": 93
+    },
+    {
+      "id": 28,
+      "name": "القصص",
+      "transliteration": "Al-Qasas",
+      "translation": "The Stories",
+      "type": "meccan",
+      "total_verses": 88
+    },
+    {
+      "id": 29,
+      "name": "العنكبوت",
+      "transliteration": "Al-Ankaboot",
+      "translation": "The Spider",
+      "type": "meccan",
+      "total_verses": 69
+    },
+    {
+      "id": 30,
+      "name": "الروم",
+      "transliteration": "Ar-Room",
+      "translation": "The Romans",
+      "type": "meccan",
+      "total_verses": 60
+    },
+    {
+      "id": 31,
+      "name": "لقمان",
+      "transliteration": "Luqman",
+      "translation": "Luqman",
+      "type": "meccan",
+      "total_verses": 34
+    },
+    {
+      "id": 32,
+      "name": "السجدة",
+      "transliteration": "As-Sajda",
+      "translation": "The Prostration",
+      "type": "meccan",
+      "total_verses": 30
+    },
+    {
+      "id": 33,
+      "name": "الأحزاب",
+      "transliteration": "Al-Ahzaab",
+      "translation": "The Clans",
+      "type": "medinan",
+      "total_verses": 73
+    },
+    {
+      "id": 34,
+      "name": "سبإ",
+      "transliteration": "Saba",
+      "translation": "Sheba",
+      "type": "meccan",
+      "total_verses": 54
+    },
+    {
+      "id": 35,
+      "name": "فاطر",
+      "transliteration": "Faatir",
+      "translation": "The Originator",
+      "type": "meccan",
+      "total_verses": 45
+    },
+    {
+      "id": 36,
+      "name": "يس",
+      "transliteration": "Yaseen",
+      "translation": "Yaseen",
+      "type": "meccan",
+      "total_verses": 83
+    },
+    {
+      "id": 37,
+      "name": "الصافات",
+      "transliteration": "As-Saaffaat",
+      "translation": "Those drawn up in Ranks",
+      "type": "meccan",
+      "total_verses": 182
+    },
+    {
+      "id": 38,
+      "name": "ص",
+      "transliteration": "Saad",
+      "translation": "The letter Saad",
+      "type": "meccan",
+      "total_verses": 88
+    },
+    {
+      "id": 39,
+      "name": "الزمر",
+      "transliteration": "Az-Zumar",
+      "translation": "The Groups",
+      "type": "meccan",
+      "total_verses": 75
+    },
+    {
+      "id": 40,
+      "name": "غافر",
+      "transliteration": "Al-Ghaafir",
+      "translation": "The Forgiver",
+      "type": "meccan",
+      "total_verses": 85
+    },
+    {
+      "id": 41,
+      "name": "فصلت",
+      "transliteration": "Fussilat",
+      "translation": "Explained in detail",
+      "type": "meccan",
+      "total_verses": 54
+    },
+    {
+      "id": 42,
+      "name": "الشورى",
+      "transliteration": "Ash-Shura",
+      "translation": "Consultation",
+      "type": "meccan",
+      "total_verses": 53
+    },
+    {
+      "id": 43,
+      "name": "الزخرف",
+      "transliteration": "Az-Zukhruf",
+      "translation": "Ornaments of gold",
+      "type": "meccan",
+      "total_verses": 89
+    },
+    {
+      "id": 44,
+      "name": "الدخان",
+      "transliteration": "Ad-Dukhaan",
+      "translation": "The Smoke",
+      "type": "meccan",
+      "total_verses": 59
+    },
+    {
+      "id": 45,
+      "name": "الجاثية",
+      "transliteration": "Al-Jaathiya",
+      "translation": "Crouching",
+      "type": "meccan",
+      "total_verses": 37
+    },
+    {
+      "id": 46,
+      "name": "الأحقاف",
+      "transliteration": "Al-Ahqaf",
+      "translation": "The Dunes",
+      "type": "meccan",
+      "total_verses": 35
+    },
+    {
+      "id": 47,
+      "name": "محمد",
+      "transliteration": "Muhammad",
+      "translation": "Muhammad",
+      "type": "medinan",
+      "total_verses": 38
+    },
+    {
+      "id": 48,
+      "name": "الفتح",
+      "transliteration": "Al-Fath",
+      "translation": "The Victory",
+      "type": "medinan",
+      "total_verses": 29
+    },
+    {
+      "id": 49,
+      "name": "الحجرات",
+      "transliteration": "Al-Hujuraat",
+      "translation": "The Inner Apartments",
+      "type": "medinan",
+      "total_verses": 18
+    },
+    {
+      "id": 50,
+      "name": "ق",
+      "transliteration": "Qaaf",
+      "translation": "The letter Qaaf",
+      "type": "meccan",
+      "total_verses": 45
+    },
+    {
+      "id": 51,
+      "name": "الذاريات",
+      "transliteration": "Adh-Dhaariyat",
+      "translation": "The Winnowing Winds",
+      "type": "meccan",
+      "total_verses": 60
+    },
+    {
+      "id": 52,
+      "name": "الطور",
+      "transliteration": "At-Tur",
+      "translation": "The Mount",
+      "type": "meccan",
+      "total_verses": 49
+    },
+    {
+      "id": 53,
+      "name": "النجم",
+      "transliteration": "An-Najm",
+      "translation": "The Star",
+      "type": "meccan",
+      "total_verses": 62
+    },
+    {
+      "id": 54,
+      "name": "القمر",
+      "transliteration": "Al-Qamar",
+      "translation": "The Moon",
+      "type": "meccan",
+      "total_verses": 55
+    },
+    {
+      "id": 55,
+      "name": "الرحمن",
+      "transliteration": "Ar-Rahmaan",
+      "translation": "The Beneficent",
+      "type": "medinan",
+      "total_verses": 78
+    },
+    {
+      "id": 56,
+      "name": "الواقعة",
+      "transliteration": "Al-Waaqia",
+      "translation": "The Inevitable",
+      "type": "meccan",
+      "total_verses": 96
+    },
+    {
+      "id": 57,
+      "name": "الحديد",
+      "transliteration": "Al-Hadid",
+      "translation": "The Iron",
+      "type": "medinan",
+      "total_verses": 29
+    },
+    {
+      "id": 58,
+      "name": "المجادلة",
+      "transliteration": "Al-Mujaadila",
+      "translation": "The Pleading Woman",
+      "type": "medinan",
+      "total_verses": 22
+    },
+    {
+      "id": 59,
+      "name": "الحشر",
+      "transliteration": "Al-Hashr",
+      "translation": "The Exile",
+      "type": "medinan",
+      "total_verses": 24
+    },
+    {
+      "id": 60,
+      "name": "الممتحنة",
+      "transliteration": "Al-Mumtahana",
+      "translation": "She that is to be examined",
+      "type": "medinan",
+      "total_verses": 13
+    },
+    {
+      "id": 61,
+      "name": "الصف",
+      "transliteration": "As-Saff",
+      "translation": "The Ranks",
+      "type": "medinan",
+      "total_verses": 14
+    },
+    {
+      "id": 62,
+      "name": "الجمعة",
+      "transliteration": "Al-Jumu'a",
+      "translation": "Friday",
+      "type": "medinan",
+      "total_verses": 11
+    },
+    {
+      "id": 63,
+      "name": "المنافقون",
+      "transliteration": "Al-Munaafiqoon",
+      "translation": "The Hypocrites",
+      "type": "medinan",
+      "total_verses": 11
+    },
+    {
+      "id": 64,
+      "name": "التغابن",
+      "transliteration": "At-Taghaabun",
+      "translation": "Mutual Disillusion",
+      "type": "medinan",
+      "total_verses": 18
+    },
+    {
+      "id": 65,
+      "name": "الطلاق",
+      "transliteration": "At-Talaaq",
+      "translation": "Divorce",
+      "type": "medinan",
+      "total_verses": 12
+    },
+    {
+      "id": 66,
+      "name": "التحريم",
+      "transliteration": "At-Tahrim",
+      "translation": "The Prohibition",
+      "type": "medinan",
+      "total_verses": 12
+    },
+    {
+      "id": 67,
+      "name": "الملك",
+      "transliteration": "Al-Mulk",
+      "translation": "The Sovereignty",
+      "type": "meccan",
+      "total_verses": 30
+    },
+    {
+      "id": 68,
+      "name": "القلم",
+      "transliteration": "Al-Qalam",
+      "translation": "The Pen",
+      "type": "meccan",
+      "total_verses": 52
+    },
+    {
+      "id": 69,
+      "name": "الحاقة",
+      "transliteration": "Al-Haaqqa",
+      "translation": "The Reality",
+      "type": "meccan",
+      "total_verses": 52
+    },
+    {
+      "id": 70,
+      "name": "المعارج",
+      "transliteration": "Al-Ma'aarij",
+      "translation": "The Ascending Stairways",
+      "type": "meccan",
+      "total_verses": 44
+    },
+    {
+      "id": 71,
+      "name": "نوح",
+      "transliteration": "Nooh",
+      "translation": "Noah",
+      "type": "meccan",
+      "total_verses": 28
+    },
+    {
+      "id": 72,
+      "name": "الجن",
+      "transliteration": "Al-Jinn",
+      "translation": "The Jinn",
+      "type": "meccan",
+      "total_verses": 28
+    },
+    {
+      "id": 73,
+      "name": "المزمل",
+      "transliteration": "Al-Muzzammil",
+      "translation": "The Enshrouded One",
+      "type": "meccan",
+      "total_verses": 20
+    },
+    {
+      "id": 74,
+      "name": "المدثر",
+      "transliteration": "Al-Muddaththir",
+      "translation": "The Cloaked One",
+      "type": "meccan",
+      "total_verses": 56
+    },
+    {
+      "id": 75,
+      "name": "القيامة",
+      "transliteration": "Al-Qiyaama",
+      "translation": "The Resurrection",
+      "type": "meccan",
+      "total_verses": 40
+    },
+    {
+      "id": 76,
+      "name": "الانسان",
+      "transliteration": "Al-Insaan",
+      "translation": "Man",
+      "type": "medinan",
+      "total_verses": 31
+    },
+    {
+      "id": 77,
+      "name": "المرسلات",
+      "transliteration": "Al-Mursalaat",
+      "translation": "The Emissaries",
+      "type": "meccan",
+      "total_verses": 50
+    },
+    {
+      "id": 78,
+      "name": "النبإ",
+      "transliteration": "An-Naba",
+      "translation": "The Announcement",
+      "type": "meccan",
+      "total_verses": 40
+    },
+    {
+      "id": 79,
+      "name": "النازعات",
+      "transliteration": "An-Naazi'aat",
+      "translation": "Those who drag forth",
+      "type": "meccan",
+      "total_verses": 46
+    },
+    {
+      "id": 80,
+      "name": "عبس",
+      "transliteration": "Abasa",
+      "translation": "He frowned",
+      "type": "meccan",
+      "total_verses": 42
+    },
+    {
+      "id": 81,
+      "name": "التكوير",
+      "transliteration": "At-Takwir",
+      "translation": "The Overthrowing",
+      "type": "meccan",
+      "total_verses": 29
+    },
+    {
+      "id": 82,
+      "name": "الإنفطار",
+      "transliteration": "Al-Infitaar",
+      "translation": "The Cleaving",
+      "type": "meccan",
+      "total_verses": 19
+    },
+    {
+      "id": 83,
+      "name": "المطففين",
+      "transliteration": "Al-Mutaffifin",
+      "translation": "Defrauding",
+      "type": "meccan",
+      "total_verses": 36
+    },
+    {
+      "id": 84,
+      "name": "الإنشقاق",
+      "transliteration": "Al-Inshiqaaq",
+      "translation": "The Splitting Open",
+      "type": "meccan",
+      "total_verses": 25
+    },
+    {
+      "id": 85,
+      "name": "البروج",
+      "transliteration": "Al-Burooj",
+      "translation": "The Constellations",
+      "type": "meccan",
+      "total_verses": 22
+    },
+    {
+      "id": 86,
+      "name": "الطارق",
+      "transliteration": "At-Taariq",
+      "translation": "The Morning Star",
+      "type": "meccan",
+      "total_verses": 17
+    },
+    {
+      "id": 87,
+      "name": "الأعلى",
+      "transliteration": "Al-A'laa",
+      "translation": "The Most High",
+      "type": "meccan",
+      "total_verses": 19
+    },
+    {
+      "id": 88,
+      "name": "الغاشية",
+      "transliteration": "Al-Ghaashiya",
+      "translation": "The Overwhelming",
+      "type": "meccan",
+      "total_verses": 26
+    },
+    {
+      "id": 89,
+      "name": "الفجر",
+      "transliteration": "Al-Fajr",
+      "translation": "The Dawn",
+      "type": "meccan",
+      "total_verses": 30
+    },
+    {
+      "id": 90,
+      "name": "البلد",
+      "transliteration": "Al-Balad",
+      "translation": "The City",
+      "type": "meccan",
+      "total_verses": 20
+    },
+    {
+      "id": 91,
+      "name": "الشمس",
+      "transliteration": "Ash-Shams",
+      "translation": "The Sun",
+      "type": "meccan",
+      "total_verses": 15
+    },
+    {
+      "id": 92,
+      "name": "الليل",
+      "transliteration": "Al-Lail",
+      "translation": "The Night",
+      "type": "meccan",
+      "total_verses": 21
+    },
+    {
+      "id": 93,
+      "name": "الضحى",
+      "transliteration": "Ad-Dhuhaa",
+      "translation": "The Morning Hours",
+      "type": "meccan",
+      "total_verses": 11
+    },
+    {
+      "id": 94,
+      "name": "الشرح",
+      "transliteration": "Ash-Sharh",
+      "translation": "The Consolation",
+      "type": "meccan",
+      "total_verses": 8
+    },
+    {
+      "id": 95,
+      "name": "التين",
+      "transliteration": "At-Tin",
+      "translation": "The Fig",
+      "type": "meccan",
+      "total_verses": 8
+    },
+    {
+      "id": 96,
+      "name": "العلق",
+      "transliteration": "Al-Alaq",
+      "translation": "The Clot",
+      "type": "meccan",
+      "total_verses": 19
+    },
+    {
+      "id": 97,
+      "name": "القدر",
+      "transliteration": "Al-Qadr",
+      "translation": "The Power, Fate",
+      "type": "meccan",
+      "total_verses": 5
+    },
+    {
+      "id": 98,
+      "name": "البينة",
+      "transliteration": "Al-Bayyina",
+      "translation": "The Evidence",
+      "type": "medinan",
+      "total_verses": 8
+    },
+    {
+      "id": 99,
+      "name": "الزلزلة",
+      "transliteration": "Az-Zalzala",
+      "translation": "The Earthquake",
+      "type": "medinan",
+      "total_verses": 8
+    },
+    {
+      "id": 100,
+      "name": "العاديات",
+      "transliteration": "Al-Aadiyaat",
+      "translation": "The Chargers",
+      "type": "meccan",
+      "total_verses": 11
+    },
+    {
+      "id": 101,
+      "name": "القارعة",
+      "transliteration": "Al-Qaari'a",
+      "translation": "The Calamity",
+      "type": "meccan",
+      "total_verses": 11
+    },
+    {
+      "id": 102,
+      "name": "التكاثر",
+      "transliteration": "At-Takaathur",
+      "translation": "Competition",
+      "type": "meccan",
+      "total_verses": 8
+    },
+    {
+      "id": 103,
+      "name": "العصر",
+      "transliteration": "Al-Asr",
+      "translation": "The Declining Day, Epoch",
+      "type": "meccan",
+      "total_verses": 3
+    },
+    {
+      "id": 104,
+      "name": "الهمزة",
+      "transliteration": "Al-Humaza",
+      "translation": "The Traducer",
+      "type": "meccan",
+      "total_verses": 9
+    },
+    {
+      "id": 105,
+      "name": "الفيل",
+      "transliteration": "Al-Fil",
+      "translation": "The Elephant",
+      "type": "meccan",
+      "total_verses": 5
+    },
+    {
+      "id": 106,
+      "name": "قريش",
+      "transliteration": "Quraish",
+      "translation": "Quraysh",
+      "type": "meccan",
+      "total_verses": 4
+    },
+    {
+      "id": 107,
+      "name": "الماعون",
+      "transliteration": "Al-Maa'un",
+      "translation": "Almsgiving",
+      "type": "meccan",
+      "total_verses": 7
+    },
+    {
+      "id": 108,
+      "name": "الكوثر",
+      "transliteration": "Al-Kawthar",
+      "translation": "Abundance",
+      "type": "meccan",
+      "total_verses": 3
+    },
+    {
+      "id": 109,
+      "name": "الكافرون",
+      "transliteration": "Al-Kaafiroon",
+      "translation": "The Disbelievers",
+      "type": "meccan",
+      "total_verses": 6
+    },
+    {
+      "id": 110,
+      "name": "النصر",
+      "transliteration": "An-Nasr",
+      "translation": "Divine Support",
+      "type": "medinan",
+      "total_verses": 3
+    },
+    {
+      "id": 111,
+      "name": "المسد",
+      "transliteration": "Al-Masad",
+      "translation": "The Palm Fibre",
+      "type": "meccan",
+      "total_verses": 5
+    },
+    {
+      "id": 112,
+      "name": "الإخلاص",
+      "transliteration": "Al-Ikhlaas",
+      "translation": "Sincerity",
+      "type": "meccan",
+      "total_verses": 4
+    },
+    {
+      "id": 113,
+      "name": "الفلق",
+      "transliteration": "Al-Falaq",
+      "translation": "The Dawn",
+      "type": "meccan",
+      "total_verses": 5
+    },
+    {
+      "id": 114,
+      "name": "الناس",
+      "transliteration": "An-Naas",
+      "translation": "Mankind",
+      "type": "meccan",
+      "total_verses": 6
+    }
+  ],
+  "indexes": {
+    "juzs": [
+      {
+        "index": 1,
+        "sura": 1,
+        "aya": 1
+      },
+      {
+        "index": 2,
+        "sura": 2,
+        "aya": 142
+      },
+      {
+        "index": 3,
+        "sura": 2,
+        "aya": 253
+      },
+      {
+        "index": 4,
+        "sura": 3,
+        "aya": 93
+      },
+      {
+        "index": 5,
+        "sura": 4,
+        "aya": 24
+      },
+      {
+        "index": 6,
+        "sura": 4,
+        "aya": 148
+      },
+      {
+        "index": 7,
+        "sura": 5,
+        "aya": 82
+      },
+      {
+        "index": 8,
+        "sura": 6,
+        "aya": 111
+      },
+      {
+        "index": 9,
+        "sura": 7,
+        "aya": 88
+      },
+      {
+        "index": 10,
+        "sura": 8,
+        "aya": 41
+      },
+      {
+        "index": 11,
+        "sura": 9,
+        "aya": 93
+      },
+      {
+        "index": 12,
+        "sura": 11,
+        "aya": 6
+      },
+      {
+        "index": 13,
+        "sura": 12,
+        "aya": 53
+      },
+      {
+        "index": 14,
+        "sura": 15,
+        "aya": 1
+      },
+      {
+        "index": 15,
+        "sura": 17,
+        "aya": 1
+      },
+      {
+        "index": 16,
+        "sura": 18,
+        "aya": 75
+      },
+      {
+        "index": 17,
+        "sura": 21,
+        "aya": 1
+      },
+      {
+        "index": 18,
+        "sura": 23,
+        "aya": 1
+      },
+      {
+        "index": 19,
+        "sura": 25,
+        "aya": 21
+      },
+      {
+        "index": 20,
+        "sura": 27,
+        "aya": 56
+      },
+      {
+        "index": 21,
+        "sura": 29,
+        "aya": 46
+      },
+      {
+        "index": 22,
+        "sura": 33,
+        "aya": 31
+      },
+      {
+        "index": 23,
+        "sura": 36,
+        "aya": 28
+      },
+      {
+        "index": 24,
+        "sura": 39,
+        "aya": 32
+      },
+      {
+        "index": 25,
+        "sura": 41,
+        "aya": 47
+      },
+      {
+        "index": 26,
+        "sura": 46,
+        "aya": 1
+      },
+      {
+        "index": 27,
+        "sura": 51,
+        "aya": 31
+      },
+      {
+        "index": 28,
+        "sura": 58,
+        "aya": 1
+      },
+      {
+        "index": 29,
+        "sura": 67,
+        "aya": 1
+      },
+      {
+        "index": 30,
+        "sura": 78,
+        "aya": 1
+      }
+    ],
+    "hizbs": [
+      {
+        "index": 1,
+        "sura": 1,
+        "aya": 1
+      },
+      {
+        "index": 2,
+        "sura": 2,
+        "aya": 26
+      },
+      {
+        "index": 3,
+        "sura": 2,
+        "aya": 44
+      },
+      {
+        "index": 4,
+        "sura": 2,
+        "aya": 60
+      },
+      {
+        "index": 5,
+        "sura": 2,
+        "aya": 75
+      },
+      {
+        "index": 6,
+        "sura": 2,
+        "aya": 92
+      },
+      {
+        "index": 7,
+        "sura": 2,
+        "aya": 106
+      },
+      {
+        "index": 8,
+        "sura": 2,
+        "aya": 124
+      },
+      {
+        "index": 9,
+        "sura": 2,
+        "aya": 142
+      },
+      {
+        "index": 10,
+        "sura": 2,
+        "aya": 158
+      },
+      {
+        "index": 11,
+        "sura": 2,
+        "aya": 177
+      },
+      {
+        "index": 12,
+        "sura": 2,
+        "aya": 189
+      },
+      {
+        "index": 13,
+        "sura": 2,
+        "aya": 203
+      },
+      {
+        "index": 14,
+        "sura": 2,
+        "aya": 219
+      },
+      {
+        "index": 15,
+        "sura": 2,
+        "aya": 233
+      },
+      {
+        "index": 16,
+        "sura": 2,
+        "aya": 243
+      },
+      {
+        "index": 17,
+        "sura": 2,
+        "aya": 253
+      },
+      {
+        "index": 18,
+        "sura": 2,
+        "aya": 263
+      },
+      {
+        "index": 19,
+        "sura": 2,
+        "aya": 272
+      },
+      {
+        "index": 20,
+        "sura": 2,
+        "aya": 283
+      },
+      {
+        "index": 21,
+        "sura": 3,
+        "aya": 15
+      },
+      {
+        "index": 22,
+        "sura": 3,
+        "aya": 33
+      },
+      {
+        "index": 23,
+        "sura": 3,
+        "aya": 52
+      },
+      {
+        "index": 24,
+        "sura": 3,
+        "aya": 75
+      },
+      {
+        "index": 25,
+        "sura": 3,
+        "aya": 93
+      },
+      {
+        "index": 26,
+        "sura": 3,
+        "aya": 113
+      },
+      {
+        "index": 27,
+        "sura": 3,
+        "aya": 133
+      },
+      {
+        "index": 28,
+        "sura": 3,
+        "aya": 153
+      },
+      {
+        "index": 29,
+        "sura": 3,
+        "aya": 171
+      },
+      {
+        "index": 30,
+        "sura": 3,
+        "aya": 186
+      },
+      {
+        "index": 31,
+        "sura": 4,
+        "aya": 1
+      },
+      {
+        "index": 32,
+        "sura": 4,
+        "aya": 12
+      },
+      {
+        "index": 33,
+        "sura": 4,
+        "aya": 24
+      },
+      {
+        "index": 34,
+        "sura": 4,
+        "aya": 36
+      },
+      {
+        "index": 35,
+        "sura": 4,
+        "aya": 58
+      },
+      {
+        "index": 36,
+        "sura": 4,
+        "aya": 74
+      },
+      {
+        "index": 37,
+        "sura": 4,
+        "aya": 88
+      },
+      {
+        "index": 38,
+        "sura": 4,
+        "aya": 100
+      },
+      {
+        "index": 39,
+        "sura": 4,
+        "aya": 114
+      },
+      {
+        "index": 40,
+        "sura": 4,
+        "aya": 135
+      },
+      {
+        "index": 41,
+        "sura": 4,
+        "aya": 148
+      },
+      {
+        "index": 42,
+        "sura": 4,
+        "aya": 163
+      },
+      {
+        "index": 43,
+        "sura": 5,
+        "aya": 1
+      },
+      {
+        "index": 44,
+        "sura": 5,
+        "aya": 12
+      },
+      {
+        "index": 45,
+        "sura": 5,
+        "aya": 27
+      },
+      {
+        "index": 46,
+        "sura": 5,
+        "aya": 41
+      },
+      {
+        "index": 47,
+        "sura": 5,
+        "aya": 51
+      },
+      {
+        "index": 48,
+        "sura": 5,
+        "aya": 67
+      },
+      {
+        "index": 49,
+        "sura": 5,
+        "aya": 82
+      },
+      {
+        "index": 50,
+        "sura": 5,
+        "aya": 97
+      },
+      {
+        "index": 51,
+        "sura": 5,
+        "aya": 109
+      },
+      {
+        "index": 52,
+        "sura": 6,
+        "aya": 13
+      },
+      {
+        "index": 53,
+        "sura": 6,
+        "aya": 36
+      },
+      {
+        "index": 54,
+        "sura": 6,
+        "aya": 59
+      },
+      {
+        "index": 55,
+        "sura": 6,
+        "aya": 74
+      },
+      {
+        "index": 56,
+        "sura": 6,
+        "aya": 95
+      },
+      {
+        "index": 57,
+        "sura": 6,
+        "aya": 111
+      },
+      {
+        "index": 58,
+        "sura": 6,
+        "aya": 127
+      },
+      {
+        "index": 59,
+        "sura": 6,
+        "aya": 141
+      },
+      {
+        "index": 60,
+        "sura": 6,
+        "aya": 151
+      },
+      {
+        "index": 61,
+        "sura": 7,
+        "aya": 1
+      },
+      {
+        "index": 62,
+        "sura": 7,
+        "aya": 31
+      },
+      {
+        "index": 63,
+        "sura": 7,
+        "aya": 47
+      },
+      {
+        "index": 64,
+        "sura": 7,
+        "aya": 65
+      },
+      {
+        "index": 65,
+        "sura": 7,
+        "aya": 88
+      },
+      {
+        "index": 66,
+        "sura": 7,
+        "aya": 117
+      },
+      {
+        "index": 67,
+        "sura": 7,
+        "aya": 142
+      },
+      {
+        "index": 68,
+        "sura": 7,
+        "aya": 156
+      },
+      {
+        "index": 69,
+        "sura": 7,
+        "aya": 171
+      },
+      {
+        "index": 70,
+        "sura": 7,
+        "aya": 189
+      },
+      {
+        "index": 71,
+        "sura": 8,
+        "aya": 1
+      },
+      {
+        "index": 72,
+        "sura": 8,
+        "aya": 22
+      },
+      {
+        "index": 73,
+        "sura": 8,
+        "aya": 41
+      },
+      {
+        "index": 74,
+        "sura": 8,
+        "aya": 61
+      },
+      {
+        "index": 75,
+        "sura": 9,
+        "aya": 1
+      },
+      {
+        "index": 76,
+        "sura": 9,
+        "aya": 19
+      },
+      {
+        "index": 77,
+        "sura": 9,
+        "aya": 34
+      },
+      {
+        "index": 78,
+        "sura": 9,
+        "aya": 46
+      },
+      {
+        "index": 79,
+        "sura": 9,
+        "aya": 60
+      },
+      {
+        "index": 80,
+        "sura": 9,
+        "aya": 75
+      },
+      {
+        "index": 81,
+        "sura": 9,
+        "aya": 93
+      },
+      {
+        "index": 82,
+        "sura": 9,
+        "aya": 111
+      },
+      {
+        "index": 83,
+        "sura": 9,
+        "aya": 122
+      },
+      {
+        "index": 84,
+        "sura": 10,
+        "aya": 11
+      },
+      {
+        "index": 85,
+        "sura": 10,
+        "aya": 26
+      },
+      {
+        "index": 86,
+        "sura": 10,
+        "aya": 53
+      },
+      {
+        "index": 87,
+        "sura": 10,
+        "aya": 71
+      },
+      {
+        "index": 88,
+        "sura": 10,
+        "aya": 90
+      },
+      {
+        "index": 89,
+        "sura": 11,
+        "aya": 6
+      },
+      {
+        "index": 90,
+        "sura": 11,
+        "aya": 24
+      },
+      {
+        "index": 91,
+        "sura": 11,
+        "aya": 41
+      },
+      {
+        "index": 92,
+        "sura": 11,
+        "aya": 61
+      },
+      {
+        "index": 93,
+        "sura": 11,
+        "aya": 84
+      },
+      {
+        "index": 94,
+        "sura": 11,
+        "aya": 108
+      },
+      {
+        "index": 95,
+        "sura": 12,
+        "aya": 7
+      },
+      {
+        "index": 96,
+        "sura": 12,
+        "aya": 30
+      },
+      {
+        "index": 97,
+        "sura": 12,
+        "aya": 53
+      },
+      {
+        "index": 98,
+        "sura": 12,
+        "aya": 77
+      },
+      {
+        "index": 99,
+        "sura": 12,
+        "aya": 101
+      },
+      {
+        "index": 100,
+        "sura": 13,
+        "aya": 5
+      },
+      {
+        "index": 101,
+        "sura": 13,
+        "aya": 19
+      },
+      {
+        "index": 102,
+        "sura": 13,
+        "aya": 35
+      },
+      {
+        "index": 103,
+        "sura": 14,
+        "aya": 10
+      },
+      {
+        "index": 104,
+        "sura": 14,
+        "aya": 28
+      },
+      {
+        "index": 105,
+        "sura": 15,
+        "aya": 1
+      },
+      {
+        "index": 106,
+        "sura": 15,
+        "aya": 50
+      },
+      {
+        "index": 107,
+        "sura": 16,
+        "aya": 1
+      },
+      {
+        "index": 108,
+        "sura": 16,
+        "aya": 30
+      },
+      {
+        "index": 109,
+        "sura": 16,
+        "aya": 51
+      },
+      {
+        "index": 110,
+        "sura": 16,
+        "aya": 75
+      },
+      {
+        "index": 111,
+        "sura": 16,
+        "aya": 90
+      },
+      {
+        "index": 112,
+        "sura": 16,
+        "aya": 111
+      },
+      {
+        "index": 113,
+        "sura": 17,
+        "aya": 1
+      },
+      {
+        "index": 114,
+        "sura": 17,
+        "aya": 23
+      },
+      {
+        "index": 115,
+        "sura": 17,
+        "aya": 50
+      },
+      {
+        "index": 116,
+        "sura": 17,
+        "aya": 70
+      },
+      {
+        "index": 117,
+        "sura": 17,
+        "aya": 99
+      },
+      {
+        "index": 118,
+        "sura": 18,
+        "aya": 17
+      },
+      {
+        "index": 119,
+        "sura": 18,
+        "aya": 32
+      },
+      {
+        "index": 120,
+        "sura": 18,
+        "aya": 51
+      },
+      {
+        "index": 121,
+        "sura": 18,
+        "aya": 75
+      },
+      {
+        "index": 122,
+        "sura": 18,
+        "aya": 99
+      },
+      {
+        "index": 123,
+        "sura": 19,
+        "aya": 22
+      },
+      {
+        "index": 124,
+        "sura": 19,
+        "aya": 59
+      },
+      {
+        "index": 125,
+        "sura": 20,
+        "aya": 1
+      },
+      {
+        "index": 126,
+        "sura": 20,
+        "aya": 55
+      },
+      {
+        "index": 127,
+        "sura": 20,
+        "aya": 83
+      },
+      {
+        "index": 128,
+        "sura": 20,
+        "aya": 111
+      },
+      {
+        "index": 129,
+        "sura": 21,
+        "aya": 1
+      },
+      {
+        "index": 130,
+        "sura": 21,
+        "aya": 29
+      },
+      {
+        "index": 131,
+        "sura": 21,
+        "aya": 51
+      },
+      {
+        "index": 132,
+        "sura": 21,
+        "aya": 83
+      },
+      {
+        "index": 133,
+        "sura": 22,
+        "aya": 1
+      },
+      {
+        "index": 134,
+        "sura": 22,
+        "aya": 19
+      },
+      {
+        "index": 135,
+        "sura": 22,
+        "aya": 38
+      },
+      {
+        "index": 136,
+        "sura": 22,
+        "aya": 60
+      },
+      {
+        "index": 137,
+        "sura": 23,
+        "aya": 1
+      },
+      {
+        "index": 138,
+        "sura": 23,
+        "aya": 36
+      },
+      {
+        "index": 139,
+        "sura": 23,
+        "aya": 75
+      },
+      {
+        "index": 140,
+        "sura": 24,
+        "aya": 1
+      },
+      {
+        "index": 141,
+        "sura": 24,
+        "aya": 21
+      },
+      {
+        "index": 142,
+        "sura": 24,
+        "aya": 35
+      },
+      {
+        "index": 143,
+        "sura": 24,
+        "aya": 53
+      },
+      {
+        "index": 144,
+        "sura": 25,
+        "aya": 1
+      },
+      {
+        "index": 145,
+        "sura": 25,
+        "aya": 21
+      },
+      {
+        "index": 146,
+        "sura": 25,
+        "aya": 53
+      },
+      {
+        "index": 147,
+        "sura": 26,
+        "aya": 1
+      },
+      {
+        "index": 148,
+        "sura": 26,
+        "aya": 52
+      },
+      {
+        "index": 149,
+        "sura": 26,
+        "aya": 111
+      },
+      {
+        "index": 150,
+        "sura": 26,
+        "aya": 181
+      },
+      {
+        "index": 151,
+        "sura": 27,
+        "aya": 1
+      },
+      {
+        "index": 152,
+        "sura": 27,
+        "aya": 27
+      },
+      {
+        "index": 153,
+        "sura": 27,
+        "aya": 56
+      },
+      {
+        "index": 154,
+        "sura": 27,
+        "aya": 82
+      },
+      {
+        "index": 155,
+        "sura": 28,
+        "aya": 12
+      },
+      {
+        "index": 156,
+        "sura": 28,
+        "aya": 29
+      },
+      {
+        "index": 157,
+        "sura": 28,
+        "aya": 51
+      },
+      {
+        "index": 158,
+        "sura": 28,
+        "aya": 76
+      },
+      {
+        "index": 159,
+        "sura": 29,
+        "aya": 1
+      },
+      {
+        "index": 160,
+        "sura": 29,
+        "aya": 26
+      },
+      {
+        "index": 161,
+        "sura": 29,
+        "aya": 46
+      },
+      {
+        "index": 162,
+        "sura": 30,
+        "aya": 1
+      },
+      {
+        "index": 163,
+        "sura": 30,
+        "aya": 31
+      },
+      {
+        "index": 164,
+        "sura": 30,
+        "aya": 54
+      },
+      {
+        "index": 165,
+        "sura": 31,
+        "aya": 22
+      },
+      {
+        "index": 166,
+        "sura": 32,
+        "aya": 11
+      },
+      {
+        "index": 167,
+        "sura": 33,
+        "aya": 1
+      },
+      {
+        "index": 168,
+        "sura": 33,
+        "aya": 18
+      },
+      {
+        "index": 169,
+        "sura": 33,
+        "aya": 31
+      },
+      {
+        "index": 170,
+        "sura": 33,
+        "aya": 51
+      },
+      {
+        "index": 171,
+        "sura": 33,
+        "aya": 60
+      },
+      {
+        "index": 172,
+        "sura": 34,
+        "aya": 10
+      },
+      {
+        "index": 173,
+        "sura": 34,
+        "aya": 24
+      },
+      {
+        "index": 174,
+        "sura": 34,
+        "aya": 46
+      },
+      {
+        "index": 175,
+        "sura": 35,
+        "aya": 15
+      },
+      {
+        "index": 176,
+        "sura": 35,
+        "aya": 41
+      },
+      {
+        "index": 177,
+        "sura": 36,
+        "aya": 28
+      },
+      {
+        "index": 178,
+        "sura": 36,
+        "aya": 60
+      },
+      {
+        "index": 179,
+        "sura": 37,
+        "aya": 22
+      },
+      {
+        "index": 180,
+        "sura": 37,
+        "aya": 83
+      },
+      {
+        "index": 181,
+        "sura": 37,
+        "aya": 145
+      },
+      {
+        "index": 182,
+        "sura": 38,
+        "aya": 21
+      },
+      {
+        "index": 183,
+        "sura": 38,
+        "aya": 52
+      },
+      {
+        "index": 184,
+        "sura": 39,
+        "aya": 8
+      },
+      {
+        "index": 185,
+        "sura": 39,
+        "aya": 32
+      },
+      {
+        "index": 186,
+        "sura": 39,
+        "aya": 53
+      },
+      {
+        "index": 187,
+        "sura": 40,
+        "aya": 1
+      },
+      {
+        "index": 188,
+        "sura": 40,
+        "aya": 21
+      },
+      {
+        "index": 189,
+        "sura": 40,
+        "aya": 41
+      },
+      {
+        "index": 190,
+        "sura": 40,
+        "aya": 66
+      },
+      {
+        "index": 191,
+        "sura": 41,
+        "aya": 9
+      },
+      {
+        "index": 192,
+        "sura": 41,
+        "aya": 25
+      },
+      {
+        "index": 193,
+        "sura": 41,
+        "aya": 47
+      },
+      {
+        "index": 194,
+        "sura": 42,
+        "aya": 13
+      },
+      {
+        "index": 195,
+        "sura": 42,
+        "aya": 27
+      },
+      {
+        "index": 196,
+        "sura": 42,
+        "aya": 51
+      },
+      {
+        "index": 197,
+        "sura": 43,
+        "aya": 24
+      },
+      {
+        "index": 198,
+        "sura": 43,
+        "aya": 57
+      },
+      {
+        "index": 199,
+        "sura": 44,
+        "aya": 17
+      },
+      {
+        "index": 200,
+        "sura": 45,
+        "aya": 12
+      },
+      {
+        "index": 201,
+        "sura": 46,
+        "aya": 1
+      },
+      {
+        "index": 202,
+        "sura": 46,
+        "aya": 21
+      },
+      {
+        "index": 203,
+        "sura": 47,
+        "aya": 10
+      },
+      {
+        "index": 204,
+        "sura": 47,
+        "aya": 33
+      },
+      {
+        "index": 205,
+        "sura": 48,
+        "aya": 18
+      },
+      {
+        "index": 206,
+        "sura": 49,
+        "aya": 1
+      },
+      {
+        "index": 207,
+        "sura": 49,
+        "aya": 14
+      },
+      {
+        "index": 208,
+        "sura": 50,
+        "aya": 27
+      },
+      {
+        "index": 209,
+        "sura": 51,
+        "aya": 31
+      },
+      {
+        "index": 210,
+        "sura": 52,
+        "aya": 24
+      },
+      {
+        "index": 211,
+        "sura": 53,
+        "aya": 26
+      },
+      {
+        "index": 212,
+        "sura": 54,
+        "aya": 9
+      },
+      {
+        "index": 213,
+        "sura": 55,
+        "aya": 1
+      },
+      {
+        "index": 214,
+        "sura": 56,
+        "aya": 1
+      },
+      {
+        "index": 215,
+        "sura": 56,
+        "aya": 75
+      },
+      {
+        "index": 216,
+        "sura": 57,
+        "aya": 16
+      },
+      {
+        "index": 217,
+        "sura": 58,
+        "aya": 1
+      },
+      {
+        "index": 218,
+        "sura": 58,
+        "aya": 14
+      },
+      {
+        "index": 219,
+        "sura": 59,
+        "aya": 11
+      },
+      {
+        "index": 220,
+        "sura": 60,
+        "aya": 7
+      },
+      {
+        "index": 221,
+        "sura": 62,
+        "aya": 1
+      },
+      {
+        "index": 222,
+        "sura": 63,
+        "aya": 4
+      },
+      {
+        "index": 223,
+        "sura": 65,
+        "aya": 1
+      },
+      {
+        "index": 224,
+        "sura": 66,
+        "aya": 1
+      },
+      {
+        "index": 225,
+        "sura": 67,
+        "aya": 1
+      },
+      {
+        "index": 226,
+        "sura": 68,
+        "aya": 1
+      },
+      {
+        "index": 227,
+        "sura": 69,
+        "aya": 1
+      },
+      {
+        "index": 228,
+        "sura": 70,
+        "aya": 19
+      },
+      {
+        "index": 229,
+        "sura": 72,
+        "aya": 1
+      },
+      {
+        "index": 230,
+        "sura": 73,
+        "aya": 20
+      },
+      {
+        "index": 231,
+        "sura": 75,
+        "aya": 1
+      },
+      {
+        "index": 232,
+        "sura": 76,
+        "aya": 19
+      },
+      {
+        "index": 233,
+        "sura": 78,
+        "aya": 1
+      },
+      {
+        "index": 234,
+        "sura": 80,
+        "aya": 1
+      },
+      {
+        "index": 235,
+        "sura": 82,
+        "aya": 1
+      },
+      {
+        "index": 236,
+        "sura": 84,
+        "aya": 1
+      },
+      {
+        "index": 237,
+        "sura": 87,
+        "aya": 1
+      },
+      {
+        "index": 238,
+        "sura": 90,
+        "aya": 1
+      },
+      {
+        "index": 239,
+        "sura": 94,
+        "aya": 1
+      },
+      {
+        "index": 240,
+        "sura": 100,
+        "aya": 9
+      }
+    ],
+    "pages": [
+      {
+        "index": 1,
+        "sura": 1,
+        "aya": 1
+      },
+      {
+        "index": 2,
+        "sura": 2,
+        "aya": 1
+      },
+      {
+        "index": 3,
+        "sura": 2,
+        "aya": 6
+      },
+      {
+        "index": 4,
+        "sura": 2,
+        "aya": 17
+      },
+      {
+        "index": 5,
+        "sura": 2,
+        "aya": 25
+      },
+      {
+        "index": 6,
+        "sura": 2,
+        "aya": 30
+      },
+      {
+        "index": 7,
+        "sura": 2,
+        "aya": 38
+      },
+      {
+        "index": 8,
+        "sura": 2,
+        "aya": 49
+      },
+      {
+        "index": 9,
+        "sura": 2,
+        "aya": 58
+      },
+      {
+        "index": 10,
+        "sura": 2,
+        "aya": 62
+      },
+      {
+        "index": 11,
+        "sura": 2,
+        "aya": 70
+      },
+      {
+        "index": 12,
+        "sura": 2,
+        "aya": 77
+      },
+      {
+        "index": 13,
+        "sura": 2,
+        "aya": 84
+      },
+      {
+        "index": 14,
+        "sura": 2,
+        "aya": 89
+      },
+      {
+        "index": 15,
+        "sura": 2,
+        "aya": 94
+      },
+      {
+        "index": 16,
+        "sura": 2,
+        "aya": 102
+      },
+      {
+        "index": 17,
+        "sura": 2,
+        "aya": 106
+      },
+      {
+        "index": 18,
+        "sura": 2,
+        "aya": 113
+      },
+      {
+        "index": 19,
+        "sura": 2,
+        "aya": 120
+      },
+      {
+        "index": 20,
+        "sura": 2,
+        "aya": 127
+      },
+      {
+        "index": 21,
+        "sura": 2,
+        "aya": 135
+      },
+      {
+        "index": 22,
+        "sura": 2,
+        "aya": 142
+      },
+      {
+        "index": 23,
+        "sura": 2,
+        "aya": 146
+      },
+      {
+        "index": 24,
+        "sura": 2,
+        "aya": 154
+      },
+      {
+        "index": 25,
+        "sura": 2,
+        "aya": 164
+      },
+      {
+        "index": 26,
+        "sura": 2,
+        "aya": 170
+      },
+      {
+        "index": 27,
+        "sura": 2,
+        "aya": 177
+      },
+      {
+        "index": 28,
+        "sura": 2,
+        "aya": 182
+      },
+      {
+        "index": 29,
+        "sura": 2,
+        "aya": 187
+      },
+      {
+        "index": 30,
+        "sura": 2,
+        "aya": 191
+      },
+      {
+        "index": 31,
+        "sura": 2,
+        "aya": 197
+      },
+      {
+        "index": 32,
+        "sura": 2,
+        "aya": 203
+      },
+      {
+        "index": 33,
+        "sura": 2,
+        "aya": 211
+      },
+      {
+        "index": 34,
+        "sura": 2,
+        "aya": 216
+      },
+      {
+        "index": 35,
+        "sura": 2,
+        "aya": 220
+      },
+      {
+        "index": 36,
+        "sura": 2,
+        "aya": 225
+      },
+      {
+        "index": 37,
+        "sura": 2,
+        "aya": 231
+      },
+      {
+        "index": 38,
+        "sura": 2,
+        "aya": 234
+      },
+      {
+        "index": 39,
+        "sura": 2,
+        "aya": 238
+      },
+      {
+        "index": 40,
+        "sura": 2,
+        "aya": 246
+      },
+      {
+        "index": 41,
+        "sura": 2,
+        "aya": 249
+      },
+      {
+        "index": 42,
+        "sura": 2,
+        "aya": 253
+      },
+      {
+        "index": 43,
+        "sura": 2,
+        "aya": 257
+      },
+      {
+        "index": 44,
+        "sura": 2,
+        "aya": 260
+      },
+      {
+        "index": 45,
+        "sura": 2,
+        "aya": 265
+      },
+      {
+        "index": 46,
+        "sura": 2,
+        "aya": 270
+      },
+      {
+        "index": 47,
+        "sura": 2,
+        "aya": 275
+      },
+      {
+        "index": 48,
+        "sura": 2,
+        "aya": 282
+      },
+      {
+        "index": 49,
+        "sura": 2,
+        "aya": 283
+      },
+      {
+        "index": 50,
+        "sura": 3,
+        "aya": 1
+      },
+      {
+        "index": 51,
+        "sura": 3,
+        "aya": 10
+      },
+      {
+        "index": 52,
+        "sura": 3,
+        "aya": 16
+      },
+      {
+        "index": 53,
+        "sura": 3,
+        "aya": 23
+      },
+      {
+        "index": 54,
+        "sura": 3,
+        "aya": 30
+      },
+      {
+        "index": 55,
+        "sura": 3,
+        "aya": 38
+      },
+      {
+        "index": 56,
+        "sura": 3,
+        "aya": 46
+      },
+      {
+        "index": 57,
+        "sura": 3,
+        "aya": 53
+      },
+      {
+        "index": 58,
+        "sura": 3,
+        "aya": 62
+      },
+      {
+        "index": 59,
+        "sura": 3,
+        "aya": 71
+      },
+      {
+        "index": 60,
+        "sura": 3,
+        "aya": 78
+      },
+      {
+        "index": 61,
+        "sura": 3,
+        "aya": 84
+      },
+      {
+        "index": 62,
+        "sura": 3,
+        "aya": 92
+      },
+      {
+        "index": 63,
+        "sura": 3,
+        "aya": 101
+      },
+      {
+        "index": 64,
+        "sura": 3,
+        "aya": 109
+      },
+      {
+        "index": 65,
+        "sura": 3,
+        "aya": 116
+      },
+      {
+        "index": 66,
+        "sura": 3,
+        "aya": 122
+      },
+      {
+        "index": 67,
+        "sura": 3,
+        "aya": 133
+      },
+      {
+        "index": 68,
+        "sura": 3,
+        "aya": 141
+      },
+      {
+        "index": 69,
+        "sura": 3,
+        "aya": 149
+      },
+      {
+        "index": 70,
+        "sura": 3,
+        "aya": 154
+      },
+      {
+        "index": 71,
+        "sura": 3,
+        "aya": 158
+      },
+      {
+        "index": 72,
+        "sura": 3,
+        "aya": 166
+      },
+      {
+        "index": 73,
+        "sura": 3,
+        "aya": 174
+      },
+      {
+        "index": 74,
+        "sura": 3,
+        "aya": 181
+      },
+      {
+        "index": 75,
+        "sura": 3,
+        "aya": 187
+      },
+      {
+        "index": 76,
+        "sura": 3,
+        "aya": 195
+      },
+      {
+        "index": 77,
+        "sura": 4,
+        "aya": 1
+      },
+      {
+        "index": 78,
+        "sura": 4,
+        "aya": 7
+      },
+      {
+        "index": 79,
+        "sura": 4,
+        "aya": 12
+      },
+      {
+        "index": 80,
+        "sura": 4,
+        "aya": 15
+      },
+      {
+        "index": 81,
+        "sura": 4,
+        "aya": 20
+      },
+      {
+        "index": 82,
+        "sura": 4,
+        "aya": 24
+      },
+      {
+        "index": 83,
+        "sura": 4,
+        "aya": 27
+      },
+      {
+        "index": 84,
+        "sura": 4,
+        "aya": 34
+      },
+      {
+        "index": 85,
+        "sura": 4,
+        "aya": 38
+      },
+      {
+        "index": 86,
+        "sura": 4,
+        "aya": 45
+      },
+      {
+        "index": 87,
+        "sura": 4,
+        "aya": 52
+      },
+      {
+        "index": 88,
+        "sura": 4,
+        "aya": 60
+      },
+      {
+        "index": 89,
+        "sura": 4,
+        "aya": 66
+      },
+      {
+        "index": 90,
+        "sura": 4,
+        "aya": 75
+      },
+      {
+        "index": 91,
+        "sura": 4,
+        "aya": 80
+      },
+      {
+        "index": 92,
+        "sura": 4,
+        "aya": 87
+      },
+      {
+        "index": 93,
+        "sura": 4,
+        "aya": 92
+      },
+      {
+        "index": 94,
+        "sura": 4,
+        "aya": 95
+      },
+      {
+        "index": 95,
+        "sura": 4,
+        "aya": 102
+      },
+      {
+        "index": 96,
+        "sura": 4,
+        "aya": 106
+      },
+      {
+        "index": 97,
+        "sura": 4,
+        "aya": 114
+      },
+      {
+        "index": 98,
+        "sura": 4,
+        "aya": 122
+      },
+      {
+        "index": 99,
+        "sura": 4,
+        "aya": 128
+      },
+      {
+        "index": 100,
+        "sura": 4,
+        "aya": 135
+      },
+      {
+        "index": 101,
+        "sura": 4,
+        "aya": 141
+      },
+      {
+        "index": 102,
+        "sura": 4,
+        "aya": 148
+      },
+      {
+        "index": 103,
+        "sura": 4,
+        "aya": 155
+      },
+      {
+        "index": 104,
+        "sura": 4,
+        "aya": 163
+      },
+      {
+        "index": 105,
+        "sura": 4,
+        "aya": 171
+      },
+      {
+        "index": 106,
+        "sura": 4,
+        "aya": 176
+      },
+      {
+        "index": 107,
+        "sura": 5,
+        "aya": 3
+      },
+      {
+        "index": 108,
+        "sura": 5,
+        "aya": 6
+      },
+      {
+        "index": 109,
+        "sura": 5,
+        "aya": 10
+      },
+      {
+        "index": 110,
+        "sura": 5,
+        "aya": 14
+      },
+      {
+        "index": 111,
+        "sura": 5,
+        "aya": 18
+      },
+      {
+        "index": 112,
+        "sura": 5,
+        "aya": 24
+      },
+      {
+        "index": 113,
+        "sura": 5,
+        "aya": 32
+      },
+      {
+        "index": 114,
+        "sura": 5,
+        "aya": 37
+      },
+      {
+        "index": 115,
+        "sura": 5,
+        "aya": 42
+      },
+      {
+        "index": 116,
+        "sura": 5,
+        "aya": 46
+      },
+      {
+        "index": 117,
+        "sura": 5,
+        "aya": 51
+      },
+      {
+        "index": 118,
+        "sura": 5,
+        "aya": 58
+      },
+      {
+        "index": 119,
+        "sura": 5,
+        "aya": 65
+      },
+      {
+        "index": 120,
+        "sura": 5,
+        "aya": 71
+      },
+      {
+        "index": 121,
+        "sura": 5,
+        "aya": 77
+      },
+      {
+        "index": 122,
+        "sura": 5,
+        "aya": 83
+      },
+      {
+        "index": 123,
+        "sura": 5,
+        "aya": 90
+      },
+      {
+        "index": 124,
+        "sura": 5,
+        "aya": 96
+      },
+      {
+        "index": 125,
+        "sura": 5,
+        "aya": 104
+      },
+      {
+        "index": 126,
+        "sura": 5,
+        "aya": 109
+      },
+      {
+        "index": 127,
+        "sura": 5,
+        "aya": 114
+      },
+      {
+        "index": 128,
+        "sura": 6,
+        "aya": 1
+      },
+      {
+        "index": 129,
+        "sura": 6,
+        "aya": 9
+      },
+      {
+        "index": 130,
+        "sura": 6,
+        "aya": 19
+      },
+      {
+        "index": 131,
+        "sura": 6,
+        "aya": 28
+      },
+      {
+        "index": 132,
+        "sura": 6,
+        "aya": 36
+      },
+      {
+        "index": 133,
+        "sura": 6,
+        "aya": 45
+      },
+      {
+        "index": 134,
+        "sura": 6,
+        "aya": 53
+      },
+      {
+        "index": 135,
+        "sura": 6,
+        "aya": 60
+      },
+      {
+        "index": 136,
+        "sura": 6,
+        "aya": 69
+      },
+      {
+        "index": 137,
+        "sura": 6,
+        "aya": 74
+      },
+      {
+        "index": 138,
+        "sura": 6,
+        "aya": 82
+      },
+      {
+        "index": 139,
+        "sura": 6,
+        "aya": 91
+      },
+      {
+        "index": 140,
+        "sura": 6,
+        "aya": 95
+      },
+      {
+        "index": 141,
+        "sura": 6,
+        "aya": 102
+      },
+      {
+        "index": 142,
+        "sura": 6,
+        "aya": 111
+      },
+      {
+        "index": 143,
+        "sura": 6,
+        "aya": 119
+      },
+      {
+        "index": 144,
+        "sura": 6,
+        "aya": 125
+      },
+      {
+        "index": 145,
+        "sura": 6,
+        "aya": 132
+      },
+      {
+        "index": 146,
+        "sura": 6,
+        "aya": 138
+      },
+      {
+        "index": 147,
+        "sura": 6,
+        "aya": 143
+      },
+      {
+        "index": 148,
+        "sura": 6,
+        "aya": 147
+      },
+      {
+        "index": 149,
+        "sura": 6,
+        "aya": 152
+      },
+      {
+        "index": 150,
+        "sura": 6,
+        "aya": 158
+      },
+      {
+        "index": 151,
+        "sura": 7,
+        "aya": 1
+      },
+      {
+        "index": 152,
+        "sura": 7,
+        "aya": 12
+      },
+      {
+        "index": 153,
+        "sura": 7,
+        "aya": 23
+      },
+      {
+        "index": 154,
+        "sura": 7,
+        "aya": 31
+      },
+      {
+        "index": 155,
+        "sura": 7,
+        "aya": 38
+      },
+      {
+        "index": 156,
+        "sura": 7,
+        "aya": 44
+      },
+      {
+        "index": 157,
+        "sura": 7,
+        "aya": 52
+      },
+      {
+        "index": 158,
+        "sura": 7,
+        "aya": 58
+      },
+      {
+        "index": 159,
+        "sura": 7,
+        "aya": 68
+      },
+      {
+        "index": 160,
+        "sura": 7,
+        "aya": 74
+      },
+      {
+        "index": 161,
+        "sura": 7,
+        "aya": 82
+      },
+      {
+        "index": 162,
+        "sura": 7,
+        "aya": 88
+      },
+      {
+        "index": 163,
+        "sura": 7,
+        "aya": 96
+      },
+      {
+        "index": 164,
+        "sura": 7,
+        "aya": 105
+      },
+      {
+        "index": 165,
+        "sura": 7,
+        "aya": 121
+      },
+      {
+        "index": 166,
+        "sura": 7,
+        "aya": 131
+      },
+      {
+        "index": 167,
+        "sura": 7,
+        "aya": 138
+      },
+      {
+        "index": 168,
+        "sura": 7,
+        "aya": 144
+      },
+      {
+        "index": 169,
+        "sura": 7,
+        "aya": 150
+      },
+      {
+        "index": 170,
+        "sura": 7,
+        "aya": 156
+      },
+      {
+        "index": 171,
+        "sura": 7,
+        "aya": 160
+      },
+      {
+        "index": 172,
+        "sura": 7,
+        "aya": 164
+      },
+      {
+        "index": 173,
+        "sura": 7,
+        "aya": 171
+      },
+      {
+        "index": 174,
+        "sura": 7,
+        "aya": 179
+      },
+      {
+        "index": 175,
+        "sura": 7,
+        "aya": 188
+      },
+      {
+        "index": 176,
+        "sura": 7,
+        "aya": 196
+      },
+      {
+        "index": 177,
+        "sura": 8,
+        "aya": 1
+      },
+      {
+        "index": 178,
+        "sura": 8,
+        "aya": 9
+      },
+      {
+        "index": 179,
+        "sura": 8,
+        "aya": 17
+      },
+      {
+        "index": 180,
+        "sura": 8,
+        "aya": 26
+      },
+      {
+        "index": 181,
+        "sura": 8,
+        "aya": 34
+      },
+      {
+        "index": 182,
+        "sura": 8,
+        "aya": 41
+      },
+      {
+        "index": 183,
+        "sura": 8,
+        "aya": 46
+      },
+      {
+        "index": 184,
+        "sura": 8,
+        "aya": 53
+      },
+      {
+        "index": 185,
+        "sura": 8,
+        "aya": 62
+      },
+      {
+        "index": 186,
+        "sura": 8,
+        "aya": 70
+      },
+      {
+        "index": 187,
+        "sura": 9,
+        "aya": 1
+      },
+      {
+        "index": 188,
+        "sura": 9,
+        "aya": 7
+      },
+      {
+        "index": 189,
+        "sura": 9,
+        "aya": 14
+      },
+      {
+        "index": 190,
+        "sura": 9,
+        "aya": 21
+      },
+      {
+        "index": 191,
+        "sura": 9,
+        "aya": 27
+      },
+      {
+        "index": 192,
+        "sura": 9,
+        "aya": 32
+      },
+      {
+        "index": 193,
+        "sura": 9,
+        "aya": 37
+      },
+      {
+        "index": 194,
+        "sura": 9,
+        "aya": 41
+      },
+      {
+        "index": 195,
+        "sura": 9,
+        "aya": 48
+      },
+      {
+        "index": 196,
+        "sura": 9,
+        "aya": 55
+      },
+      {
+        "index": 197,
+        "sura": 9,
+        "aya": 62
+      },
+      {
+        "index": 198,
+        "sura": 9,
+        "aya": 69
+      },
+      {
+        "index": 199,
+        "sura": 9,
+        "aya": 73
+      },
+      {
+        "index": 200,
+        "sura": 9,
+        "aya": 80
+      },
+      {
+        "index": 201,
+        "sura": 9,
+        "aya": 87
+      },
+      {
+        "index": 202,
+        "sura": 9,
+        "aya": 94
+      },
+      {
+        "index": 203,
+        "sura": 9,
+        "aya": 100
+      },
+      {
+        "index": 204,
+        "sura": 9,
+        "aya": 107
+      },
+      {
+        "index": 205,
+        "sura": 9,
+        "aya": 112
+      },
+      {
+        "index": 206,
+        "sura": 9,
+        "aya": 118
+      },
+      {
+        "index": 207,
+        "sura": 9,
+        "aya": 123
+      },
+      {
+        "index": 208,
+        "sura": 10,
+        "aya": 1
+      },
+      {
+        "index": 209,
+        "sura": 10,
+        "aya": 7
+      },
+      {
+        "index": 210,
+        "sura": 10,
+        "aya": 15
+      },
+      {
+        "index": 211,
+        "sura": 10,
+        "aya": 21
+      },
+      {
+        "index": 212,
+        "sura": 10,
+        "aya": 26
+      },
+      {
+        "index": 213,
+        "sura": 10,
+        "aya": 34
+      },
+      {
+        "index": 214,
+        "sura": 10,
+        "aya": 43
+      },
+      {
+        "index": 215,
+        "sura": 10,
+        "aya": 54
+      },
+      {
+        "index": 216,
+        "sura": 10,
+        "aya": 62
+      },
+      {
+        "index": 217,
+        "sura": 10,
+        "aya": 71
+      },
+      {
+        "index": 218,
+        "sura": 10,
+        "aya": 79
+      },
+      {
+        "index": 219,
+        "sura": 10,
+        "aya": 89
+      },
+      {
+        "index": 220,
+        "sura": 10,
+        "aya": 98
+      },
+      {
+        "index": 221,
+        "sura": 10,
+        "aya": 107
+      },
+      {
+        "index": 222,
+        "sura": 11,
+        "aya": 6
+      },
+      {
+        "index": 223,
+        "sura": 11,
+        "aya": 13
+      },
+      {
+        "index": 224,
+        "sura": 11,
+        "aya": 20
+      },
+      {
+        "index": 225,
+        "sura": 11,
+        "aya": 29
+      },
+      {
+        "index": 226,
+        "sura": 11,
+        "aya": 38
+      },
+      {
+        "index": 227,
+        "sura": 11,
+        "aya": 46
+      },
+      {
+        "index": 228,
+        "sura": 11,
+        "aya": 54
+      },
+      {
+        "index": 229,
+        "sura": 11,
+        "aya": 63
+      },
+      {
+        "index": 230,
+        "sura": 11,
+        "aya": 72
+      },
+      {
+        "index": 231,
+        "sura": 11,
+        "aya": 82
+      },
+      {
+        "index": 232,
+        "sura": 11,
+        "aya": 89
+      },
+      {
+        "index": 233,
+        "sura": 11,
+        "aya": 98
+      },
+      {
+        "index": 234,
+        "sura": 11,
+        "aya": 109
+      },
+      {
+        "index": 235,
+        "sura": 11,
+        "aya": 118
+      },
+      {
+        "index": 236,
+        "sura": 12,
+        "aya": 5
+      },
+      {
+        "index": 237,
+        "sura": 12,
+        "aya": 15
+      },
+      {
+        "index": 238,
+        "sura": 12,
+        "aya": 23
+      },
+      {
+        "index": 239,
+        "sura": 12,
+        "aya": 31
+      },
+      {
+        "index": 240,
+        "sura": 12,
+        "aya": 38
+      },
+      {
+        "index": 241,
+        "sura": 12,
+        "aya": 44
+      },
+      {
+        "index": 242,
+        "sura": 12,
+        "aya": 53
+      },
+      {
+        "index": 243,
+        "sura": 12,
+        "aya": 64
+      },
+      {
+        "index": 244,
+        "sura": 12,
+        "aya": 70
+      },
+      {
+        "index": 245,
+        "sura": 12,
+        "aya": 79
+      },
+      {
+        "index": 246,
+        "sura": 12,
+        "aya": 87
+      },
+      {
+        "index": 247,
+        "sura": 12,
+        "aya": 96
+      },
+      {
+        "index": 248,
+        "sura": 12,
+        "aya": 104
+      },
+      {
+        "index": 249,
+        "sura": 13,
+        "aya": 1
+      },
+      {
+        "index": 250,
+        "sura": 13,
+        "aya": 6
+      },
+      {
+        "index": 251,
+        "sura": 13,
+        "aya": 14
+      },
+      {
+        "index": 252,
+        "sura": 13,
+        "aya": 19
+      },
+      {
+        "index": 253,
+        "sura": 13,
+        "aya": 29
+      },
+      {
+        "index": 254,
+        "sura": 13,
+        "aya": 35
+      },
+      {
+        "index": 255,
+        "sura": 13,
+        "aya": 43
+      },
+      {
+        "index": 256,
+        "sura": 14,
+        "aya": 6
+      },
+      {
+        "index": 257,
+        "sura": 14,
+        "aya": 11
+      },
+      {
+        "index": 258,
+        "sura": 14,
+        "aya": 19
+      },
+      {
+        "index": 259,
+        "sura": 14,
+        "aya": 25
+      },
+      {
+        "index": 260,
+        "sura": 14,
+        "aya": 34
+      },
+      {
+        "index": 261,
+        "sura": 14,
+        "aya": 43
+      },
+      {
+        "index": 262,
+        "sura": 15,
+        "aya": 1
+      },
+      {
+        "index": 263,
+        "sura": 15,
+        "aya": 16
+      },
+      {
+        "index": 264,
+        "sura": 15,
+        "aya": 32
+      },
+      {
+        "index": 265,
+        "sura": 15,
+        "aya": 52
+      },
+      {
+        "index": 266,
+        "sura": 15,
+        "aya": 71
+      },
+      {
+        "index": 267,
+        "sura": 15,
+        "aya": 91
+      },
+      {
+        "index": 268,
+        "sura": 16,
+        "aya": 7
+      },
+      {
+        "index": 269,
+        "sura": 16,
+        "aya": 15
+      },
+      {
+        "index": 270,
+        "sura": 16,
+        "aya": 27
+      },
+      {
+        "index": 271,
+        "sura": 16,
+        "aya": 35
+      },
+      {
+        "index": 272,
+        "sura": 16,
+        "aya": 43
+      },
+      {
+        "index": 273,
+        "sura": 16,
+        "aya": 55
+      },
+      {
+        "index": 274,
+        "sura": 16,
+        "aya": 65
+      },
+      {
+        "index": 275,
+        "sura": 16,
+        "aya": 73
+      },
+      {
+        "index": 276,
+        "sura": 16,
+        "aya": 80
+      },
+      {
+        "index": 277,
+        "sura": 16,
+        "aya": 88
+      },
+      {
+        "index": 278,
+        "sura": 16,
+        "aya": 94
+      },
+      {
+        "index": 279,
+        "sura": 16,
+        "aya": 103
+      },
+      {
+        "index": 280,
+        "sura": 16,
+        "aya": 111
+      },
+      {
+        "index": 281,
+        "sura": 16,
+        "aya": 119
+      },
+      {
+        "index": 282,
+        "sura": 17,
+        "aya": 1
+      },
+      {
+        "index": 283,
+        "sura": 17,
+        "aya": 8
+      },
+      {
+        "index": 284,
+        "sura": 17,
+        "aya": 18
+      },
+      {
+        "index": 285,
+        "sura": 17,
+        "aya": 28
+      },
+      {
+        "index": 286,
+        "sura": 17,
+        "aya": 39
+      },
+      {
+        "index": 287,
+        "sura": 17,
+        "aya": 50
+      },
+      {
+        "index": 288,
+        "sura": 17,
+        "aya": 59
+      },
+      {
+        "index": 289,
+        "sura": 17,
+        "aya": 67
+      },
+      {
+        "index": 290,
+        "sura": 17,
+        "aya": 76
+      },
+      {
+        "index": 291,
+        "sura": 17,
+        "aya": 87
+      },
+      {
+        "index": 292,
+        "sura": 17,
+        "aya": 97
+      },
+      {
+        "index": 293,
+        "sura": 17,
+        "aya": 105
+      },
+      {
+        "index": 294,
+        "sura": 18,
+        "aya": 5
+      },
+      {
+        "index": 295,
+        "sura": 18,
+        "aya": 16
+      },
+      {
+        "index": 296,
+        "sura": 18,
+        "aya": 21
+      },
+      {
+        "index": 297,
+        "sura": 18,
+        "aya": 28
+      },
+      {
+        "index": 298,
+        "sura": 18,
+        "aya": 35
+      },
+      {
+        "index": 299,
+        "sura": 18,
+        "aya": 46
+      },
+      {
+        "index": 300,
+        "sura": 18,
+        "aya": 54
+      },
+      {
+        "index": 301,
+        "sura": 18,
+        "aya": 62
+      },
+      {
+        "index": 302,
+        "sura": 18,
+        "aya": 75
+      },
+      {
+        "index": 303,
+        "sura": 18,
+        "aya": 84
+      },
+      {
+        "index": 304,
+        "sura": 18,
+        "aya": 98
+      },
+      {
+        "index": 305,
+        "sura": 19,
+        "aya": 1
+      },
+      {
+        "index": 306,
+        "sura": 19,
+        "aya": 12
+      },
+      {
+        "index": 307,
+        "sura": 19,
+        "aya": 26
+      },
+      {
+        "index": 308,
+        "sura": 19,
+        "aya": 39
+      },
+      {
+        "index": 309,
+        "sura": 19,
+        "aya": 52
+      },
+      {
+        "index": 310,
+        "sura": 19,
+        "aya": 65
+      },
+      {
+        "index": 311,
+        "sura": 19,
+        "aya": 77
+      },
+      {
+        "index": 312,
+        "sura": 19,
+        "aya": 96
+      },
+      {
+        "index": 313,
+        "sura": 20,
+        "aya": 13
+      },
+      {
+        "index": 314,
+        "sura": 20,
+        "aya": 38
+      },
+      {
+        "index": 315,
+        "sura": 20,
+        "aya": 52
+      },
+      {
+        "index": 316,
+        "sura": 20,
+        "aya": 65
+      },
+      {
+        "index": 317,
+        "sura": 20,
+        "aya": 77
+      },
+      {
+        "index": 318,
+        "sura": 20,
+        "aya": 88
+      },
+      {
+        "index": 319,
+        "sura": 20,
+        "aya": 99
+      },
+      {
+        "index": 320,
+        "sura": 20,
+        "aya": 114
+      },
+      {
+        "index": 321,
+        "sura": 20,
+        "aya": 126
+      },
+      {
+        "index": 322,
+        "sura": 21,
+        "aya": 1
+      },
+      {
+        "index": 323,
+        "sura": 21,
+        "aya": 11
+      },
+      {
+        "index": 324,
+        "sura": 21,
+        "aya": 25
+      },
+      {
+        "index": 325,
+        "sura": 21,
+        "aya": 36
+      },
+      {
+        "index": 326,
+        "sura": 21,
+        "aya": 45
+      },
+      {
+        "index": 327,
+        "sura": 21,
+        "aya": 58
+      },
+      {
+        "index": 328,
+        "sura": 21,
+        "aya": 73
+      },
+      {
+        "index": 329,
+        "sura": 21,
+        "aya": 82
+      },
+      {
+        "index": 330,
+        "sura": 21,
+        "aya": 91
+      },
+      {
+        "index": 331,
+        "sura": 21,
+        "aya": 102
+      },
+      {
+        "index": 332,
+        "sura": 22,
+        "aya": 1
+      },
+      {
+        "index": 333,
+        "sura": 22,
+        "aya": 6
+      },
+      {
+        "index": 334,
+        "sura": 22,
+        "aya": 16
+      },
+      {
+        "index": 335,
+        "sura": 22,
+        "aya": 24
+      },
+      {
+        "index": 336,
+        "sura": 22,
+        "aya": 31
+      },
+      {
+        "index": 337,
+        "sura": 22,
+        "aya": 39
+      },
+      {
+        "index": 338,
+        "sura": 22,
+        "aya": 47
+      },
+      {
+        "index": 339,
+        "sura": 22,
+        "aya": 56
+      },
+      {
+        "index": 340,
+        "sura": 22,
+        "aya": 65
+      },
+      {
+        "index": 341,
+        "sura": 22,
+        "aya": 73
+      },
+      {
+        "index": 342,
+        "sura": 23,
+        "aya": 1
+      },
+      {
+        "index": 343,
+        "sura": 23,
+        "aya": 18
+      },
+      {
+        "index": 344,
+        "sura": 23,
+        "aya": 28
+      },
+      {
+        "index": 345,
+        "sura": 23,
+        "aya": 43
+      },
+      {
+        "index": 346,
+        "sura": 23,
+        "aya": 60
+      },
+      {
+        "index": 347,
+        "sura": 23,
+        "aya": 75
+      },
+      {
+        "index": 348,
+        "sura": 23,
+        "aya": 90
+      },
+      {
+        "index": 349,
+        "sura": 23,
+        "aya": 105
+      },
+      {
+        "index": 350,
+        "sura": 24,
+        "aya": 1
+      },
+      {
+        "index": 351,
+        "sura": 24,
+        "aya": 11
+      },
+      {
+        "index": 352,
+        "sura": 24,
+        "aya": 21
+      },
+      {
+        "index": 353,
+        "sura": 24,
+        "aya": 28
+      },
+      {
+        "index": 354,
+        "sura": 24,
+        "aya": 32
+      },
+      {
+        "index": 355,
+        "sura": 24,
+        "aya": 37
+      },
+      {
+        "index": 356,
+        "sura": 24,
+        "aya": 44
+      },
+      {
+        "index": 357,
+        "sura": 24,
+        "aya": 54
+      },
+      {
+        "index": 358,
+        "sura": 24,
+        "aya": 59
+      },
+      {
+        "index": 359,
+        "sura": 24,
+        "aya": 62
+      },
+      {
+        "index": 360,
+        "sura": 25,
+        "aya": 3
+      },
+      {
+        "index": 361,
+        "sura": 25,
+        "aya": 12
+      },
+      {
+        "index": 362,
+        "sura": 25,
+        "aya": 21
+      },
+      {
+        "index": 363,
+        "sura": 25,
+        "aya": 33
+      },
+      {
+        "index": 364,
+        "sura": 25,
+        "aya": 44
+      },
+      {
+        "index": 365,
+        "sura": 25,
+        "aya": 56
+      },
+      {
+        "index": 366,
+        "sura": 25,
+        "aya": 68
+      },
+      {
+        "index": 367,
+        "sura": 26,
+        "aya": 1
+      },
+      {
+        "index": 368,
+        "sura": 26,
+        "aya": 20
+      },
+      {
+        "index": 369,
+        "sura": 26,
+        "aya": 40
+      },
+      {
+        "index": 370,
+        "sura": 26,
+        "aya": 61
+      },
+      {
+        "index": 371,
+        "sura": 26,
+        "aya": 84
+      },
+      {
+        "index": 372,
+        "sura": 26,
+        "aya": 112
+      },
+      {
+        "index": 373,
+        "sura": 26,
+        "aya": 137
+      },
+      {
+        "index": 374,
+        "sura": 26,
+        "aya": 160
+      },
+      {
+        "index": 375,
+        "sura": 26,
+        "aya": 184
+      },
+      {
+        "index": 376,
+        "sura": 26,
+        "aya": 207
+      },
+      {
+        "index": 377,
+        "sura": 27,
+        "aya": 1
+      },
+      {
+        "index": 378,
+        "sura": 27,
+        "aya": 14
+      },
+      {
+        "index": 379,
+        "sura": 27,
+        "aya": 23
+      },
+      {
+        "index": 380,
+        "sura": 27,
+        "aya": 36
+      },
+      {
+        "index": 381,
+        "sura": 27,
+        "aya": 45
+      },
+      {
+        "index": 382,
+        "sura": 27,
+        "aya": 56
+      },
+      {
+        "index": 383,
+        "sura": 27,
+        "aya": 64
+      },
+      {
+        "index": 384,
+        "sura": 27,
+        "aya": 77
+      },
+      {
+        "index": 385,
+        "sura": 27,
+        "aya": 89
+      },
+      {
+        "index": 386,
+        "sura": 28,
+        "aya": 6
+      },
+      {
+        "index": 387,
+        "sura": 28,
+        "aya": 14
+      },
+      {
+        "index": 388,
+        "sura": 28,
+        "aya": 22
+      },
+      {
+        "index": 389,
+        "sura": 28,
+        "aya": 29
+      },
+      {
+        "index": 390,
+        "sura": 28,
+        "aya": 36
+      },
+      {
+        "index": 391,
+        "sura": 28,
+        "aya": 44
+      },
+      {
+        "index": 392,
+        "sura": 28,
+        "aya": 51
+      },
+      {
+        "index": 393,
+        "sura": 28,
+        "aya": 60
+      },
+      {
+        "index": 394,
+        "sura": 28,
+        "aya": 71
+      },
+      {
+        "index": 395,
+        "sura": 28,
+        "aya": 78
+      },
+      {
+        "index": 396,
+        "sura": 28,
+        "aya": 85
+      },
+      {
+        "index": 397,
+        "sura": 29,
+        "aya": 7
+      },
+      {
+        "index": 398,
+        "sura": 29,
+        "aya": 15
+      },
+      {
+        "index": 399,
+        "sura": 29,
+        "aya": 24
+      },
+      {
+        "index": 400,
+        "sura": 29,
+        "aya": 31
+      },
+      {
+        "index": 401,
+        "sura": 29,
+        "aya": 39
+      },
+      {
+        "index": 402,
+        "sura": 29,
+        "aya": 46
+      },
+      {
+        "index": 403,
+        "sura": 29,
+        "aya": 53
+      },
+      {
+        "index": 404,
+        "sura": 29,
+        "aya": 64
+      },
+      {
+        "index": 405,
+        "sura": 30,
+        "aya": 6
+      },
+      {
+        "index": 406,
+        "sura": 30,
+        "aya": 16
+      },
+      {
+        "index": 407,
+        "sura": 30,
+        "aya": 25
+      },
+      {
+        "index": 408,
+        "sura": 30,
+        "aya": 33
+      },
+      {
+        "index": 409,
+        "sura": 30,
+        "aya": 42
+      },
+      {
+        "index": 410,
+        "sura": 30,
+        "aya": 51
+      },
+      {
+        "index": 411,
+        "sura": 31,
+        "aya": 1
+      },
+      {
+        "index": 412,
+        "sura": 31,
+        "aya": 12
+      },
+      {
+        "index": 413,
+        "sura": 31,
+        "aya": 20
+      },
+      {
+        "index": 414,
+        "sura": 31,
+        "aya": 29
+      },
+      {
+        "index": 415,
+        "sura": 32,
+        "aya": 1
+      },
+      {
+        "index": 416,
+        "sura": 32,
+        "aya": 12
+      },
+      {
+        "index": 417,
+        "sura": 32,
+        "aya": 21
+      },
+      {
+        "index": 418,
+        "sura": 33,
+        "aya": 1
+      },
+      {
+        "index": 419,
+        "sura": 33,
+        "aya": 7
+      },
+      {
+        "index": 420,
+        "sura": 33,
+        "aya": 16
+      },
+      {
+        "index": 421,
+        "sura": 33,
+        "aya": 23
+      },
+      {
+        "index": 422,
+        "sura": 33,
+        "aya": 31
+      },
+      {
+        "index": 423,
+        "sura": 33,
+        "aya": 36
+      },
+      {
+        "index": 424,
+        "sura": 33,
+        "aya": 44
+      },
+      {
+        "index": 425,
+        "sura": 33,
+        "aya": 51
+      },
+      {
+        "index": 426,
+        "sura": 33,
+        "aya": 55
+      },
+      {
+        "index": 427,
+        "sura": 33,
+        "aya": 63
+      },
+      {
+        "index": 428,
+        "sura": 34,
+        "aya": 1
+      },
+      {
+        "index": 429,
+        "sura": 34,
+        "aya": 8
+      },
+      {
+        "index": 430,
+        "sura": 34,
+        "aya": 15
+      },
+      {
+        "index": 431,
+        "sura": 34,
+        "aya": 23
+      },
+      {
+        "index": 432,
+        "sura": 34,
+        "aya": 32
+      },
+      {
+        "index": 433,
+        "sura": 34,
+        "aya": 40
+      },
+      {
+        "index": 434,
+        "sura": 34,
+        "aya": 49
+      },
+      {
+        "index": 435,
+        "sura": 35,
+        "aya": 4
+      },
+      {
+        "index": 436,
+        "sura": 35,
+        "aya": 12
+      },
+      {
+        "index": 437,
+        "sura": 35,
+        "aya": 19
+      },
+      {
+        "index": 438,
+        "sura": 35,
+        "aya": 31
+      },
+      {
+        "index": 439,
+        "sura": 35,
+        "aya": 39
+      },
+      {
+        "index": 440,
+        "sura": 35,
+        "aya": 45
+      },
+      {
+        "index": 441,
+        "sura": 36,
+        "aya": 13
+      },
+      {
+        "index": 442,
+        "sura": 36,
+        "aya": 28
+      },
+      {
+        "index": 443,
+        "sura": 36,
+        "aya": 41
+      },
+      {
+        "index": 444,
+        "sura": 36,
+        "aya": 55
+      },
+      {
+        "index": 445,
+        "sura": 36,
+        "aya": 71
+      },
+      {
+        "index": 446,
+        "sura": 37,
+        "aya": 1
+      },
+      {
+        "index": 447,
+        "sura": 37,
+        "aya": 25
+      },
+      {
+        "index": 448,
+        "sura": 37,
+        "aya": 52
+      },
+      {
+        "index": 449,
+        "sura": 37,
+        "aya": 77
+      },
+      {
+        "index": 450,
+        "sura": 37,
+        "aya": 103
+      },
+      {
+        "index": 451,
+        "sura": 37,
+        "aya": 127
+      },
+      {
+        "index": 452,
+        "sura": 37,
+        "aya": 154
+      },
+      {
+        "index": 453,
+        "sura": 38,
+        "aya": 1
+      },
+      {
+        "index": 454,
+        "sura": 38,
+        "aya": 17
+      },
+      {
+        "index": 455,
+        "sura": 38,
+        "aya": 27
+      },
+      {
+        "index": 456,
+        "sura": 38,
+        "aya": 43
+      },
+      {
+        "index": 457,
+        "sura": 38,
+        "aya": 62
+      },
+      {
+        "index": 458,
+        "sura": 38,
+        "aya": 84
+      },
+      {
+        "index": 459,
+        "sura": 39,
+        "aya": 6
+      },
+      {
+        "index": 460,
+        "sura": 39,
+        "aya": 11
+      },
+      {
+        "index": 461,
+        "sura": 39,
+        "aya": 22
+      },
+      {
+        "index": 462,
+        "sura": 39,
+        "aya": 32
+      },
+      {
+        "index": 463,
+        "sura": 39,
+        "aya": 41
+      },
+      {
+        "index": 464,
+        "sura": 39,
+        "aya": 48
+      },
+      {
+        "index": 465,
+        "sura": 39,
+        "aya": 57
+      },
+      {
+        "index": 466,
+        "sura": 39,
+        "aya": 68
+      },
+      {
+        "index": 467,
+        "sura": 39,
+        "aya": 75
+      },
+      {
+        "index": 468,
+        "sura": 40,
+        "aya": 8
+      },
+      {
+        "index": 469,
+        "sura": 40,
+        "aya": 17
+      },
+      {
+        "index": 470,
+        "sura": 40,
+        "aya": 26
+      },
+      {
+        "index": 471,
+        "sura": 40,
+        "aya": 34
+      },
+      {
+        "index": 472,
+        "sura": 40,
+        "aya": 41
+      },
+      {
+        "index": 473,
+        "sura": 40,
+        "aya": 50
+      },
+      {
+        "index": 474,
+        "sura": 40,
+        "aya": 59
+      },
+      {
+        "index": 475,
+        "sura": 40,
+        "aya": 67
+      },
+      {
+        "index": 476,
+        "sura": 40,
+        "aya": 78
+      },
+      {
+        "index": 477,
+        "sura": 41,
+        "aya": 1
+      },
+      {
+        "index": 478,
+        "sura": 41,
+        "aya": 12
+      },
+      {
+        "index": 479,
+        "sura": 41,
+        "aya": 21
+      },
+      {
+        "index": 480,
+        "sura": 41,
+        "aya": 30
+      },
+      {
+        "index": 481,
+        "sura": 41,
+        "aya": 39
+      },
+      {
+        "index": 482,
+        "sura": 41,
+        "aya": 47
+      },
+      {
+        "index": 483,
+        "sura": 42,
+        "aya": 1
+      },
+      {
+        "index": 484,
+        "sura": 42,
+        "aya": 11
+      },
+      {
+        "index": 485,
+        "sura": 42,
+        "aya": 16
+      },
+      {
+        "index": 486,
+        "sura": 42,
+        "aya": 23
+      },
+      {
+        "index": 487,
+        "sura": 42,
+        "aya": 32
+      },
+      {
+        "index": 488,
+        "sura": 42,
+        "aya": 45
+      },
+      {
+        "index": 489,
+        "sura": 42,
+        "aya": 52
+      },
+      {
+        "index": 490,
+        "sura": 43,
+        "aya": 11
+      },
+      {
+        "index": 491,
+        "sura": 43,
+        "aya": 23
+      },
+      {
+        "index": 492,
+        "sura": 43,
+        "aya": 34
+      },
+      {
+        "index": 493,
+        "sura": 43,
+        "aya": 48
+      },
+      {
+        "index": 494,
+        "sura": 43,
+        "aya": 61
+      },
+      {
+        "index": 495,
+        "sura": 43,
+        "aya": 74
+      },
+      {
+        "index": 496,
+        "sura": 44,
+        "aya": 1
+      },
+      {
+        "index": 497,
+        "sura": 44,
+        "aya": 19
+      },
+      {
+        "index": 498,
+        "sura": 44,
+        "aya": 40
+      },
+      {
+        "index": 499,
+        "sura": 45,
+        "aya": 1
+      },
+      {
+        "index": 500,
+        "sura": 45,
+        "aya": 14
+      },
+      {
+        "index": 501,
+        "sura": 45,
+        "aya": 23
+      },
+      {
+        "index": 502,
+        "sura": 45,
+        "aya": 33
+      },
+      {
+        "index": 503,
+        "sura": 46,
+        "aya": 6
+      },
+      {
+        "index": 504,
+        "sura": 46,
+        "aya": 15
+      },
+      {
+        "index": 505,
+        "sura": 46,
+        "aya": 21
+      },
+      {
+        "index": 506,
+        "sura": 46,
+        "aya": 29
+      },
+      {
+        "index": 507,
+        "sura": 47,
+        "aya": 1
+      },
+      {
+        "index": 508,
+        "sura": 47,
+        "aya": 12
+      },
+      {
+        "index": 509,
+        "sura": 47,
+        "aya": 20
+      },
+      {
+        "index": 510,
+        "sura": 47,
+        "aya": 30
+      },
+      {
+        "index": 511,
+        "sura": 48,
+        "aya": 1
+      },
+      {
+        "index": 512,
+        "sura": 48,
+        "aya": 10
+      },
+      {
+        "index": 513,
+        "sura": 48,
+        "aya": 16
+      },
+      {
+        "index": 514,
+        "sura": 48,
+        "aya": 24
+      },
+      {
+        "index": 515,
+        "sura": 48,
+        "aya": 29
+      },
+      {
+        "index": 516,
+        "sura": 49,
+        "aya": 5
+      },
+      {
+        "index": 517,
+        "sura": 49,
+        "aya": 12
+      },
+      {
+        "index": 518,
+        "sura": 50,
+        "aya": 1
+      },
+      {
+        "index": 519,
+        "sura": 50,
+        "aya": 16
+      },
+      {
+        "index": 520,
+        "sura": 50,
+        "aya": 36
+      },
+      {
+        "index": 521,
+        "sura": 51,
+        "aya": 7
+      },
+      {
+        "index": 522,
+        "sura": 51,
+        "aya": 31
+      },
+      {
+        "index": 523,
+        "sura": 51,
+        "aya": 52
+      },
+      {
+        "index": 524,
+        "sura": 52,
+        "aya": 15
+      },
+      {
+        "index": 525,
+        "sura": 52,
+        "aya": 32
+      },
+      {
+        "index": 526,
+        "sura": 53,
+        "aya": 1
+      },
+      {
+        "index": 527,
+        "sura": 53,
+        "aya": 27
+      },
+      {
+        "index": 528,
+        "sura": 53,
+        "aya": 45
+      },
+      {
+        "index": 529,
+        "sura": 54,
+        "aya": 7
+      },
+      {
+        "index": 530,
+        "sura": 54,
+        "aya": 28
+      },
+      {
+        "index": 531,
+        "sura": 54,
+        "aya": 50
+      },
+      {
+        "index": 532,
+        "sura": 55,
+        "aya": 17
+      },
+      {
+        "index": 533,
+        "sura": 55,
+        "aya": 41
+      },
+      {
+        "index": 534,
+        "sura": 55,
+        "aya": 68
+      },
+      {
+        "index": 535,
+        "sura": 56,
+        "aya": 17
+      },
+      {
+        "index": 536,
+        "sura": 56,
+        "aya": 51
+      },
+      {
+        "index": 537,
+        "sura": 56,
+        "aya": 77
+      },
+      {
+        "index": 538,
+        "sura": 57,
+        "aya": 4
+      },
+      {
+        "index": 539,
+        "sura": 57,
+        "aya": 12
+      },
+      {
+        "index": 540,
+        "sura": 57,
+        "aya": 19
+      },
+      {
+        "index": 541,
+        "sura": 57,
+        "aya": 25
+      },
+      {
+        "index": 542,
+        "sura": 58,
+        "aya": 1
+      },
+      {
+        "index": 543,
+        "sura": 58,
+        "aya": 7
+      },
+      {
+        "index": 544,
+        "sura": 58,
+        "aya": 12
+      },
+      {
+        "index": 545,
+        "sura": 58,
+        "aya": 22
+      },
+      {
+        "index": 546,
+        "sura": 59,
+        "aya": 4
+      },
+      {
+        "index": 547,
+        "sura": 59,
+        "aya": 10
+      },
+      {
+        "index": 548,
+        "sura": 59,
+        "aya": 17
+      },
+      {
+        "index": 549,
+        "sura": 60,
+        "aya": 1
+      },
+      {
+        "index": 550,
+        "sura": 60,
+        "aya": 6
+      },
+      {
+        "index": 551,
+        "sura": 60,
+        "aya": 12
+      },
+      {
+        "index": 552,
+        "sura": 61,
+        "aya": 6
+      },
+      {
+        "index": 553,
+        "sura": 62,
+        "aya": 1
+      },
+      {
+        "index": 554,
+        "sura": 62,
+        "aya": 9
+      },
+      {
+        "index": 555,
+        "sura": 63,
+        "aya": 5
+      },
+      {
+        "index": 556,
+        "sura": 64,
+        "aya": 1
+      },
+      {
+        "index": 557,
+        "sura": 64,
+        "aya": 10
+      },
+      {
+        "index": 558,
+        "sura": 65,
+        "aya": 1
+      },
+      {
+        "index": 559,
+        "sura": 65,
+        "aya": 6
+      },
+      {
+        "index": 560,
+        "sura": 66,
+        "aya": 1
+      },
+      {
+        "index": 561,
+        "sura": 66,
+        "aya": 8
+      },
+      {
+        "index": 562,
+        "sura": 67,
+        "aya": 1
+      },
+      {
+        "index": 563,
+        "sura": 67,
+        "aya": 13
+      },
+      {
+        "index": 564,
+        "sura": 67,
+        "aya": 27
+      },
+      {
+        "index": 565,
+        "sura": 68,
+        "aya": 16
+      },
+      {
+        "index": 566,
+        "sura": 68,
+        "aya": 43
+      },
+      {
+        "index": 567,
+        "sura": 69,
+        "aya": 9
+      },
+      {
+        "index": 568,
+        "sura": 69,
+        "aya": 35
+      },
+      {
+        "index": 569,
+        "sura": 70,
+        "aya": 11
+      },
+      {
+        "index": 570,
+        "sura": 70,
+        "aya": 40
+      },
+      {
+        "index": 571,
+        "sura": 71,
+        "aya": 11
+      },
+      {
+        "index": 572,
+        "sura": 72,
+        "aya": 1
+      },
+      {
+        "index": 573,
+        "sura": 72,
+        "aya": 14
+      },
+      {
+        "index": 574,
+        "sura": 73,
+        "aya": 1
+      },
+      {
+        "index": 575,
+        "sura": 73,
+        "aya": 20
+      },
+      {
+        "index": 576,
+        "sura": 74,
+        "aya": 18
+      },
+      {
+        "index": 577,
+        "sura": 74,
+        "aya": 48
+      },
+      {
+        "index": 578,
+        "sura": 75,
+        "aya": 20
+      },
+      {
+        "index": 579,
+        "sura": 76,
+        "aya": 6
+      },
+      {
+        "index": 580,
+        "sura": 76,
+        "aya": 26
+      },
+      {
+        "index": 581,
+        "sura": 77,
+        "aya": 20
+      },
+      {
+        "index": 582,
+        "sura": 78,
+        "aya": 1
+      },
+      {
+        "index": 583,
+        "sura": 78,
+        "aya": 31
+      },
+      {
+        "index": 584,
+        "sura": 79,
+        "aya": 16
+      },
+      {
+        "index": 585,
+        "sura": 80,
+        "aya": 1
+      },
+      {
+        "index": 586,
+        "sura": 81,
+        "aya": 1
+      },
+      {
+        "index": 587,
+        "sura": 82,
+        "aya": 1
+      },
+      {
+        "index": 588,
+        "sura": 83,
+        "aya": 7
+      },
+      {
+        "index": 589,
+        "sura": 83,
+        "aya": 35
+      },
+      {
+        "index": 590,
+        "sura": 85,
+        "aya": 1
+      },
+      {
+        "index": 591,
+        "sura": 86,
+        "aya": 1
+      },
+      {
+        "index": 592,
+        "sura": 87,
+        "aya": 16
+      },
+      {
+        "index": 593,
+        "sura": 89,
+        "aya": 1
+      },
+      {
+        "index": 594,
+        "sura": 89,
+        "aya": 24
+      },
+      {
+        "index": 595,
+        "sura": 91,
+        "aya": 1
+      },
+      {
+        "index": 596,
+        "sura": 92,
+        "aya": 15
+      },
+      {
+        "index": 597,
+        "sura": 95,
+        "aya": 1
+      },
+      {
+        "index": 598,
+        "sura": 97,
+        "aya": 1
+      },
+      {
+        "index": 599,
+        "sura": 98,
+        "aya": 8
+      },
+      {
+        "index": 600,
+        "sura": 100,
+        "aya": 10
+      },
+      {
+        "index": 601,
+        "sura": 103,
+        "aya": 1
+      },
+      {
+        "index": 602,
+        "sura": 106,
+        "aya": 1
+      },
+      {
+        "index": 603,
+        "sura": 109,
+        "aya": 1
+      },
+      {
+        "index": 604,
+        "sura": 112,
+        "aya": 1
+      }
+    ],
+    "sajdas": [
+      {
+        "index": 1,
+        "sura": 7,
+        "aya": 206,
+        "type": "recommended"
+      },
+      {
+        "index": 2,
+        "sura": 13,
+        "aya": 15,
+        "type": "recommended"
+      },
+      {
+        "index": 3,
+        "sura": 16,
+        "aya": 50,
+        "type": "recommended"
+      },
+      {
+        "index": 4,
+        "sura": 17,
+        "aya": 109,
+        "type": "recommended"
+      },
+      {
+        "index": 5,
+        "sura": 19,
+        "aya": 58,
+        "type": "recommended"
+      },
+      {
+        "index": 6,
+        "sura": 22,
+        "aya": 18,
+        "type": "recommended"
+      },
+      {
+        "index": 7,
+        "sura": 22,
+        "aya": 77,
+        "type": "recommended"
+      },
+      {
+        "index": 8,
+        "sura": 25,
+        "aya": 60,
+        "type": "recommended"
+      },
+      {
+        "index": 9,
+        "sura": 27,
+        "aya": 26,
+        "type": "recommended"
+      },
+      {
+        "index": 10,
+        "sura": 32,
+        "aya": 15,
+        "type": "obligatory"
+      },
+      {
+        "index": 11,
+        "sura": 38,
+        "aya": 24,
+        "type": "recommended"
+      },
+      {
+        "index": 12,
+        "sura": 41,
+        "aya": 38,
+        "type": "obligatory"
+      },
+      {
+        "index": 13,
+        "sura": 53,
+        "aya": 62,
+        "type": "obligatory"
+      },
+      {
+        "index": 14,
+        "sura": 84,
+        "aya": 21,
+        "type": "recommended"
+      },
+      {
+        "index": 15,
+        "sura": 96,
+        "aya": 19,
+        "type": "obligatory"
+      }
+    ]
+  }
+}

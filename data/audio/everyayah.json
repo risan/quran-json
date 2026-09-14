@@ -1,0 +1,515 @@
+{
+  "ayah_count": [
+    7,
+    286,
+    200,
+    176,
+    120,
+    165,
+    206,
+    75,
+    129,
+    109,
+    123,
+    111,
+    43,
+    52,
+    99,
+    128,
+    111,
+    110,
+    98,
+    135,
+    112,
+    78,
+    118,
+    64,
+    77,
+    227,
+    93,
+    88,
+    69,
+    60,
+    34,
+    30,
+    73,
+    54,
+    45,
+    83,
+    182,
+    88,
+    75,
+    85,
+    54,
+    53,
+    89,
+    59,
+    37,
+    35,
+    38,
+    29,
+    18,
+    45,
+    60,
+    49,
+    62,
+    55,
+    78,
+    96,
+    29,
+    22,
+    24,
+    13,
+    14,
+    11,
+    11,
+    18,
+    12,
+    12,
+    30,
+    52,
+    52,
+    44,
+    28,
+    28,
+    20,
+    56,
+    40,
+    31,
+    50,
+    40,
+    46,
+    42,
+    29,
+    19,
+    36,
+    25,
+    22,
+    17,
+    19,
+    26,
+    30,
+    20,
+    15,
+    21,
+    11,
+    8,
+    8,
+    19,
+    5,
+    8,
+    8,
+    11,
+    11,
+    8,
+    3,
+    9,
+    5,
+    4,
+    7,
+    3,
+    6,
+    3,
+    5,
+    4,
+    5,
+    6
+  ],
+  "recitations": [
+    {
+      "id": "Abdul_Basit_Murattal_64kbps",
+      "name": "Abdul Basit Murattal",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Abdul_Basit_Murattal_192kbps",
+      "name": "Abdul Basit Murattal",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "Abdul_Basit_Mujawwad_128kbps",
+      "name": "Abdul Basit Mujawwad",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Abdullah_Basfar_32kbps",
+      "name": "Abdullah Basfar",
+      "bitrate_kbps": 32
+    },
+    {
+      "id": "Abdullah_Basfar_64kbps",
+      "name": "Abdullah Basfar",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Abdullah_Basfar_192kbps",
+      "name": "Abdullah Basfar",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "Abdurrahmaan_As-Sudais_64kbps",
+      "name": "Abdurrahmaan As-Sudais",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Abdurrahmaan_As-Sudais_192kbps",
+      "name": "Abdurrahmaan As-Sudais",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "AbdulSamad_64kbps_QuranExplorer.Com",
+      "name": "AbdulSamad QuranExplorer.Com",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Abu_Bakr_Ash-Shaatree_64kbps",
+      "name": "Abu Bakr Ash-Shaatree",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Abu_Bakr_Ash-Shaatree_128kbps",
+      "name": "Abu Bakr Ash-Shaatree",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Ahmed_ibn_Ali_al-Ajamy_64kbps_QuranExplorer.Com",
+      "name": "Ahmed ibn Ali al-Ajamy QuranExplorer.Com",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Ahmed_ibn_Ali_al-Ajamy_128kbps_ketaballah.net",
+      "name": "Ahmed ibn Ali al-Ajamy KetabAllah.Net",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Alafasy_64kbps",
+      "name": "Alafasy",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Alafasy_128kbps",
+      "name": "Alafasy",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Ghamadi_40kbps",
+      "name": "Ghamadi",
+      "bitrate_kbps": 40
+    },
+    {
+      "id": "Hani_Rifai_64kbps",
+      "name": "Hani Rifai",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Hani_Rifai_192kbps",
+      "name": "Hani Rifai",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "Husary_64kbps",
+      "name": "Husary",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Husary_128kbps",
+      "name": "Husary",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Husary_Mujawwad_64kbps",
+      "name": "Husary Mujawwad",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Husary_128kbps_Mujawwad",
+      "name": "Husary Mujawwad",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Hudhaify_32kbps",
+      "name": "Hudhaify",
+      "bitrate_kbps": 32
+    },
+    {
+      "id": "Hudhaify_64kbps",
+      "name": "Hudhaify",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Hudhaify_128kbps",
+      "name": "Hudhaify",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Ibrahim_Akhdar_32kbps",
+      "name": "Ibrahim Akhdar",
+      "bitrate_kbps": 32
+    },
+    {
+      "id": "Ibrahim_Akhdar_64kbps",
+      "name": "Ibrahim Akhdar",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Maher_AlMuaiqly_64kbps",
+      "name": "Maher Al Muaiqly",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "MaherAlMuaiqly128kbps",
+      "name": "Maher Al Muaiqly",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Menshawi_16kbps",
+      "name": "Menshawi",
+      "bitrate_kbps": 16
+    },
+    {
+      "id": "Menshawi_32kbps",
+      "name": "Menshawi",
+      "bitrate_kbps": 32
+    },
+    {
+      "id": "Minshawy_Mujawwad_64kbps",
+      "name": "Minshawy Mujawwad",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Minshawy_Mujawwad_192kbps",
+      "name": "Minshawy Mujawwad",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "Minshawy_Murattal_128kbps",
+      "name": "Minshawy Murattal",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Mohammad_al_Tablaway_64kbps",
+      "name": "Mohammad al Tablaway",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Mohammad_al_Tablaway_128kbps",
+      "name": "Mohammad al Tablaway",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Muhammad_Ayyoub_128kbps",
+      "name": "Muhammad Ayyoub",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Muhammad_Ayyoub_64kbps",
+      "name": "Muhammad Ayyoub",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Muhammad_Ayyoub_32kbps",
+      "name": "Muhammad Ayyoub",
+      "bitrate_kbps": 32
+    },
+    {
+      "id": "Muhammad_Jibreel_64kbps",
+      "name": "Muhammad Jibreel",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Muhammad_Jibreel_128kbps",
+      "name": "Muhammad Jibreel",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Mustafa_Ismail_48kbps",
+      "name": "Mustafa Ismail",
+      "bitrate_kbps": 48
+    },
+    {
+      "id": "Saood_ash-Shuraym_64kbps",
+      "name": "Saood bin Ibraaheem Ash-Shuraym",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Saood_ash-Shuraym_128kbps",
+      "name": "Saood bin Ibraaheem Ash-Shuraym",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "English/Sahih_Intnl_Ibrahim_Walk_192kbps",
+      "name": "(English) Translated by Sahih International Recited by Ibrahim Walk",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "MultiLanguage/Basfar_Walk_192kbps",
+      "name": "MultiLanguage/Basfar Walk",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "translations/Makarem_Kabiri_16Kbps",
+      "name": "(Persian) Translated by Makarem Recited by Kabiri",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "translations/Fooladvand_Hedayatfar_40Kbps",
+      "name": "(Persian) Translated by Fooladvand Recited by Hedayatfar",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Parhizgar_48kbps",
+      "name": "Parhizgar_64Kbps",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "translations/azerbaijani/balayev",
+      "name": "Balayev",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Salaah_AbdulRahman_Bukhatir_128kbps",
+      "name": "Salaah AbdulRahman Bukhatir",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Muhsin_Al_Qasim_192kbps",
+      "name": "Muhsin Al Qasim",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "Abdullaah_3awwaad_Al-Juhaynee_128kbps",
+      "name": "Abdullaah 3awwaad Al-Juhaynee",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Salah_Al_Budair_128kbps",
+      "name": "Salah Al Budair",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Abdullah_Matroud_128kbps",
+      "name": "Abdullah Matroud",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Ahmed_Neana_128kbps",
+      "name": "Ahmed Neana",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Muhammad_AbdulKareem_128kbps",
+      "name": "Muhammad AbdulKareem",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "khalefa_al_tunaiji_64kbps",
+      "name": "Khalefa Al-Tunaiji",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "mahmoud_ali_al_banna_32kbps",
+      "name": "Mahmoud Ali Al-Banna",
+      "bitrate_kbps": 32
+    },
+    {
+      "id": "warsh/warsh_ibrahim_aldosary_128kbps",
+      "name": "(Warsh) Ibrahim Al-Dosary",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "warsh/warsh_yassin_al_jazaery_64kbps",
+      "name": "(Warsh) Yassin Al-Jazaery",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "warsh/warsh_Abdul_Basit_128kbps",
+      "name": "(Warsh) Abdul Basit",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "translations/urdu_shamshad_ali_khan_46kbps",
+      "name": "(Urdu) Shamshad Ali Khan",
+      "bitrate_kbps": 46
+    },
+    {
+      "id": "Karim_Mansoori_40kbps",
+      "name": "Karim Mansoori (Iran)",
+      "bitrate_kbps": 40
+    },
+    {
+      "id": "Husary_Muallim_128kbps",
+      "name": "Husary (Muallim)",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Khaalid_Abdullaah_al-Qahtaanee_192kbps",
+      "name": "Khalid Abdullah al-Qahtanee",
+      "bitrate_kbps": 192
+    },
+    {
+      "id": "Yasser_Ad-Dussary_128kbps",
+      "name": "Yasser_Ad-Dussary",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Nasser_Alqatami_128kbps",
+      "name": "Nasser_Alqatami",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Ali_Hajjaj_AlSuesy_128kbps",
+      "name": "Ali_Hajjaj_AlSuesy",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Sahl_Yassin_128kbps",
+      "name": "Sahl_Yassin",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "ahmed_ibn_ali_al_ajamy_128kbps",
+      "name": "Ahmed Ibn Ali Al Ajamy",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "translations/besim_korkut_ajet_po_ajet",
+      "name": "Besim Korkut (Bosnian)",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "aziz_alili_128kbps",
+      "name": "Aziz Alili",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Yaser_Salamah_128kbps",
+      "name": "Yaser Salamah",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Akram_AlAlaqimy_128kbps",
+      "name": "Akram Al Alaqimy",
+      "bitrate_kbps": 128
+    },
+    {
+      "id": "Ali_Jaber_64kbps",
+      "name": "Ali Jaber",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "Fares_Abbad_64kbps",
+      "name": "Fares Abbad",
+      "bitrate_kbps": 64
+    },
+    {
+      "id": "translations/urdu_farhat_hashmi",
+      "name": "Farhat Hashmi (Urdu word for word translation)",
+      "bitrate_kbps": 32
+    },
+    {
+      "id": "Ayman_Sowaid_64kbps",
+      "name": "Ayman Sowaid",
+      "bitrate_kbps": 64
+    }
+  ]
+}
