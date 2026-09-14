@@ -12,9 +12,6 @@ provenance.
 
 from __future__ import annotations
 
-import io
-import sqlite3
-import zipfile
 from typing import Any
 
 from . import config
@@ -50,7 +47,18 @@ def parse_catalogue(raw: bytes) -> dict[str, Any]:
 
 
 def parse_translation(raw: bytes) -> dict[str, list[dict[str, Any]]]:
-    """Extract one translation's verses from its zipped SQLite database."""
+    """Extract one translation's verses from its zipped SQLite database.
+
+    `io`, `zipfile` and `sqlite3` are imported here rather than at module scope because
+    this is the only function that needs them, and `catalogue_editions` is imported on the
+    render path. Importing `sqlite3` there would hard-fail on any interpreter built without
+    the SQLite extension -- notably Cloudflare's build image, whose CPython 3.13 has no
+    `_sqlite3` -- even though rendering only reads the already-parsed JSON snapshots.
+    """
+    import io
+    import sqlite3
+    import zipfile
+
     with zipfile.ZipFile(io.BytesIO(raw)) as archive:
         member = next((name for name in archive.namelist() if name.endswith(".sqlite")), None)
         if member is None:

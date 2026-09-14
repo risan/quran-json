@@ -75,7 +75,7 @@ def cdn(
         bool, typer.Option("--audio/--no-audio", help="Include the audio reciter index.")
     ] = True,
 ) -> None:
-    """Render the version-pinned site deployed to Cloudflare Pages."""
+    """Render the version-pinned site deployed to Cloudflare Workers."""
     withheld = build_site(
         out,
         version=version,
