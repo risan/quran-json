@@ -11,7 +11,7 @@ on:
     tags: ["v*"]
 
 jobs:
-  pages:
+  workers:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -34,9 +34,9 @@ jobs:
       - name: render the site
         run: uv run quran-json cdn --version "${{ steps.version.outputs.value }}"
 
-      - name: deploy to Cloudflare Pages
+      - name: deploy to Cloudflare Workers
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy cdn --project-name=quran-json
+          command: deploy

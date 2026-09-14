@@ -1,5 +1,13 @@
 {
+  // Serves the generated CDN tree as Workers static assets.
+  //
+  // `uv run quran-json cdn` renders ./cdn before deploy; the directory is gitignored, so
+  // it must be built in the same run. CORS and the /latest redirect come from the
+  // generated _headers and _redirects files inside that directory, both of which Workers
+  // static assets parses natively.
   "name": "quran-json",
-  "pages_build_output_dir": "cdn",
-  "compatibility_date": "2026-09-14"
+  "compatibility_date": "2026-09-14",
+  "assets": {
+    "directory": "./cdn"
+  }
 }
