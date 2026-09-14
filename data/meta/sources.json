@@ -250,7 +250,7 @@
     "license_url": "https://everyayah.com/data/",
     "sha256": "51d6b0eabf67fb0a0050c1ea839c11792413985061d6f29a37989532aac175e8",
     "bytes": 10167,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/audio/mp3quran.json",
@@ -261,7 +261,7 @@
     "license_url": "https://mp3quran.net/eng/",
     "sha256": "bb3a03a4e36e7d9ef39119f39943c5acc70dd57f2ee5b1c9c121083cdfe4dc76",
     "bytes": 63563,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/audio/islamic_network_by_ayah.json",
@@ -272,7 +272,7 @@
     "license_url": "https://islamic.network/",
     "sha256": "4b127658bbf20d73b8fae355f20c2aff5c70fc4c063bec5e8c139a26f9451e98",
     "bytes": 2298,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/audio/islamic_network_by_surah.json",
@@ -283,7 +283,7 @@
     "license_url": "https://islamic.network/",
     "sha256": "f41562f8168182c83a9918cec7f7a509aee72a09414f18bf6fddfbab370506fb",
     "bytes": 5621,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/tanzil/uthmani.json",
@@ -294,6 +294,17 @@
     "license_url": "https://tanzil.net/docs/text_license",
     "sha256": "adaebb377c60eba1bab6ef652959c7a0b4ccb4d0ca42145945c14ecdbeb4b761",
     "bytes": 1764243,
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+  },
+  {
+    "path": "data/tanzil/uthmani-min.json",
+    "url": "https://tanzil.net/pub/download/index.php?quranType=uthmani-min&outType=txt-2&agree=true",
+    "source": "tanzil.net",
+    "license": "Tanzil Quran Text / Copyright (C) 2007-2021 Tanzil Project / Creative Commons Attribution 3.0. Permission is granted to copy and distribute verbatim copies of this text, but CHANGING IT IS NOT ALLOWED.",
+    "license_status": "granted",
+    "license_url": "https://tanzil.net/docs/text_license",
+    "sha256": "ea44601cb1c17c03461daa1d2c37328778312007f449938e9038f9dbd010015a",
+    "bytes": 1566173,
     "revision": ""
   },
   {
@@ -305,6 +316,39 @@
     "license_url": "https://tanzil.net/docs/text_license",
     "sha256": "703246a73a0a3d57f721b02e3edad9a2ee6831b79f49ffb9513ddfe99a65b801",
     "bytes": 1731456,
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+  },
+  {
+    "path": "data/tanzil/simple-plain.json",
+    "url": "https://tanzil.net/pub/download/index.php?quranType=simple-plain&outType=txt-2&agree=true",
+    "source": "tanzil.net",
+    "license": "Tanzil Quran Text / Copyright (C) 2007-2021 Tanzil Project / Creative Commons Attribution 3.0. Permission is granted to copy and distribute verbatim copies of this text, but CHANGING IT IS NOT ALLOWED.",
+    "license_status": "granted",
+    "license_url": "https://tanzil.net/docs/text_license",
+    "sha256": "bdd73303ff6ba9818333566f6715dec7bf85c3f8597045315b6da43fdf99cb62",
+    "bytes": 1737856,
+    "revision": ""
+  },
+  {
+    "path": "data/tanzil/simple-min.json",
+    "url": "https://tanzil.net/pub/download/index.php?quranType=simple-min&outType=txt-2&agree=true",
+    "source": "tanzil.net",
+    "license": "Tanzil Quran Text / Copyright (C) 2007-2021 Tanzil Project / Creative Commons Attribution 3.0. Permission is granted to copy and distribute verbatim copies of this text, but CHANGING IT IS NOT ALLOWED.",
+    "license_status": "granted",
+    "license_url": "https://tanzil.net/docs/text_license",
+    "sha256": "f3d7cbec3d38c6a80d5b1db86447d2520399bd3ac061a6e1d2f885aa5c8bf501",
+    "bytes": 1560578,
+    "revision": ""
+  },
+  {
+    "path": "data/tanzil/simple-clean.json",
+    "url": "https://tanzil.net/pub/download/index.php?quranType=simple-clean&outType=txt-2&agree=true",
+    "source": "tanzil.net",
+    "license": "Tanzil Quran Text / Copyright (C) 2007-2021 Tanzil Project / Creative Commons Attribution 3.0. Permission is granted to copy and distribute verbatim copies of this text, but CHANGING IT IS NOT ALLOWED.",
+    "license_status": "granted",
+    "license_url": "https://tanzil.net/docs/text_license",
+    "sha256": "c073e908f5ca16978328652d38648e65c15c69f4ea15c5392056c226339eacfa",
+    "bytes": 1174536,
     "revision": ""
   },
   {
@@ -316,7 +360,7 @@
     "license_url": "https://tanzil.net/docs/text_license",
     "sha256": "5b18adae945fcb6f9fbb865dd7dc596f89a63607a4e6617ca9e37f7f10d3386b",
     "bytes": 89238,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/catalogue.json",
@@ -327,7 +371,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "74fc274893dbf2eec954eddf733c47248d4636c1a06b463b725606921d4123e4",
     "bytes": 30927,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/english_itani.json",
@@ -338,7 +382,7 @@
     "license_url": "https://blog.clearquran.com/download",
     "sha256": "9d481234acb116e850d8b6953e105959bfcf9cb51426762ce8ed9f6d11554b18",
     "bytes": 978906,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/english_itani_allah.json",
@@ -349,7 +393,7 @@
     "license_url": "https://blog.clearquran.com/download",
     "sha256": "2e5d4d9fc7ee9cad5ed3fc0691d8e398c6f943a9ab7fe49ac515961abf5250ed",
     "bytes": 984308,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/english_pickthall.json",
@@ -360,7 +404,7 @@
     "license_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-mohammedmarmadu.json",
     "sha256": "f93ecb2a50578c9cc4e5b89630e79fa9bcdd1d289b1a858f2aedf5aa55e8194a",
     "bytes": 1040215,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/english_yusuf_ali.json",
@@ -371,7 +415,7 @@
     "license_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-abdullahyusufal.json",
     "sha256": "91ce211ba23e24c33160c40e0529a9cd54f1f97849012ff4f665775ac17a7e3c",
     "bytes": 1114620,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/english_palmer.json",
@@ -382,7 +426,7 @@
     "license_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-edwardhenrypalm.json",
     "sha256": "20fcf43088786766d891b1c38d199a9cf9fd4f3b3a02a8c53ea4013ddf70b73e",
     "bytes": 990908,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/english_sale.json",
@@ -393,7 +437,7 @@
     "license_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-georgesale.json",
     "sha256": "e010728a306cdab42c61144c180166ab49c6183b16368c28b207d81a65919861",
     "bytes": 1145186,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/russian_sablukov.json",
@@ -404,7 +448,7 @@
     "license_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/rus-gordysemyonovic.json",
     "sha256": "5615a38bc8f721e55e27ac92110e1545f4acab02618c1d78be46846f6a0eaad3",
     "bytes": 1567626,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/extra/russian_krachkovsky.json",
@@ -415,7 +459,7 @@
     "license_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/rus-ignatyyulianovi.json",
     "sha256": "158217efa011b7b656378893ed4aafb36eea702f313642894a7602ef24479eb7",
     "bytes": 1467292,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/english_rwwad.json",
@@ -426,7 +470,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d5b599f24bc48b9759e9737afb1cb84aebc68070aa618e3afdf553857b1c7763",
     "bytes": 1337992,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/english_saheeh.json",
@@ -437,7 +481,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "c12b5bed64837cb744e075fdd3b79f885aee1522d92468f36c38ff565bfdc439",
     "bytes": 1317330,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/english_hilali_khan.json",
@@ -448,7 +492,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ec5c98ca82f3bd65995b0702c7a00ab1f6689d34056f9d157eb4750545170515",
     "bytes": 1782630,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/french_rashid.json",
@@ -459,7 +503,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "1f02ad33e5a6b959fe4133a95017c343633d2b2dd82e5411837ce174246d4778",
     "bytes": 1424575,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/french_montada.json",
@@ -470,7 +514,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ce010ea175f02d592dc76e8c066b58e5d600061c86999c00d1da9d2fcea675ad",
     "bytes": 1325634,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/spanish_garcia.json",
@@ -481,7 +525,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "29a5896209b2d8e5ec04b42f3fda559a55b085bcd0402c66872c53398ba3b9ea",
     "bytes": 1383560,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/spanish_montada_eu.json",
@@ -492,7 +536,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "34dea6ef3c1f8e5a5da694d8009bd22a5596be26b6f75ff350ad07eb3e181c87",
     "bytes": 1592364,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/spanish_montada_latin.json",
@@ -503,7 +547,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8192983af4d381ffc5d7d854aa5f10cb8aa0c29edcf4417dab1a2c3e29eb4b52",
     "bytes": 1614987,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/portuguese_nasr.json",
@@ -514,7 +558,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d1791cc14a64a703f3a537f75440cd0cd4f5ffd875577e0fc8dcd982e275e9d3",
     "bytes": 1384943,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/german_rwwad.json",
@@ -525,7 +569,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "b67353a2e936cffdd62095a5a91d1d566b30ae1c7c605ec74ab7a10a33be4464",
     "bytes": 1220713,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/german_bubenheim.json",
@@ -536,7 +580,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "84e47c93b693d61cfdfaf107e6a0f4e53373ae2c303802f7016165de250dccee",
     "bytes": 1163618,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/romanian_project.json",
@@ -547,7 +591,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "e806647f92a16e1c662f5553220a20784a43d38f6e5f27b43ab738fe829a19b0",
     "bytes": 1300333,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/dutch_center.json",
@@ -558,7 +602,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "312c580d2edf99b157d04d7d723fc867b2844cd3dfb7f3eea5c0b3b897343aa7",
     "bytes": 1263346,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/swedish_rwwad.json",
@@ -569,7 +613,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "026bdbdd26ead591c6832f8d1b5d92a2acee327721700346c63826b7404df08a",
     "bytes": 1073084,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/turkish_rwwad.json",
@@ -580,7 +624,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a12c7e334500160b3234fc4129e32498faabe2c0d6f1e91a04f71cfcd72d2ab2",
     "bytes": 1101265,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/turkish_shaban.json",
@@ -591,7 +635,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8ba50b4394e6d2f69f91d6a0aa9f35da805752dabe9ae12987f17ad5cca86295",
     "bytes": 1042238,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/turkish_shahin.json",
@@ -602,7 +646,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "681d48b91b93c122e383ecc7d05c80555bdd63a0487a2bb081866ea5a10dd70a",
     "bytes": 1134396,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/azeri_musayev.json",
@@ -613,7 +657,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8b6cfd8d22ce719b582b3efb652fe4df85f90baa9e6635779641b438d82a7eeb",
     "bytes": 1196510,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/macedonian_group.json",
@@ -624,7 +668,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "6cc4acd8bedb873c4b322989469e98072b3b50e61a449cd416771d51283ead38",
     "bytes": 1730180,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/albanian_rwwad.json",
@@ -635,7 +679,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9aeb4c96b9c41e1f85936d0020f2f65973abf6c366d8bd56d5bd5023926c4874",
     "bytes": 1120210,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/albanian_nahi.json",
@@ -646,7 +690,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "edec15720e4fdae9e4a330f7b0e61e1bd007378547ab974bb9a8bc4102e2b735",
     "bytes": 1238809,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/bosnian_rwwad.json",
@@ -657,7 +701,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a379ccf6ef8fe3458cfe2c6fa12dcc931e604901cc0431a4b9dc2422d88f4248",
     "bytes": 999367,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/bosnian_mihanovich.json",
@@ -668,7 +712,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "78c70bfb5427543a02b2131bf1b9397a3fc7bd43a7cb6d6f614509b44c6ec838",
     "bytes": 986618,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/serbian_rwwad.json",
@@ -679,7 +723,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "05d251bbb20d7f4ba50a6be3da9714510529ebc830caba736c064c29f724bec6",
     "bytes": 1530903,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/croatian_rwwad.json",
@@ -690,7 +734,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "cf8403e576537fc453dbe2aa8eccfc4a1f53e1f99e44bb50654d2a73b760043b",
     "bytes": 994035,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/lithuanian_rwwad.json",
@@ -701,7 +745,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "26157a508ec4570fa517f889dbd4e27eb240ec0328c36345edffd971bd880611",
     "bytes": 1405014,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/uzbek_rwwad.json",
@@ -712,7 +756,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f3215e5a75066a246013563a75164d59e3a91de13fc7f867fc4433a4c90b4bbb",
     "bytes": 1665087,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/uzbek_mansour.json",
@@ -723,7 +767,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "acdbe3490aacb1a4f9febc7778a16bf2b5925c2ca70306d0ec19d088577d11cb",
     "bytes": 2763149,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/tajik_arifi.json",
@@ -734,7 +778,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "11329e74aea3ba4768b569d4c4daaeeb91c1681ba3dac97c8299c25c7dfe5470",
     "bytes": 1995478,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/kyrgyz_hakimov.json",
@@ -745,7 +789,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "1dee95fc0add04fb924ce5c974e303a4c08533fa49753097ff0e3dc8bbd2c1c9",
     "bytes": 2603619,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/indonesian_sabiq.json",
@@ -756,7 +800,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "20b2414625991dd95b8a6922e23f4186da48dda4a7940cffec38b863b4a72e9e",
     "bytes": 1497326,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/indonesian_affairs.json",
@@ -767,7 +811,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "5990a1522965daef7fd721d21e4f9c3d7ac77404060cf1343a8fedc07cc72406",
     "bytes": 1465306,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/indonesian_complex.json",
@@ -778,7 +822,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "10e943dc82ed31757165f97f3590897b51913a9d7eeaf4ec1e6af96667f3321b",
     "bytes": 1639666,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/tagalog_rwwad.json",
@@ -789,7 +833,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "aa4f270b81a6496dbfee473ab4d00f9d09750bdb0531ac68e393eea3f47c0168",
     "bytes": 1344443,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/bisayan_rwwad.json",
@@ -800,7 +844,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "954cb0cfb90ec015f3e8048e2f09f8d52d99576f718e59c870b583d005224243",
     "bytes": 1466823,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/maguindanao_rwwad.json",
@@ -811,7 +855,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d0f7e5eba82475315f29b949cfe9accdf6ac55f799d67d75edc354c7296a79de",
     "bytes": 1194845,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/chinese_suliman.json",
@@ -822,7 +866,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "220752d594795547d950200cc48c896324f2177e0aeed9a46736718e8e4cca29",
     "bytes": 967561,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/chinese_makin.json",
@@ -833,7 +877,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d784005446da9f1887be6d3999e1fa87dcf47fcc05cbb1841f9095d4bd53559b",
     "bytes": 958986,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/uyghur_saleh.json",
@@ -844,7 +888,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "3e3c33fe3bc0dc7d4fb68d5a082c6ae1e52042373d1b2237c4225e1afef9fb80",
     "bytes": 2334447,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/japanese_saeedsato.json",
@@ -855,7 +899,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "6ceeff9bc3125e480dc3b05c41cf7755f1ba54674b7f341f55074cfe0b963b93",
     "bytes": 2856316,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/vietnamese_rwwad.json",
@@ -866,7 +910,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d9142fc4f0ba0845d8cc4733cbc2a7513e9b3a77a217457a8a21ce7f7f463747",
     "bytes": 1773176,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/thai_rwwad.json",
@@ -877,7 +921,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9557d3166aba98848f6ed63a82369dfa66945af83c1d0a37592e803c0be0c3b2",
     "bytes": 2989527,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/khmer_rwwad.json",
@@ -888,7 +932,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "40fc687c26ee9a1ba9c22c8fd6bb9e3445a1c092ce772fc0c5163ce7fb6a4bd1",
     "bytes": 3491264,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/khmer_cambodia.json",
@@ -899,7 +943,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "fe9da44597ed1eb45a42ea043c17c429b543f463165624a9176fada9d4eafe05",
     "bytes": 3223909,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/persian_ih.json",
@@ -910,7 +954,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "5b21933679d53d34d49e2abc2ce5baf0ce70b0f8deb3e4a02a03f5ba853078c3",
     "bytes": 1791606,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/kurdish_bamoki.json",
@@ -921,7 +965,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "96a8636fce34a718b37e07e68447c0dcf134f637085ecdb4b9a7ee306c060704",
     "bytes": 1864637,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/pashto_rwwad.json",
@@ -932,7 +976,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "2a329924bc034b7cfd40d93055e0a75813bcd15e4665e7a7f53cdde2a191ca39",
     "bytes": 1564684,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/urdu_junagarhi.json",
@@ -943,7 +987,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "2741c0001abbe8a588bb70698383a7d7599af105f4e85a6013265978a2ee307d",
     "bytes": 6090816,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/hindi_omari.json",
@@ -954,7 +998,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ce5463c940e83f6a8e3cefa4d49fac2e30f8aecc1e9805ab7d8daebfe25a0a1a",
     "bytes": 3417003,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/telugu_muhammad.json",
@@ -965,7 +1009,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "0318306db89c11c4b4280abc666b2630688f3c0880c9c2e0e90309019f5fa109",
     "bytes": 4100815,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/gujarati_omari.json",
@@ -976,7 +1020,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f5ffcf684c3a0ef970a2a80af0a844a3e34f38290b66bbf48e04f0fab7bc27ca",
     "bytes": 2506554,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/malayalam_kunhi.json",
@@ -987,7 +1031,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "11b656f1fa0e8831062da0c0dd366a78e5eed9cd284074b56ca8f295a368f76a",
     "bytes": 4384787,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/kannada_hamza.json",
@@ -998,7 +1042,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9b90673c6bd58de81311244cb8af0492819fe596bb31c567812ba6366f95b2f5",
     "bytes": 3089967,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/assamese_rafeeq.json",
@@ -1009,7 +1053,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a1d10870efff6ed9f69e60657ce130c0547250c4a21423ba94353ca43ce077c2",
     "bytes": 2667134,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/punjabi_arif.json",
@@ -1020,7 +1064,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ca4a98de5d363087015065bc47dd8b4998636b5628c44de6a4ae062e7e2fc7fe",
     "bytes": 3095903,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/tamil_omar_brief.json",
@@ -1031,7 +1075,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d46e624a53eb85dc33af06a04063853895054056c58b1a32b9d381acc50010d1",
     "bytes": 3353688,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/tamil_omar.json",
@@ -1042,7 +1086,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f7d2cb8289203036c726b4460e2f9d9b8512f9052146d0f17e85d3a85067c577",
     "bytes": 3714782,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/tamil_baqavi.json",
@@ -1053,7 +1097,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "7eeefbca9ff7b9c9854ede055583e1506ae68e7fd2d2032db5970f9ec5fd6b45",
     "bytes": 3875602,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/sinhalese_mahir.json",
@@ -1064,7 +1108,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "c93c0efbc78a1fa425f1090b9133c19e5706b92a87ccaad4cfca945279c23017",
     "bytes": 2619016,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/swahili_rwwad.json",
@@ -1075,7 +1119,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f506e9f4f0ddb539912075adf6997d266cb501d39073dd654f15af3af81b60c3",
     "bytes": 1024983,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/swahili_barawani.json",
@@ -1086,7 +1130,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "7c2b426183ba6339f04a3cc7602c9913fa97b33f29520314b2a95a08d6f95d1e",
     "bytes": 2743965,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/somali_yacob.json",
@@ -1097,7 +1141,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ef649f183635945a52bde77e56ec164359ffa0ba1da923f84516063b631170fc",
     "bytes": 1320380,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/amharic_zain.json",
@@ -1108,7 +1152,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "dabfe5f6663dd6c7febf3429bc1449b381be20971441f926ac8d8384bf67f18f",
     "bytes": 1626148,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/amharic_sadiq.json",
@@ -1119,7 +1163,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a6997681f253a19dd4d1aff33d14a1d69c84c586a9d5747efffc9cd1d89b30c0",
     "bytes": 1532289,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/yoruba_mikail.json",
@@ -1130,7 +1174,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "6021045bde9b300282d5b33ec4abd7e9b8e6889123a2f561438188cadfec6e1f",
     "bytes": 1932414,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/hausa_gummi.json",
@@ -1141,7 +1185,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "58e5a1a8792e4da8d2266748df835db82fbc79d2ff99bd7ef847744705a58bf1",
     "bytes": 1444862,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/oromo_ababor.json",
@@ -1152,7 +1196,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "31e166682c2617d74844a4f34cb6a911e16d8b47d49c351c6d29904d7eb68322",
     "bytes": 1112189,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/afar_hamza.json",
@@ -1163,7 +1207,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9ca4dc35bb5b4f2f7420fc9ea66ce3a1ae294e3a3ffa4e61db5bb79fce3be9b6",
     "bytes": 1395885,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/ankobambara_dayyan.json",
@@ -1174,7 +1218,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "96a880b3095e032866059892c79564da7f404d67a7eeddffb74fbc4c16af22df",
     "bytes": 1801566,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/kinyarwanda_assoc.json",
@@ -1185,7 +1229,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "267abf6aa99feab90356682fe8e21a26614914e52383908fcfcd731014b62bfa",
     "bytes": 1211050,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/ikirundi_gehiti.json",
@@ -1196,7 +1240,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8abf4f678a66abde4852534b574196ce1a067944e55c0eb2472e60a58a439fa2",
     "bytes": 1851953,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/moore_rwwad.json",
@@ -1207,7 +1251,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "135c518f6bcff8cb27193f32156786b28a8fdf869489a57df553e5b556f44cc3",
     "bytes": 1113202,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/asante_harun.json",
@@ -1218,7 +1262,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8511f1e8aa5b82733e660fbb989e7f6325d913961d2efef9883d521b55c94881",
     "bytes": 1174118,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/fulani_rwwad.json",
@@ -1229,7 +1273,7 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "da57dac461adbc0e8674d1ba71f8f4edc82559bfdedc1e5895b61734e7e820bb",
     "bytes": 1005146,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
     "path": "data/quranenc/lingala_zakaria.json",
@@ -1240,6 +1284,6 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "27dfa05c203a026cd6906e67bc93eefd87adfa19aa268cfbcc72aa25d04759cb",
     "bytes": 1114164,
-    "revision": ""
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   }
 ]

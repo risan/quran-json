@@ -9,7 +9,7 @@ import typer
 
 from . import audio, config, licensing, review, sources
 from .build import build_tree
-from .cdn import DEFAULT_BASE_URL, build_site
+from .cdn import build_site
 
 app = typer.Typer(add_completion=False, help="Build and verify the quran-json dataset.")
 
@@ -55,13 +55,7 @@ def build(
 
 @app.command()
 def cdn(
-    version: Annotated[
-        str, typer.Option("--version", help="Dataset version, used as the URL prefix.")
-    ] = config.DATASET_VERSION,
     out: Annotated[Path, typer.Option("--out", "-o", help="Site output directory.")] = config.CDN,
-    base_url: Annotated[str, typer.Option("--base-url", help="Public site origin.")] = (
-        DEFAULT_BASE_URL
-    ),
     pretty: Annotated[bool, typer.Option("--pretty", help="Indent output by two spaces.")] = False,
     include_unverified_licenses: Annotated[
         bool,
@@ -75,11 +69,9 @@ def cdn(
         bool, typer.Option("--audio/--no-audio", help="Include the audio reciter index.")
     ] = True,
 ) -> None:
-    """Render the version-pinned site deployed to Cloudflare Workers."""
+    """Render the site deployed to Cloudflare Workers."""
     withheld = build_site(
         out,
-        version=version,
-        base_url=base_url,
         pretty=pretty,
         include_unverified_licenses=include_unverified_licenses,
         audio=audio_enabled,
@@ -88,7 +80,7 @@ def cdn(
     for violation in withheld:
         typer.echo(f"withheld (no redistribution grant): {violation}")
 
-    typer.echo(f"built site {out} ({version})")
+    typer.echo(f"built site {out}")
 
 
 @app.command()

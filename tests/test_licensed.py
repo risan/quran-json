@@ -11,8 +11,9 @@ from pathlib import Path
 
 import pytest
 
-from quranjson import config, quranenc
+from quranjson import config
 from quranjson.build import Sources
+from quranjson.cdn import edition_url_key, published_editions
 from quranjson.jsonio import read_json
 
 CHAPTERS = 114
@@ -30,6 +31,20 @@ BASMALA_ASSIMILATED = (
 @pytest.fixture(scope="module")
 def licensed() -> Sources:
     return Sources("licensed")
+
+
+def url_of(edition_lang: str) -> str:
+    """The published path segment for an edition, derived rather than hardcoded."""
+    for edition in published_editions():
+        if edition.lang == edition_lang:
+            return edition_url_key(edition)
+    raise AssertionError(f"{edition_lang} is not published")
+
+
+def published_chapter(cdn_tree: Path, edition_lang: str, chapter: int = 1) -> dict:
+    """One published chapter of one translation."""
+    path = cdn_tree / "translations" / url_of(edition_lang) / "chapters" / f"{chapter}.json"
+    return read_json(path)
 
 
 @pytest.fixture(scope="module")
@@ -136,7 +151,7 @@ def test_public_domain_translations_are_published(cdn_tree: Path) -> None:
         ("english_pickthall", "In the name of Allah, the Beneficent, the Merciful"),
         ("english_yusuf_ali", "In the name of Allah, Most Gracious, Most Merciful"),
     ):
-        chapter = read_json(cdn_tree / "chapters" / key / "1.json")
+        chapter = published_chapter(cdn_tree, key)
 
         assert chapter["verses"][0]["translation"] == opening, key
         assert len(chapter["verses"]) == 7, key
@@ -160,9 +175,10 @@ def test_clearquran_editions_are_published_from_the_translators_own_distribution
 ) -> None:
     """The grant is the translator's (CC BY-ND 4.0), so it travels with his own files."""
     for key in ("english_itani", "english_itani_allah"):
-        chapter = read_json(cdn_tree / "chapters" / key / "1.json")
+        base = cdn_tree / "translations" / url_of(key)
+        chapter = read_json(base / "chapters" / "1.json")
 
-        assert (cdn_tree / f"quran_{key}.json").exists()
+        assert (base / "quran.json").exists()
         assert chapter["verses"][0]["translation"].startswith("In the name of")
         # Verse 0 of the source archive must not leak in as an extra ayah.
         assert [v["id"] for v in chapter["verses"]] == list(range(1, 8))
@@ -172,7 +188,7 @@ def test_published_manifest_declares_every_edition_as_granted(cdn_tree: Path) ->
     manifest = read_json(cdn_tree / "meta" / "sources.json")
 
     assert manifest["text"]["status"] == "granted"
-    assert manifest["text"]["edition"] == "tanzil-uthmani"
+    assert manifest["text"]["scripts"] == list(config.TANZIL_VARIANTS)
     assert manifest["transliteration"]["status"] == "withheld"
 
     editions = manifest["editions"]
@@ -180,18 +196,17 @@ def test_published_manifest_declares_every_edition_as_granted(cdn_tree: Path) ->
     assert {entry["status"] for entry in editions} == {"granted"}
 
     # QuranEnc condition 3: state the version of a republished translation.
-    quranenc_entries = []
-    for entry in editions:
-        if entry["lang"].startswith("english_rwwad") or entry["lang"].startswith("indonesian"):
-            quranenc_entries.append(entry)
+    quranenc_entries = [
+        entry for entry in editions if entry["source"].startswith("https://quranenc.com")
+    ]
 
     assert quranenc_entries
     for entry in quranenc_entries:
-        assert entry["version"] != "n/a", entry["lang"]
+        assert entry["version"] != "n/a", entry["edition"]
 
     for entry in editions:
-        assert entry["license_url"].startswith("https://"), entry["lang"]
-        assert entry["author"].strip(), entry["lang"]
+        assert entry["license_url"].startswith("https://"), entry["edition"]
+        assert entry["author"].strip(), entry["edition"]
 
 
 def test_catalogue_records_language_and_version(catalogue: dict) -> None:
@@ -206,17 +221,6 @@ def test_catalogue_records_language_and_version(catalogue: dict) -> None:
         assert entry["database_url"].startswith("https://"), entry["key"]
 
 
-def test_featured_keys_pick_one_translation_per_language(catalogue: dict) -> None:
-    featured = quranenc.featured_keys(catalogue)
-
-    assert len(featured) == len(set(featured))
-    assert len(featured) == 11
-    assert "english_rwwad" in featured
-
-    langs = [entry["lang"] for entry in catalogue["translations"] if entry["key"] in featured]
-    assert len(langs) == len(set(langs))
-
-
 def test_footnotes_travel_with_the_verse(licensed: Sources, cdn_tree: Path) -> None:
     """QuranEnc grants republication on condition of no deletion."""
     with_notes = [
@@ -225,24 +229,23 @@ def test_footnotes_travel_with_the_verse(licensed: Sources, cdn_tree: Path) -> N
 
     assert with_notes, "expected at least one footnoted verse in Al-Fatiha"
 
-    published = read_json(cdn_tree / "chapters" / "english_rwwad" / "1.json")
+    published = published_chapter(cdn_tree, "english_rwwad")
     assert any("footnotes" in verse for verse in published["verses"])
 
 
-def test_published_verse_index_covers_the_featured_translations(
-    cdn_tree: Path, catalogue: dict
-) -> None:
-    published = read_json(cdn_tree / "verses" / "1.json")
+def test_every_published_edition_has_a_whole_and_a_per_chapter_file(cdn_tree: Path) -> None:
+    """One edition is reachable whole or chapter by chapter, for all 83."""
+    for edition in published_editions():
+        base = cdn_tree / "translations" / edition_url_key(edition)
 
-    assert sorted(published["translations"]) == sorted(quranenc.featured_keys(catalogue))
-    assert "transliteration" not in published
+        assert (base / "quran.json").exists(), edition.lang
+        assert len(read_json(base / "quran.json")) == CHAPTERS, edition.lang
+        assert (base / "chapters" / "1.json").exists(), edition.lang
+        assert (base / "chapters" / f"{CHAPTERS}.json").exists(), edition.lang
 
 
-def test_licensed_tree_publishes_every_translation_per_chapter(cdn_tree: Path) -> None:
-    for key in ("english_rwwad", "urdu_junagarhi", "chinese_suliman"):
-        assert (cdn_tree / "chapters" / key / "1.json").exists()
-        assert (cdn_tree / f"quran_{key}.json").exists()
+def test_no_edition_is_reachable_only_through_the_chapter_tree(cdn_tree: Path) -> None:
+    """The old tree had 75 editions but only 11 of them in the per-verse index."""
+    catalogue = read_json(cdn_tree / "translations" / "index.json")
 
-    # The legacy registry's codes are not edition keys in this generation.
-    assert not (cdn_tree / "chapters" / "en").exists()
-    assert not (cdn_tree / "quran_transliteration.json").exists()
+    assert len(catalogue["editions"]) == len(published_editions()) > 75

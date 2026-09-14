@@ -147,7 +147,7 @@ def licensed_tasks() -> list[FetchTask]:
             license=config.TANZIL_TEXT,
             parse=tanzil.parse_text,
         )
-        for variant in ("uthmani", "simple")
+        for variant in config.TANZIL_VARIANTS
     ]
 
     tasks.append(

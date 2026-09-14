@@ -8,50 +8,89 @@ redistribution.
 
 | | URL | Served by | Cost |
 |---|---|---|---|
-| **Dataset (current)** | `https://quran-json.pages.dev/4.0.0/…` | Cloudflare Pages | Free, unlimited bandwidth |
+| **Dataset (current)** | `https://quran-json.risan.workers.dev/…` | Cloudflare Workers static assets | Free, unlimited bandwidth |
 | Dataset (legacy) | `https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/…` | npm + jsDelivr | Free |
-| Future versions | `https://quran-json.pages.dev/latest/…` | 302 to the newest version | Free |
 
-Cloudflare Pages was chosen over R2 because a per-verse dataset is read-heavy: Pages
-serves static requests with **no quota and no egress charge**, whereas R2 bills Class B
-read operations (10M/month free) and only returns CORS headers for pre-configured
-origins. Pages' one real constraint is **20,000 files per site** — the current tree uses
-15,987, and `Access-Control-Allow-Origin: *` comes from a `_headers` file.
+Cloudflare Workers static assets was chosen over R2 because this dataset is read-heavy:
+static requests carry **no quota and no egress charge**, whereas R2 bills Class B read
+operations (10M/month free) and only returns CORS headers for pre-configured origins.
+`Access-Control-Allow-Origin: *` comes from the generated `_headers` file, which Workers
+parses natively.
 
-**cdnjs was evaluated and rejected.** cdnjs is a curated CDN for *"established libraries
+Two limits matter. **Files: 20,000 per Worker version** on the free plan, 100,000 on paid;
+the tree uses 10,243. **Size: 25 MiB per file**; the largest is 7.1 MiB.
+
+**cdnjs was evaluated and rejected.** It is a curated CDN for *"established libraries
 published through npm or versioned Git repositories"*: its guide explicitly excludes
 *"general-purpose dataset hosting"*, requires ~800 npm downloads/month or ~200 GitHub
-stars, discourages broad file globs, and retains only the **10 most recent versions** —
-fatal for a dataset consumers pin by version. It would also add nothing, because jsDelivr
-already mirrors this npm package. Use jsDelivr for the frozen legacy tree and Cloudflare
-Pages for the new one.
+stars, discourages broad file globs, and retains only the **10 most recent versions**. It
+would also add nothing, because jsDelivr already mirrors this npm package. Use jsDelivr for
+the frozen legacy tree and Cloudflare Workers for the current one.
 
 ## Endpoints
 
-All paths below are relative to `https://quran-json.pages.dev/4.0.0/`.
+All paths are relative to `https://quran-json.risan.workers.dev/`, and none of them carry a
+version.
 
 | Path | Contents |
 |---|---|
-| `quran.json` | All 114 chapters with the Tanzil Uthmani text |
-| `quran_{key}.json` | Text plus one translation (83 available) |
-| `chapters/index.json` | Chapter index |
-| `chapters/{1-114}.json` | One chapter, Tanzil text |
-| `chapters/{key}/{1-114}.json` | One chapter with a translation, including translator footnotes |
-| `chapters/{key}/index.json` | Chapter index for one translation |
-| `verses/{1-6236}.json` | One verse with the featured translations inline |
+| `manifest.json` | Scripts, counts, and pointers |
+| `chapters.json` | Metadata for all 114 chapters |
+| `text/{script}/quran.json` | The whole Quran in one script |
+| `text/{script}/chapters/{1-114}.json` | One chapter in one script |
+| `translations/index.json` | The edition catalogue, with licence and version per entry |
+| `translations/{code}-{slug}/quran.json` | The whole Quran in one translation |
+| `translations/{code}-{slug}/chapters/{1-114}.json` | One chapter in one translation, with footnotes |
 | `audio/reciters.json` | 595 recitations across 3 hosts, as URL templates |
 | `meta/sources.json` | Provenance and license for everything published |
-| `versions.json` | Available dataset versions |
+| `meta/qa.json` | Transcription corrections applied to upstream sources |
 
-A single verse file carries the chapter's `id` and the surah-relative `number`, which is
-exactly what the audio templates need:
+**Six text scripts**, all Tanzil, all complete at 6,236 verses:
+
+| `{script}` | Name | Notes |
+|---|---|---|
+| `uthmani` | Uthmani | Uthmanic orthography, full vocalisation |
+| `uthmani-min` | Uthmani minimal | Uthmanic orthography, reduced marks |
+| `simple` | Imlaei | Modern orthography, full vocalisation, assimilated letters |
+| `simple-plain` | Imlaei plain | Modern orthography, unassimilated letters |
+| `simple-min` | Imlaei minimal | Modern orthography, reduced marks |
+| `simple-clean` | Imlaei unvocalised | Modern orthography, **no vowel marks at all** |
+
+`simple` is an easy trap: it is a different *orthography*, not a lower level of
+vocalisation, and it carries the full set of harakat. Reach for `simple-clean` if you want
+the text without them.
+
+**Translations carry the translation only.** The Arabic is identical across editions, so
+embedding it would have duplicated one 1.7 MB corpus 83 times — 105 MB, a fifth of the old
+deployment. Pair a text file with a translation file instead:
 
 ```js
-const verse = await fetch(`https://quran-json.pages.dev/latest/verses/262.json`).then(r => r.json());
-// verse.text, verse.translations.english_rwwad, verse.chapter.id === 2, verse.number === 255
-
-const audio = `https://everyayah.com/data/Alafasy_128kbps/${String(verse.chapter.id).padStart(3, "0")}${String(verse.number).padStart(3, "0")}.mp3`;
+const [arabic, indonesian] = await Promise.all([
+  fetch("https://quran-json.risan.workers.dev/text/simple-clean/chapters/2.json").then(r => r.json()),
+  fetch("https://quran-json.risan.workers.dev/translations/id-affairs/chapters/2.json").then(r => r.json()),
+]);
+// arabic.verses[254].text === "الله لا إله إلا هو الحي القيوم" (2:255, Ayat al-Kursi)
+// indonesian.verses[254].translation
 ```
+
+Every chapter file numbers its verses `1..total_verses` with the key `id`, which is what the
+audio templates need:
+
+```js
+const audio = `https://everyayah.com/data/Alafasy_128kbps/${String(chapterId).padStart(3, "0")}${String(verseId).padStart(3, "0")}.mp3`;
+```
+
+### Compatibility contract
+
+Unversioned paths only work because they are stable. The rules:
+
+- A published path is **never renamed, removed, or rewritten**. Data paths are cached
+  `immutable` for a year, so a rewrite would strand consumers on stale bytes.
+- **Adding is always fine** — new scripts, editions, and chapters.
+- Correcting the Quran text would be a break, and would require publishing new paths
+  rather than editing existing ones.
+
+`dist/` is the exception: it is frozen and never regenerated.
 
 ## Two generations
 
@@ -60,17 +99,17 @@ reproduced byte-for-byte by `quran-json build` (enforced by `tests/test_parity.p
 consumers pin those URLs. It is **not** regenerated: it contains editions whose licenses
 do not permit redistribution.
 
-| | `dist/` (frozen, 3.1.2) | Published (`latest`, 4.0.0) |
+| | `dist/` (frozen, 3.1.2) | Published (current) |
 |---|---|---|
-| Arabic text | Re-encoded derivative, no upstream license | **Tanzil Uthmani**, CC-BY 3.0 verbatim |
+| Arabic text | Re-encoded derivative, no upstream license | **Six Tanzil scripts**, CC-BY 3.0 verbatim |
 | Chapter metadata | Quran.com API (personal, non-commercial) | **Tanzil `quran-data.xml`**, CC-BY 3.0 |
 | Translations | 11, mostly Tanzil (redistribution not permitted) | **83, all with grants**: 75 QuranEnc + 8 public-domain / author-granted |
 | Transliteration | Yes (Tanzil) | Withheld — no source with a redistribution grant exists (see below) |
 | Per-surah audio | none | 159 editions (Islamic Network), 288 (MP3Quran) |
 | Basmala | Only in 1:1 | Embedded in ayah 1 of every surah except 9 |
-| Verse files | Bengali missing (upstream bug) | Featured translations, Bengali **unavailable** at source |
-| Files | 7,513 | 15,986 |
-| Size | 82 MB | 552 MB |
+| Verse files | Bengali missing (upstream bug) | No per-verse files: a chapter file answers the same question |
+| Files | 7,513 | 10,243 |
+| Size | 82 MB | 317 MB |
 
 The basmala change is the one most likely to surprise a consumer migrating. Tanzil embeds
 it in the opening ayah rather than storing it as chapter metadata, so `2:1` is
@@ -132,7 +171,7 @@ Quranic rhetoric that Gutenberg confirms exactly (*"a wave, above which is a wav
 not corruption. The single true defect — a duplicated fragment in Yusuf Ali 5:94 — is
 restored by `quranjson.qa`, which also **fails the build if upstream ever repairs the text
 itself**, so the patch cannot rot into a double-correction. The record is published at
-`/4.0.0/meta/qa.json`.
+`/meta/qa.json`.
 
 | Source | Status | Evidence |
 |---|---|---|
@@ -233,7 +272,7 @@ serving every pinned URL (it retains fetched files permanently). Do **not**
 
 ```bash
 npm deprecate "quran-json@<=3.1.2" \
-  "Ships translations without redistribution rights and is unmaintained. Use the licensed dataset at https://quran-json.pages.dev/4.0.0/ instead."
+  "Ships translations without redistribution rights and is unmaintained. Use the licensed dataset at https://quran-json.risan.workers.dev/ instead."
 ```
 
 Nothing here publishes to npm on its own, and `package.json` still reads `3.1.2`, so the
@@ -245,7 +284,7 @@ Requires [uv](https://docs.astral.sh/uv/) and Python 3.12+.
 
 ```bash
 uv sync                       # install
-uv run pytest                 # 71 tests: parity, integrity, licensing, audio
+uv run pytest                 # 84 tests: parity, integrity, licensing, layout
 uv run mypy && uv run ruff check .
 
 uv run quran-json licenses    # what may be published, why, and what blocks the rest
@@ -264,22 +303,34 @@ snapshots under `data/`, so they work offline.
 ## Deploying
 
 ```bash
-npx wrangler pages project create quran-json --production-branch main
-uv run quran-json cdn --version 4.0.0
-npx wrangler pages deploy cdn --project-name=quran-json
+uv run quran-json cdn        # render the site into cdn/
+npx wrangler deploy          # reads assets.directory from wrangler.jsonc
 ```
 
-`.github/workflows/deploy.yml` does this on a `v*` tag or manual dispatch; set
-`CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository secrets. Deployments are
-version-pinned (`/4.0.0/…` is cached immutably for a year) with `/latest/` redirecting to
-the newest version, so a new dataset is a new directory rather than a cache-busting
-mutation.
+On Cloudflare, connect the repository to the Worker instead and let it build. The build
+command must be:
+
+```
+curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv sync --locked && uv run quran-json cdn
+```
+
+and the deploy command `npx wrangler deploy`. `cdn/` is gitignored, so it has to be
+generated in the same run — there is nothing committed for a static-only deploy to serve.
+Cloudflare's build image ships Python 3.13, which satisfies `requires-python`; `uv` is not
+in the image, hence the installer. `workers_dev` is enabled and `preview_urls` disabled in
+`wrangler.jsonc`, so each deployment does not publish a second copy of the dataset at an
+unpredictable hostname.
+
+`.github/workflows/deploy.yml` can do the same from GitHub on a `v*` tag or manual
+dispatch; set `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository secrets. Do
+not run both paths at once — they target the same Worker, and the workflow derives the URL
+version from the tag while the Cloudflare build uses the constant.
 
 ## Attribution
 
-Quran text and chapter metadata: [Tanzil.net](https://tanzil.net) (CC-BY 3.0).
-Translations: the publishers credited per edition in `meta/sources.json` via
-[QuranEnc.com](https://quranenc.com). Audio: linked from EveryAyah, Islamic Network, and
+Quran text and chapter metadata: [Tanzil.net](https://tanzil.net) (CC-BY 3.0, six text
+variants published verbatim). Translations: the publishers credited per edition in
+`translations/index.json` and `meta/sources.json` via [QuranEnc.com](https://quranenc.com). Audio: linked from EveryAyah, Islamic Network, and
 MP3Quran; each recitation's rights remain with its reciter.
 
 Project code and the frozen `dist/` tree: [CC BY-SA 4.0](LICENSE.txt).

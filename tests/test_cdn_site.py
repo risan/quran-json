@@ -1,35 +1,41 @@
-"""The generated Cloudflare Pages site: routing rules the CDN depends on.
+"""The generated site's headers, which are the only part a static host must interpret.
 
-`_headers` and `_redirects` are the only parts of the site that cannot be exercised by
-reading a JSON file, so they are pinned here. Verified against `wrangler pages dev`.
+`_headers` cannot be exercised by reading a JSON file, so it is pinned here. Verified
+against `wrangler pages dev`.
 """
 
 from __future__ import annotations
 
-from quranjson.cdn import _HEADERS, _REDIRECTS
+from quranjson.cdn import _HEADERS
 
 
-def test_every_dataset_path_is_cors_readable() -> None:
+def test_every_path_is_cors_readable() -> None:
     """A blanket rule must grant cross-origin reads, or no browser client can use it."""
     assert _HEADERS.startswith("/*")
     assert "Access-Control-Allow-Origin: *" in _HEADERS
 
 
-def test_dataset_paths_are_immutable_cached() -> None:
-    """Version-pinned files never change, so they should cache for a year."""
-    assert "max-age=31536000" in _HEADERS
-    assert "immutable" in _HEADERS
+def test_data_paths_are_cached_immutably() -> None:
+    """Data paths carry no version, so immutable caching rests on the no-rewrite promise.
+
+    Text and translations are each cached for a year; if that promise is broken, a
+    consumer keeps the old bytes for as long as their browser holds them.
+    """
+    for rule in ("/text/*", "/translations/*"):
+        block = _HEADERS.split(rule, 1)[1].split("\n\n", 1)[0]
+        assert "max-age=31536000" in block, rule
+        assert "immutable" in block, rule
 
 
-def test_latest_prefix_redirects_to_the_pinned_version() -> None:
-    """`/latest/...` must land on the version it names, preserving the tail."""
-    rule = _REDIRECTS.format(version="4.0.0")
+def test_the_landing_page_is_not_cached_for_a_year() -> None:
+    """The blanket CORS rule must not accidentally make the HTML immutable too."""
+    root = _HEADERS.split("/*", 1)[1].split("\n\n", 1)[0]
 
-    assert "/latest/* /4.0.0/:splat 302" in rule
+    assert "immutable" not in root
 
 
-def test_bare_latest_also_redirects() -> None:
-    """`/latest` without a trailing path must not silently serve the landing page."""
-    rule = _REDIRECTS.format(version="4.0.0")
+def test_no_redirect_file_is_generated() -> None:
+    """Unversioned paths need no `/latest` indirection."""
+    import quranjson.cdn as cdn
 
-    assert "\n/latest /4.0.0/ 302" in rule
+    assert not hasattr(cdn, "_REDIRECTS")

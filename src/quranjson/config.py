@@ -57,23 +57,6 @@ LANG_CODES: Final = (
 VERSE_LANGS: Final = tuple(lang for lang in LANG_CODES if lang is not None)
 LEGACY_VERSE_LANGS: Final = tuple(LANG_CODES[2:])
 
-#: One translation per language for the licensed generation's per-verse index, in
-#: preference order. Every other QuranEnc translation is still published per chapter.
-FEATURED_LANGS: Final = (
-    "en",
-    "fr",
-    "es",
-    "de",
-    "id",
-    "tr",
-    "ur",
-    "zh",
-    "pt",
-    "fa",
-    "ru",
-    "hi",
-)
-
 DEFAULT_LINK_BASE: Final = "https://cdn.jsdelivr.net/npm/quran-json@{version}/dist/chapters/"
 
 #: Version baked into the frozen `dist/` tree's chapter links. It is the npm package
@@ -197,6 +180,18 @@ TANZIL_VARIANTS: Final = (
     "simple-clean",
 )
 
+#: Human-readable name and description for each text variant, published in the
+#: manifest so consumers can choose without guessing what a Tanzil identifier means.
+SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
+    "uthmani": ("Uthmani", "Uthmanic orthography, full vocalisation"),
+    "uthmani-min": ("Uthmani minimal", "Uthmanic orthography, reduced marks"),
+    "simple": ("Imlaei", "Modern orthography, full vocalisation, assimilated letters"),
+    "simple-plain": ("Imlaei plain", "Modern orthography, unassimilated letters"),
+    "simple-min": ("Imlaei minimal", "Modern orthography, reduced marks"),
+    "simple-clean": ("Imlaei unvocalised", "Modern orthography, no vowel marks at all"),
+}
+
+
 #: Chapter metadata snapshotted from the Quran.com API.
 QURAN_COM_METADATA = License(
     status="restricted",
@@ -301,6 +296,10 @@ class Edition:
     #: How the snapshot is parsed: "quran-api" (JSON, grouped by chapter),
     #: "clearquran" (zip of per-verse text files), or "quranenc" (zip of SQLite).
     kind: str = "quran-api"
+    #: ISO 639 language code used in published URLs, e.g. the `en` in
+    #: `/translations/en-pickthall/`. QuranEnc supplies this authoritatively in its
+    #: catalogue; the extra editions declare it here.
+    code: str = ""
 
     @property
     def redistributable(self) -> bool:
@@ -451,6 +450,7 @@ def extra_edition_path(key: str) -> Path:
 EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     Edition(
         lang="english_itani",
+        code="en",
         slug="clearquran-verse-by-verse",
         author="Talal Itani",
         source="https://www.clearquran.com/downloads/quran-verse-by-verse-text.zip",
@@ -459,6 +459,7 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     ),
     Edition(
         lang="english_itani_allah",
+        code="en",
         slug="clearquran-verse-by-verse-allah",
         author="Talal Itani",
         source=clearquran_url("quran-in-english-clearquran-verse-by-verse-txt-edition-allah.zip"),
@@ -467,6 +468,7 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     ),
     Edition(
         lang="english_pickthall",
+        code="en",
         slug="eng-mohammedmarmadu",
         author="Marmaduke Pickthall (1930)",
         source=f"{QURAN_API_EDITION}/eng-mohammedmarmadu.json",
@@ -474,6 +476,7 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     ),
     Edition(
         lang="english_yusuf_ali",
+        code="en",
         slug="eng-abdullahyusufal",
         author="Abdullah Yusuf Ali (1934)",
         source=f"{QURAN_API_EDITION}/eng-abdullahyusufal.json",
@@ -481,6 +484,7 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     ),
     Edition(
         lang="english_palmer",
+        code="en",
         slug="eng-edwardhenrypalm",
         author="E. H. Palmer (1880)",
         source=f"{QURAN_API_EDITION}/eng-edwardhenrypalm.json",
@@ -488,6 +492,7 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     ),
     Edition(
         lang="english_sale",
+        code="en",
         slug="eng-georgesale",
         author="George Sale (1734)",
         source=f"{QURAN_API_EDITION}/eng-georgesale.json",
@@ -495,6 +500,7 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     ),
     Edition(
         lang="russian_sablukov",
+        code="ru",
         slug="rus-gordysemyonovic",
         author="Gordy Semyonovich Sablukov (1878)",
         source=f"{QURAN_API_EDITION}/rus-gordysemyonovic.json",
@@ -502,6 +508,7 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
     ),
     Edition(
         lang="russian_krachkovsky",
+        code="ru",
         slug="rus-ignatyyulianovi",
         author="Ignaty Yulianovich Krachkovsky (1963)",
         source=f"{QURAN_API_EDITION}/rus-ignatyyulianovi.json",

@@ -102,24 +102,11 @@ def catalogue_editions(catalogue: dict[str, Any]) -> list[config.Edition]:
         config.Edition(
             lang=entry["key"],
             slug=entry["key"],
+            code=entry["lang"],
             author=entry["title"],
             source=f"https://quranenc.com/en/browse/{entry['key']}/",
             license=config.QURANENC,
+            kind="quranenc",
         )
         for entry in catalogue["translations"]
     ]
-
-
-def featured_keys(catalogue: dict[str, Any]) -> tuple[str, ...]:
-    """One representative translation per major language, for the per-verse index.
-
-    `verses/{n}.json` embeds every translation it covers, so covering all 75 would
-    duplicate the whole corpus once more (~141 MB). The full set stays reachable through
-    `chapters/{key}/{n}.json`.
-    """
-    chosen: dict[str, str] = {}
-
-    for entry in catalogue["translations"]:
-        chosen.setdefault(entry["lang"], entry["key"])
-
-    return tuple(chosen[lang] for lang in config.FEATURED_LANGS if lang in chosen)

@@ -1,13 +1,20 @@
 {
-  // Serves the generated CDN tree as Workers static assets.
+  // Serves the generated site as Workers static assets.
   //
   // `uv run quran-json cdn` renders ./cdn before deploy; the directory is gitignored, so
-  // it must be built in the same run. CORS and the /latest redirect come from the
-  // generated _headers and _redirects files inside that directory, both of which Workers
-  // static assets parses natively.
+  // it must be built in the same run. CORS and the caching rules come from the generated
+  // _headers file inside that directory, which Workers static assets parses natively.
+  //
+  // Paths carry no version, so the immutable caching in _headers rests on a promise:
+  // published paths are never renamed, removed, or rewritten.
   "name": "quran-json",
   "compatibility_date": "2026-09-14",
   "assets": {
     "directory": "./cdn"
-  }
+  },
+  // The workers.dev URL is the published origin, so keep it enabled.
+  "workers_dev": true,
+  // Preview URLs publish a complete copy of the dataset at an unpredictable hostname for
+  // every deployment, which adds surface area without adding anything of value.
+  "preview_urls": false
 }
