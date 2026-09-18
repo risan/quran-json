@@ -20,6 +20,19 @@ parses natively.
 Two limits matter. **Files: 20,000 per Worker version** on the free plan, 100,000 on paid;
 the tree uses 10,359. **Size: 25 MiB per file**; the largest is 5.8 MiB.
 
+The published origin is rendered with `--include-unverified-licenses`, so the two Qur'an
+Kemenag editions whose rights are **not** cleared ship despite that. Their catalogue entries
+carry `restricted` and `unknown` rather than a licence claim, so a consumer can see it, and
+dropping the flag from this command reverts the site:
+
+```sh
+curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" \
+  && uv run --locked quran-json cdn --include-unverified-licenses
+```
+
+Cloudflare's Workers Build runs that on every push to `main` — its image ships pip, poetry
+and pipx but no `uv`, hence the install line — and the deploy command then uploads `./cdn`.
+
 **cdnjs was evaluated and rejected.** It is a curated CDN for *"established libraries
 published through npm or versioned Git repositories"*: its guide explicitly excludes
 *"general-purpose dataset hosting"*, requires ~800 npm downloads/month or ~200 GitHub
@@ -41,7 +54,7 @@ version.
 | `translations/index.json` | The edition catalogue, with licence and version per entry |
 | `translations/{code}-{slug}/quran.json` | The whole Quran in one translation |
 | `translations/{code}-{slug}/chapters/{1-114}.json` | One chapter in one translation, with footnotes |
-| `transliteration/index.json` | The romanisation catalogue — empty while nothing is licensed |
+| `transliteration/index.json` | The romanisation catalogue, with its licence status per entry |
 | `transliteration/{key}/quran.json` | The whole Quran in one romanisation |
 | `transliteration/{key}/chapters/{1-114}.json` | One chapter in one romanisation |
 | `audio/reciters.json` | 595 recitations across 3 hosts, as URL templates |
@@ -117,8 +130,8 @@ do not permit redistribution.
 |---|---|---|
 | Arabic text | Re-encoded derivative, no upstream license | **Seven scripts**: six Tanzil, CC-BY 3.0 verbatim, plus the Indonesian standard mushaf from Qur'an Kemenag |
 | Chapter metadata | Quran.com API (personal, non-commercial) | **Tanzil `quran-data.xml`**, CC-BY 3.0 |
-| Translations | 11, mostly Tanzil (redistribution not permitted) | **83, all with grants**: 75 QuranEnc + 8 public-domain / author-granted. Two more are ingested from Qur'an Kemenag and withheld |
-| Transliteration | Yes (Tanzil) | Withheld — no romanisation is licensed, including Qur'an Kemenag's (see below) |
+| Translations | 11, mostly Tanzil (redistribution not permitted) | **84**: 83 with grants (75 QuranEnc + 8 public-domain / author-granted), plus Qur'an Kemenag's Indonesian translation, published on an unverified-licence override and labelled `restricted` |
+| Transliteration | Yes (Tanzil) | **1**: Qur'an Kemenag's romanisation. No romanisation with a grant was found, so it too is published on the override and labelled `unknown` (see below) |
 | Per-surah audio | none | 159 editions (Islamic Network), 288 (MP3Quran) |
 | Basmala | Only in 1:1 | Embedded in ayah 1 of every surah except 9 |
 | Verse files | Bengali missing (upstream bug) | No per-verse files: a chapter file answers the same question |
@@ -266,24 +279,25 @@ clean fix is to deprecate 3.1.2 in favour of the CDN.
 
 ## Transliteration
 
-**Not published: no transliteration was found whose redistribution is granted.** This was
+**No transliteration with a granted redistribution was found.** This was
 researched exhaustively, and the whole readable Latin transliteration space collapses to
 essentially one text (the `Bismi Allahi alrrahmani alrraheemi` family), republished under
 contradictory licence labels. `quran-json licenses` lists every candidate with its blocker;
 `data/meta/licensing-review.json` is the durable record.
 
-Qur'an Kemenag does serve a romanisation beside its text, so one is now **ingested** — all
-6,236 verses, one romanised ayah per verse, `latin` in the API and
-`data/kemenag/quran.json` in this repository. It stays withheld: a romanisation is an
-authored transformation, so the rule that frees the mushaf text does not reach it, and no
-grant is published. Publishing it is `--include-unverified-licenses` away, once the rights
-are cleared.
+Qur'an Kemenag does serve a romanisation beside its text, so one is now **ingested and
+published on an override** — all 6,236 verses, one romanised ayah per verse, `latin` in the
+API and `data/kemenag/quran.json` in this repository. It carries no grant: a romanisation is
+an authored transformation, so the rule that frees the mushaf text does not reach it. The
+site publishes it anyway on `--include-unverified-licenses`, by the owner's decision, and
+its catalogue entry reports `unknown` rather than claiming a licence. Removing the flag
+reverts it.
 
 | Candidate | Status | Blocker |
 |---|---|---|
 | **Pre-1929 public-domain transliteration** | ⛔ None exists | The only pre-1929 "Roman" Qur'an is the 1844/1876 Roman-**Urdu** translation — an Urdu text in Latin letters, not a transliteration of the Arabic |
 | Tanzil `en.transliteration` | ⛔ Restricted | Terms forbid redistribution; their CC-BY notice covers the Arabic text only |
-| **Qur'an Kemenag (LPMQ) `latin` field** | ⚠️ Unknown | An authored romanisation, not the uncopyrightable mushaf text, and no grant is published. Complete at 6,236 verses; ingested, reviewed, and withheld |
+| **Qur'an Kemenag (LPMQ) `latin` field** | ⚠️ Unknown | An authored romanisation, not the uncopyrightable mushaf text, and no grant is published. Complete at 6,236 verses; ingested, reviewed, and published on the override |
 | Islamic Bulletin PDF | ⛔ Restricted | It offers *"free for use to everyone…"* but credits **"The Calgary Islamic Homepage"**, whose archived footer reads **"Copyright 1997 - 2004 … All Rights Reserved"** — the only grant on that text is contradicted by the credited author |
 | Pickthall's bundled transliteration | ⛔ Restricted | By M. A. Haleem Eliasii, first published **1983** — in copyright |
 | QUL / Tarteel | ⚠️ None | Swept **every** resource id: of ~591 resources, 2 have any licence statement and both are restrictive; the rest say *"We don't have copyright information"* |
