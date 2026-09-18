@@ -332,13 +332,18 @@ not delete files, touch `node_modules`, invalidate lockfiles, or change
 serving every pinned URL (it retains fetched files permanently). Do **not**
 `npm unpublish` — that is the destructive action.
 
+The account's two-factor auth is set to *auth-only*, so the write needs a one-time code:
+
 ```bash
-npm deprecate "quran-json@<=3.1.2" \
-  "Ships translations without redistribution rights and is unmaintained. Use the licensed dataset at https://quran-json.risan.workers.dev/ instead."
+npm deprecate "quran-json@<=3.1.2" --otp=<code> \
+  "Ships translations without redistribution rights and is unmaintained. Use the current dataset at https://quran-json.risan.workers.dev/ instead."
 ```
 
-Nothing here publishes to npm on its own, and `package.json` still reads `3.1.2`, so the
-frozen tree's generated `link` fields stay valid.
+The new generation is deliberately **not** published to npm. It is 316 MB against the frozen
+tree's 82 MB; it is unversioned by design, so an npm release would republish the whole
+dataset to change one byte; and the live tree carries two editions whose rights are not
+cleared — the owner's call to serve from their own CDN, not to hand to every `npm install`.
+`package.json` still reads `3.1.2`, so the frozen tree's generated `link` fields stay valid.
 
 ## Development
 
@@ -383,10 +388,10 @@ in the image, hence the installer. `workers_dev` is enabled and `preview_urls` d
 `wrangler.jsonc`, so each deployment does not publish a second copy of the dataset at an
 unpredictable hostname.
 
-`.github/workflows/deploy.yml` can do the same from GitHub on a `v*` tag or manual
-dispatch; set `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` as repository secrets. Do
-not run both paths at once — they target the same Worker, and the workflow derives the URL
-version from the tag while the Cloudflare build uses the constant.
+Deployment happens only through that Cloudflare build. It runs on every push to `main`, so
+there is no GitHub Actions deploy workflow to keep in step with it — there used to be one,
+and it could never have run: the repository has no Cloudflare secrets, and the flag that
+decides whether uncleared editions ship would have lived in two places at once.
 
 ## Attribution
 
