@@ -36,5 +36,7 @@ jobs:
 
       - run: uv run mypy
 
+      # The site is deliberately unversioned: `DATASET_VERSION` is a constant and no
+      # published path carries a version segment, so this only smoke-tests the render.
       - name: build the CDN site
-        run: uv run quran-json cdn --version 4.0.0
+        run: uv run quran-json cdn
