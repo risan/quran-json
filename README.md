@@ -338,8 +338,10 @@ their recordings — which matters for the two hosts whose terms are unstated or
 `data/editions/en.json`, labelled in the original source with *Tanzil's Arabic-text
 licence* — which does not cover translations. Eight further editions are Tanzil-hosted
 and Tanzil forbids their redistribution. The frozen tree is retained for URL stability;
-the published generation does not use any of them. If you control that npm package, the
-clean fix is to deprecate 3.1.2 in favour of the CDN.
+the published generation does not use any of them. Every npm version has since been
+deprecated in favour of the CDN (see [Deprecating the old npm
+package](#deprecating-the-old-npm-package)), so a new install warns before a consumer
+builds on text this project cannot redistribute.
 
 ## What the research found
 
@@ -435,6 +437,19 @@ deliberately fails while no transliteration is licensed.
 
 ## Deprecating the old npm package
 
+**Done, 2026-09-19.** Every published version is deprecated:
+
+```bash
+npm deprecate "quran-json@<=3.1.2" \
+  "Ships translations without redistribution rights and is unmaintained. Use the current dataset at https://quran-json.risan.workers.dev/ instead."
+```
+
+That covers 1.0.0, 1.0.1, 2.0.0, 3.0.0, 3.1.0, 3.1.1 and 3.1.2 — the whole package, `latest`
+included. Verified against the registry rather than `npm view`, whose local cache lags: every
+entry in `https://registry.npmjs.org/quran-json` carries the `deprecated` message, and both
+pinned jsDelivr URLs still answer `206`. Write access needs a one-time code, since the
+account's two-factor auth is set to *auth-only*; add `--otp=<code>`.
+
 `dist/` is unchanged and stays on npm + jsDelivr — do not remove or regenerate it.
 Deprecating it is **non-breaking**: `npm deprecate` only edits registry metadata. It does
 not delete files, touch `node_modules`, invalidate lockfiles, or change
@@ -442,11 +457,10 @@ not delete files, touch `node_modules`, invalidate lockfiles, or change
 serving every pinned URL (it retains fetched files permanently). Do **not**
 `npm unpublish` — that is the destructive action.
 
-The account's two-factor auth is set to *auth-only*, so the write needs a one-time code:
+It is also reversible, should the wording ever need to change:
 
 ```bash
-npm deprecate "quran-json@<=3.1.2" --otp=<code> \
-  "Ships translations without redistribution rights and is unmaintained. Use the current dataset at https://quran-json.risan.workers.dev/ instead."
+npm deprecate "quran-json@<=3.1.2" ""    # clear the notice
 ```
 
 The new generation is deliberately **not** published to npm. It is 330 MB against the frozen
