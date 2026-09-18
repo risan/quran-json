@@ -6,8 +6,11 @@ immediately), and means we are linking to these hosts rather than redistributing
 recordings -- which matters because only some of them grant redistribution.
 
 There is deliberately no per-ayah audio file. Consumers construct the URL from the verse
-they already fetched: `verses/{n}.json` carries `chapter.id` (surah) and `number`
-(surah-relative ayah), which is exactly what both padding schemes need.
+they already fetched: `/text/{script}/chapters/{n}.json` carries the chapter id as the file
+name and each verse's surah-relative `id`, which is what a `surah-relative` host wants; a
+`global-ayah` host wants the verse's number across the whole Quran, which `/chapters.json`
+sums from `total_verses`. Both are published per host as `indexing_mode`, `surah_pad` and
+`ayah_pad`, so a client never has to parse the prose.
 """
 
 from __future__ import annotations
@@ -33,6 +36,9 @@ AUDIO_HOSTS: dict[str, dict[str, Any]] = {
         "home": "https://everyayah.com/",
         "template": "https://everyayah.com/data/{reciter}/{surah:03d}{ayah:03d}.mp3",
         "indexing": "surah-relative ayah, both zero-padded to 3 digits",
+        "indexing_mode": "surah-relative",
+        "surah_pad": 3,
+        "ayah_pad": 3,
         "cors": True,
         "accept_ranges": True,
         "license": config.EVERYAYAH_AUDIO,
@@ -42,6 +48,9 @@ AUDIO_HOSTS: dict[str, dict[str, Any]] = {
         "home": "https://mp3quran.net/eng/",
         "template": "{reciter}{surah:03d}.mp3",
         "indexing": "whole-surah files, surah zero-padded to 3 digits",
+        "indexing_mode": "whole-surah",
+        "surah_pad": 3,
+        "ayah_pad": 0,
         "cors": True,
         "accept_ranges": True,
         "license": config.MP3QURAN_AUDIO,
@@ -52,6 +61,9 @@ AUDIO_HOSTS: dict[str, dict[str, Any]] = {
         "template": "https://cdn.islamic.network/quran/audio/{bitrate}/{reciter}/{ayah}.mp3",
         "surah_template": "https://cdn.islamic.network/quran/audio-surah/{bitrate}/{reciter}/{surah}.mp3",
         "indexing": "per-ayah files use the GLOBAL ayah number 1-6236 (not zero-padded)",
+        "indexing_mode": "global-ayah",
+        "surah_pad": 0,
+        "ayah_pad": 0,
         "cors": False,
         "accept_ranges": True,
         "license": config.ISLAMIC_NETWORK_AUDIO,
@@ -167,6 +179,11 @@ def _host_entry(host: str) -> dict[str, Any]:
         "home": spec["home"],
         "template": spec["template"],
         "indexing": spec["indexing"],
+        # Prose above for a reader, fields here for a client: which ayah number a template
+        # wants, and how wide each placeholder must be padded, without parsing English.
+        "indexing_mode": spec["indexing_mode"],
+        "surah_pad": spec["surah_pad"],
+        "ayah_pad": spec["ayah_pad"],
         "cors": spec["cors"],
         "accept_ranges": spec["accept_ranges"],
         "license_status": spec["license"].status,
@@ -248,9 +265,12 @@ def build_audio_index(out_dir: Path, *, pretty: bool = False) -> dict[str, Any]:
 
     index = {
         "note": (
-            "URL templates only; this project does not host audio. Substitute {reciter} "
-            "from `url` and {surah}/{ayah} from `verses/{n}.json` (`chapter.id` and "
-            "`number`). Placeholders marked :03d are zero-padded to three digits."
+            "URL templates only; this project does not host audio. Substitute {surah} with "
+            "the chapter id and {ayah} with a verse id from "
+            "/text/{script}/chapters/{n}.json -- or, where the host's `indexing_mode` is "
+            "`global-ayah`, with the verse's number across the whole Quran (1-6236), which "
+            "`total_verses` in /chapters.json sums to. `surah_pad` and `ayah_pad` give each "
+            "placeholder's zero-padded width, so no client has to read this sentence."
         ),
         "hosts": {host: _host_entry(host) for host in AUDIO_HOSTS},
         "reciters": reciters,

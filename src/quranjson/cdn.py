@@ -13,8 +13,13 @@ Layout, all unversioned::
     /transliteration/{key}/quran.json
     /transliteration/{key}/chapters/{1-114}.json
     /audio/reciters.json
+    /index.html                                     the documentation page
+    /assets/{base,docs}.css, /assets/site.js
+    /assets/fonts/{amiri,scheherazade-new,noto-naskh-arabic}-regular.woff2
+    /app/index.html                                 the reader app
+    /app/{app,api,store,ui,audio}.js, /app/app.css
+    /app/fonts.json                                 measured font coverage
     /_headers
-    /index.html
 
 Three deliberate choices, each reversing an earlier one:
 
@@ -40,7 +45,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
-from . import config, licensing, qa
+from . import config, licensing, qa, web
 from .jsonio import read_json, write_json
 
 __all__ = [
@@ -81,54 +86,9 @@ _HEADERS = """\
 
 /audio/*
   Cache-Control: public, max-age=3600
-"""
 
-_INDEX = """\
-<!doctype html>
-<html lang="en">
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>quran-json</title>
-<style>
-  body {{ font: 16px/1.6 system-ui, sans-serif; max-width: 46rem; margin: 4rem auto; padding: 0 1rem; }}
-  code, pre {{ font-family: ui-monospace, monospace; background: #f4f4f5; }}
-  code {{ padding: .1rem .3rem; border-radius: 3px; }}
-  pre {{ padding: 1rem; overflow-x: auto; border-radius: 6px; }}
-  th, td {{ text-align: left; padding: .25rem .75rem .25rem 0; }}
-</style>
-<h1>quran-json</h1>
-<p>Quran text and translations in JSON. CORS enabled, no authentication, no rate limit.</p>
-
-<h2>Text</h2>
-<table>
-  <tr><th>Path</th><th>Contents</th></tr>
-  <tr><td><code>/manifest.json</code></td><td>Scripts, counts, and pointers</td></tr>
-  <tr><td><code>/chapters.json</code></td><td>Metadata for all 114 chapters</td></tr>
-  <tr><td><code>/text/{{script}}/quran.json</code></td><td>The whole Quran in one script</td></tr>
-  <tr><td><code>/text/{{script}}/chapters/{{1-114}}.json</code></td><td>One chapter in one script</td></tr>
-</table>
-<p>Scripts: {scripts}.</p>
-
-<h2>Translations</h2>
-<table>
-  <tr><th>Path</th><th>Contents</th></tr>
-  <tr><td><code>/translations/index.json</code></td><td>The edition catalogue</td></tr>
-  <tr><td><code>/translations/{{code}}-{{slug}}/quran.json</code></td><td>The whole Quran in one translation</td></tr>
-  <tr><td><code>/translations/{{code}}-{{slug}}/chapters/{{1-114}}.json</code></td><td>One chapter in one translation</td></tr>
-</table>
-<p>{translations} translations are published, across {languages} languages. Translation
-files carry the translation only; fetch a <code>/text/</code> file for the Arabic.</p>
-
-<h2>Other</h2>
-<table>
-  <tr><th>Path</th><th>Contents</th></tr>
-{extra}
-  <tr><td><code>/meta/sources.json</code></td><td>Provenance and license per dataset</td></tr>
-  <tr><td><code>/meta/qa.json</code></td><td>Transcription corrections applied upstream</td></tr>
-</table>
-
-<p>Paths carry no version. The text is immutable and editions are only ever added, so a
-path published today keeps working; see the README for the compatibility contract.</p>
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
 """
 
 
@@ -339,6 +299,11 @@ def _check_shape(label: str, chapters: list[dict[str, Any]], expected_verses: in
     return verses
 
 
+def _chapter(chapters: list[dict[str, Any]], chapter_id: int) -> dict[str, Any]:
+    """One chapter of an already-rendered scripture, by its id."""
+    return next(chapter for chapter in chapters if chapter["id"] == chapter_id)
+
+
 def _write_jsonl_dir(directory: Path, chapters: list[dict[str, Any]], *, pretty: bool) -> None:
     """Write one file per chapter plus the whole collection, for one scripture."""
     write_json(directory / "quran.json", chapters, pretty=pretty)
@@ -479,11 +444,19 @@ def build_site(
     ]
 
     counts: dict[str, int] = {}
+    corpora: dict[str, list[str]] = {}
+    samples: dict[str, str] = {}
 
     for script in scripts:
         text = _script_chapters(script)
         counts[script] = _check_shape(f"text/{script}", text, config.SCRIPT_VERSES[script])
         _write_jsonl_dir(out_dir / "text" / script, text, pretty=pretty)
+
+        # Kept for two measured outputs: the font coverage report, which needs every
+        # codepoint the script uses, and the documentation page's per-script sample, which
+        # is one verse rendered in that script's default font.
+        corpora[script] = [verse["text"] for chapter in text for verse in chapter["verses"]]
+        samples[script] = _chapter(text, 112)["verses"][0]["text"]
 
     # What was actually published, so nothing published is also listed as withheld.
     published_langs = {edition.lang for edition in (*editions, *transliterations)}
@@ -523,19 +496,16 @@ def build_site(
             }
         )
 
-    write_json(
-        out_dir / "translations" / "index.json",
-        {
-            "count": len(index),
-            "editions": index,
-            "withheld": [
-                _withheld_entry(edition)
-                for edition in _withheld_editions(published_langs)
-                if not _is_transliteration(edition)
-            ],
-        },
-        pretty=pretty,
-    )
+    translations_manifest: dict[str, Any] = {
+        "count": len(index),
+        "editions": index,
+        "withheld": [
+            _withheld_entry(edition)
+            for edition in _withheld_editions(published_langs)
+            if not _is_transliteration(edition)
+        ],
+    }
+    write_json(out_dir / "translations" / "index.json", translations_manifest, pretty=pretty)
 
     # The transliteration catalogue is always written, even when it publishes nothing: a
     # consumer asking whether a romanisation exists deserves an answer, not a 404.
@@ -566,72 +536,68 @@ def build_site(
             }
         )
 
-    write_json(
-        out_dir / "transliteration" / "index.json",
-        {
-            "count": len(transliteration_index),
-            "editions": transliteration_index,
-            "withheld": [
-                _withheld_entry(edition)
-                for edition in _withheld_editions(published_langs)
-                if _is_transliteration(edition)
-            ],
-        },
-        pretty=pretty,
-    )
+    transliteration_manifest: dict[str, Any] = {
+        "count": len(transliteration_index),
+        "editions": transliteration_index,
+        "withheld": [
+            _withheld_entry(edition)
+            for edition in _withheld_editions(published_langs)
+            if _is_transliteration(edition)
+        ],
+    }
+    write_json(out_dir / "transliteration" / "index.json", transliteration_manifest, pretty=pretty)
 
-    write_json(
-        out_dir / "manifest.json",
-        {
-            "chapters": {"count": CHAPTER_COUNT, "path": "/chapters.json"},
-            "scripts": [
-                {
-                    "id": script,
-                    "name": config.SCRIPT_LABELS[script][0],
-                    "description": config.SCRIPT_LABELS[script][1],
-                    "verses": counts.get(script, 0),
-                    "path": f"/text/{script}/quran.json",
-                    "chapters": f"/text/{script}/chapters/{{1-{CHAPTER_COUNT}}}.json",
-                    **(
-                        {"note": config.SCRIPT_NOTES[script]}
-                        if script in config.SCRIPT_NOTES
-                        else {}
-                    ),
-                }
-                for script in scripts
-            ],
-            "translations": {
-                "count": len(index),
-                "languages": len({entry["code"] for entry in index}),
-                "index": "/translations/index.json",
-            },
-            "transliteration": {
-                "count": len(transliteration_index),
-                "index": "/transliteration/index.json",
-            },
-            "audio": "/audio/reciters.json" if audio else None,
-            "license": {
-                "project": "CC BY-SA 4.0",
-                "text": {
-                    "source": (
-                        "tanzil.net, quran.kemenag.go.id, DigitalKhatt (MIT) and "
-                        "quranpedia.net -- see /meta/sources.json for the verdict on each"
-                    ),
-                    "status": config.TANZIL_TEXT.status,
-                    "url": config.TANZIL_TEXT.url,
-                },
-            },
-            "attribution": (
-                "Quran text and chapter metadata: Tanzil.net (CC-BY 3.0, verbatim); the "
-                "Mushaf Standar Indonesia script, LPMQ / Kementerian Agama RI; the Indo-Pak "
-                "script, DigitalKhatt (MIT); and the Warsh and Qalun riwayat, Qur'anpedia.net "
-                "(https://quranpedia.net, dump version 2026-09-18). Translations: each "
-                "edition's publisher, credited in /translations/index.json. Audio: linked "
-                "from EveryAyah, Islamic Network and MP3Quran; no audio is hosted here."
-            ),
+    manifest: dict[str, Any] = {
+        "chapters": {"count": CHAPTER_COUNT, "path": "/chapters.json"},
+        "scripts": [
+            {
+                "id": script,
+                "name": config.SCRIPT_LABELS[script][0],
+                "description": config.SCRIPT_LABELS[script][1],
+                "verses": counts.get(script, 0),
+                "verse_ids": config.SCRIPT_VERSE_IDS[script],
+                "path": f"/text/{script}/quran.json",
+                "chapters": f"/text/{script}/chapters/{{1-{CHAPTER_COUNT}}}.json",
+                **({"note": config.SCRIPT_NOTES[script]} if script in config.SCRIPT_NOTES else {}),
+                **(
+                    {"verse_ids_differ_in": list(config.SCRIPT_VERSE_ID_DIVERGENCE[script])}
+                    if script in config.SCRIPT_VERSE_ID_DIVERGENCE
+                    else {}
+                ),
+            }
+            for script in scripts
+        ],
+        "translations": {
+            "count": len(index),
+            "languages": len({entry["code"] for entry in index}),
+            "index": "/translations/index.json",
         },
-        pretty=pretty,
-    )
+        "transliteration": {
+            "count": len(transliteration_index),
+            "index": "/transliteration/index.json",
+        },
+        "audio": "/audio/reciters.json" if audio else None,
+        "license": {
+            "project": "CC BY-SA 4.0",
+            "text": {
+                "source": (
+                    "tanzil.net, quran.kemenag.go.id, DigitalKhatt (MIT) and "
+                    "quranpedia.net -- see /meta/sources.json for the verdict on each"
+                ),
+                "status": config.TANZIL_TEXT.status,
+                "url": config.TANZIL_TEXT.url,
+            },
+        },
+        "attribution": (
+            "Quran text and chapter metadata: Tanzil.net (CC-BY 3.0, verbatim); the "
+            "Mushaf Standar Indonesia script, LPMQ / Kementerian Agama RI; the Indo-Pak "
+            "script, DigitalKhatt (MIT); and the Warsh and Qalun riwayat, Qur'anpedia.net "
+            "(https://quranpedia.net, dump version 2026-09-18). Translations: each "
+            "edition's publisher, credited in /translations/index.json. Audio: linked "
+            "from EveryAyah, Islamic Network and MP3Quran; no audio is hosted here."
+        ),
+    }
+    write_json(out_dir / "manifest.json", manifest, pretty=pretty)
 
     write_json(
         out_dir / "meta" / "sources.json",
@@ -640,34 +606,31 @@ def build_site(
     )
     write_json(out_dir / "meta" / "qa.json", qa.manifest(), pretty=pretty)
 
+    reciters = None
     if audio:
         from .audio import build_audio_index
 
-        build_audio_index(out_dir / "audio", pretty=pretty)
+        reciters = build_audio_index(out_dir / "audio", pretty=pretty)
+
+    # The page and the app are measured against the published bytes, not against a
+    # hand-maintained copy of them: coverage comes from the scripts just rendered, and the
+    # documentation's rows from the catalogues just written.
+    coverage = web.font_coverage(corpora, names=[chapter["name"] for chapter in chapters])
+    web.write_site_assets(out_dir, coverage)
+    web.write_docs(
+        out_dir,
+        web.docs_context(
+            manifest=manifest,
+            translations=translations_manifest,
+            transliterations=transliteration_manifest,
+            reciters=reciters,
+            coverage=coverage,
+            chapters=chapters,
+            samples=samples,
+        ),
+    )
 
     (out_dir / "_headers").write_text(_HEADERS, encoding="utf-8")
-    (out_dir / "index.html").write_text(
-        _INDEX.format(
-            scripts=", ".join(f"<code>{script}</code>" for script in scripts),
-            translations=len(index),
-            languages=len({entry["code"] for entry in index}),
-            extra=(
-                (
-                    "  <tr><td><code>/transliteration/index.json</code></td>"
-                    "<td>The romanisation catalogue</td></tr>\n"
-                )
-                if transliteration_index
-                else ""
-            )
-            + (
-                "  <tr><td><code>/audio/reciters.json</code></td>"
-                "<td>Reciters and audio URL templates</td></tr>\n"
-                if audio
-                else ""
-            ),
-        ),
-        encoding="utf-8",
-    )
 
     return [licensing.violation(edition) for edition in _withheld_editions(published_langs)]
 

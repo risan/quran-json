@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quran-json — Quran text, translations, transliterations and audio in JSON</title>
+<meta name="description" content="The Quran as static JSON: {{script_count}} text scripts, {{translation_count}} translations in {{language_count}} languages, transliterations and audio URL templates. CORS enabled, no authentication, no rate limit.">
+<meta name="theme-color" content="#0d7a63">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/assets/fonts/amiri-regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="/assets/docs.css">
+<script>try{var t=localStorage.getItem("quran-json:theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script src="/assets/site.js" defer></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/">quran-json</a>
+  <nav>
+    <a href="#quickstart">Quickstart</a>
+    <a href="#endpoints">Endpoints</a>
+    <a href="#scripts">Scripts</a>
+    <a href="#translations">Translations</a>
+    <a href="#transliteration">Transliteration</a>
+    <a href="#audio">Audio</a>
+    <a href="#licensing">Licensing</a>
+  </nav>
+  <div class="actions">
+    <button class="button icon" type="button" data-theme-toggle aria-label="Switch colour theme">◐</button>
+    <a class="button primary" href="/app/">Open the reader</a>
+  </div>
+</header>
+
+<main>
+
+<section class="hero">
+  <p class="eyebrow">Static JSON · no version segment · no auth</p>
+  <h1>Quran text as data<span class="arabic hero-arabic">ٱلْقُرْآن</span></h1>
+  <p class="lede">
+    Every published byte is generated from sources that license redistribution. One path per
+    scripture, a chapter at a time or the whole book at once, and the same JSON whether a
+    browser, a server or a script asks for it.
+  </p>
+  <div class="actions">
+    <a class="button primary" href="/app/">Open the reader</a>
+    <a class="button" href="/manifest.json">manifest.json</a>
+    <a class="button" href="/chapters.json">chapters.json</a>
+  </div>
+  <dl class="stats">
+    <div><dt>Scripts</dt><dd>{{script_count}}</dd></div>
+    <div><dt>Translations</dt><dd>{{translation_count}}</dd></div>
+    <div><dt>Languages</dt><dd>{{language_count}}</dd></div>
+    <div><dt>Transliterations</dt><dd>{{transliteration_count}}</dd></div>
+    <div><dt>Chapters</dt><dd>{{chapter_count}}</dd></div>
+    <div><dt>Verses</dt><dd>{{verse_count}}</dd></div>
+    <div><dt>Recitations</dt><dd>{{reciter_count}}</dd></div>
+  </dl>
+  <p class="path-note">
+    Everything below is served from <code>https://quran-json.risanb.com</code> — the same tree
+    as <code>https://quran-json.risan.workers.dev</code>. CORS is <code>*</code>, there is no
+    key, no quota and no rate limit.
+  </p>
+</section>
+
+<section id="quickstart">
+  <h2>Quickstart</h2>
+  <p>
+    Everything is a <code>GET</code> on a JSON file. Chapter files number their verses
+    <code>1..n</code> with the key <code>id</code>; a translation file carries the translation
+    only, so the Arabic and the translation are joined on that id.
+  </p>
+
+  <h3>One chapter, one script</h3>
+  <div class="tabs" data-tabs>
+    <div class="tablist" role="tablist">
+      <button role="tab" data-lang="curl">curl</button>
+      <button role="tab" data-lang="js">JavaScript</button>
+      <button role="tab" data-lang="python">Python</button>
+    </div>
+    <pre data-lang="curl"><code>curl -s https://quran-json.risanb.com/text/{{default_script}}/chapters/2.json | head -c 400</code></pre>
+    <pre data-lang="js"><code>const base = "https://quran-json.risanb.com";
+const chapter = await fetch(`${base}/text/{{default_script}}/chapters/2.json`).then((r) => r.json());
+
+chapter.verses[254].text; // 2:255, Ayat al-Kursi</code></pre>
+    <pre data-lang="python"><code>import httpx
+
+base = "https://quran-json.risanb.com"
+chapter = httpx.get(f"{base}/text/{{default_script}}/chapters/2.json").json()
+
+chapter["verses"][254]["text"]  # 2:255, Ayat al-Kursi</code></pre>
+  </div>
+
+  <h3>Join the Arabic to a translation</h3>
+  <div class="tabs" data-tabs>
+    <div class="tablist" role="tablist">
+      <button role="tab" data-lang="js">JavaScript</button>
+      <button role="tab" data-lang="python">Python</button>
+    </div>
+    <pre data-lang="js"><code>const [arabic, translated] = await Promise.all([
+  fetch(`${base}/text/{{default_script}}/chapters/2.json`).then((r) => r.json()),
+  fetch(`${base}/translations/{{default_translation}}/chapters/2.json`).then((r) => r.json()),
+]);
+
+const verses = arabic.verses.map((verse, i) => ({
+  id: verse.id,
+  text: verse.text,
+  translation: translated.verses[i].translation,
+}));</code></pre>
+    <pre data-lang="python"><code>arabic = httpx.get(f"{base}/text/{{default_script}}/chapters/2.json").json()
+translated = httpx.get(f"{base}/translations/{{default_translation}}/chapters/2.json").json()
+
+verses = [
+    {"id": a["id"], "text": a["text"], "translation": t["translation"]}
+    for a, t in zip(arabic["verses"], translated["verses"], strict=True)
+]</code></pre>
+  </div>
+  <p class="note">
+    <strong>Join on <code>id</code>, not on position.</strong> Every translation is keyed to the
+    Hafs count, and every verse file numbers its verses <code>1..total_verses</code>, so the
+    lists line up — but the two <em>riwayat</em> scripts (<code>warsh</code>, <code>qalun</code>)
+    number 6,214 ayahs and carry a <code>number_in_hafs</code> map instead.
+  </p>
+
+  <h3>Build an audio URL</h3>
+  <pre><code>// everyayah.com — surah-relative ayah, both padded to three digits
+// (reciters.json: host.indexing_mode == "surah-relative")
+`https://everyayah.com/data/Alafasy_128kbps/${String(2).padStart(3, "0")}${String(255).padStart(3, "0")}.mp3`
+
+// cdn.islamic.network — the GLOBAL ayah number, 1..6236, unpadded
+// (reciters.json: host.indexing_mode == "global-ayah"); 2:255 is ayah {{global_ayah_2_255}}
+`https://cdn.islamic.network/quran/audio/128/ar.alafasy/{{global_ayah_2_255}}.mp3`</code></pre>
+  <p class="note">
+    <code>/audio/reciters.json</code> publishes each host's <code>indexing_mode</code>,
+    <code>surah_pad</code> and <code>ayah_pad</code>, so a client can fill a template without
+    parsing the prose. Global ayah numbers come from summing <code>total_verses</code> in
+    <code>/chapters.json</code>.
+  </p>
+
+  <h3>A romanisation, when one is published</h3>
+  <pre><code>GET /transliteration/{{default_transliteration}}/chapters/2.json
+{ "id": 2, "verses": [ { "id": 1, "transliteration": "Al-ḥamdu lillāhi rabbil-‘ālamīn(a)." } ] }</code></pre>
+</section>
+
+<section id="endpoints">
+  <h2>Endpoints</h2>
+  <p>
+    No path carries a version: the text is immutable and editions are only ever added, so a
+    path published today keeps working. <code>{script}</code> is one of the
+    {{script_count}} script ids, <code>{code}-{slug}</code> one of the
+    {{translation_count}} edition paths in <code>/translations/index.json</code>.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Path</th><th>Contents</th></tr></thead>
+      <tbody>
+        <tr><td><code>/manifest.json</code></td><td>Scripts, per-script notes, counts and pointers</td></tr>
+        <tr><td><code>/chapters.json</code></td><td>Metadata for all {{chapter_count}} chapters: name, transliteration, meaning, type, verse count</td></tr>
+        <tr><td><code>/text/{script}/quran.json</code></td><td>The whole Quran in one script</td></tr>
+        <tr><td><code>/text/{script}/chapters/{1-114}.json</code></td><td>One chapter in one script</td></tr>
+        <tr><td><code>/translations/index.json</code></td><td>The edition catalogue: author, language, direction, version, licence, path</td></tr>
+        <tr><td><code>/translations/{code}-{slug}/quran.json</code></td><td>The whole Quran in one translation</td></tr>
+        <tr><td><code>/translations/{code}-{slug}/chapters/{1-114}.json</code></td><td>One chapter in one translation, with the translator's footnotes where the source supplies them</td></tr>
+        <tr><td><code>/transliteration/index.json</code></td><td>The romanisation catalogue, with its licence status</td></tr>
+        <tr><td><code>/transliteration/{key}/chapters/{1-114}.json</code></td><td>One chapter in one romanisation</td></tr>
+        <tr><td><code>/audio/reciters.json</code></td><td>{{reciter_count}} recitations across {{host_count}} hosts, as URL templates</td></tr>
+        <tr><td><code>/meta/sources.json</code></td><td>Provenance and licence verdict for every published source</td></tr>
+        <tr><td><code>/meta/qa.json</code></td><td>Transcription corrections applied to upstream sources</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="scripts">
+  <h2>{{script_count}} text scripts</h2>
+  <p>
+    Three different things hide inside the word “script”, and this dataset carries two of them:
+    the <strong>riwayah</strong> (which reading — Hafs, Warsh, Qalun), the
+    <strong>rasm</strong> (how it is written — Uthmani, Imlaei, Indo-Pak) and the
+    <strong>print layout</strong> (13/15/16-line, ayet-berkenar, Bombay), which no verse array
+    can describe because it is page geometry rather than text. The last column renders each
+    script's own 112:1, so the orthographies can be compared side by side.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Script</th><th>Name</th><th>Verses</th><th>What it is</th><th>112:1</th></tr></thead>
+      <tbody>
+{{scripts_rows}}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Fonts, and why they are published here</h3>
+  <p>
+    The dataset publishes UTF-8 text and names no font — render it however you like. This site
+    does ship Arabic typography for all {{script_count}} scripts, so the table below is
+    <em>measured at build time</em> from the bundled font files against every codepoint each
+    script's verses and the chapter names use. Under each font, <span class="yes">yes</span>
+    means it covers every one of them, and a number is how many codepoints it cannot render at
+    all — hover for which. A script's <code>default</code> is the first font in preference
+    order that is complete for it.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Script</th><th>Codepoints</th><th>Default</th>{{font_columns}}</tr></thead>
+      <tbody>
+{{font_rows}}
+      </tbody>
+    </table>
+  </div>
+  <p class="note warn">
+    <strong>Coverage is not shaping.</strong> A font that carries a glyph still positions these
+    marks by its own rules; only the typeface a text was designed for renders it as intended.
+    <code>indopak</code> is DigitalKhatt's own typesetting and uses Arabic Extended-B marks
+    (U+089C, 2,098 of them), which Amiri lacks entirely — so this site never renders
+    <code>indopak</code> in Amiri, and the reader disables any font/script pair in that table
+    that is incomplete.
+  </p>
+
+  <h3>Reading a script</h3>
+  <ul class="bullets">
+    <li>
+      <strong><code>indopak</code> keeps the Indo-Pak segmentation of Al-Fatiha:</strong> the
+      basmala is unnumbered there, so 1:1 is
+      <span class="arabic">اَلْحَمْدُ لِلّٰهِ</span> — the last two verses are held separately —
+      and no basmala is embedded in any verse, because the source prints it as chapter
+      furniture. Every chapter still has its canonical count; only chapter 1's labels differ.
+    </li>
+    <li>
+      <strong><code>kemenag</code> is not a Tanzil text with another label.</strong> It is the
+      Mushaf Standar Indonesia served by the ministry's own API: it writes no alef wasla where
+      Tanzil's Uthmani writes 13,819 of them, and only 6 of 37,416 verse comparisons against the
+      Tanzil variants coincide.
+    </li>
+    <li>
+      <strong>Every script says how its verse <code>id</code>s relate to the Hafs count</strong>
+      that every translation is keyed to. <code>verse_ids</code> is <code>hafs</code> (the ids
+      <em>are</em> Hafs numbers), <code>mapped</code> (a riwayah with its own count of 6,214,
+      each verse carrying the <code>number_in_hafs</code> it covers) or <code>own</code>, and
+      <code>verse_ids_differ_in</code> names the chapters whose labels are not Hafs numbers.
+      Today that is <code>indopak</code> chapter 1, where the basmala is unnumbered — so the
+      reader refuses to pair a Hafs-keyed translation with it rather than pairing the wrong
+      verses.
+    </li>
+    <li>
+      <strong><code>simple</code> is an orthography, not a lower level of vocalisation.</strong>
+      It carries the full set of harakat; reach for <code>simple-clean</code> if you want the
+      text without them.
+    </li>
+  </ul>
+
+  <h3>Joining a riwayah to the Hafs count</h3>
+  <p>
+    <code>warsh</code> and <code>qalun</code> number 6,214 ayahs to Nafiʿ's count, not the Kufi
+    6,236, so 50 surahs differ in length from <code>/chapters.json</code> (al-Baqarah 285 where
+    Hafs has 286, At-Tawbah 130 where Hafs has 129). Each verse carries the source's own
+    <code>number_in_hafs</code>. There is no constant offset to add: Nafiʿ splits Hafs 2:255
+    across two of its verses and merges two Hafs verses elsewhere, so the join is a lookup.
+  </p>
+  <pre><code>const warsh = await fetch(`${base}/text/warsh/chapters/2.json`).then((r) => r.json());
+
+// every riwayah verse that covers Hafs 2:255
+const covering = warsh.verses.filter((verse) => verse.number_in_hafs.includes(255));
+// → two verses: the first half of Ayat al-Kursi, then the rest of it</code></pre>
+</section>
+
+<section id="translations">
+  <h2>{{translation_count}} translations</h2>
+  <p>
+    Each edition is published on the strength of its own grant from its own publisher, recorded
+    per entry in <code>/translations/index.json</code> and in <code>/meta/sources.json</code>.
+    <code>direction</code> is <code>rtl</code> for the editions written right-to-left;
+    <code>version</code> is the source's version, which QuranEnc's terms require a republication
+    to state. Translation files carry the translation only — the Arabic is identical across
+    editions and lives once under <code>/text/</code>.
+  </p>
+  <div class="catalogue-tools">
+    <label class="search">
+      <span class="visually-hidden">Filter editions</span>
+      <input type="search" placeholder="Filter by language, author or path…" data-filter="translations">
+    </label>
+    <span class="hint" data-filter-count="translations">{{translation_count}} editions</span>
+  </div>
+  <div class="table-wrap tall">
+    <table data-filterable="translations">
+      <thead><tr><th>Lang</th><th>Translator / publisher</th><th>Dir</th><th>Version</th><th>Licence</th><th>Path</th></tr></thead>
+      <tbody>
+{{translations_rows}}
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Withheld</h3>
+  <p>
+    {{withheld_count}} registered editions are ingested and audited but <em>not</em> published:
+    their rights holder granted nothing this dataset could rely on. They are listed here, with
+    the reason, rather than silently dropped — a licence label in code is not evidence of a
+    grant, and Tanzil's CC-BY notice covers its Arabic text, not its translations.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Edition</th><th>Rights holder</th><th>Status</th><th>Terms</th></tr></thead>
+      <tbody>
+{{withheld_rows}}
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section id="transliteration">
+  <h2>Transliteration</h2>
+  <p>{{transliteration_lead}}</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Edition</th><th>Source</th><th>Licence</th><th>Path</th></tr></thead>
+      <tbody>
+{{transliterations_rows}}
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    A romanisation is a language-shaped artifact like any translation, so it stays out of
+    <code>/text/</code> and gets its own path family. The catalogue at
+    <code>/transliteration/index.json</code> is always written — even when it publishes nothing —
+    so a client asking whether one exists gets an answer instead of a 404.
+  </p>
+</section>
+
+<section id="audio">
+  <h2>Audio</h2>
+  <p>
+    {{reciter_count}} recitations across {{host_count}} hosts, published as URL templates and
+    never mirrored: no audio bytes are hosted here, which keeps the tree small and means this
+    project links to the recordings instead of redistributing them.
+  </p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Host</th><th>Template</th><th>Indexing</th><th>Licence</th></tr></thead>
+      <tbody>
+{{audio_rows}}
+      </tbody>
+    </table>
+  </div>
+  <p class="note">
+    Recitations follow their own riwayah. The Hafs recitations do not match the
+    <code>warsh</code> or <code>qalun</code> verse numbering, so the reader offers surah-level
+    audio for those scripts and disables per-ayah playback rather than playing the wrong ayah.
+  </p>
+</section>
+
+<section id="compatibility">
+  <h2>Compatibility contract</h2>
+  <ul class="bullets">
+    <li>A published path is <strong>never renamed, removed or rewritten</strong>. Data paths are
+      cached <code>immutable</code> for a year, so a rewrite would strand consumers on stale bytes.</li>
+    <li><strong>Adding is always fine:</strong> new scripts, new editions, new chapters.</li>
+    <li>Correcting the Quran text would be a break and would need new paths, not edited ones.</li>
+    <li>The frozen <code>3.1.2</code> tree on jsDelivr is the exception: it is a byte-for-byte
+      reproduction of what npm already served, and it is not regenerated.</li>
+  </ul>
+</section>
+
+<section id="licensing">
+  <h2>Licensing and attribution</h2>
+  <p>
+    The project's own code and the frozen tree are CC BY-SA 4.0. The dataset's parts carry the
+    terms of the source each came from, recorded per item:
+  </p>
+  <p class="attribution">{{attribution}}</p>
+  <p>
+    Machine-readable copies: <a href="/meta/sources.json"><code>/meta/sources.json</code></a> for
+    provenance and per-source verdicts, <a href="/translations/index.json"><code>/translations/index.json</code></a>
+    for per-edition licences, <a href="/meta/qa.json"><code>/meta/qa.json</code></a> for the
+    transcription corrections applied upstream, and
+    <a href="/app/fonts.json"><code>/app/fonts.json</code></a> for the fonts this site renders
+    with (SIL OFL 1.1, licence texts beside the font files).
+  </p>
+</section>
+
+</main>
+
+<footer>
+  <p>
+    <strong>quran-json</strong> — Quran text, translations, transliterations and audio
+    references in JSON.
+    <a href="https://github.com/risan/quran-json">Source on GitHub</a> ·
+    <a href="/app/">Reader</a> ·
+    <a href="/manifest.json">manifest.json</a>
+  </p>
+  <p>Built by a Python pipeline from committed upstream snapshots. No tracking, no cookies.</p>
+</footer>
+
+</body>
+</html>

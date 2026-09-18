@@ -1,0 +1,418 @@
+/*
+ * Shared design system for the documentation page and the reader app.
+ *
+ * Two things here are not decoration:
+ *
+ * 1. `@font-face` ships the Arabic fonts beside the page rather than loading them from a
+ *    font CDN, so a reader renders the mushaf offline, from this origin, with no third
+ *    party in the path. Each family is used lazily -- a browser downloads only the face a
+ *    page actually renders.
+ * 2. `.arabic` never letterspaces and never underlines, and it takes its family from
+ *    `--arabic-family`, which the app sets per script from the measured coverage report.
+ *    Arabic is a cursive script: letter-spacing breaks the joins, and a fallback font that
+ *    lacks an Extended-B mark renders a missing-glyph box in the middle of a verse.
+ */
+
+@font-face {
+  font-family: "Amiri";
+  src: url("/assets/fonts/amiri-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Scheherazade New";
+  src: url("/assets/fonts/scheherazade-new-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Naskh Arabic";
+  src: url("/assets/fonts/noto-naskh-arabic-regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: light dark;
+
+  --bg: #f6f6f4;
+  --surface: #ffffff;
+  --surface-2: #efefec;
+  --border: #ddddd7;
+  --border-strong: #c8c8c0;
+  --text: #1a1a1c;
+  --muted: #5f5f68;
+  --accent: #0d7a63;
+  --accent-soft: #d8efe8;
+  --accent-contrast: #ffffff;
+  --ok: #1c7c54;
+  --warn: #9a6700;
+  --danger: #a33a34;
+  --shadow: 0 1px 2px rgba(20, 20, 25, 0.06), 0 8px 24px rgba(20, 20, 25, 0.05);
+
+  --radius: 12px;
+  --radius-sm: 7px;
+  --measure: 68rem;
+  --arabic-family: "Amiri";
+
+  /* The reader's Arabic size, scaled from the UI by the app's A-/A+ control. */
+  --arabic-size: 1.9rem;
+  --arabic-leading: 2.15;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #101114;
+    --surface: #17181c;
+    --surface-2: #1f2026;
+    --border: #2e3038;
+    --border-strong: #3c3f48;
+    --text: #eceef1;
+    --muted: #a1a4ad;
+    --accent: #46c9a8;
+    --accent-soft: #17352e;
+    --accent-contrast: #06231c;
+    --ok: #64c99b;
+    --warn: #e4b75f;
+    --danger: #f0837c;
+    --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #101114;
+  --surface: #17181c;
+  --surface-2: #1f2026;
+  --border: #2e3038;
+  --border-strong: #3c3f48;
+  --text: #eceef1;
+  --muted: #a1a4ad;
+  --accent: #46c9a8;
+  --accent-soft: #17352e;
+  --accent-contrast: #06231c;
+  --ok: #64c99b;
+  --warn: #e4b75f;
+  --danger: #f0837c;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 30px rgba(0, 0, 0, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  line-height: 1.2;
+  margin: 0 0 0.5rem;
+  font-weight: 650;
+  letter-spacing: -0.011em;
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+}
+
+h2 {
+  font-size: 1.55rem;
+}
+
+h3 {
+  font-size: 1.12rem;
+}
+
+p {
+  margin: 0 0 1rem;
+}
+
+a {
+  color: var(--accent);
+  text-decoration-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  text-underline-offset: 2px;
+}
+
+a:hover {
+  text-decoration-color: currentColor;
+}
+
+code,
+pre,
+kbd {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+  font-size: 0.875em;
+}
+
+code {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 0.08em 0.34em;
+  overflow-wrap: anywhere;
+}
+
+pre {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin: 0;
+  padding: 0.9rem 1rem;
+  overflow-x: auto;
+  line-height: 1.55;
+  tab-size: 2;
+}
+
+pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+  font-size: 0.85rem;
+  overflow-wrap: normal;
+}
+
+.arabic {
+  font-family: var(--arabic-family), serif;
+  direction: rtl;
+  letter-spacing: 0;
+  word-spacing: 0;
+  font-feature-settings: normal;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+/* ---------------------------------------------------------------- buttons --- */
+
+.button {
+  --button-bg: var(--surface);
+  --button-fg: var(--text);
+  align-items: center;
+  background: var(--button-bg);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--button-fg);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 550;
+  gap: 0.4rem;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.button.primary {
+  --button-bg: var(--accent);
+  --button-fg: var(--accent-contrast);
+  border-color: transparent;
+}
+
+.button.primary:hover {
+  color: var(--button-fg);
+  filter: brightness(1.05);
+  border-color: transparent;
+}
+
+.button.ghost {
+  background: none;
+  border-color: transparent;
+}
+
+.button.icon {
+  border-radius: 8px;
+  padding: 0.4rem 0.55rem;
+}
+
+.button[aria-pressed="true"] {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+/* ----------------------------------------------------------------- tables --- */
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.9rem;
+}
+
+th,
+td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  position: sticky;
+  text-transform: uppercase;
+  top: 0;
+  z-index: 1;
+}
+
+tbody tr:hover {
+  background: color-mix(in srgb, var(--accent-soft) 40%, transparent);
+}
+
+td code {
+  white-space: nowrap;
+}
+
+/* ------------------------------------------------------------------ cards --- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.25rem;
+}
+
+.note {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin: 0 0 1rem;
+  font-size: 0.92rem;
+}
+
+.note.warn {
+  border-left-color: var(--warn);
+}
+
+.note p:last-child {
+  margin-bottom: 0;
+}
+
+.tag {
+  background: var(--accent-soft);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 0.1rem 0.45rem;
+  text-transform: uppercase;
+}
+
+.yes {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+.no {
+  color: var(--warn);
+  font-weight: 600;
+}
+
+/* ---------------------------------------------------------------- topbar --- */
+
+.topbar {
+  align-items: center;
+  backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 1rem;
+  padding: 0.6rem clamp(1rem, 4vw, 2.5rem);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.brand {
+  color: var(--text);
+  font-size: 1rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.topbar nav {
+  display: flex;
+  flex: 1;
+  gap: 0.9rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.topbar nav a {
+  color: var(--muted);
+  font-size: 0.86rem;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.topbar nav a:hover {
+  color: var(--text);
+}
+
+.topbar .actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+footer {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-top: 4rem;
+  padding: 2rem clamp(1rem, 4vw, 2.5rem) 3rem;
+}
+
+footer a {
+  color: var(--muted);
+}
+
+@media (max-width: 720px) {
+  .topbar nav {
+    display: none;
+  }
+
+  .topbar .actions {
+    margin-left: auto;
+  }
+}

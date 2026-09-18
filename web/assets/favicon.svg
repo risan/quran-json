@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="quran-json">
+  <rect width="32" height="32" rx="7" fill="#0d7a63"/>
+  <g fill="none" stroke="#e9f7f2" stroke-width="2.1" stroke-linejoin="round">
+    <rect x="8.6" y="8.6" width="14.8" height="14.8" rx="2.2"/>
+    <rect x="8.6" y="8.6" width="14.8" height="14.8" rx="2.2" transform="rotate(45 16 16)"/>
+  </g>
+</svg>

@@ -1,0 +1,575 @@
+/* The reader app: layout for the chapter grid, the verse list, the pickers and the player. */
+
+body.app {
+  padding-bottom: 6rem;
+}
+
+main {
+  margin: 0 auto;
+  max-width: 60rem;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+.crumb {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.loading,
+.empty {
+  color: var(--muted);
+  padding: 3rem 0;
+  text-align: center;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.status {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  margin: 1rem auto 0;
+  max-width: 60rem;
+  padding: 0.6rem 0.9rem;
+}
+
+.status[data-kind="error"] {
+  border-left-color: var(--danger);
+}
+
+/* ----------------------------------------------------------------- toolbar --- */
+
+.toolbar {
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 3.05rem;
+  z-index: 10;
+}
+
+.toolbar-inner {
+  align-items: flex-end;
+  display: flex;
+  gap: 0.75rem;
+  margin: 0 auto;
+  max-width: 60rem;
+  overflow-x: auto;
+  padding: 0.7rem clamp(1rem, 4vw, 2rem);
+  scrollbar-width: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  gap: 0.25rem;
+}
+
+.field-label {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.field select {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.88rem;
+  max-width: 15rem;
+  padding: 0.42rem 0.6rem;
+}
+
+.stepper {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.chev {
+  font-size: 0.7rem;
+  opacity: 0.7;
+}
+
+.script-note {
+  margin: 0 auto 0.5rem;
+  max-width: 60rem;
+  padding: 0 clamp(1rem, 4vw, 2rem);
+}
+
+.script-note summary {
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 0.82rem;
+}
+
+.script-note p {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.86rem;
+  margin: 0.5rem 0 0;
+  padding: 0.75rem 0.9rem;
+}
+
+/* -------------------------------------------------------------- surah grid --- */
+
+.view-head {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 2rem 0 1.25rem;
+}
+
+.view-head h1 {
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
+}
+
+.view-head p {
+  margin: 0;
+}
+
+.search input {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.92rem;
+  padding: 0.55rem 1rem;
+  width: 100%;
+}
+
+.surah-grid {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  margin: 1rem 0 3rem;
+}
+
+.surah-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: inherit;
+  display: grid;
+  gap: 0.15rem 0.7rem;
+  grid-template-columns: 2.2rem 1fr;
+  padding: 0.7rem 0.85rem;
+  text-decoration: none;
+}
+
+.surah-card:hover {
+  border-color: var(--accent);
+}
+
+.surah-no {
+  align-items: center;
+  background: var(--accent-soft);
+  border-radius: 8px;
+  color: var(--accent);
+  display: flex;
+  font-size: 0.85rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  grid-row: span 2;
+  height: 2.2rem;
+  justify-content: center;
+}
+
+.surah-names {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.surah-arabic {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+.surah-latin {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.surah-meta {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 0.8rem;
+  gap: 0.35rem;
+}
+
+.dot {
+  opacity: 0.45;
+}
+
+.tag.meccan,
+.tag.medinan {
+  font-size: 0.62rem;
+}
+
+/* ----------------------------------------------------------------- reader --- */
+
+.chapter-head {
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  margin: 2rem 0 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.chapter-head h1 {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin: 0.15rem 0 0.35rem;
+}
+
+.chapter-head .arabic {
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+.chapter-head .latin {
+  font-size: 1.6rem;
+}
+
+.chapter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.verses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.verse {
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  gap: 0 0.9rem;
+  grid-template-columns: 2.4rem 1fr;
+  padding: 1.1rem 0;
+  scroll-margin-top: 9rem;
+}
+
+.verse.playing {
+  background: color-mix(in srgb, var(--accent-soft) 60%, transparent);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 0.75rem color-mix(in srgb, var(--accent-soft) 60%, transparent);
+}
+
+.verse.highlight .verse-no {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.verse-gutter {
+  display: flex;
+  justify-content: center;
+}
+
+.verse-no {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 50%;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  height: 2rem;
+  padding: 0;
+  transition: transform 120ms ease;
+  width: 2rem;
+}
+
+.verse-no:hover:not(:disabled) {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.08);
+}
+
+.verse-no:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.verse-body .arabic {
+  direction: rtl;
+  font-size: var(--arabic-size);
+  line-height: var(--arabic-leading);
+  margin: 0 0 0.5rem;
+  text-align: right;
+}
+
+.transliteration {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-style: italic;
+  margin: 0 0 0.5rem;
+}
+
+.translation {
+  font-size: 0.98rem;
+  margin: 0 0 0.5rem;
+}
+
+.translation[dir="rtl"] {
+  text-align: right;
+}
+
+.footnotes {
+  font-size: 0.86rem;
+  margin: 0 0 0.5rem;
+}
+
+.footnotes summary {
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.footnotes p {
+  background: var(--surface-2);
+  border-radius: var(--radius-sm);
+  margin: 0.4rem 0 0;
+  padding: 0.6rem 0.75rem;
+  white-space: pre-wrap;
+}
+
+.verse-tools {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.verse:hover .verse-tools,
+.verse:focus-within .verse-tools {
+  opacity: 1;
+}
+
+@media (hover: none) {
+  .verse-tools {
+    opacity: 1;
+  }
+}
+
+.verse-tools button {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+  padding: 0.15rem 0.4rem;
+}
+
+.verse-tools button:hover {
+  border-color: var(--border);
+  color: var(--accent);
+}
+
+.chapter-foot {
+  margin: 2rem 0 3rem;
+}
+
+.data-paths {
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+}
+
+.data-paths summary {
+  cursor: pointer;
+}
+
+.data-paths ul {
+  margin: 0.6rem 0 0;
+  padding-left: 1.1rem;
+}
+
+.data-paths li {
+  margin-bottom: 0.3rem;
+}
+
+/* --------------------------------------------------------------- popovers --- */
+
+.popover {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  max-height: min(70vh, 34rem);
+  position: fixed;
+  right: clamp(1rem, 4vw, 2rem);
+  top: 7.5rem;
+  width: min(30rem, calc(100vw - 2rem));
+  z-index: 30;
+}
+
+.popover-head {
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.6rem 0.7rem;
+}
+
+.popover-head input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--text);
+  flex: 1;
+  font: inherit;
+  font-size: 0.88rem;
+  padding: 0.4rem 0.8rem;
+}
+
+.popover-hint {
+  color: var(--muted);
+  font-size: 0.78rem;
+  margin: 0;
+  padding: 0.6rem 0.8rem 0;
+}
+
+.popover-list {
+  overflow-y: auto;
+  padding: 0.4rem;
+}
+
+.pick {
+  align-items: flex-start;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  gap: 0.6rem;
+  padding: 0.45rem 0.5rem;
+}
+
+.pick:hover {
+  background: var(--surface-2);
+}
+
+.pick input {
+  accent-color: var(--accent);
+  margin-top: 0.25rem;
+}
+
+.pick-body {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.pick-author {
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pick-meta {
+  color: var(--muted);
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ----------------------------------------------------------------- player --- */
+
+.player {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  bottom: 0;
+  box-shadow: 0 -8px 24px rgba(0, 0, 0, 0.12);
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 25;
+}
+
+.player-inner {
+  align-items: center;
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 auto;
+  max-width: 60rem;
+  padding: 0.6rem clamp(0.75rem, 3vw, 1.5rem);
+}
+
+.player-now {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.player-title,
+.player-sub {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-title {
+  font-size: 0.88rem;
+  font-weight: 550;
+}
+
+.player-sub {
+  color: var(--muted);
+  font-size: 0.76rem;
+}
+
+.player-sub.warn {
+  color: var(--warn);
+}
+
+.player-progress {
+  flex: 0 1 12rem;
+}
+
+.player-progress input {
+  accent-color: var(--accent);
+  width: 100%;
+}
+
+@media (max-width: 720px) {
+  .player-progress {
+    display: none;
+  }
+
+  .verse {
+    grid-template-columns: 2rem 1fr;
+  }
+}

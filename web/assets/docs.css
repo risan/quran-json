@@ -1,0 +1,270 @@
+/* The documentation page: layout and the few components only it uses. */
+
+main {
+  margin: 0 auto;
+  max-width: var(--measure);
+  padding: 0 clamp(1rem, 4vw, 2.5rem);
+}
+
+section {
+  margin: 4rem 0;
+  scroll-margin-top: 4.5rem;
+}
+
+section > h2 {
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+section > h3 {
+  margin-top: 2.25rem;
+}
+
+.lede {
+  color: var(--muted);
+  font-size: 1.08rem;
+  max-width: 42rem;
+}
+
+/* ------------------------------------------------------------------- hero --- */
+
+.hero {
+  margin: 3.5rem 0 4rem;
+}
+
+.hero h1 {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.hero-arabic {
+  color: var(--accent);
+  font-size: clamp(2.2rem, 7vw, 3.6rem);
+  line-height: 1;
+}
+
+.eyebrow {
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1.5rem 0;
+}
+
+.stats {
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin: 2rem 0 1rem;
+  overflow: hidden;
+}
+
+.stats div {
+  background: var(--surface);
+  min-width: 0;
+  padding: 0.85rem 1rem;
+}
+
+.stats dt {
+  color: var(--muted);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  /* The longest label is a single 15-letter word: break it rather than let it collide
+     with the next cell. */
+  overflow-wrap: anywhere;
+  text-transform: uppercase;
+}
+
+.stats dd {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  margin: 0.2rem 0 0;
+}
+
+.path-note {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+/* ------------------------------------------------------------------ tables --- */
+
+.table-wrap {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: auto;
+  max-height: 34rem;
+  background: var(--surface);
+}
+
+.table-wrap.tall {
+  max-height: 30rem;
+}
+
+.table-wrap table {
+  min-width: 34rem;
+}
+
+.table-wrap th:first-child,
+.table-wrap td:first-child {
+  padding-left: 1rem;
+}
+
+.table-wrap th:last-child,
+.table-wrap td:last-child {
+  padding-right: 1rem;
+}
+
+.catalogue-tools {
+  align-items: center;
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.85rem;
+}
+
+.search {
+  flex: 1;
+  max-width: 26rem;
+}
+
+.search input {
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9rem;
+  padding: 0.45rem 0.9rem;
+  width: 100%;
+}
+
+.search input:focus-visible {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 1px;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.visually-hidden {
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+/* ----------------------------------------------------------- code and tabs --- */
+
+pre {
+  position: relative;
+}
+
+.tabs {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.tabs .tablist {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.tabs .tablist button {
+  background: none;
+  border: 0;
+  border-radius: 999px;
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 550;
+  padding: 0.25rem 0.7rem;
+}
+
+.tabs .tablist button:hover {
+  color: var(--text);
+}
+
+.tabs .tablist button[aria-selected="true"] {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.tabs pre {
+  border: 0;
+  border-radius: 0;
+}
+
+.copy {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--muted);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.72rem;
+  padding: 0.2rem 0.5rem;
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+}
+
+.copy:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ------------------------------------------------------------------- lists --- */
+
+.bullets {
+  padding-left: 1.1rem;
+}
+
+.bullets li {
+  margin-bottom: 0.6rem;
+}
+
+.sample {
+  display: block;
+  font-size: 1.6rem;
+  line-height: 1.9;
+  white-space: nowrap;
+}
+
+.attribution {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+  padding: 0.9rem 1rem;
+}
+
+@media (max-width: 640px) {
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}

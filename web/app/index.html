@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>quran-json — read the Quran</title>
+<meta name="description" content="Read the Quran across ten text scripts, 84 translations and every published romanisation, with recitations linked from the hosts that serve them.">
+<meta name="theme-color" content="#0d7a63">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="stylesheet" href="/app/app.css">
+<script>try{var t=localStorage.getItem("quran-json:theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+<script type="module" src="/app/app.js"></script>
+</head>
+<body class="app">
+
+<header class="topbar">
+  <a class="brand" href="/">quran-json</a>
+  <span class="crumb">Reader</span>
+  <div class="actions">
+    <button class="button icon" type="button" data-role="theme" aria-label="Switch colour theme">◐</button>
+    <a class="button ghost" href="/">Docs</a>
+  </div>
+</header>
+
+<div class="toolbar" id="toolbar"></div>
+
+<p class="status" id="status" role="status" hidden></p>
+
+<main id="view">
+  <p class="loading">Loading the dataset…</p>
+</main>
+
+<div class="popover" id="popover" role="dialog" aria-label="Choices" hidden></div>
+
+<audio id="audio" preload="none"></audio>
+<div class="player" id="player" hidden></div>
+
+<footer>
+  <p>
+    Text, translations and romanisations from
+    <a href="/meta/sources.json">published sources</a> under their own terms; recitations are
+    linked from their hosts and not hosted here.
+    <a href="/">How to use the data</a>.
+  </p>
+</footer>
+
+<noscript>
+  <p class="status" data-kind="error">
+    The reader needs JavaScript. Every artifact it loads is a plain JSON file, so
+    <a href="/">the documentation</a> works without it.
+  </p>
+</noscript>
+
+</body>
+</html>

@@ -4,6 +4,7 @@ version = "4.0.0"
 description = "Quran text, transliteration, translations, and audio references in JSON format."
 requires-python = ">=3.12"
 dependencies = [
+    "fonttools[woff]>=4.65.0",
     "httpx>=0.27",
     "orjson>=3.10",
     "tenacity>=8.3",
@@ -35,8 +36,6 @@ target-version = "py312"
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
 [tool.ruff.lint.per-file-ignores]
-# `_INDEX` is an HTML document held in a string; its markup lines are not code.
-"src/quranjson/cdn.py" = ["E501"]
 # The review record is a set of verbatim quotes from rights holders -- Arabic, Indonesian,
 # Turkish, Malay. RUF001 reads a Turkish dotless ı as a mistyped Latin i; it is neither.
 "src/quranjson/review.py" = ["RUF001"]
@@ -49,3 +48,10 @@ addopts = "-q"
 python_version = "3.12"
 strict = true
 files = ["src"]
+
+# fontTools ships no type information. Only `TTFont` and its cmap table are used, and both
+# are exercised by the coverage test, so stubs would buy annotation theatre rather than
+# safety.
+[[tool.mypy.overrides]]
+module = ["fontTools.*"]
+ignore_missing_imports = true

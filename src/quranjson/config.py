@@ -28,6 +28,10 @@ DIST: Final = ROOT / "dist"
 #: New artifact tree, deployed to Cloudflare Pages.
 CDN: Final = ROOT / "cdn"
 
+#: Hand-written site assets: the documentation page, the reader app, and the Arabic fonts
+#: the scripts in `data/` are rendered with. `cdn/` is generated from `data/` plus this.
+WEB: Final = ROOT / "web"
+
 #: The verse text used by the frozen tree.
 TEXT_EDITION: Final = "ara-quranuthmanienc"
 
@@ -234,6 +238,29 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
         "Qalun ʿan Nafiʿ (Libya, Tunisia), 6,214 ayahs to Nafiʿ's count",
     ),
 }
+
+
+#: How a script's verse `id`s relate to the Hafs ayah number every translation is keyed to,
+#: published per script in `manifest.json` so a client never has to guess:
+#:
+#: *   ``hafs`` -- the ids are Hafs ayah numbers, so a translation file joins by id.
+#: *   ``mapped`` -- a riwayah with its own count (6,214), where each verse carries the
+#:     `number_in_hafs` it covers; a client joins through that map, and one riwayah verse
+#:     can cover two Hafs verses whose translations both belong to it.
+#: *   ``own`` -- the script's own labels, which are not Hafs numbers in the chapters named
+#:     by `SCRIPT_VERSE_ID_DIVERGENCE`. No join is possible there without inventing one.
+SCRIPT_VERSE_IDS: Final[dict[str, str]] = {
+    **dict.fromkeys(TANZIL_VARIANTS, "hafs"),
+    KEMENAG_SCRIPT: "hafs",
+    DIGITALKHATT_SCRIPT: "own",
+    **dict.fromkeys(RIWAYAH_SCRIPTS, "mapped"),
+}
+
+#: Chapters where a script's verse labels are not Hafs ayah numbers. The Indo-Pak
+#: segmentation of Al-Fatiha leaves the basmala unnumbered, so its verse 1 is Hafs 2 and its
+#: last two verses split Hafs 7: a Hafs-keyed translation cannot be aligned there by id, and
+#: the reader says so instead of pairing the wrong verses.
+SCRIPT_VERSE_ID_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {DIGITALKHATT_SCRIPT: (1,)}
 
 
 #: Qur'an Kemenag -- the LPMQ (Ministry of Religious Affairs) mushaf text, its 2019
