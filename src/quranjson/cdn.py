@@ -54,6 +54,15 @@ __all__ = [
 #: Chapters in the Quran, asserted against the snapshots before anything is written.
 CHAPTER_COUNT = 114
 
+#: Per-verse source fields published beside `id` and `text`, when a snapshot carries them.
+#: `number_in_hafs` is the Nafiʿ riwayat' mapping onto the Hafs ayah numbers: those two
+#: scripts number 6,214 ayahs and 50 surahs differ in length, so a consumer needs the
+#: mapping to join them to the Hafs scripts at all.
+PUBLISHED_VERSE_FIELDS = ("number_in_hafs",)
+
+#: The Kufi count every translation, transliteration and Hafs script is keyed to.
+HAFS_VERSES = 6236
+
 _HEADERS = """\
 /*
   Access-Control-Allow-Origin: *
@@ -177,18 +186,33 @@ def chapter_metadata() -> list[dict[str, Any]]:
     ]
 
 
+def _script_snapshot_path(script: str) -> Path:
+    """Where a script's committed snapshot lives, by source."""
+    if script == config.DIGITALKHATT_SCRIPT:
+        return config.digitalkhatt_path()
+
+    if script in config.RIWAYAH_SCRIPTS:
+        return config.quranpedia_path(script)
+
+    return config.tanzil_text_path(script)
+
+
 def _script_chapters(script: str) -> list[dict[str, Any]]:
     """One script's text as 114 chapter objects, verses only."""
     if script == config.KEMENAG_SCRIPT:
         return _kemenag_chapters("text")
 
-    snapshot: dict[str, list[dict[str, Any]]] = read_json(config.tanzil_text_path(script))
+    snapshot: dict[str, list[dict[str, Any]]] = read_json(_script_snapshot_path(script))
 
     return [
         {
             "id": int(chapter),
             "verses": [
-                {"id": int(verse["verse"]), "text": verse["text"]}
+                {
+                    "id": int(verse["verse"]),
+                    "text": verse["text"],
+                    **{field: verse[field] for field in PUBLISHED_VERSE_FIELDS if field in verse},
+                }
                 for verse in sorted(snapshot[chapter], key=lambda item: int(item["verse"]))
             ],
         }
@@ -293,14 +317,24 @@ def _edition_chapters(edition: config.Edition) -> list[dict[str, Any]]:
     return chapters
 
 
-def _check_shape(label: str, chapters: list[dict[str, Any]]) -> int:
-    """Assert a rendered scripture is complete before it is written."""
+def _check_shape(label: str, chapters: list[dict[str, Any]], expected_verses: int) -> int:
+    """Assert a rendered scripture is complete before it is written.
+
+    The verse total is per script rather than a constant: the Hafs-count scripts run to
+    6,236, while Warsh and Qalun number 6,214 ayahs to Nafiʿ's count, and padding either to
+    6,236 would mean merging or splitting ayahs the riwayah holds apart.
+    """
     if len(chapters) != CHAPTER_COUNT:
         raise ValueError(f"{label}: expected {CHAPTER_COUNT} chapters, got {len(chapters)}")
 
     verses = sum(len(chapter["verses"]) for chapter in chapters)
-    if verses != 6236:
-        raise ValueError(f"{label}: expected 6236 verses, got {verses}")
+    if verses != expected_verses:
+        raise ValueError(f"{label}: expected {expected_verses} verses, got {verses}")
+
+    for chapter in chapters:
+        ids = [verse["id"] for verse in chapter["verses"]]
+        if ids != list(range(1, len(ids) + 1)):
+            raise ValueError(f"{label}: chapter {chapter['id']} is not numbered 1..n")
 
     return verses
 
@@ -448,7 +482,7 @@ def build_site(
 
     for script in scripts:
         text = _script_chapters(script)
-        counts[script] = _check_shape(f"text/{script}", text)
+        counts[script] = _check_shape(f"text/{script}", text, config.SCRIPT_VERSES[script])
         _write_jsonl_dir(out_dir / "text" / script, text, pretty=pretty)
 
     # What was actually published, so nothing published is also listed as withheld.
@@ -460,7 +494,7 @@ def build_site(
     for edition in editions:
         key = edition_url_key(edition)
         translated = _edition_chapters(edition)
-        _check_shape(f"translations/{key}", translated)
+        _check_shape(f"translations/{key}", translated, HAFS_VERSES)
         _write_jsonl_dir(out_dir / "translations" / key, translated, pretty=pretty)
 
         meta = catalogue.get(edition.lang, {})
@@ -510,7 +544,7 @@ def build_site(
     for edition in transliterations:
         key = transliteration_url_key(edition)
         romanised = _transliteration_chapters(edition)
-        _check_shape(f"transliteration/{key}", romanised)
+        _check_shape(f"transliteration/{key}", romanised, HAFS_VERSES)
         _write_jsonl_dir(out_dir / "transliteration" / key, romanised, pretty=pretty)
 
         transliteration_index.append(
@@ -558,6 +592,11 @@ def build_site(
                     "verses": counts.get(script, 0),
                     "path": f"/text/{script}/quran.json",
                     "chapters": f"/text/{script}/chapters/{{1-{CHAPTER_COUNT}}}.json",
+                    **(
+                        {"note": config.SCRIPT_NOTES[script]}
+                        if script in config.SCRIPT_NOTES
+                        else {}
+                    ),
                 }
                 for script in scripts
             ],
@@ -574,17 +613,21 @@ def build_site(
             "license": {
                 "project": "CC BY-SA 4.0",
                 "text": {
-                    "source": "tanzil.net and quran.kemenag.go.id",
+                    "source": (
+                        "tanzil.net, quran.kemenag.go.id, DigitalKhatt (MIT) and "
+                        "quranpedia.net -- see /meta/sources.json for the verdict on each"
+                    ),
                     "status": config.TANZIL_TEXT.status,
                     "url": config.TANZIL_TEXT.url,
                 },
             },
             "attribution": (
-                "Quran text and chapter metadata: Tanzil.net (CC-BY 3.0, verbatim) and, for "
-                "the Mushaf Standar Indonesia script, LPMQ / Kementerian Agama RI. "
-                "Translations: each edition's publisher, credited in "
-                "/translations/index.json. Audio: linked from EveryAyah, Islamic Network "
-                "and MP3Quran; no audio is hosted here."
+                "Quran text and chapter metadata: Tanzil.net (CC-BY 3.0, verbatim); the "
+                "Mushaf Standar Indonesia script, LPMQ / Kementerian Agama RI; the Indo-Pak "
+                "script, DigitalKhatt (MIT); and the Warsh and Qalun riwayat, Qur'anpedia.net "
+                "(https://quranpedia.net, dump version 2026-09-18). Translations: each "
+                "edition's publisher, credited in /translations/index.json. Audio: linked "
+                "from EveryAyah, Islamic Network and MP3Quran; no audio is hosted here."
             ),
         },
         pretty=pretty,
@@ -677,7 +720,11 @@ def sources_manifest(
 
     return {
         "text": {
-            "source": "https://tanzil.net/pub/download/ and https://quran.kemenag.go.id/",
+            "source": (
+                "https://tanzil.net/pub/download/, https://quran.kemenag.go.id/, "
+                "https://github.com/DigitalKhatt/digitalkhatt-js and "
+                "https://api.quranpedia.net/dumps"
+            ),
             "status": config.TANZIL_TEXT.status,
             "license": config.TANZIL_TEXT.text,
             "license_url": config.TANZIL_TEXT.url,
@@ -687,17 +734,25 @@ def sources_manifest(
                     "script": script,
                     "status": config.SCRIPT_LICENSES[script].status,
                     "license_url": config.SCRIPT_LICENSES[script].url,
+                    "verses": config.SCRIPT_VERSES[script],
                 }
                 for script in config.SCRIPT_IDS
             ],
             "withheld_scripts": [script for script in config.SCRIPT_IDS if script not in scripts],
             "note": (
-                "Seven scripts are published: the six Tanzil variants (one licence -- the "
-                "grant is per text, not per variant) and Qur'an Kemenag's Mushaf Standar "
-                "Indonesia, a distinct orthography whose text the ministry's own publishing "
-                "regulation (PMA 44/2016 Pasal 8(1)) holds to be uncopyrightable. Only "
-                "UTF-8 text is taken from Kemenag: no fonts, no mushaf layout, no "
-                "ornaments, which Pasal 8(2) reserves to the publisher."
+                "Every script is published on the strength of its own grant, and the "
+                "grants differ in kind. Six Tanzil variants: one licence, CC-BY 3.0 "
+                "verbatim, because the grant is per text rather than per variant. Qur'an "
+                "Kemenag's Mushaf Standar Indonesia: the ministry's own publishing "
+                "regulation (PMA 44/2016 Pasal 8(1)) holds the mushaf text to be "
+                "uncopyrightable, and only its plain UTF-8 text is taken -- no fonts, no "
+                "mushaf layout, no ornaments, which Pasal 8(2) reserves to the publisher. "
+                "The Indo-Pak script is DigitalKhatt's own typesetting under its "
+                "repository's MIT licence. Warsh and Qalun are Qur'anpedia.net's dumps "
+                "under their data licence, which requires crediting them and stating the "
+                "dump version; they are riwayat rather than orthographies and number 6,214 "
+                "ayahs, so their per-surah counts differ from /chapters.json, which is "
+                "Hafs metadata."
             ),
         },
         "chapters": {

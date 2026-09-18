@@ -234,6 +234,34 @@ def licensed_tasks() -> list[FetchTask]:
         )
     )
 
+    from . import digitalkhatt
+
+    tasks.append(
+        FetchTask(
+            path=config.digitalkhatt_path(),
+            url=digitalkhatt.SNAPSHOT_URL,
+            source="DigitalKhatt/digitalkhatt-js (Indo-Pak, 15-line)",
+            license=config.DIGITALKHATT,
+            parse=digitalkhatt.parse_text,
+        )
+    )
+
+    from . import quranpedia
+
+    tasks.extend(
+        FetchTask(
+            path=config.quranpedia_path(script),
+            url=quranpedia.dump_url(script),
+            source=(
+                f"quranpedia.net dumps/mushafs-{quranpedia.MOUNT[script]} "
+                f"({script}, {config.SCRIPT_LABELS[script][0]})"
+            ),
+            license=config.QURANPEDIA,
+            parse=quranpedia.parse_dump,
+        )
+        for script in config.RIWAYAH_SCRIPTS
+    )
+
     return tasks
 
 

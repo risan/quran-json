@@ -34,11 +34,30 @@ TEXT_EDITION: Final = "ara-quranuthmanienc"
 #: `transliteration` is generated like a language but has no chapter directory.
 TRANSLITERATION: Final = "transliteration"
 
-#: The Indonesian standard mushaf served by the Qur'an Kemenag app. A seventh script
-#: rather than a Tanzil variant: it follows the Mushaf Standar Indonesia (Imlaei rasm with
-#: Uthmani marks and waqf signs) and marks no alef wasla (U+0671) where Tanzil's Uthmani
-#: text marks 13,819 of them, so only 6 of the 37,416 verse comparisons coincide.
+#: The Indonesian standard mushaf served by the Qur'an Kemenag app. Not a Tanzil variant:
+#: it is the Mushaf Standar Indonesia, whose own definition (PMA 44/2016 Pasal 1(2), and
+#: Pasal 17's variant list of Usmani/Bahriyyah/Braille) makes it a *standard*, and whose
+#: serving API describes its text as "Rasm Usmani". Measured, it marks no alef wasla
+#: (U+0671) where Tanzil's Uthmani text marks 13,819 of them, and only 6 of the 37,416
+#: verse comparisons against the six Tanzil variants coincide. "Imlaei" is a producer
+#: orthography name, not an MSI variant, so it is not used for this script.
 KEMENAG_SCRIPT: Final = "kemenag"
+
+#: DigitalKhatt's Indo-Pak text. The only Indo-Pak rasm under a redistribution grant:
+#: every other one is either all-rights-reserved or an unlicensed mirror, and the
+#: QuranWBW/Quran.com text is expressly "DO NOT SELL, MANIPULATE, DISTRIBUTE WITHOUT
+#: CREDITS". See `quranjson.digitalkhatt` for the three reconstruction decisions and the
+#: three properties a consumer should know (Fatiha segmentation, no embedded basmala,
+#: Arabic Extended-B marks).
+DIGITALKHATT_SCRIPT: Final = "indopak"
+
+#: Qur'anpedia.net's two Nafiʿ riwayat -- Warsh (the Maghrib: Morocco, Algeria, West
+#: Africa) and Qalun (Libya, Tunisia). Riwayat, not orthographies: their ayah numbering is
+#: Nafiʿ's, 6,214, so they are not interchangeable with the Hafs scripts and are not
+#: forced into a 6,236-slot array. See `quranjson.quranpedia`.
+WARSH_SCRIPT: Final = "warsh"
+QALUN_SCRIPT: Final = "qalun"
+RIWAYAH_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT)
 
 #: Order matters: it determines key order in `verses/*.json`.
 LANG_CODES: Final = (
@@ -197,7 +216,22 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
     "simple-clean": ("Imlaei unvocalised", "Modern orthography, no vowel marks at all"),
     KEMENAG_SCRIPT: (
         "Mushaf Standar Indonesia",
-        "Kemenag (LPMQ) Indonesian standard orthography, Imlaei rasm with waqf marks",
+        "Kemenag (LPMQ) Mushaf Standar Indonesia, the rasm Usmani text the ministry's API "
+        "serves, carrying the Indonesian standard's waqf signs",
+    ),
+    DIGITALKHATT_SCRIPT: (
+        "Indo-Pak",
+        "DigitalKhatt's Indo-Pak typesetting: subscript alef (U+0656), no alef wasla, "
+        "Arabic Extended-B marks",
+    ),
+    WARSH_SCRIPT: (
+        "Warsh",
+        "Warsh ʿan Nafiʿ (the Maghrib: Morocco, Algeria, West Africa), 6,214 ayahs to "
+        "Nafiʿ's count",
+    ),
+    QALUN_SCRIPT: (
+        "Qalun",
+        "Qalun ʿan Nafiʿ (Libya, Tunisia), 6,214 ayahs to Nafiʿ's count",
     ),
 }
 
@@ -260,11 +294,90 @@ KEMENAG_TRANSLITERATION = License(
     url=f"{KEMENAG_API}?start=0&limit=3&surah=2",
 )
 
+#: DigitalKhatt's own typesetting, MIT-licensed at the repository root. A font licence
+#: would not do: OFL on DigitalKhatt's `indopakfont` covers the glyphs, never the text.
+DIGITALKHATT = License(
+    status="granted",
+    text=(
+        "MIT (DigitalKhatt/digitalkhatt-js): 'Permission is hereby granted, free of charge, "
+        "to any person obtaining a copy of this software and associated documentation "
+        "files ... to deal in the Software without restriction, including without limitation "
+        "the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or "
+        "sell copies of the Software.' The repository's root LICENSE covers the text file "
+        "this dataset parses; there is no separate data licence and no NOTICE file. The "
+        "Indo-Pak rasm itself is DigitalKhatt's own typesetting, not a copy of another "
+        "producer's Indopak data (0 of 6,236 verses shared with the QuranWBW or KFGQPC text)."
+    ),
+    url="https://raw.githubusercontent.com/DigitalKhatt/digitalkhatt-js/HEAD/LICENSE",
+)
+
+#: The first source found whose grant reaches the Maghribi riwayat at all. It is granted
+#: with two conditions a dataset must meet (credit + dump version) and one duty (stay
+#: current), which is why the version travels in the provenance record.
+QURANPEDIA = License(
+    status="granted",
+    text=(
+        "Qur'anpedia.net Data License (version 2026-09-18): 'Free to use inside apps, "
+        "websites, bots, and research tools -- no attribution required ... Republishing "
+        "this data -- in full or in part -- as a downloadable database or dataset "
+        "requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating "
+        "this dump's version.' The same licence requires keeping a copy current via "
+        "/api/v1/changes and holds the distributor responsible for outdated text; the "
+        "snapshot records the dump version it was taken from. The underlying riwayah text "
+        "is KFGQPC's printed mushaf per the dump's own description; the licence's own "
+        "ownership clause treats the qira'at text as the ummah's shared heritage and claims "
+        "only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate "
+        "KFGQPC assets and are not published here."
+    ),
+    url="https://api.quranpedia.net/dumps/LICENSE.md",
+)
+
 #: Every script published under `/text/`, in manifest order, with its covering licence.
-SCRIPT_IDS: Final = (*TANZIL_VARIANTS, KEMENAG_SCRIPT)
+SCRIPT_IDS: Final = (
+    *TANZIL_VARIANTS,
+    KEMENAG_SCRIPT,
+    DIGITALKHATT_SCRIPT,
+    *RIWAYAH_SCRIPTS,
+)
 SCRIPT_LICENSES: Final[dict[str, License]] = {
     **dict.fromkeys(TANZIL_VARIANTS, TANZIL_TEXT),
     KEMENAG_SCRIPT: KEMENAG_TEXT,
+    DIGITALKHATT_SCRIPT: DIGITALKHATT,
+    **dict.fromkeys(RIWAYAH_SCRIPTS, QURANPEDIA),
+}
+
+#: Verses a script is expected to hold. The Hafs-count scripts all run to 6,236; Nafiʿ's
+#: two riwayat do not, and flattening them to 6,236 would mean merging or splitting ayahs.
+#: The per-script total is published in `manifest.json`, so the divergence is visible to a
+#: consumer rather than implied.
+SCRIPT_VERSES: Final[dict[str, int]] = {
+    **dict.fromkeys(SCRIPT_IDS, 6236),
+    WARSH_SCRIPT: 6214,
+    QALUN_SCRIPT: 6214,
+}
+
+#: What a consumer must know before reading a script's bytes, published per script in
+#: `manifest.json`. Only scripts whose shape or segmentation departs from the dataset's
+#: Hafs-based chapter metadata carry one.
+SCRIPT_NOTES: Final[dict[str, str]] = {
+    DIGITALKHATT_SCRIPT: (
+        "Al-Fatiha follows the Indo-Pak segmentation: the basmala is unnumbered, so verse 1 "
+        "is 'al-hamdu lillahi rabbi al-'alamin' and the last two verses are held separately, "
+        "where the Hafs scripts make the basmala verse 1 and hold the final two together. "
+        "Every chapter has the canonical count; only chapter 1's verse labels differ. No "
+        "basmala is embedded in any verse. The text uses Arabic Extended-B marks (U+089C)."
+    ),
+    WARSH_SCRIPT: (
+        "Warsh ʿan Nafiʿ, a different riwayah, not an orthography: 6,214 ayahs to Nafiʿ's "
+        "count, of which 50 surahs differ in length from the Hafs count in /chapters.json "
+        "(al-Baqarah 285 where Hafs has 286, At-Tawbah 130 where Hafs has 129). Each verse's "
+        "`number_in_hafs` gives the Hafs ayah number or numbers it covers."
+    ),
+    QALUN_SCRIPT: (
+        "Qalun ʿan Nafiʿ, a different riwayah, not an orthography: 6,214 ayahs to Nafiʿ's "
+        "count, of which 50 surahs differ in length from the Hafs count in /chapters.json. "
+        "Each verse's `number_in_hafs` gives the Hafs ayah number or numbers it covers."
+    ),
 }
 
 
@@ -509,6 +622,16 @@ def kemenag_path() -> Path:
     crawl and drift in any of them is detected verse by verse.
     """
     return DATA / "kemenag" / "quran.json"
+
+
+def digitalkhatt_path() -> Path:
+    """Path to the committed DigitalKhatt Indo-Pak snapshot (licence: MIT)."""
+    return DATA / "digitalkhatt" / "quran.json"
+
+
+def quranpedia_path(script: str) -> Path:
+    """Path to a committed Qur'anpedia snapshot, one per Nafiʿ riwayah."""
+    return DATA / "quranpedia" / f"{script}.json"
 
 
 #: Record of upstream transcription defects restored on load (see `quranjson.qa`).

@@ -124,12 +124,18 @@ def test_translation_files_carry_no_arabic(cdn_tree: Path) -> None:
 
 
 def test_every_script_is_published_complete(cdn_tree: Path) -> None:
-    """Every published script is whole: 114 chapters, 6,236 verses, plus chapter files."""
+    """Every published script is whole: 114 chapters, its own verse count, chapter files.
+
+    The count is per script rather than a constant: the Hafs-count scripts run to 6,236,
+    while Warsh and Qalun carry Nafiʿ's 6,214 ayahs.
+    """
     for script in config.SCRIPT_IDS:
         chapters = read_json(cdn_tree / "text" / script / "quran.json")
 
         assert len(chapters) == CHAPTERS, script
-        assert sum(len(chapter["verses"]) for chapter in chapters) == VERSES, script
+        assert (
+            sum(len(chapter["verses"]) for chapter in chapters) == config.SCRIPT_VERSES[script]
+        ), script
         assert (cdn_tree / "text" / script / "chapters" / f"{CHAPTERS}.json").exists()
 
 
@@ -202,7 +208,7 @@ def test_manifest_agrees_with_the_tree_it_describes(cdn_tree: Path) -> None:
     assert (cdn_tree / "chapters.json").exists()
 
     for script in manifest["scripts"]:
-        assert script["verses"] == VERSES, script["id"]
+        assert script["verses"] == config.SCRIPT_VERSES[script["id"]], script["id"]
 
 
 def test_chapter_files_embed_transliteration_but_quran_json_does_not(legacy_tree: Path) -> None:

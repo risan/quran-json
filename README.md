@@ -47,7 +47,7 @@ version.
 
 | Path | Contents |
 |---|---|
-| `manifest.json` | Scripts, counts, and pointers |
+| `manifest.json` | Scripts, counts, per-script notes, and pointers |
 | `chapters.json` | Metadata for all 114 chapters |
 | `text/{script}/quran.json` | The whole Quran in one script |
 | `text/{script}/chapters/{1-114}.json` | One chapter in one script |
@@ -61,31 +61,77 @@ version.
 | `meta/sources.json` | Provenance and license for everything published |
 | `meta/qa.json` | Transcription corrections applied to upstream sources |
 
-**Seven text scripts**, all complete at 6,236 verses — six Tanzil orthographies, plus the
-Indonesian standard mushaf from Qur'an Kemenag:
+**Ten text scripts**, in three kinds that are worth keeping apart:
 
-| `{script}` | Name | Notes |
+| `{script}` | Name | Verses | Notes |
+|---|---|---|---|
+| `uthmani` | Uthmani | 6,236 | Uthmanic orthography, full vocalisation |
+| `uthmani-min` | Uthmani minimal | 6,236 | Uthmanic orthography, reduced marks |
+| `simple` | Imlaei | 6,236 | Modern orthography, full vocalisation, assimilated letters |
+| `simple-plain` | Imlaei plain | 6,236 | Modern orthography, unassimilated letters |
+| `simple-min` | Imlaei minimal | 6,236 | Modern orthography, reduced marks |
+| `simple-clean` | Imlaei unvocalised | 6,236 | Modern orthography, **no vowel marks at all** |
+| `kemenag` | Mushaf Standar Indonesia | 6,236 | Kemenag (LPMQ) rasm Usmani text with the Indonesian standard's waqf signs |
+| `indopak` | Indo-Pak | 6,236 | DigitalKhatt's Indo-Pak typesetting: subscript alef (U+0656), no alef wasla, Arabic Extended-B marks |
+| `warsh` | Warsh | **6,214** | Warsh ʿan Nafiʿ (the Maghrib), a different reading |
+| `qalun` | Qalun | **6,214** | Qalun ʿan Nafiʿ (Libya, Tunisia), a different reading |
+
+Three axes hide inside the word "script", and this dataset only carries two of them:
+
+| Axis | What it is | Carried by |
 |---|---|---|
-| `uthmani` | Uthmani | Uthmanic orthography, full vocalisation |
-| `uthmani-min` | Uthmani minimal | Uthmanic orthography, reduced marks |
-| `simple` | Imlaei | Modern orthography, full vocalisation, assimilated letters |
-| `simple-plain` | Imlaei plain | Modern orthography, unassimilated letters |
-| `simple-min` | Imlaei minimal | Modern orthography, reduced marks |
-| `simple-clean` | Imlaei unvocalised | Modern orthography, **no vowel marks at all** |
-| `kemenag` | Mushaf Standar Indonesia | Kemenag (LPMQ) Indonesian standard, Imlaei rasm with waqf marks |
+| **Riwayah** | *Which reading*: Hafs, Warsh, Qalun. Changes the words, and sometimes the ayah count itself. | `warsh`, `qalun` differ from the other eight |
+| **Rasm / orthography** | How the same reading is written: Uthmani, Imlaei, Indo-Pak, Maghribi, and how marks are encoded. | The Uthmani/Imlaei group, `kemenag`, `indopak` |
+| **Print layout** | 13/15/16-line, ayet-berkenar, Bombay, page and line breaks. | **Nothing here.** A verse array has no page geometry. |
+
+That last row is why "the 15-line Taj mushaf" cannot be a script: it is the same text
+arranged differently on a page. Publishers are also where this bites — KFGQPC's free grant
+covers its **Illustrator and PDF page copies**, not its verse text.
+
+### Mushaf traditions, and what is covered
+
+| Tradition | Covered by | Gap |
+|---|---|---|
+| **Madinah** (King Fahd Complex, Uthman Taha naskh) | `uthmani` — the riwayah and rasm it prints (Hafs, Uthmani) | The Complex's *own* transcription and its calligraphy: `جميع الحقوق محفوظة`, and its one grant is scoped to Illustrator/PDF/images/fonts, not a verse array |
+| **Indo-Pak** (Taj Company and similar, 13/15/16-line) | `indopak` — the rasm, from DigitalKhatt (MIT) | The mainstream Indopak texts (QuranWBW / Quran.com, KFGQPC) are restricted; the 13/15/16-line *layouts* are QUL artefacts with no licence |
+| **Ottoman / Turkish** (ayet-berkenar) | `uthmani` — the riwayah (Hafs) | No Turkish text is licensable: Diyanet explicitly refuses to share datasets, and its text carries a Turkish işaret layer. "Ayet-berkenar" is a page layout (15 lines), not a text |
+| **Southeast Asian** (MSI, Bombay) | `kemenag` — the Mushaf Standar Indonesia text | Bombay is a print family, not a text edition: no digital text identifies as it, and its rasm is the Uthmani-family text already covered |
+| **Maghribi** (Warsh in Morocco/Algeria/West Africa, Qalun in Libya/Tunisia) | `warsh`, `qalun` — both riwayat, from Qur'anpedia.net | The KFGQPC texts of both, and Morocco's Mohammed VI Foundation text, are restricted |
 
 `simple` is an easy trap: it is a different *orthography*, not a lower level of
 vocalisation, and it carries the full set of harakat. Reach for `simple-clean` if you want
 the text without them.
 
-`kemenag` is not a seventh *label* for a Tanzil text but a different orthography: it writes
-no alef wasla (`U+0671`) where Tanzil's Uthmani text writes 13,819 of them, and only 6 of
-the 37,416 verse comparisons against the six Tanzil variants coincide (47:6, 55:4 and 56:3
-against the Imlaei texts, 56:3 against Uthmani) — verses that hold none of the
-distinguishing marks. It is the text served by <https://quran.kemenag.go.id/>, and the
-ministry's own publishing regulation holds the mushaf text to be uncopyrightable; see
-[Licensing](#licensing). Trailing whitespace is stripped, and the API's double space after
-a waqf sign is preserved as published.
+`kemenag` is not a Tanzil text with a different label: it writes no alef wasla (`U+0671`)
+where Tanzil's Uthmani writes 13,819 of them, and only 6 of the 37,416 verse comparisons
+against the six Tanzil variants coincide (47:6, 55:4 and 56:3 against the Imlaei texts,
+56:3 against Uthmani) — verses that hold none of the distinguishing marks. It is the text
+served by <https://quran.kemenag.go.id/>, which describes it as *Rasm Usmani*; the
+ministry's own publishing regulation holds the mushaf text to be uncopyrightable, and the
+Indonesian standard's three official variants (Usmani, Bahriyyah, Braille) are the
+regulator's, not this API's. Note that "Imlaei" is **not** an MSI variant name — it is a
+producer orthography, and the official set does not contain one. Trailing whitespace is
+stripped, and the API's double space after a waqf sign is preserved as published.
+
+`indopak` needs three things said plainly. It is **DigitalKhatt's typesetting**, not the
+Indopak text most apps ship: measured, it shares 0 of 6,236 verses with the QuranWBW text or
+KFGQPC's Indopak. It keeps the **Indo-Pak segmentation of Al-Fatiha**, where the basmala is
+unnumbered — so 1:1 is `اَلْحَمْدُ لِلّٰهِ ...` and the last two verses are held separately,
+where every other script here makes the basmala verse 1 and holds them together. And it
+embeds **no basmala in any verse**, because the source prints it as chapter furniture.
+Its `note` in `manifest.json` says so; only chapter 1's verse labels differ, and every
+chapter still has its canonical count.
+
+`warsh` and `qalun` are different *readings*, not orthographies, and they number **6,214
+ayahs** — Nafiʿ's count, not the Kufi 6,236 — so 50 surahs differ in length from
+`chapters.json`, which is Hafs metadata (al-Baqarah 285 where Hafs has 286, At-Tawbah 130
+where Hafs has 129). Each verse carries the source's own `number_in_hafs`, the Hafs ayah
+number or numbers it covers, so the two counts can be joined without this dataset merging
+or splitting a single verse:
+
+```json
+{ "id": 1, "text": "أَلَآمِّٓۖ ...", "number_in_hafs": [1, 2] }
+```
 
 **Translations carry the translation only.** The Arabic is identical across editions, so
 embedding it would have duplicated one 1.7 MB corpus 83 times — 105 MB, a fifth of the old
@@ -128,15 +174,15 @@ do not permit redistribution.
 
 | | `dist/` (frozen, 3.1.2) | Published (current) |
 |---|---|---|
-| Arabic text | Re-encoded derivative, no upstream license | **Seven scripts**: six Tanzil, CC-BY 3.0 verbatim, plus the Indonesian standard mushaf from Qur'an Kemenag |
+| Arabic text | Re-encoded derivative, no upstream license | **Ten scripts**: six Tanzil (CC-BY 3.0, verbatim), the Indonesian standard mushaf from Qur'an Kemenag, DigitalKhatt's Indo-Pak text (MIT), and Qur'anpedia.net's Warsh and Qalun (granted with attribution + version) |
 | Chapter metadata | Quran.com API (personal, non-commercial) | **Tanzil `quran-data.xml`**, CC-BY 3.0 |
 | Translations | 11, mostly Tanzil (redistribution not permitted) | **84**: 83 with grants (75 QuranEnc + 8 public-domain / author-granted), plus Qur'an Kemenag's Indonesian translation, published on an unverified-licence override and labelled `restricted` |
 | Transliteration | Yes (Tanzil) | **1**: Qur'an Kemenag's romanisation. No romanisation with a grant was found, so it too is published on the override and labelled `unknown` (see below) |
 | Per-surah audio | none | 159 editions (Islamic Network), 288 (MP3Quran) |
-| Basmala | Only in 1:1 | Embedded in ayah 1 of every surah except 9 |
+| Basmala | Only in 1:1 | Embedded in ayah 1 of every surah except 9 (Tanzil); unnumbered chapter furniture in `indopak`, `warsh` and `qalun`, whose Al-Fatiha verse labels therefore differ from the rest |
 | Verse files | Bengali missing (upstream bug) | No per-verse files: a chapter file answers the same question |
-| Files | 7,513 | 10,359 |
-| Size | 82 MB | 312 MB |
+| Files | 7,513 | 10,704 |
+| Size | 82 MB | 330 MB |
 
 The basmala change is the one most likely to surprise a consumer migrating. Tanzil embeds
 it in the opening ayah rather than storing it as chapter metadata, so `2:1` is
@@ -207,6 +253,18 @@ itself**, so the patch cannot rot into a double-correction. The record is publis
 | **ClearQuran (Talal Itani)** | ✅ Granted | *"free to use, share, and distribute — including in commercial projects — with no permission or authorization required"* under CC BY-ND 4.0 — <https://blog.clearquran.com/download>. Fetched from the translator's own verse-by-verse archive, not a packager |
 | **QuranEnc translations** (75) | ✅ Granted | *"Contents of the translations can be downloaded and re-published"* under 7 conditions: verbatim, credit publisher + QuranEnc.com, state the version, keep transcripts, no inappropriate advertising — <https://quranenc.com/en/home/api> |
 | **Qur'an Kemenag text** (`kemenag`) | ✅ Granted | Minister of Religious Affairs Regulation 44/2016, Pasal 8(1): *"Teks Mushaf Al-Qur'an tidak memiliki hak cipta"*, and Copyright Law 28/2014, Pasal 42(e), which removes copyright from a *kitab suci*. Pasal 8(2) keeps the publisher's rights in the calligraphy, the tanda baca/tajwid/qira'at apparatus and the ornaments, so this project takes only the plain UTF-8 text — no fonts, no mushaf layout, no ornaments — <https://jdih.kemenag.go.id/regulation-download/penerbitan-pentashihan-dan-peredaran-mushaf-al-qur%27an> |
+| **DigitalKhatt Indo-Pak text** (`indopak`) | ✅ Granted | MIT at the repository root: *"Permission is hereby granted, free of charge… to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies"*. The repository's own LICENSE covers the text file; there is no separate data licence, and the sibling `indopakfont`'s OFL is a *font* grant, which never reaches text — <https://github.com/DigitalKhatt/digitalkhatt-js/blob/main/LICENSE> |
+| **Qur'anpedia.net Warsh + Qalun** (`warsh`, `qalun`) | ✅ Granted, with conditions | *"Free to use inside apps, websites, bots, and research tools — no attribution required… Republishing this data — in full or in part — as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version."* This is a downloadable dataset, so both are met: the credit is in `manifest.json` and below, and the dump version (2026-09-18) is in `meta/sources.json`. The same licence requires keeping a copy current and makes outdated text the distributor's responsibility, which is why `fetch --force` re-checks upstream — <https://api.quranpedia.net/dumps/LICENSE.md> |
+| KFGQPC developer text — Madinah Hafs/QPC and the Warsh package | ⛔ Restricted | The Complex's own IT department built the data, so its terms reach the text — but the grant it publishes is scoped to *"رسم المتجهات Illustrator"* (Illustrator/PDF/image/TrueType copies), not a verse array, and the site states *"جميع الحقوق محفوظة لمجمع الملك فهد لطباعة المصحف الشريف © 2025"*. The whole domain is unreachable from outside Saudi Arabia (HTTP 000), so these are the rights holder's own pages via archive snapshots |
+| Diyanet Turkish mushaf text | ⛔ Restricted | The Presidency's API page refuses redistribution outright: *"…metin, ses dosyası, veri seti… paylaşılmamaktadır"*, and bulk-transfer requests are *"karşılanamamaktadır"*. The downloaded text carries no licence, only a meta copyright. Separately, **ayet-berkenar is a page layout** — Diyanet's own guide defines it as fifteen lines per page — so a verse array cannot deliver it |
+| QuranWBW / Quran.com IndoPak text (QUL 55/59, QF `text_indopak`) | ⛔ Restricted | The text an `indopak` label usually means: *"for Sadaqa-e-Jaria purposes only. DO NOT SELL, MANIPULATE, DISTRIBUTE WITHOUT CREDITS OR TAMPER IN ANY FORM OR MANNER."* Sadaqa-e-Jaria is a religious-benefit framing, not a grant, and the notice forbids distribution outright. Quran Foundation adds *"QF Content is not sold, sublicensed, or redistributed"* — <https://github.com/marwan/indopak-quran-text> |
+| KFGQPC Indopak/Nastaleeq via fawazahmed0/quran-api | ⚠️ Unknown | Two complete Indopak editions do exist there, self-declaring KFGQPC as their upstream, and both are genuine Indopak rasm — but the repo's Unlicense covers packaging only, and KFGQPC's own terms are unreachable. No grant can be quoted |
+| alquran.cloud `quran-indopak` | ⚠️ Unknown | Undocumented: its metadata endpoint 404s, it is absent from the 331-edition catalogue and the OpenAPI spec, and nothing names its provenance. Measured, it is also not the QuranWBW text but a Persianised hybrid (22,024 Farsi-yeh, 13,819 alef wasla) |
+| QUL mushaf-layout resources (Taj 13/16-line, Qudratullah 13/15-line, Gaba 9-line) | ⛔ Restricted | Where the line-count traditions live online, as page/line grids rather than texts. No per-resource licence, and Tarteel's terms call the Service Content *"the proprietary property of Tarteel or its licensors"* |
+| King Saud University e-Mushaf (Warsh) | ⚠️ Unknown | Serves Warsh as **page images** with a Maghribi pagination table (28 of 604 page-starts differ from Hafs) and text only for Hafs Imlaei. No API, and no terms page — support/terms.php, about.php and /api/ all 404 |
+| Morocco — Ministry of Habous / Mohammed VI Foundation | ⛔ Restricted | The origin and rights holder of the Maghribi Warsh mushaf, mandated by dahir 1.09.198 (2010) to re-copy it *"برواية ورش عن نافع"* and to **license** reproduction. It publishes no machine-readable text, and its reader's API refuses unauthenticated calls |
+| Malaysia (KDN, Akta 326) and Brunei | ⛔ Restricted | Malaysia licenses the printing of Quran text under the Printing of Quranic Texts Act 1986 — a fine to RM10,000 and/or three years without it — with no published Malaysian-standard byte stream; Brunei vets each edition and keeps a list of what passed. Neither standard is a separate rasm: both work from rasm Uthmani, which is already covered |
+| Bombay mushaf | ⚠️ Not a text edition | A print family (Mumbai), reprinted across Southeast Asia in 13, 17 or 18 lines with its own waqf conventions; LPMQ records the 1960 Bombay mushaf as the model for Indonesia's standard rasm. No digital text identifies as it, so there is nothing to license |
 | Qur'an Kemenag translation (Indonesian, 2019) | ⛔ Restricted | A translation is a protected work: Copyright Law 28/2014, Pasal 59(g) covers *"terjemahan, tafsir, …"* for 50 years from first publication, and nothing exempts the ministry. No grant is published — the serving API states no terms and the ministry's own site was unreachable (2026-09-18). Ingested and withheld; the same ministry's earlier edition is already published as `id-affairs` under the QuranEnc grant — <https://peraturan.bpk.go.id/Details/38690/uu-no-28-tahun-2014> |
 | Qur'an Kemenag translation romanisation | ⚠️ Unknown | A romanisation carrying authored vocalisation, so the uncopyrightable-mushaf-text rule does not reach it, and no grant exists either. Ingested and withheld |
 | Tanzil translations | ⛔ Restricted | *"for non-commercial purposes only… you need to obtain necessary permission from the translator or the publisher"* and *"Redistributing the following list in another website is not allowed"* — <https://tanzil.net/trans/> |
@@ -277,6 +335,31 @@ clean fix is to deprecate 3.1.2 in favour of the CDN.
   numbers with both parts zero-padded (`114006.mp3`), Islamic Network uses the global ayah
   number unpadded (`6236.mp3`), MP3Quran uses whole-surah files (`114.mp3`).
 
+### On the mushaf traditions
+
+The five traditions a reader is most likely to ask for are **Madinah, Indo-Pak,
+Ottoman/Turkish, Southeast Asian and Maghribi**, and the research into them produced four
+results worth keeping:
+
+- **The labels mix three axes.** "Indo-Pak 16-line" and "ayet-berkenar" name a *print
+  layout*; "Uthmani" and "Indopak" name a *rasm*; "Warsh" and "Qalun" name a *riwayah*.
+  Only the last two change the verse count. Every catalogue that lists "13/15/16-line" as a
+  text edition is really listing one text in several arrangements.
+- **Fonts keep being offered as if they were text.** KFGQPC's genuinely free grant covers
+  its Illustrator/PDF page copies and its fonts; DigitalKhatt's `indopakfont` is OFL while
+  the *text* in the same project is MIT for a different reason; LPMQ's free download is a
+  Word `.rar` plus a font. None of those is a text grant, and one of them (KFGQPC) is a
+  grant that does not reach a verse array at all.
+- **`api.quran.com` answers 200 for a script it does not have.** `/verses/qalun`,
+  `/verses/warsh` and `/verses/notarealscriptxyz` all return byte-identical Hafs Uthmani.
+  A source that "returns 200 and Arabic text" is not evidence of a resource, which is why
+  every text here is fingerprinted by codepoint rather than trusted by its label.
+- **The relabelled-Hafs trap is real and popular.** A starred repo's `WarshHolyQuran.ts` is
+  byte-identical to its `HafsHolyQuran.ts` in 6,236 of 6,236 verses; the only difference in
+  the two files is one surah name. It was the top search hit for "warsh quran". The check
+  that catches it (no U+0671 alef wasla; the Maghribi marks present instead) is pinned in
+  `tests/test_riwayat.py`.
+
 ## Transliteration
 
 **No transliteration with a granted redistribution was found.** This was
@@ -339,7 +422,7 @@ npm deprecate "quran-json@<=3.1.2" --otp=<code> \
   "Ships translations without redistribution rights and is unmaintained. Use the current dataset at https://quran-json.risan.workers.dev/ instead."
 ```
 
-The new generation is deliberately **not** published to npm. It is 316 MB against the frozen
+The new generation is deliberately **not** published to npm. It is 330 MB against the frozen
 tree's 82 MB; it is unversioned by design, so an npm release would republish the whole
 dataset to change one byte; and the live tree carries two editions whose rights are not
 cleared — the owner's call to serve from their own CDN, not to hand to every `npm install`.
@@ -351,7 +434,7 @@ Requires [uv](https://docs.astral.sh/uv/) and Python 3.12+.
 
 ```bash
 uv sync                       # install
-uv run pytest                 # 84 tests: parity, integrity, licensing, layout
+uv run pytest                 # 108 tests: parity, integrity, licensing, layout
 uv run mypy && uv run ruff check .
 
 uv run quran-json licenses    # what may be published, why, and what blocks the rest
@@ -396,10 +479,14 @@ decides whether uncleared editions ship would have lived in two places at once.
 ## Attribution
 
 Quran text and chapter metadata: [Tanzil.net](https://tanzil.net) (CC-BY 3.0, six text
-variants published verbatim) and, for the `kemenag` script, LPMQ / Kementerian Agama RI
-(the Indonesian standard mushaf, whose text its publishing regulation holds to be
-uncopyrightable). Translations: the publishers credited per edition in
-`translations/index.json` and `meta/sources.json` via [QuranEnc.com](https://quranenc.com). Audio: linked from EveryAyah, Islamic Network, and
-MP3Quran; each recitation's rights remain with its reciter.
+variants published verbatim); for the `kemenag` script, LPMQ / Kementerian Agama RI (the
+Mushaf Standar Indonesia, whose text its publishing regulation holds to be
+uncopyrightable); for the `indopak` script, [DigitalKhatt](https://github.com/DigitalKhatt)
+(MIT, its own Indo-Pak typesetting); and for the `warsh` and `qalun` scripts,
+[Qur'anpedia.net](https://quranpedia.net) — whose licence requires exactly this credit and
+the dump version, which is **2026-09-18** (`api.quranpedia.net/dumps`, mushafs 4 and 7).
+Translations: the publishers credited per edition in `translations/index.json` and
+`meta/sources.json` via [QuranEnc.com](https://quranenc.com). Audio: linked from EveryAyah,
+Islamic Network, and MP3Quran; each recitation's rights remain with its reciter.
 
 Project code and the frozen `dist/` tree: [CC BY-SA 4.0](LICENSE.txt).

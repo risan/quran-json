@@ -37,6 +37,9 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 [tool.ruff.lint.per-file-ignores]
 # `_INDEX` is an HTML document held in a string; its markup lines are not code.
 "src/quranjson/cdn.py" = ["E501"]
+# The review record is a set of verbatim quotes from rights holders -- Arabic, Indonesian,
+# Turkish, Malay. RUF001 reads a Turkish dotless ı as a mistyped Latin i; it is neither.
+"src/quranjson/review.py" = ["RUF001"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

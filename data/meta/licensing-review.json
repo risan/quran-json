@@ -185,6 +185,110 @@
       "license_url": "https://web-api.qurankemenag.net/quran-ayah?start=0&limit=3&surah=2",
       "evidence": "A romanisation carrying authored vocalisation choices, so it is not the uncopyrightable 'teks Mushaf Al-Qur'an' of Regulation 44/2016 Pasal 8(1): Copyright Law 28/2014 Pasal 59(g) protects 'karya lain dari hasil transformasi'. No grant published either -- the API carries no terms and is the app's private backend (403 without Origin). Complete for all 6,236 verses, one romanised ayah per verse, with parenthetical case endings.",
       "blocker": "Written permission from LPMQ, or generate the transliteration mechanically from the uncopyrightable Arabic text -- the route recorded above and the one with no rights holder at all."
+    },
+    {
+      "name": "DigitalKhatt digitalkhatt-js -- Indo-Pak (15-line) text",
+      "kind": "text",
+      "status": "granted",
+      "license_url": "https://github.com/DigitalKhatt/digitalkhatt-js/blob/main/LICENSE",
+      "evidence": "MIT at the repository root: 'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files ... to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.' VERIFIED 2026-09-18: the text lives at apps/site-angular/src/app/services/quran_text_indopak_15.ts, 1,503,148 bytes, 610 page groups of 15 lines, and parses to 6,236 verses. It is DigitalKhatt's own typesetting, not a copy of another producer's Indopak data: 0 of 6,236 verses match the QuranWBW text or the KFGQPC text. The sibling `indopakfont` is OFL -- a font grant, which never reaches the text. Published as the `indopak` script.",
+      "blocker": ""
+    },
+    {
+      "name": "Qur'anpedia.net dumps -- Warsh and Qalun (mushafs 4 and 7)",
+      "kind": "text",
+      "status": "granted",
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "evidence": "'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' Both conditions are met: the attribution is in manifest.json, meta/sources.json and the README, and the dump version (2026-09-18) travels in the provenance record. VERIFIED 2026-09-18: mushafs-4 (Warsh, 422,507 bytes) and mushafs-7 (Qalun, 418,528 bytes) each parse to 114 surahs / 6,214 ayahs, Nafiʿ's count rather than the Kufi 6,236, with per-verse `number_in_hafs` covering all 6,214. Both texts are genuinely the riwayah and not relabelled Hafs: Warsh carries U+06D2 yeh barree 2,996x and U+06EC 10,055x with no U+0671 alef wasla, and Warsh and Qalun differ in 4,566 of 6,214 ayahs. The licence's currency clause ('distributing outdated Quranic text is the distributor's responsibility') is handled as QuranEnc's equivalent is: the version is recorded and `fetch --force` re-checks upstream. Fonts and per-page SVG packs are separate KFGQPC assets, not covered.",
+      "blocker": ""
+    },
+    {
+      "name": "KFGQPC (King Fahd Complex) developer text -- Madinah Hafs / QPC",
+      "kind": "text",
+      "status": "restricted",
+      "license_url": "https://web.archive.org/web/20240518045023/https://dm.qurancomplex.gov.sa/copyright/",
+      "evidence": "The Complex does publish real per-ayah data (Excel/CSV/SQL/XML/JSON/PDF/Word with page, jozz and line_start/line_end), and its own IT department built it, so its terms do reach the text rather than a third party's transcription. But the only grant it publishes is scoped to output formats: 'يتشـرَّف المجمع بإتاحة نسخة رقمية كاملة ... رسم المتجهات Illustrator ... ويمكن استخدام النسخة المذكورة مجاناً في المجالات الشخصية والأعمال الفردية كافة ... ومواقع الإنترنت والبرامج الحاسوبية' -- Illustrator/PDF/images/TrueType files, not a verse array. Elsewhere the Complex states 'جميع الحقوق محفوظة لمجمع الملك فهد لطباعة المصحف الشريف © 2025' and its policy page: 'All the contents ... including the texts ... and compiled information are owned by the Complex'. The whole domain timed out from this network (HTTP 000 on qurancomplex.gov.sa, dm., fonts., download., policy.), so these are archive snapshots of the rights holder's own pages, not third-party summaries.",
+      "blocker": "Written permission from KFGQPC for the verse text itself, or a granted redistribution route from a party that holds the text. The Arabic rasm this tradition prints (Hafs, Uthmani) is already covered by Tanzil's `uthmani`; what is missing is the Complex's own transcription and its calligraphy, which no grant reaches."
+    },
+    {
+      "name": "KFGQPC developer text -- Warsh narration",
+      "kind": "text",
+      "status": "restricted",
+      "license_url": "https://web.archive.org/web/20250907020432/https://qurancomplex.gov.sa/en/techquran/dev/",
+      "evidence": "A versioned, complete-looking Warsh package exists: 'It contains files for developers (Excel, CSV, HTML5, SQL, XML, JSON, TXT and PDF)' with fields jozz, page, sura_no, line_start, line_end, aya_no, aya_text; 8.62 MB, MD5 4701e8bbf053098220cf2cf4cda206a1, version 6.0. It carries no licence text, and the site footer reads 'جميع الحقوق محفوظة ... © 2025'. The same text reaches the world only through mirrors whose licences cover packaging (fawazahmed0/quran-api Unlicense; QUL account-gated, no per-resource licence). Two independent mirrors are byte-identical after one documented mapping (U+08F0 -> U+0657), which confirms the provenance, not a grant. Published instead from Qur'anpedia.net's granted dump.",
+      "blocker": "A redistribution grant from KFGQPC for the text package."
+    },
+    {
+      "name": "Diyanet (Türkiye) Turkish mushaf text",
+      "kind": "text",
+      "status": "restricted",
+      "license_url": "https://acikkaynakkuran-dev.diyanet.gov.tr/",
+      "evidence": "The Presidency publishes a complete per-ayah text (kuran.diyanet.gov.tr/Yayinlar, kuran.docx: 114 surahs, 6,236 verses), but its API page refuses redistribution: '...metin, ses dosyası, veri seti, kaynak dosya... firma, vatandaş, bireysel yazılım geliştiricisi veya diğer üçüncü kişilerle paylaşılmamaktadır' and bulk transfer/republish/source-file requests are 'karşılanamamaktadır'; the API key itself is capped (30 pages, 9 ayat per surah, juz 1). The download carries no licence, only a meta copyright '(c) 2016 Bilgi Yönetimi ve İletişim Daire Başkanlığı'. Measured, it is also not an Uthmani text: 0x U+0671, 10,012x U+06EA (Turkish isaret) and an embedded 'Shaikh Hamdullah Mushaf' font. SEPARATELY, 'ayet-berkenar' is a page-layout convention, not a reading or an orthography: Diyanet's own Hafızlık Eğitimi Rehberi defines it as 'her sayfada on beş satırdan müteşekkil' (fifteen lines per page). A verse array carries no page geometry, so ayet-berkenar cannot be delivered by a text script at all.",
+      "blocker": "Written permission from Diyanet for the text dataset. Note that even with it, the Turkish mushaf's isaret layer and the ayet-berkenar pagination are editorial/apparatus material outside a plain text grant."
+    },
+    {
+      "name": "QuranWBW / Quran.com IndoPak text (QUL resources 55/59, QF text_indopak)",
+      "kind": "text",
+      "status": "restricted",
+      "license_url": "https://github.com/marwan/indopak-quran-text",
+      "evidence": "The most widely redistributed IndoPak text, and the one an `indopak` label usually means. Its authors' own notice: 'Made by Ayman Siddiqui and R. Siddiqua for www.QuranWBW.com and www.Quran.com for Sadaqa-e-Jaria purposes only. DO NOT SELL, MANIPULATE, DISTRIBUTE WITHOUT CREDITS OR TAMPER IN ANY FORM OR MANNER.' Sadaqa-e-Jaria is a religious-benefit framing, not a redistribution grant, and the notice forbids distribution outright, so no credit condition can satisfy it. Quran Foundation's developer terms add: QF Content 'is not sold, sublicensed, or redistributed', with a dataset or content package requiring a separate written commercial licence, and a one-week cache limit. QUL publishes no licence field for the resource, its downloads are account-gated (HTTP 401), and its own credits page says the majority of its resources 'were created or curated by the community, not Tarteel'. Independent corroboration: UmmahLibrary removed the bundled Indopak text and fetches it live from quran.com display-only, tracking an unanswered permission request.",
+      "blocker": "Written permission from the text's authors (Ayman Siddiqui / QuranWBW) or a commercial licence from Quran Foundation. Neither has granted one publicly."
+    },
+    {
+      "name": "KFGQPC Indopak / Nastaleeq text via fawazahmed0/quran-api",
+      "kind": "text",
+      "status": "unknown",
+      "license_url": "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions.json",
+      "evidence": "CORRECTS an earlier audit: an IndoPak edition DOES exist here -- ara-quranindopak (1,967,814 bytes) and ara-qurannastaleeqn (1,992,827 bytes), 6,236 verses each, per-ayah, self-declaring KFGQPC as their upstream ('This is a copy of Quran Nastaleeq from https://fonts.qurancomplex.gov.sa/'). Both are genuine Indopak rasm (U+06E1 ~62,300x, U+0656 ~990x, 0x U+0671) and distinct from the QuranWBW text (58 of 6,236 verses shared). But the repo's Unlicense covers its packaging only, and KFGQPC's own terms could not be reached (every qurancomplex host returned HTTP 000), so no grant can be quoted.",
+      "blocker": "KFGQPC's own terms, or a grant from the mirror. What is reachable is DigitalKhatt's MIT text, which is published instead."
+    },
+    {
+      "name": "alquran.cloud `quran-indopak` (Islamic Network)",
+      "kind": "text",
+      "status": "unknown",
+      "license_url": "https://api.alquran.cloud/v1/quran/quran-indopak",
+      "evidence": "The endpoint serves 6,236 verses, but the edition is undocumented: its own metadata endpoint 404s, it is absent from the 331-edition catalogue and from the OpenAPI spec, and no provenance, author or licence is stated anywhere reachable (alquran.cloud/terms 404s). Measured, it is also not the QuranWBW Indopak text but a hybrid: U+06E1 x37,372, U+0671 alef wasla x13,819, U+06CC Farsi yeh x22,024 -- a Persianised transcription layer no other Indopak text has. 0 of 6,236 verses match quran.com's text_indopak.",
+      "blocker": "A stated provenance and grant from Islamic Network for this edition."
+    },
+    {
+      "name": "QUL mushaf-layout resources (Taj 13/16-line, Qudratullah 13/15-line, Gaba 9-line)",
+      "kind": "text",
+      "status": "restricted",
+      "license_url": "https://qul.tarteel.ai/resources/mushaf-layout",
+      "evidence": "Where the 13/15/16-line Indo-Pak print traditions actually live online, as page/line grids rather than texts: 12 layouts, tagged Indopak 5 / QPC 4 / Madani 3 / Digital khatt 1, offering sqlite, docx, images or zip -- never a per-ayah rasm. The pages state no licence; Tarteel's terms call the Service Content 'the proprietary property of Tarteel or its licensors' and forbid copying or distributing it. QUL re-hosts exist without any licence (e.g. a `quran-indopak` repo mirroring exactly these archives). CONCLUSION ON THE AXIS: Taj Company 13-line/16-line and Qudratullah 13-line/15-line are layouts, not separate texts, so a verse array of an Indopak text does not imply any of them. DigitalKhatt's MIT file is the one Indopak artefact that carries a 15-line page structure as data.",
+      "blocker": "A grant from each layout's originator. Not needed for the text we publish: a per-ayah scripture carries no page geometry."
+    },
+    {
+      "name": "King Saud University e-Mushaf (`quran.ksu.edu.sa`) -- Warsh mode",
+      "kind": "text",
+      "status": "unknown",
+      "license_url": "https://quran.ksu.edu.sa/index.php?l=en",
+      "evidence": "VERIFIED 2026-09-18: the site offers Hafs, Hafs-Mujawwad and Warsh, and says of Qalun 'وقريباً رواية قالون' (soon) -- announced, not shipped. Warsh is served as *page images*, not text: engine.js holds `'warsh': {url:'warsh/', ext:'png', page_key:'Page_warsh'}` and the site's only text panel is Hafs Imlaei ('نص القرآن الكريم (إملائي)'). Its Page_warsh index differs from the Hafs pagination in 28 of 604 page-starts, so it is genuine Maghribi pagination (axis 3). There is no API (/api/ 404s) and no terms page: support/index.php, support/terms.php and about.php all 404.",
+      "blocker": "No text to take and no rights statement to rely on. Warsh is published instead from Qur'anpedia.net's granted dump."
+    },
+    {
+      "name": "Morocco -- Ministry of Habous and the Mohammed VI Foundation",
+      "kind": "text",
+      "status": "restricted",
+      "license_url": "https://www.habous.gov.ma/",
+      "evidence": "The origin and rights holder of the Maghribi mushaf, by dahir 1.09.198 (23 Feb 2010): the Mohammed VI Foundation for the Publication of the Holy Quran is 'هيئة وطنية مرجعية عليا في مجال الإعداد العلمي والمادي والفني لنسخ المصحف الشريف ونشره', mandated to re-copy the Quran 'برواية ورش عن نافع' and among other things to license reproduction. It publishes no machine-readable text: almoshaf-almohammadi.ma is a reader whose API refuses unauthenticated calls (403 'The used authentication method is not allowed on this route.'), and habous.gov.ma offers no bulk text. quran.ma was unreachable (HTTP 000).",
+      "blocker": "A licence from the Foundation, which explicitly runs a permission regime."
+    },
+    {
+      "name": "Malaysia -- KDN licensing under Akta 326, and Brunei's per-item vetting",
+      "kind": "text",
+      "status": "restricted",
+      "license_url": "https://www.mygp.gov.my/garis-panduan-permohonan-lesen-mencetak-teks-al-quran",
+      "evidence": "Malaysia has no published Malaysian-standard text, and its regime is stricter than Indonesia's: a licence is required to print or publish Quran text under the Printing of Quranic Texts Act 1986 (Akta 326), failing which a fine to RM10,000 and/or three years, administered by Kementerian Dalam Negeri (KDN, not JAKIM) through the LPPPQ. Brunei vets each item: the Religious Affairs Ministry publishes a list of approved Quran editions (LULUS/PEMBETULAN) vetted by the Da'wah Islamiah Centre, with a footer reading 'Hak Cipta Terpelihara', and no machine-readable Brunei text exists. Neither country's standard is a separate rassm: both work from rasm Uthmani, which Tanzil's texts already cover.",
+      "blocker": "A Malaysian printing licence does not grant redistribution, and no Malaysian or Bruneian text dataset has been published for licensing."
+    },
+    {
+      "name": "Bombay mushaf (the print tradition)",
+      "kind": "text",
+      "status": "unknown",
+      "license_url": "https://web.lpmqkemenag.id/berita-dan-artikel/artikel/mushaf-al-qur-an-standar-usmani.html",
+      "evidence": "Not a text edition, so there is nothing to license: the Bombay mushaf is a print family (Mumbai), Hafs with a rasm-Usmani-family text and its own waqf conventions, reprinted across Southeast Asia by Menara Kudus, Toha Putra and Sulaiman Marʿī, in 13, 17 or 18 lines as the printer chose. LPMQ records that the 1960 Bombay mushaf was the model for Indonesia's standard rasm and tanda baca, and still certifies 'Mushaf Al-Qur'an Bombay 18 Baris Ayat Pojok'. No digital text self-identifies as Bombay; the modern digitised descendants are layout grids (Taj 16-line, Qudratullah 15-line) tracked above.",
+      "blocker": "Nothing to unblock as a text: the tradition is print layout plus a waqf convention on an Uthmani-family Hafs text, which is already published."
     }
   ],
   "published": {
@@ -231,6 +335,6 @@
         "status": "granted"
       }
     ],
-    "text": "tanzil variants (CC-BY 3.0, verbatim) and kemenag (the Indonesian mushaf text, which its publishing regulation holds to be uncopyrightable)"
+    "text": "tanzil variants (CC-BY 3.0, verbatim), kemenag (the Indonesian mushaf text, which its publishing regulation holds to be uncopyrightable), indopak (DigitalKhatt, MIT), and warsh and qalun (Qur'anpedia.net, whose licence requires crediting them and stating the dump version)"
   }
 }
