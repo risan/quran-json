@@ -1295,7 +1295,7 @@
     "license_url": "https://jdih.kemenag.go.id/regulation-download/penerbitan-pentashihan-dan-peredaran-mushaf-al-qur%27an",
     "sha256": "7a08902c0591c0774df916fb2e969e58a7ab95e2ff6743ca894122db6be98a94",
     "bytes": 4093138,
-    "revision": "",
+    "revision": "80e8ca67c21193eb716917d475695073139b4212",
     "extra_licenses": [
       {
         "status": "restricted",
