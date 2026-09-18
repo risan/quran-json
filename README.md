@@ -133,6 +133,33 @@ or splitting a single verse:
 { "id": 1, "text": "أَلَآمِّٓۖ ...", "number_in_hafs": [1, 2] }
 ```
 
+### Reading a script: fonts, and joining the riwayat
+
+**No constant offset maps a riwayah verse to a Hafs one.** Nafiʿ splits Hafs 2:255 (Ayat
+al-Kursi) across two of its own verses and merges two Hafs verses elsewhere, so the join is
+a lookup, not arithmetic:
+
+```js
+// Every riwayah verse whose map includes Hafs 2:255.
+const warsh = await fetch("https://quran-json.risan.workers.dev/text/warsh/chapters/2.json").then(r => r.json());
+const covering = warsh.verses.filter(v => v.number_in_hafs.includes(255));
+// → two verses: the first half of Ayat al-Kursi, then the rest of it.
+```
+
+**`indopak` needs a font with Arabic Extended-B coverage.** Measured 2026-09-18 over every
+codepoint the published scripts use:
+
+| Font | `warsh` / `qalun` | `indopak` |
+|---|---|---|
+| Noto Naskh Arabic | 0 missing | **0 missing** |
+| Amiri | 0 missing | 10 missing, `U+089C` (2,098×) among them |
+| DigitalKhatt's own (from the source repo) | 7 missing (the Maghribi marks) | 0 missing |
+
+Coverage is not shaping: a font that carries the glyph still positions these marks by its
+own rules, and only DigitalKhatt's fonts are designed for its byte stream. The `indopak`
+`note` in `manifest.json` says the same, so a consumer meets it from the API and not only
+from this file.
+
 **Translations carry the translation only.** The Arabic is identical across editions, so
 embedding it would have duplicated one 1.7 MB corpus 83 times — 105 MB, a fifth of the old
 deployment. Pair a text file with a translation file instead:

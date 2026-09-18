@@ -97,6 +97,9 @@ def test_the_rasm_is_indo_pak_not_hafs(cdn_tree: Path) -> None:
     assert counts.get(0x0671, 0) == 0
     assert counts.get(0x0656, 0) > 900
     assert counts.get(0x06E1, 0) == 0, "U+06E1 marks the other producer's Indopak encoding"
+    # The manifest note tells consumers to pick an Extended-B font; that is only true while
+    # this text uses U+089C. If upstream re-encodes, revise the note with this number.
+    assert counts.get(0x089C, 0) > 2000
 
 
 def test_the_parser_refuses_a_source_that_changed_shape() -> None:

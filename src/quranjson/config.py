@@ -365,7 +365,11 @@ SCRIPT_NOTES: Final[dict[str, str]] = {
         "is 'al-hamdu lillahi rabbi al-'alamin' and the last two verses are held separately, "
         "where the Hafs scripts make the basmala verse 1 and hold the final two together. "
         "Every chapter has the canonical count; only chapter 1's verse labels differ. No "
-        "basmala is embedded in any verse. The text uses Arabic Extended-B marks (U+089C)."
+        "basmala is embedded in any verse. The text uses Arabic Extended-B marks (U+089C, "
+        "2,098 of them), which not every font covers: Noto Naskh Arabic and DigitalKhatt's "
+        "own fonts cover every codepoint here, while Amiri renders U+089C as a missing "
+        "glyph. Coverage is not shaping: a font that has the glyph still positions these "
+        "marks by its own rules."
     ),
     WARSH_SCRIPT: (
         "Warsh ʿan Nafiʿ, a different riwayah, not an orthography: 6,214 ayahs to Nafiʿ's "
