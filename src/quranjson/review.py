@@ -19,7 +19,7 @@ from . import config
 __all__ = ["REVIEWED", "SourceReview", "review_manifest"]
 
 #: When the review below was last carried out.
-REVIEWED = "2026-09-14"
+REVIEWED = "2026-09-18"
 
 
 @dataclass(frozen=True, slots=True)
@@ -313,6 +313,75 @@ CANDIDATES: tuple[SourceReview, ...] = (
             "CORS header."
         ),
     ),
+    SourceReview(
+        name="Qur'an Kemenag (LPMQ) Arabic text -- Mushaf Standar Indonesia",
+        kind="text",
+        status="granted",
+        license_url=config.PMA_MUSHAF_URL,
+        evidence=(
+            "Minister of Religious Affairs Regulation 44/2016 Pasal 8(1): 'Teks Mushaf "
+            "Al-Qur'an tidak memiliki hak cipta.' Copyright Law 28/2014 Pasal 42(e): "
+            "'Tidak ada Hak Cipta atas hasil karya berupa: ... e. kitab suci atau simbol "
+            "keagamaan.' Pasal 8(2) keeps the publisher's rights in the khat, the "
+            "tanda baca/tajwid/qira'at apparatus and the ornaments, so only the plain "
+            "UTF-8 text is taken. VERIFIED 2026-09-18: both instruments downloaded (HTTP "
+            "200) and read as text, not summarised. The text is a seventh orthography: it "
+            "carries no alef wasla (U+0671) where Tanzil's Uthmani marks 13,819, and only "
+            "6 of the 37,416 verse comparisons against the six Tanzil variants coincide."
+        ),
+    ),
+    SourceReview(
+        name="Qur'an Kemenag (LPMQ) Indonesian translation, 2019 revision",
+        kind="translation",
+        status="restricted",
+        license_url=config.UU_COPYRIGHT_URL,
+        evidence=(
+            "A translation is a protected work: Copyright Law 28/2014 Pasal 59(g) covers "
+            "'terjemahan, tafsir, saduran, ...' for 50 years from first publication, and "
+            "nothing in the Act exempts the ministry. No grant found: the serving API "
+            "(web-api.qurankemenag.net) publishes no terms and answers HTTP 403 without "
+            "the site's Origin header; the ministry's own site was unreachable on "
+            "2026-09-18 (lajnah.kemenag.go.id redirects to a maintenance page) and the "
+            "Wayback Machine holds no snapshot of the relevant pages. The 2019 revision is "
+            "a re-edit of the ministry translation already published as `id-affairs` under "
+            "the QuranEnc grant, but only 116 of 6,236 verses are byte-identical, so that "
+            "grant does not cover these bytes."
+        ),
+        blocker=(
+            "Written permission from LPMQ (lajnah@kemenag.go.id; the tashih service at "
+            "tashih.kemenag.go.id is the live channel). Ingested and withheld meanwhile: "
+            "publish with --include-unverified-licenses once cleared. NOTE ON THE "
+            "NON-COMMERCIAL CARVE-OUT: Copyright Law 28/2014 Pasal 43(d) excuses "
+            "'pembuatan dan penyebarluasan konten Hak Cipta melalui media teknologi "
+            "informasi dan komunikasi yang bersifat tidak komersial', and this project is "
+            "non-commercial. It does not lift the verdict: 43(d) is a limitation on "
+            "infringement, not a grant, so it confers nothing on a consumer; it is "
+            "conditioned on use being non-commercial, while this dataset is offered under "
+            "CC BY-SA with no such limit on downstream use; and this repository already "
+            "records a non-commercial-only term as `restricted`, which is exactly how "
+            "Tanzil's translations are treated. It also requires that the author state no "
+            "objection, and LPMQ has stated none reachable to us."
+        ),
+    ),
+    SourceReview(
+        name="Qur'an Kemenag (LPMQ) Latin transliteration (the API's `latin` field)",
+        kind="transliteration",
+        status="unknown",
+        license_url=f"{config.KEMENAG_API}?start=0&limit=3&surah=2",
+        evidence=(
+            "A romanisation carrying authored vocalisation choices, so it is not the "
+            "uncopyrightable 'teks Mushaf Al-Qur'an' of Regulation 44/2016 Pasal 8(1): "
+            "Copyright Law 28/2014 Pasal 59(g) protects 'karya lain dari hasil "
+            "transformasi'. No grant published either -- the API carries no terms and is "
+            "the app's private backend (403 without Origin). Complete for all 6,236 "
+            "verses, one romanised ayah per verse, with parenthetical case endings."
+        ),
+        blocker=(
+            "Written permission from LPMQ, or generate the transliteration mechanically "
+            "from the uncopyrightable Arabic text -- the route recorded above and the one "
+            "with no rights holder at all."
+        ),
+    ),
 )
 
 
@@ -336,6 +405,9 @@ def review_manifest() -> dict[str, Any]:
                 }
                 for edition in config.EXTRA_EDITIONS
             ],
-            "text": "tanzil-uthmani (CC-BY 3.0 verbatim)",
+            "text": (
+                "tanzil variants (CC-BY 3.0, verbatim) and kemenag (the Indonesian mushaf "
+                "text, which its publishing regulation holds to be uncopyrightable)"
+            ),
         },
     }

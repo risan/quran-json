@@ -305,7 +305,7 @@
     "license_url": "https://tanzil.net/docs/text_license",
     "sha256": "ea44601cb1c17c03461daa1d2c37328778312007f449938e9038f9dbd010015a",
     "bytes": 1566173,
-    "revision": ""
+    "revision": "0df59b5888c8c6ba5d4524fcc8206ca5cdf8e0cd"
   },
   {
     "path": "data/tanzil/simple.json",
@@ -327,7 +327,7 @@
     "license_url": "https://tanzil.net/docs/text_license",
     "sha256": "bdd73303ff6ba9818333566f6715dec7bf85c3f8597045315b6da43fdf99cb62",
     "bytes": 1737856,
-    "revision": ""
+    "revision": "0df59b5888c8c6ba5d4524fcc8206ca5cdf8e0cd"
   },
   {
     "path": "data/tanzil/simple-min.json",
@@ -338,7 +338,7 @@
     "license_url": "https://tanzil.net/docs/text_license",
     "sha256": "f3d7cbec3d38c6a80d5b1db86447d2520399bd3ac061a6e1d2f885aa5c8bf501",
     "bytes": 1560578,
-    "revision": ""
+    "revision": "0df59b5888c8c6ba5d4524fcc8206ca5cdf8e0cd"
   },
   {
     "path": "data/tanzil/simple-clean.json",
@@ -349,7 +349,7 @@
     "license_url": "https://tanzil.net/docs/text_license",
     "sha256": "c073e908f5ca16978328652d38648e65c15c69f4ea15c5392056c226339eacfa",
     "bytes": 1174536,
-    "revision": ""
+    "revision": "0df59b5888c8c6ba5d4524fcc8206ca5cdf8e0cd"
   },
   {
     "path": "data/tanzil/chapters.json",
@@ -1285,5 +1285,28 @@
     "sha256": "27dfa05c203a026cd6906e67bc93eefd87adfa19aa268cfbcc72aa25d04759cb",
     "bytes": 1114164,
     "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+  },
+  {
+    "path": "data/kemenag/quran.json",
+    "url": "https://web-api.qurankemenag.net/quran-ayah?start=0&limit=286&surah={1-114}",
+    "source": "quran.kemenag.go.id (Lajnah Pentashihan Mushaf Al-Qur'an)",
+    "license": "Minister of Religious Affairs Regulation 44/2016, Pasal 8(1): 'Teks Mushaf Al-Qur'an tidak memiliki hak cipta.' Copyright Law 28/2014, Pasal 42(e): 'Tidak ada Hak Cipta atas hasil karya berupa: ... e. kitab suci atau simbol keagamaan.' Pasal 8(2) reserves the publisher's rights in khat, tanda baca/tajwid/qira'at and ornamentation, so only the plain UTF-8 text is published: no fonts, no mushaf layout, no ornaments.",
+    "license_status": "granted",
+    "license_url": "https://jdih.kemenag.go.id/regulation-download/penerbitan-pentashihan-dan-peredaran-mushaf-al-qur%27an",
+    "sha256": "7a08902c0591c0774df916fb2e969e58a7ab95e2ff6743ca894122db6be98a94",
+    "bytes": 4093138,
+    "revision": "",
+    "extra_licenses": [
+      {
+        "status": "restricted",
+        "text": "No grant. A translation is a protected work: Copyright Law 28/2014 Pasal 59(g) covers 'terjemahan, tafsir, saduran, ...' for 50 years from first publication, and nothing exempts the ministry. The serving API publishes no terms and the ministry's own site (lajnah.kemenag.go.id) was unreachable on 2026-09-18, with no Wayback snapshot to fall back on. This 2019 revision is a re-edit of the ministry translation already published as `id-affairs` under the QuranEnc grant, but only 116 of 6,236 verses are byte-identical, so that grant does not cover these bytes. Pasal 43(d) excuses non-commercial distribution but is a limitation on infringement rather than a grant, and this dataset carries no non-commercial limit downstream.",
+        "url": "https://peraturan.bpk.go.id/Details/38690/uu-no-28-tahun-2014"
+      },
+      {
+        "status": "unknown",
+        "text": "No grant, and no statutory basis: the API's `latin` field is a romanisation with authored vocalisation, not the uncopyrightable 'teks Mushaf Al-Qur'an' of Regulation 44/2016 Pasal 8(1). Copyright Law 28/2014 Pasal 59(g) protects 'karya lain dari hasil transformasi'. Complete for all 6,236 verses. Pasal 43(d) excuses non-commercial distribution, but it is a limitation on infringement rather than a grant, and the dataset imposes no non-commercial limit downstream.",
+        "url": "https://web-api.qurankemenag.net/quran-ayah?start=0&limit=3&surah=2"
+      }
+    ]
   }
 ]

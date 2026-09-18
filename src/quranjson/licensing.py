@@ -16,7 +16,14 @@ from dataclasses import dataclass
 
 from . import config
 
-__all__ = ["LicenseError", "blocked", "publishable_languages", "report", "require_publishable"]
+__all__ = [
+    "LicenseError",
+    "blocked",
+    "publishable_languages",
+    "report",
+    "require_publishable",
+    "violation",
+]
 
 
 class LicenseError(RuntimeError):
@@ -36,23 +43,29 @@ class Violation:
         return f"{self.lang}: {self.author} ({self.status}) -- {self.license_url}"
 
 
-def blocked(editions: Iterable[config.Edition] = config.EDITIONS) -> list[Violation]:
-    """Editions whose licence is not verified as ``granted``."""
-    return [
-        Violation(
-            lang=edition.lang,
-            author=edition.author,
-            status=edition.license.status,
-            license_url=edition.license.url,
-        )
-        for edition in editions
-        if not edition.redistributable
-    ]
+def violation(edition: config.Edition) -> Violation:
+    """The record of one edition withheld for lack of a redistribution grant."""
+    return Violation(
+        lang=edition.lang,
+        author=edition.author,
+        status=edition.license.status,
+        license_url=edition.license.url,
+    )
+
+
+def blocked(editions: Iterable[config.Edition] = config.REGISTERED) -> list[Violation]:
+    """Editions whose licence is not verified as ``granted``.
+
+    This is the registry view: an edition listed here is one a build refuses to publish
+    *unless* it was published on an explicit override. `quranjson.cdn.build_site` reports
+    what a given build actually held back, which differs once the override is in play.
+    """
+    return [violation(edition) for edition in editions if not edition.redistributable]
 
 
 def require_publishable(
     languages: Iterable[str],
-    editions: Iterable[config.Edition] = config.EDITIONS,
+    editions: Iterable[config.Edition] = config.REGISTERED,
 ) -> None:
     """Raise if any requested language has no verified redistribution grant."""
     wanted = set(languages)
@@ -66,12 +79,14 @@ def require_publishable(
         )
 
 
-def publishable_languages(editions: Iterable[config.Edition] = config.EDITIONS) -> tuple[str, ...]:
+def publishable_languages(
+    editions: Iterable[config.Edition] = config.REGISTERED,
+) -> tuple[str, ...]:
     """Languages safe to publish, in registry order."""
     return tuple(edition.lang for edition in editions if edition.redistributable)
 
 
-def report(editions: Iterable[config.Edition] = config.EDITIONS) -> str:
+def report(editions: Iterable[config.Edition] = config.REGISTERED) -> str:
     """A human-readable licence summary for the CLI."""
     lines = []
     for edition in editions:

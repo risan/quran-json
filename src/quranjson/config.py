@@ -34,6 +34,12 @@ TEXT_EDITION: Final = "ara-quranuthmanienc"
 #: `transliteration` is generated like a language but has no chapter directory.
 TRANSLITERATION: Final = "transliteration"
 
+#: The Indonesian standard mushaf served by the Qur'an Kemenag app. A seventh script
+#: rather than a Tanzil variant: it follows the Mushaf Standar Indonesia (Imlaei rasm with
+#: Uthmani marks and waqf signs) and marks no alef wasla (U+0671) where Tanzil's Uthmani
+#: text marks 13,819 of them, so only 6 of the 37,416 verse comparisons coincide.
+KEMENAG_SCRIPT: Final = "kemenag"
+
 #: Order matters: it determines key order in `verses/*.json`.
 LANG_CODES: Final = (
     None,
@@ -189,6 +195,76 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
     "simple-plain": ("Imlaei plain", "Modern orthography, unassimilated letters"),
     "simple-min": ("Imlaei minimal", "Modern orthography, reduced marks"),
     "simple-clean": ("Imlaei unvocalised", "Modern orthography, no vowel marks at all"),
+    KEMENAG_SCRIPT: (
+        "Mushaf Standar Indonesia",
+        "Kemenag (LPMQ) Indonesian standard orthography, Imlaei rasm with waqf marks",
+    ),
+}
+
+
+#: Qur'an Kemenag -- the LPMQ (Ministry of Religious Affairs) mushaf text, its 2019
+#: Indonesian translation, and its Latin transliteration, all served by the app's own
+#: JSON API. `data/kemenag/quran.json` snapshots all three from one crawl.
+KEMENAG_SOURCE: Final = "https://quran.kemenag.go.id/"
+KEMENAG_API: Final = "https://web-api.qurankemenag.net/quran-ayah"
+PMA_MUSHAF_URL: Final = (
+    "https://jdih.kemenag.go.id/regulation-download/"
+    "penerbitan-pentashihan-dan-peredaran-mushaf-al-qur%27an"
+)
+UU_COPYRIGHT_URL: Final = "https://peraturan.bpk.go.id/Details/38690/uu-no-28-tahun-2014"
+
+#: The text: the state's own instrument says the mushaf text carries no copyright.
+#: Verified 2026-09-18 by extracting the text of both instruments, not from a summary.
+KEMENAG_TEXT = License(
+    status="granted",
+    text=(
+        "Minister of Religious Affairs Regulation 44/2016, Pasal 8(1): 'Teks Mushaf "
+        "Al-Qur'an tidak memiliki hak cipta.' Copyright Law 28/2014, Pasal 42(e): 'Tidak "
+        "ada Hak Cipta atas hasil karya berupa: ... e. kitab suci atau simbol keagamaan.' "
+        "Pasal 8(2) reserves the publisher's rights in khat, tanda baca/tajwid/qira'at and "
+        "ornamentation, so only the plain UTF-8 text is published: no fonts, no mushaf "
+        "layout, no ornaments."
+    ),
+    url=PMA_MUSHAF_URL,
+)
+
+#: The 2019 Indonesian translation: a protected work with no grant found.
+KEMENAG_TRANSLATION = License(
+    status="restricted",
+    text=(
+        "No grant. A translation is a protected work: Copyright Law 28/2014 Pasal 59(g) "
+        "covers 'terjemahan, tafsir, saduran, ...' for 50 years from first publication, and "
+        "nothing exempts the ministry. The serving API publishes no terms and the ministry's "
+        "own site (lajnah.kemenag.go.id) was unreachable on 2026-09-18, with no Wayback "
+        "snapshot to fall back on. This 2019 revision is a re-edit of the ministry "
+        "translation already published as `id-affairs` under the QuranEnc grant, but only "
+        "116 of 6,236 verses are byte-identical, so that grant does not cover these bytes. "
+        "Pasal 43(d) excuses non-commercial distribution but is a limitation on "
+        "infringement rather than a grant, and this dataset carries no non-commercial "
+        "limit downstream."
+    ),
+    url=UU_COPYRIGHT_URL,
+)
+
+#: The Latin transliteration: no grant, and no statutory basis either.
+KEMENAG_TRANSLITERATION = License(
+    status="unknown",
+    text=(
+        "No grant, and no statutory basis: the API's `latin` field is a romanisation with "
+        "authored vocalisation, not the uncopyrightable 'teks Mushaf Al-Qur'an' of "
+        "Regulation 44/2016 Pasal 8(1). Copyright Law 28/2014 Pasal 59(g) protects 'karya "
+        "lain dari hasil transformasi'. Complete for all 6,236 verses. Pasal 43(d) excuses "
+        "non-commercial distribution, but it is a limitation on infringement rather than a "
+        "grant, and the dataset imposes no non-commercial limit downstream."
+    ),
+    url=f"{KEMENAG_API}?start=0&limit=3&surah=2",
+)
+
+#: Every script published under `/text/`, in manifest order, with its covering licence.
+SCRIPT_IDS: Final = (*TANZIL_VARIANTS, KEMENAG_SCRIPT)
+SCRIPT_LICENSES: Final[dict[str, License]] = {
+    **dict.fromkeys(TANZIL_VARIANTS, TANZIL_TEXT),
+    KEMENAG_SCRIPT: KEMENAG_TEXT,
 }
 
 
@@ -294,7 +370,8 @@ class Edition:
     source: str
     license: License
     #: How the snapshot is parsed: "quran-api" (JSON, grouped by chapter),
-    #: "clearquran" (zip of per-verse text files), or "quranenc" (zip of SQLite).
+    #: "clearquran" (zip of per-verse text files), "quranenc" (zip of SQLite), or
+    #: "kemenag" (the Qur'an Kemenag snapshot, one field per edition).
     kind: str = "quran-api"
     #: ISO 639 language code used in published URLs, e.g. the `en` in
     #: `/translations/en-pickthall/`. QuranEnc supplies this authoritatively in its
@@ -424,6 +501,16 @@ def quranenc_path(key: str) -> Path:
     return DATA / "quranenc" / f"{key}.json"
 
 
+def kemenag_path() -> Path:
+    """Path to the committed Qur'an Kemenag snapshot.
+
+    One file for one upstream: the Arabic text, the 2019 Indonesian translation and the
+    Latin transliteration are three fields of the same ayah record, so they come from one
+    crawl and drift in any of them is detected verse by verse.
+    """
+    return DATA / "kemenag" / "quran.json"
+
+
 #: Record of upstream transcription defects restored on load (see `quranjson.qa`).
 QA_PATH: Final = DATA / "meta" / "qa.json"
 
@@ -515,3 +602,32 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
         license=KRACHKOVSKY,
     ),
 )
+
+
+#: Editions that are ingested but not publishable: their licence is not `granted`, so the
+#: gate keeps them out of `cdn/` and reports them, with the reason, in the withheld lists.
+#: They are published only under `--include-unverified-licenses`, once the rights have
+#: been cleared out of band. Fetching them anyway is deliberate: the snapshot is what
+#: makes the withheld bytes auditable, exactly as the frozen tree's 9 editions are.
+PENDING_EDITIONS: Final[tuple[Edition, ...]] = (
+    Edition(
+        lang="indonesian_kemenag",
+        code="id",
+        slug="ind-kemenag-2019",
+        author="Kementerian Agama RI (Lajnah Pentashihan Mushaf Al-Qur'an)",
+        source=KEMENAG_API,
+        license=KEMENAG_TRANSLATION,
+        kind="kemenag",
+    ),
+    Edition(
+        lang="transliteration_kemenag",
+        slug="ara-kemenag-latin",
+        author="Kementerian Agama RI (Lajnah Pentashihan Mushaf Al-Qur'an)",
+        source=KEMENAG_API,
+        license=KEMENAG_TRANSLITERATION,
+        kind="kemenag",
+    ),
+)
+
+#: Every registered edition, publishable or not -- what the licence report accounts for.
+REGISTERED: Final = (*EDITIONS, *PENDING_EDITIONS)

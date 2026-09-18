@@ -124,13 +124,13 @@ def test_translation_files_carry_no_arabic(cdn_tree: Path) -> None:
 
 
 def test_every_script_is_published_complete(cdn_tree: Path) -> None:
-    """All six Tanzil variants are whole: 114 chapters, 6,236 verses, plus chapter files."""
-    for variant in config.TANZIL_VARIANTS:
-        chapters = read_json(cdn_tree / "text" / variant / "quran.json")
+    """Every published script is whole: 114 chapters, 6,236 verses, plus chapter files."""
+    for script in config.SCRIPT_IDS:
+        chapters = read_json(cdn_tree / "text" / script / "quran.json")
 
-        assert len(chapters) == CHAPTERS, variant
-        assert sum(len(chapter["verses"]) for chapter in chapters) == VERSES, variant
-        assert (cdn_tree / "text" / variant / "chapters" / f"{CHAPTERS}.json").exists()
+        assert len(chapters) == CHAPTERS, script
+        assert sum(len(chapter["verses"]) for chapter in chapters) == VERSES, script
+        assert (cdn_tree / "text" / script / "chapters" / f"{CHAPTERS}.json").exists()
 
 
 def test_the_unvocalised_script_carries_no_vowel_marks(cdn_tree: Path) -> None:
@@ -197,7 +197,7 @@ def test_manifest_agrees_with_the_tree_it_describes(cdn_tree: Path) -> None:
     catalogue = read_json(cdn_tree / "translations" / "index.json")
 
     assert manifest["chapters"]["count"] == CHAPTERS
-    assert [script["id"] for script in manifest["scripts"]] == list(config.TANZIL_VARIANTS)
+    assert [script["id"] for script in manifest["scripts"]] == list(config.SCRIPT_IDS)
     assert manifest["translations"]["count"] == catalogue["count"]
     assert (cdn_tree / "chapters.json").exists()
 

@@ -45,6 +45,14 @@ class FetchTask:
     parse: Callable[[bytes], Any] | None = None
     #: Bulk snapshots (75 translations) are stored compactly; the difference is ~40%.
     compact: bool = False
+    #: For upstreams whose corpus spans many requests: crawls through the client and
+    #: returns the payload directly. `url` then documents the request pattern rather than
+    #: a single endpoint.
+    gather: Callable[[Fetcher], Any] | None = None
+    #: Extra verdicts for a snapshot carrying more than one payload. `license` stays the
+    #: primary -- it is what `verify_snapshots` checks -- and these record the rest, so a
+    #: reader of the provenance file sees every verdict the file's bytes are held under.
+    extra_licenses: tuple[config.License, ...] = ()
 
     @property
     def rel(self) -> str:
@@ -132,10 +140,12 @@ def tasks(*, langs: tuple[str, ...] | None = None) -> list[FetchTask]:
 
 
 def licensed_tasks() -> list[FetchTask]:
-    """Snapshots for the licensed dataset generation: Tanzil text plus QuranEnc.
+    """Snapshots for the licensed dataset generation: Tanzil, QuranEnc, Qur'an Kemenag.
 
     These are the sources whose grants actually cover redistribution, as opposed to the
-    re-encoded derivative the frozen `dist/` tree was built from.
+    re-encoded derivative the frozen `dist/` tree was built from. Qur'an Kemenag is the
+    exception in kind rather than in treatment: only its text is publishable, so the
+    snapshot is fetched and its three verdicts travel with it into the provenance file.
     """
     from . import quranenc, tanzil
 
@@ -209,6 +219,20 @@ def licensed_tasks() -> list[FetchTask]:
             )
             for entry in catalogue["translations"]
         )
+
+    from . import kemenag
+
+    tasks.append(
+        FetchTask(
+            path=config.kemenag_path(),
+            url=kemenag.SNAPSHOT_URL,
+            source="quran.kemenag.go.id (Lajnah Pentashihan Mushaf Al-Qur'an)",
+            license=config.KEMENAG_TEXT,
+            gather=kemenag.gather,
+            # The one snapshot holds all three payloads, under three different verdicts.
+            extra_licenses=(config.KEMENAG_TRANSLATION, config.KEMENAG_TRANSLITERATION),
+        )
+    )
 
     return tasks
 
@@ -321,7 +345,11 @@ def fetch_all(
                 previous_sha = (
                     sha256(task.path.read_bytes()).hexdigest() if previous is not None else None
                 )
-                payload = _normalise(client.get_bytes(task.url), task.transform, task.parse)
+                payload = (
+                    task.gather(client)
+                    if task.gather is not None
+                    else _normalise(client.get_bytes(task.url), task.transform, task.parse)
+                )
                 summary = _summarise_change(previous, payload) if previous is not None else None
 
                 write_json(task.path, payload, pretty=not task.compact)
@@ -352,7 +380,7 @@ def fetch_all(
 
 def _record(task: FetchTask) -> dict[str, Any]:
     body = task.path.read_bytes()
-    return {
+    record: dict[str, Any] = {
         "path": task.rel,
         "url": task.url,
         "source": task.source,
@@ -363,6 +391,16 @@ def _record(task: FetchTask) -> dict[str, Any]:
         "bytes": len(body),
         "revision": _revision(task.path),
     }
+
+    # A multipart snapshot carries bytes held under more than one verdict; record them all
+    # so the provenance file never implies the primary licence covers the whole file.
+    if task.extra_licenses:
+        record["extra_licenses"] = [
+            {"status": license_.status, "text": license_.text, "url": license_.url}
+            for license_ in task.extra_licenses
+        ]
+
+    return record
 
 
 def _revision(path: Path) -> str:

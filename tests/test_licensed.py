@@ -188,7 +188,7 @@ def test_published_manifest_declares_every_edition_as_granted(cdn_tree: Path) ->
     manifest = read_json(cdn_tree / "meta" / "sources.json")
 
     assert manifest["text"]["status"] == "granted"
-    assert manifest["text"]["scripts"] == list(config.TANZIL_VARIANTS)
+    assert manifest["text"]["scripts"] == list(config.SCRIPT_IDS)
     assert manifest["transliteration"]["status"] == "withheld"
 
     editions = manifest["editions"]

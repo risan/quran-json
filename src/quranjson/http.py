@@ -77,10 +77,10 @@ class Fetcher:
         wait=wait_exponential_jitter(initial=2, max=60),
         reraise=True,
     )
-    def get_bytes(self, url: str) -> bytes:
+    def get_bytes(self, url: str, *, headers: dict[str, str] | None = None) -> bytes:
         """Fetch ``url`` and return the raw body, retrying transient failures."""
         self._throttle()
-        response = self._client.get(url)
+        response = self._client.get(url, headers=headers)
 
         if response.status_code in _RETRY_STATUS:
             raise RetryableStatus(response.status_code, url)

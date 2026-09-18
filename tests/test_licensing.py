@@ -56,6 +56,10 @@ def test_blocked_lists_every_withheld_edition() -> None:
         "sv",
         "tr",
         "ur",
+        # Ingested from Qur'an Kemenag but not cleared: a protected translation and a
+        # romanisation nobody has granted rights to.
+        "indonesian_kemenag",
+        "transliteration_kemenag",
     }
 
 
