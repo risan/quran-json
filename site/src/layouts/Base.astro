@@ -1,0 +1,96 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#f5efe3" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/assets/fonts/amiri-regular.woff2" as="font" type="font/woff2" crossorigin />
+    <style is:inline>
+      @font-face {
+        font-family: "Amiri";
+        src: url("/assets/fonts/amiri-regular.woff2") format("woff2");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Noto Naskh Arabic";
+        src: url("/assets/fonts/noto-naskh-arabic-regular.woff2") format("woff2");
+        font-display: swap;
+      }
+      @font-face {
+        font-family: "Scheherazade New";
+        src: url("/assets/fonts/scheherazade-new-regular.woff2") format("woff2");
+        font-display: swap;
+      }
+    </style>
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem("quran-json:theme");
+        if (theme) document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="wordmark" href="/" aria-label="quran-json home">
+          <span class="wordmark-mark" aria-hidden="true">ق</span>
+          <span>quran-json</span>
+        </a>
+        <nav class="desktop-nav" aria-label="Primary navigation">
+          <a href="#quickstart">Start here</a>
+          <a href="#endpoints">Endpoints</a>
+          <a href="#catalogues">Catalogues</a>
+          <a href="#licensing">Licensing</a>
+        </nav>
+        <div class="header-actions">
+          <button class="theme-button" type="button" data-theme-toggle aria-label="Switch colour theme">◐</button>
+          <a class="reader-link" href="/app/">Open reader <span aria-hidden="true">↗</span></a>
+        </div>
+        <details class="mobile-nav">
+          <summary aria-label="Open navigation">Menu</summary>
+          <nav aria-label="Mobile navigation">
+            <a href="#quickstart">Start here</a>
+            <a href="#endpoints">Endpoints</a>
+            <a href="#catalogues">Catalogues</a>
+            <a href="#licensing">Licensing</a>
+          </nav>
+        </details>
+      </div>
+    </header>
+    <main id="main-content">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span>quran-json · static data, quiet interfaces</span>
+        <a href="/meta/sources.json">Sources and licence records</a>
+      </div>
+    </footer>
+    <script is:inline>
+      for (const button of document.querySelectorAll("[data-theme-toggle]")) {
+        button.addEventListener("click", () => {
+          const current = document.documentElement.dataset.theme ||
+            (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+          const next = current === "dark" ? "light" : "dark";
+          document.documentElement.dataset.theme = next;
+          try { localStorage.setItem("quran-json:theme", next); } catch {}
+        });
+      }
+    </script>
+  </body>
+</html>

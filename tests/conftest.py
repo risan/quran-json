@@ -24,3 +24,11 @@ def cdn_tree(tmp_path_factory: pytest.TempPathFactory) -> Path:
     out = tmp_path_factory.mktemp("cdn")
     build_site(out)
     return out
+
+
+@pytest.fixture(scope="session")
+def cdn_override_tree(tmp_path_factory: pytest.TempPathFactory) -> Path:
+    """The explicit rights-override tree, rendered once for gate and contract checks."""
+    out = tmp_path_factory.mktemp("cdn-override")
+    build_site(out, include_unverified_licenses=True, audio=False)
+    return out

@@ -17,6 +17,21 @@ jobs:
 
       - run: uv sync --locked
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.12.0
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+
+      - name: install the isolated site dependencies
+        run: npm ci --prefix site
+
+      - name: type-check the Astro site
+        run: npm run check --prefix site
+
+      - name: build the assembled site without touching frozen dist
+        run: npm run site -- --no-cdn
+
       # The published dist/ tree is a public contract. Rebuilding it must not change a
       # single byte; a failure here means the artefact changed for real consumers.
       - name: rebuild the frozen tree

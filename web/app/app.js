@@ -18,13 +18,22 @@ import { api, globalOffsets } from "./api.js";
 import { Player } from "./audio.js";
 import { currentTheme, loadPrefs, savePrefs, setTheme } from "./store.js";
 import {
+  editionKey,
+  alignsWithHafs,
+  canJoinWithHafs,
+  mergeChapter as mergeReaderChapter,
+  normalizeReaderState,
+  parseReaderHash,
+  validateOptionalChapter,
+} from "./reader-core.js";
+import {
   byId,
   chapterGrid,
-  editionKey,
   playerView,
   readerView,
   reciterPanel,
   surahGridHTML,
+  settingsPanel,
   toolbar,
   translationPanel,
 } from "./ui.js";
@@ -51,25 +60,48 @@ let reciters = null; // loaded on first use: 136 KB is not worth a first paint
 let loadToken = 0;
 let pendingVerse = null; // a verse the reader asked for before choosing a reciter
 let continuation = false; // the player rolled past the end of a chapter
+let popoverTrigger = null;
+let catalogueWarnings = [];
+let deferredOptionalPrefs = { translations: [], transliteration: null };
 
 /* ------------------------------------------------------------------- route --- */
 
 function parseRoute() {
-  const raw = location.hash.replace(/^#/, "");
-  const [path, query] = raw.split("?");
-  const params = new URLSearchParams(query ?? "");
-  const [chapter, verse] = path.replace(/^\//, "").split(":");
+  const parsed = parseReaderHash(location.hash);
+  const params = parsed.params;
+  catalogueWarnings = [];
+  const raw = { ...state };
+  if (params.has("s")) raw.script = params.get("s");
+  if (params.has("t")) raw.translations = params.get("t").split(",").filter(Boolean);
+  if (params.has("tl")) raw.transliteration = params.get("tl") || null;
+  if (params.has("r")) raw.reciter = params.get("r") || null;
+  if (params.has("f")) raw.font = params.get("f") || "auto";
 
-  if (params.has("s")) state.script = params.get("s");
-  if (params.has("t")) state.translations = params.get("t").split(",").filter(Boolean);
-  if (params.has("tl")) state.transliteration = params.get("tl") || null;
-  if (params.has("r")) state.reciter = params.get("r") || null;
-  if (params.has("f")) state.font = params.get("f") || "auto";
+  state = normalizeReaderState(raw, data);
+  const chapter = byId(data.chapters, parsed.chapter);
+  // The catalogue's chapter counts are Hafs counts. A selected mapped script can have a
+  // different native count, so the Arabic chapter fetch is the authority for verse bounds.
+  const verse = chapter && parsed.verse ? parsed.verse : null;
 
-  return {
-    chapter: chapter ? Number(chapter) : null,
-    verse: verse ? Number(verse) : null,
-  };
+  const invalid = [];
+  if (params.has("s") && raw.script !== state.script) invalid.push("script");
+  if (params.has("t") && state.translations.length !== raw.translations.length) invalid.push("translation");
+  if (params.has("tl") && raw.transliteration && !state.transliteration) invalid.push("transliteration");
+  if (params.has("f") && raw.font !== state.font) invalid.push("font");
+  if (
+    parsed.invalidChapter ||
+    parsed.invalidVerse ||
+    (parsed.chapter && !chapter)
+  ) {
+    invalid.push("chapter link");
+  }
+  if (invalid.length) {
+    catalogueWarnings = [
+      "Some link options were unavailable (" + invalid.join(", ") + "); showing the published defaults.",
+    ];
+  }
+
+  return { chapter: chapter?.id ?? null, verse };
 }
 
 function routeHash({ chapter = route.chapter, verse = null } = {}) {
@@ -109,7 +141,16 @@ function remember(patch) {
 /* -------------------------------------------------------------------- data --- */
 
 async function ensureReciters() {
-  if (!reciters) reciters = await api.reciters();
+  if (!reciters) {
+    const requested = state.reciter;
+    reciters = await api.reciters();
+    state = normalizeReaderState(state, { ...data, reciters });
+    if (requested && !state.reciter) {
+      setStatus("That reciter is unavailable; choose one from the published list.", "error");
+    }
+    if (state.reciter) player.setReciter(state.reciter);
+    renderToolbar();
+  }
   return reciters;
 }
 
@@ -119,50 +160,8 @@ function translationsFor(catalogue) {
     .filter(Boolean);
 }
 
-/**
- * Which Hafs ayah numbers one verse of the selected script stands for.
- *
- * Translations are keyed to the Hafs count, and the scripts are not all keyed that way, so
- * the manifest says how: `hafs` ids are Hafs numbers, `mapped` verses carry the Hafs ayah
- * or ayahs they cover, and `own` labels are not Hafs numbers at all in the chapters the
- * manifest names. Nothing here guesses.
- */
-export function hafsNumbers(script, verse) {
-  if (script.verse_ids === "mapped") {
-    const mapped = verse.number_in_hafs;
-    return Array.isArray(mapped) ? mapped : [mapped ?? verse.id];
-  }
-  return [verse.id];
-}
-
-/** Merge the Arabic, the romanisation and every selected translation into verse records. */
-function mergeChapter({ arabic, romanisation, translated, script }) {
-  return arabic.verses.map((verse, index) => {
-    const merged = { ...verse };
-
-    if (romanisation?.verses[index]) {
-      merged.transliteration = romanisation.verses[index].transliteration;
-    }
-
-    const numbers = hafsNumbers(script, verse);
-    const translations = {};
-    let footnote = null;
-
-    for (const { key, chapter } of translated) {
-      // A riwayah verse can cover two Hafs verses; both translations belong to it.
-      const parts = numbers.map((number) => chapter.verses[number - 1]).filter(Boolean);
-      if (!parts.length) continue;
-
-      translations[key] = parts.map((entry) => entry.translation).join(" ");
-      const notes = parts.map((entry) => entry.footnotes).filter(Boolean);
-      if (notes.length) footnote = footnote ? `${footnote}\n\n${notes.join("\n\n")}` : notes.join("\n\n");
-    }
-
-    if (Object.keys(translations).length) merged.translations = translations;
-    if (footnote) merged.footnote = footnote;
-
-    return merged;
-  });
+function cataloguePayload(value) {
+  return value && Array.isArray(value.editions) ? value : { editions: [] };
 }
 
 function currentChapter() {
@@ -173,17 +172,12 @@ function currentScript() {
   return data.manifest.scripts.find((entry) => entry.id === state.script) ?? data.manifest.scripts[0];
 }
 
-/** `warsh` and `qalun` are riwayat, and the published per-ayah audio is all Hafs. */
-function scriptRiwayah() {
-  return ["warsh", "qalun"].includes(state.script) ? state.script : "hafs";
-}
-
 function configurePlayer(chapter = currentChapter()) {
   player.configure({
     reciters: reciters ?? undefined,
     chapter,
     offsets: data.offsets,
-    riwayah: scriptRiwayah(),
+    script: currentScript(),
   });
 }
 
@@ -240,7 +234,9 @@ function render() {
   renderPlayer();
 
   if (!chapter) {
+    loadToken += 1;
     document.title = "quran-json — read the Quran";
+    setStatus(catalogueWarnings.shift() ?? null, "error");
     dom.view.innerHTML = chapterGrid({
       chapters: data.chapters,
       state,
@@ -248,6 +244,7 @@ function render() {
       query: ui.query,
       resume: state.resume ?? null,
       scriptName: currentScript().name,
+      script: currentScript(),
     });
     return;
   }
@@ -260,33 +257,100 @@ async function loadChapter(chapter) {
   const romanisationKey = state.transliteration;
   const token = ++loadToken;
 
-  // Where a script's verse labels are not Hafs numbers, no translation can be joined to
-  // them without inventing an alignment, so the reader shows the Arabic and says why.
-  const diverges = (script.verse_ids_differ_in ?? []).includes(chapter.id);
+  // Only chapters explicitly marked as unjoinable suppress Hafs-keyed optional layers. Mapped
+  // readings can have different counts and still join through each verse's source map.
+  const diverges = !alignsWithHafs(script, chapter.id);
   const selected = diverges ? [] : translationsFor(data.translations);
+  const optionalRequests = [];
+  if (!diverges && romanisationKey) {
+    optionalRequests.push({
+      type: "transliteration",
+      key: romanisationKey,
+      promise: api.transliteration(romanisationKey, chapter.id),
+    });
+  }
+  for (const edition of selected) {
+    const key = editionKey(edition);
+    optionalRequests.push({
+      type: "translation",
+      key,
+      promise: api.translation(key, chapter.id),
+    });
+  }
 
   setStatus("Loading…");
   try {
-    const [arabic, romanisation, ...translated] = await Promise.all([
+    const [arabic, ...optionalResults] = await Promise.all([
       api.text(state.script, chapter.id),
-      romanisationKey ? api.transliteration(romanisationKey, chapter.id) : null,
-      ...selected.map(async (edition) => ({
-        key: editionKey(edition),
-        chapter: await api.translation(editionKey(edition), chapter.id),
-      })),
+      ...optionalRequests.map(({ type, key, promise }) =>
+        promise
+          .then((chapterData) => ({
+            ok: true,
+            type,
+            key,
+            chapter: validateOptionalChapter(chapterData, {
+              chapterId: chapter.id,
+              key,
+              type,
+              expectedVerseCount: chapter.total_verses,
+            }),
+          }))
+          .catch((error) => ({ ok: false, type, key, error })),
+      ),
     ]);
 
     if (token !== loadToken) return; // a newer navigation won
 
-    const verses = mergeChapter({ arabic, romanisation, translated, script });
+    // Validate a deep-linked native verse after loading the selected script. Optional layers
+    // remain Hafs-keyed and continue to use `chapter.total_verses` above.
+    const nativeVerseCount = arabic.verses.length;
+    const requestedVerse = route.verse;
+    if (requestedVerse && requestedVerse > nativeVerseCount) {
+      route = { ...route, verse: null };
+      ui.highlight = null;
+      history.replaceState(null, "", routeHash({ verse: null }));
+      catalogueWarnings.push(
+        `Verse ${requestedVerse} is not present in ${script.name}; showing the chapter instead.`,
+      );
+    }
+    const nativeChapter = { ...chapter, total_verses: nativeVerseCount };
+    const mappingValid = canJoinWithHafs(script, arabic.verses);
+
+    const romanResult = optionalResults.find(
+      (result) => result.type === "transliteration" && result.key === romanisationKey,
+    );
+    const romanisation = romanResult?.ok && mappingValid ? romanResult.chapter : null;
+    const translated = optionalResults.filter(
+      (result) => result.ok && result.type === "translation",
+    );
+    const loadedTranslations = mappingValid
+      ? selected.filter((edition) => translated.some((result) => result.key === editionKey(edition)))
+      : [];
+    const failedLayers = optionalResults.filter((result) => !result.ok);
+    const mappingNote = mappingValid || (!selected.length && !romanisationKey)
+      ? null
+      : "Optional layers are unavailable because this script chapter has an invalid verse mapping.";
+    const unavailableLayers = failedLayers.length + (mappingNote ? 1 : 0);
+    const verses = mergeReaderChapter({
+      arabic,
+      romanisation,
+      translated,
+      script,
+      chapterId: chapter.id,
+    });
     document.title = `${chapter.id}. ${chapter.transliteration} — quran-json`;
 
     dom.view.innerHTML = readerView({
       chapters: data.chapters,
-      chapter,
+      chapter: nativeChapter,
       text: { verses },
-      translations: selected,
-      transliteration: romanisationKey ? { key: romanisationKey } : null,
+     translations: loadedTranslations,
+      transliteration: romanisation
+        ? {
+            key: romanisationKey,
+            edition: data.transliterations.editions.find((edition) => editionKey(edition) === romanisationKey),
+          }
+        : null,
       coverage: data.coverage,
       state,
       manifest: data.manifest,
@@ -294,16 +358,30 @@ async function loadChapter(chapter) {
       perAyahDisabled: player.conflicted,
       reciter: player.reciter,
       translationNote: diverges
-        ? `${script.name} does not number ${chapter.transliteration} the way the Hafs count ` +
-          `that every translation is keyed to does (its verse 1 is Hafs 2, and its last two ` +
-          `verses split Hafs 7), so no translation is shown beside it here. Read this ` +
-          `chapter in another script to see translations.`
+        ? `${script.name} does not publish a safe verse mapping for this chapter, so Hafs-keyed ` +
+          `translations and transliterations are hidden here. Read this chapter in another ` +
+          `script to see those optional layers.`
         : null,
+      layerNote: [
+        mappingNote,
+        failedLayers.length
+          ? `Some optional layers could not be loaded: ${failedLayers
+                .map((result) => result.key)
+                .join(", ")}. Arabic remains available.`
+          : null,
+      ]
+        .filter(Boolean)
+        .join(" ") || null,
     });
 
-    setStatus(null);
+    setStatus(
+      unavailableLayers
+        ? `Arabic is ready; ${unavailableLayers} optional layer${unavailableLayers > 1 ? "s" : ""} could not be loaded.`
+        : catalogueWarnings.shift() ?? null,
+      failedLayers.length ? "error" : "info",
+    );
     remember({ resume: { chapter: chapter.id, verse: route.verse ?? 1 } });
-    configurePlayer(chapter);
+    configurePlayer(nativeChapter);
 
     if (route.verse) {
       dom.view.querySelector(`#v${route.verse}`)?.scrollIntoView({ block: "center" });
@@ -323,32 +401,73 @@ async function loadChapter(chapter) {
 
 /* ----------------------------------------------------------------- popovers --- */
 
-function openPopover(html, focusSelector) {
+function setModalInert(value) {
+  for (const child of document.body.children) {
+    if (child !== dom.popover) child.inert = value;
+  }
+}
+
+function resolvedPopoverTrigger(record) {
+  if (!record) return null;
+  if (record.element?.isConnected) return record.element;
+  if (!record.role) return null;
+  return [...document.querySelectorAll('[data-role="' + record.role + '"]')].find(
+    (element) => element !== dom.popover && element.getClientRects().length,
+  ) ?? null;
+}
+
+function focusTrigger(role) {
+  resolvedPopoverTrigger({ role })?.focus();
+}
+
+function openPopover(
+  html,
+  focusSelector,
+  { label = "Reader choices", trigger = document.activeElement } = {},
+) {
+  const previous = popoverTrigger?.element ?? null;
+  const parentTrigger = dom.popover.hidden || !dom.popover.contains(trigger) ? trigger : previous;
+  if (previous && previous !== parentTrigger) previous.setAttribute("aria-expanded", "false");
+  popoverTrigger = parentTrigger
+    ? { element: parentTrigger, role: parentTrigger.dataset.role ?? null }
+    : null;
   dom.popover.innerHTML = html;
   dom.popover.hidden = false;
+  dom.popover.setAttribute("aria-label", label);
+  setModalInert(true);
+  if (parentTrigger) parentTrigger.setAttribute("aria-expanded", "true");
   if (focusSelector) dom.popover.querySelector(focusSelector)?.focus();
 }
 
-function closePopover() {
+function closePopover({ restore = true } = {}) {
+  const record = popoverTrigger;
+  const trigger = resolvedPopoverTrigger(record);
+  if (trigger) trigger.setAttribute("aria-expanded", "false");
+  setModalInert(false);
   dom.popover.hidden = true;
   dom.popover.innerHTML = "";
+  popoverTrigger = null;
+  if (restore) trigger?.focus();
 }
 
 function pickReciter(id) {
   const chosen = player.setReciter(id);
+  closePopover({ restore: false });
   remember({ reciter: id });
-  closePopover();
 
   if (chosen && pendingVerse !== null) {
     const verse = pendingVerse;
     pendingVerse = null;
     configurePlayer();
+    renderToolbar();
+    focusTrigger("reciter-picker");
     player.start(verse).then(renderPlayer);
     return;
   }
 
   renderPlayer();
   navigate({ verse: route.verse, replace: true });
+  focusTrigger("reciter-picker");
 }
 
 /* ------------------------------------------------------------------- events --- */
@@ -361,38 +480,62 @@ document.addEventListener("click", async (event) => {
   }
 
   switch (target.dataset.role) {
+    case "settings":
+      openPopover(
+        settingsPanel({
+          state,
+          manifest: data.manifest,
+          transliterations: data.transliterations,
+          coverage: data.coverage,
+          reciter: player.reciter,
+        }),
+        "[data-role=script]",
+        { label: "Reader settings", trigger: target },
+      );
+      break;
+
     case "translation-picker":
       openPopover(
         translationPanel({ translations: data.translations, state }),
         "[data-role=translation-search]",
+        { label: "Translations", trigger: target },
       );
       break;
 
     case "translation-clear":
       state = { ...state, translations: [] };
       remember({ translations: [] });
-      closePopover();
+      closePopover({ restore: false });
       navigate({ replace: true });
+      focusTrigger("translation-picker");
       break;
 
     case "transliteration": {
       const first = data.transliterations.editions[0];
       if (!first) break;
+      const fromPopover = dom.popover.contains(target);
       const chosen = state.transliteration ? null : editionKey(first);
       state = { ...state, transliteration: chosen };
       remember({ transliteration: chosen });
+      if (fromPopover) closePopover({ restore: false });
       navigate({ replace: true });
+      if (fromPopover) focusTrigger("settings");
       break;
     }
 
     case "reciter-picker": {
       const index = await ensureReciters();
       openPopover(
-        reciterPanel({ reciters: index, host: index.hosts.everyayah, state }),
+        reciterPanel({ reciters: index, host: index.hosts.everyayah, state, script: currentScript() }),
         "[data-role=reciter-search]",
+        { label: "Recitation", trigger: target },
       );
       break;
     }
+
+    case "close-popover":
+      closePopover();
+      break;
 
     case "size-down":
     case "size-up": {
@@ -412,7 +555,7 @@ document.addEventListener("click", async (event) => {
       if (!player.reciter) {
         pendingVerse = verse;
         openPopover(
-          reciterPanel({ reciters, host: reciters.hosts.everyayah, state }),
+          reciterPanel({ reciters, host: reciters.hosts.everyayah, state, script: currentScript() }),
           "[data-role=reciter-search]",
         );
         break;
@@ -483,15 +626,25 @@ document.addEventListener("change", (event) => {
 
   switch (target.dataset.role) {
     case "script":
-      state = { ...state, script: target.value };
-      remember({ script: state.script });
-      navigate({ verse: null, replace: true });
+      {
+        const fromPopover = dom.popover.contains(target);
+        if (fromPopover) closePopover({ restore: false });
+        state = { ...state, script: target.value };
+        remember({ script: state.script });
+        navigate({ verse: null, replace: true });
+        if (fromPopover) focusTrigger("settings");
+      }
       break;
 
     case "font":
-      state = { ...state, font: target.value };
-      remember({ font: state.font });
-      navigate({ verse: route.verse, replace: true });
+      {
+        const fromPopover = dom.popover.contains(target);
+        if (fromPopover) closePopover({ restore: false });
+        state = { ...state, font: target.value };
+        remember({ font: state.font });
+        navigate({ verse: route.verse, replace: true });
+        if (fromPopover) focusTrigger("settings");
+      }
       break;
 
     case "translation": {
@@ -525,7 +678,13 @@ document.addEventListener("input", (event) => {
     case "chapter-search": {
       ui.query = target.value;
       const grid = dom.view.querySelector(".surah-grid");
-      if (grid) grid.innerHTML = surahGridHTML({ chapters: data.chapters, query: ui.query });
+      if (grid) {
+        grid.innerHTML = surahGridHTML({
+          chapters: data.chapters,
+          query: ui.query,
+          script: currentScript(),
+        });
+      }
       break;
     }
 
@@ -549,7 +708,24 @@ document.addEventListener("input", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
-    closePopover();
+    if (!dom.popover.hidden) closePopover();
+    return;
+  }
+  if (!dom.popover.hidden && event.key === "Tab") {
+    const focusable = [...dom.popover.querySelectorAll(
+      "button:not([disabled]), input:not([disabled]), select:not([disabled]), [href], [tabindex]:not([tabindex=\"-1\"])",
+    )].filter((item) => !item.hidden && item.getClientRects().length);
+    if (focusable.length) {
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
     return;
   }
 
@@ -581,34 +757,94 @@ player.onChapterEnd = (delta = 1) => {
 };
 
 /* --------------------------------------------------------------- start up --- */
+function defaultTranslation(catalogue) {
+  const wanted = (navigator.languages ?? [navigator.language ?? "en"]).map((tag) =>
+    tag.split("-")[0].toLowerCase(),
+  );
+  return (
+    catalogue.editions.find((entry) => wanted.includes(entry.code)) ??
+    catalogue.editions.find((entry) => entry.code === "en") ??
+    catalogue.editions[0] ??
+    null
+  );
+}
 
-async function main() {
-  const [manifest, chapters, translations, transliterations, coverage] = await Promise.all([
-    api.manifest(),
-    api.chapters(),
+async function loadCatalogues() {
+  const [translationResult, transliterationResult] = await Promise.allSettled([
     api.translations(),
     api.transliterations(),
+  ]);
+  data.translations = translationResult.status === "fulfilled"
+    ? cataloguePayload(translationResult.value)
+    : { editions: [] };
+  data.transliterations = transliterationResult.status === "fulfilled"
+    ? cataloguePayload(transliterationResult.value)
+    : { editions: [] };
+  const failures = [];
+  if (translationResult.status === "rejected") failures.push("translations");
+  if (transliterationResult.status === "rejected") failures.push("transliteration");
+  if (
+    translationResult.status === "fulfilled" &&
+    !Array.isArray(translationResult.value?.editions)
+  ) {
+    failures.push("translations");
+  }
+  if (
+    transliterationResult.status === "fulfilled" &&
+    !Array.isArray(transliterationResult.value?.editions)
+  ) {
+    failures.push("transliteration");
+  }
+
+ state = normalizeReaderState(state, data);
+ route = parseRoute();
+ const params = parseReaderHash(location.hash).params;
+  if (!params.has("t") && deferredOptionalPrefs.translations.length) {
+    state = { ...state, translations: deferredOptionalPrefs.translations };
+  }
+  if (!params.has("tl") && deferredOptionalPrefs.transliteration) {
+    state = { ...state, transliteration: deferredOptionalPrefs.transliteration };
+  }
+  if (!params.has("t") && !state.translations.length && data.translations.editions.length) {
+    const edition = defaultTranslation(data.translations);
+    if (edition) state = { ...state, translations: [editionKey(edition)] };
+  }
+  state = normalizeReaderState(state, data);
+ route = parseRoute();
+ if (failures.length) {
+    catalogueWarnings = [];
+   catalogueWarnings.push("Optional " + failures.join(" and ") + " catalogue unavailable; Arabic remains readable.");
+  }
+  render();
+}
+
+
+async function main() {
+  const [manifest, chapters, coverage] = await Promise.all([
+    api.manifest(),
+    api.chapters(),
     api.fonts(),
   ]);
 
-  data = { manifest, chapters, translations, transliterations, coverage, offsets: globalOffsets(chapters) };
+  data = {
+    manifest,
+    chapters,
+    translations: { editions: [] },
+    transliterations: { editions: [] },
+    coverage,
+    offsets: globalOffsets(chapters),
+  };
 
-  // A fresh visit starts on a published script and on a language the browser asks for, when
-  // the catalogue has one: the dataset's 57 languages are worth using rather than ignoring.
-  if (!state.script || !manifest.scripts.some((entry) => entry.id === state.script)) {
-    state.script = manifest.scripts[0].id;
-  }
-  if (!state.translations.length) {
-    const wanted = (navigator.languages ?? [navigator.language ?? "en"]).map((tag) =>
-      tag.split("-")[0].toLowerCase(),
-    );
-    const edition =
-      translations.editions.find((entry) => wanted.includes(entry.code)) ??
-      translations.editions.find((entry) => entry.code === "en") ??
-      translations.editions[0];
-    if (edition) state.translations = [editionKey(edition)];
-  }
-  if (state.transliteration && !transliterations.editions.length) state.transliteration = null;
+// A fresh visit starts on a published script and on a language the browser asks for, when
+// the catalogue has one: the dataset's 57 languages are worth using rather than ignoring.
+  deferredOptionalPrefs = {
+    translations: Array.isArray(state.translations) ? [...state.translations] : [],
+    transliteration: state.transliteration,
+  };
+ state = normalizeReaderState(
+    { ...state, translations: [], transliteration: null },
+    data,
+  );
 
   player.autoplay = state.autoplay;
   player.repeat = state.repeat;
@@ -620,19 +856,20 @@ async function main() {
   route = parseRoute();
   ui.highlight = route.verse;
 
-  if (state.reciter) {
-    await ensureReciters();
-    configurePlayer();
-    player.setReciter(state.reciter);
-  }
 
-  window.addEventListener("hashchange", () => {
+ window.addEventListener("hashchange", () => {
     route = parseRoute();
     ui.highlight = route.verse;
     render();
   });
 
-  render();
+ render();
+  loadCatalogues().catch((error) => {
+    data.translations = { editions: [] };
+    data.transliterations = { editions: [] };
+    catalogueWarnings = ["Optional catalogues unavailable: " + error.message];
+    render();
+  });
 }
 
 main().catch((error) => {

@@ -8,6 +8,13 @@
  * missing-glyph boxes is never offered.
  */
 
+import {
+  editionKey,
+  nativeChapterCount,
+  recitersForScript,
+  scriptReadingIdentity,
+} from "./reader-core.js";
+
 export function esc(value) {
   return String(value ?? "").replace(
     /[&<>"']/g,
@@ -21,8 +28,11 @@ export function byId(chapters, id) {
 }
 
 export function fontOf(state, coverage, script) {
-  const entry = coverage.scripts[script];
-  return state.font !== "auto" && entry.usable.includes(state.font) ? state.font : entry.default;
+  const entry = coverage?.scripts?.[script] ?? Object.values(coverage?.scripts ?? {})[0] ?? {
+    usable: [],
+    default: "amiri",
+  };
+  return state.font !== "auto" && entry.usable?.includes(state.font) ? state.font : entry.default;
 }
 
 export function familyOf(coverage, fontId) {
@@ -33,15 +43,11 @@ export function arabicStyle(state, coverage, script) {
   return `--arabic-family:'${familyOf(coverage, fontOf(state, coverage, script))}'`;
 }
 
-export function editionKey(edition) {
-  return edition.path.replace(/\/$/, "").split("/").pop();
-}
-
 const PAD = (value) => String(value).padStart(3, "0");
 
 /* ------------------------------------------------------------- chapter grid --- */
 
-export function surahGridHTML({ chapters, query }) {
+export function surahGridHTML({ chapters, query, script = null }) {
   const needle = query.trim().toLowerCase();
   const cards = chapters
     .filter((chapter) => {
@@ -65,7 +71,7 @@ export function surahGridHTML({ chapters, query }) {
         <span class="surah-meta">
           <span>${esc(chapter.translation)}</span>
           <span class="dot">·</span>
-          <span>${chapter.total_verses} verses</span>
+          <span>${nativeChapterCount(script, chapter.id, chapter.total_verses)} verses</span>
           <span class="tag ${chapter.type}">${esc(chapter.type)}</span>
         </span>
       </a>`,
@@ -75,21 +81,23 @@ export function surahGridHTML({ chapters, query }) {
   return cards || '<p class="empty">No chapter matches that.</p>';
 }
 
-export function chapterGrid({ chapters, state, coverage, query, resume, scriptName }) {
-  const script = state.script;
-  const font = fontOf(state, coverage, script);
+export function chapterGrid({ chapters, state, coverage, query, resume, scriptName, script = null }) {
+  const scriptId = state.script;
+  const font = fontOf(state, coverage, scriptId);
 
   const resumeCard = resume
-    ? `<a class="button" href="#/${resume.chapter}:${resume.verse}">Continue at ${resume.chapter}:${resume.verse}</a>`
+    ? `<a class="button" href="#/${esc(resume.chapter)}:${esc(resume.verse)}">Continue at ${esc(
+        resume.chapter,
+      )}:${esc(resume.verse)}</a>`
     : "";
 
   return `
-    <section class="grid-view" style="${arabicStyle(state, coverage, script)}">
+    <section class="grid-view" style="${arabicStyle(state, coverage, scriptId)}">
       <header class="view-head">
         <div>
           <h1>Read the Quran</h1>
           <p class="muted">
-            ${chapters.length} chapters · ${esc(scriptName ?? script)} · ${esc(
+            ${chapters.length} chapters · ${esc(scriptName ?? scriptId)} · ${esc(
               familyOf(coverage, font),
             )}, chosen for this script
           </p>
@@ -101,7 +109,7 @@ export function chapterGrid({ chapters, state, coverage, query, resume, scriptNa
         <input type="search" data-role="chapter-search" value="${esc(query)}"
           placeholder="Find a chapter by number, name or meaning…">
       </label>
-      <div class="surah-grid">${surahGridHTML({ chapters, query })}</div>
+      <div class="surah-grid">${surahGridHTML({ chapters, query, script })}</div>
     </section>`;
 }
 
@@ -117,12 +125,12 @@ export function toolbar({
   reciter,
 }) {
   const script = manifest.scripts.find((entry) => entry.id === state.script);
-  const entry = coverage.scripts[state.script];
+  const entry = coverage.scripts[state.script] ?? Object.values(coverage.scripts)[0] ?? { usable: [], missing: {}, default: "amiri" };
   const chosen = state.translations.length;
 
   const fontOptions = coverage.fonts
     .map((font) => {
-      const gaps = entry.missing[font.id];
+      const gaps = entry.missing?.[font.id];
       const label = font.name + (gaps ? ` — ${Object.keys(gaps).length} codepoints missing` : "");
       const disabled = gaps ? " disabled" : "";
       const selected = state.font === "auto" ? "" : font.id === state.font ? " selected" : "";
@@ -133,10 +141,11 @@ export function toolbar({
   const transliterationKey = state.transliteration;
 
   return `
-    <div class="toolbar-inner">
+    <div class="toolbar-inner" role="region" aria-label="Reader controls">
+      <div class="toolbar-primary">
       <label class="field">
         <span class="field-label">Script</span>
-        <select data-role="script">
+        <select id="reader-script" data-role="script" aria-label="Text script">
           ${manifest.scripts
             .map(
               (item) =>
@@ -147,10 +156,13 @@ export function toolbar({
             .join("")}
         </select>
       </label>
+      <button class="button settings-trigger" type="button" data-role="settings" aria-label="Open reader settings" aria-haspopup="dialog" aria-controls="popover" aria-expanded="false">Settings</button>
+      </div>
+      <div class="toolbar-controls">
 
       <label class="field">
         <span class="field-label">Font</span>
-        <select data-role="font">
+        <select id="reader-font" data-role="font" aria-label="Arabic font">
           <option value="auto"${state.font === "auto" ? " selected" : ""}>Auto (${
             coverage.fonts.find((font) => font.id === entry.default)?.name ?? entry.default
           })</option>
@@ -160,7 +172,7 @@ export function toolbar({
 
       <div class="field">
         <span class="field-label">Translation${chosen > 1 ? "s" : ""}</span>
-        <button class="button" type="button" data-role="translation-picker" aria-expanded="false">
+        <button class="button" type="button" data-role="translation-picker" aria-controls="popover" aria-haspopup="dialog" aria-expanded="false">
           ${
             chosen
               ? `${chosen} selected<span class="chev">▾</span>`
@@ -183,7 +195,7 @@ export function toolbar({
 
       <div class="field">
         <span class="field-label">Recitation</span>
-        <button class="button" type="button" data-role="reciter-picker">
+        <button class="button" type="button" data-role="reciter-picker" aria-controls="popover" aria-haspopup="dialog" aria-expanded="false">
           ${reciter ? esc(reciter.name) : "Choose…"}<span class="chev">▾</span>
         </button>
       </div>
@@ -195,6 +207,7 @@ export function toolbar({
           <button class="button icon" type="button" data-role="size-up" aria-label="Larger Arabic">A+</button>
         </div>
       </div>
+      </div>
     </div>
     ${
       script?.note
@@ -205,7 +218,39 @@ export function toolbar({
     }`;
 }
 
+export function settingsPanel({ state, manifest, transliterations, coverage, reciter }) {
+  const scriptOptions = manifest.scripts
+    .map((item) => `<option value="${esc(item.id)}"${item.id === state.script ? " selected" : ""}>${esc(item.name)}</option>`)
+    .join("");
+  const entry = coverage.scripts[state.script] ?? Object.values(coverage.scripts)[0] ?? { usable: [], missing: {}, default: "amiri" };
+  const fonts = coverage.fonts
+    .map((font) => {
+      const disabled = entry.missing?.[font.id] ? " disabled" : "";
+      return `<option value="${esc(font.id)}"${disabled}${state.font === font.id ? " selected" : ""}>${esc(font.name)}</option>`;
+    })
+    .join("");
+  return `
+    <section class="settings-sheet" aria-labelledby="settings-title">
+      <div class="popover-head">
+        <div>
+          <h2 id="settings-title">Reader settings</h2>
+          <p class="popover-hint">Choose the text, language and reading comfort for this visit.</p>
+        </div>
+        <button class="button ghost" type="button" data-role="close-popover" aria-label="Close reader settings">Close</button>
+      </div>
+      <div class="settings-grid">
+        <label class="field"><span class="field-label">Script</span><select data-role="script" aria-label="Text script">${scriptOptions}</select></label>
+        <label class="field"><span class="field-label">Font</span><select data-role="font" aria-label="Arabic font"><option value="auto"${state.font === "auto" ? " selected" : ""}>Auto</option>${fonts}</select></label>
+        <div class="field"><span class="field-label">Translations</span><button class="button" type="button" data-role="translation-picker" aria-haspopup="dialog" aria-controls="popover">${state.translations.length ? `${state.translations.length} selected` : "Choose…"}</button></div>
+        <div class="field"><span class="field-label">Transliteration</span>${transliterations.editions.length ? `<button class="button" type="button" data-role="transliteration" aria-pressed="${state.transliteration ? "true" : "false"}">${state.transliteration ? "On" : "Off"}</button>` : `<span class="muted">None published</span>`}</div>
+        <div class="field"><span class="field-label">Recitation</span><button class="button" type="button" data-role="reciter-picker" aria-haspopup="dialog" aria-controls="popover">${reciter ? esc(reciter.name) : "Choose…"}</button></div>
+        <div class="field"><span class="field-label">Arabic size</span><div class="stepper"><button class="button icon" type="button" data-role="size-down" aria-label="Smaller Arabic">A−</button><button class="button icon" type="button" data-role="size-up" aria-label="Larger Arabic">A+</button></div></div>
+      </div>
+    </section>`;
+}
+
 export function translationPanel({ translations, state }) {
+
   const rows = translations.editions
     .map((edition) => {
       const key = editionKey(edition);
@@ -228,12 +273,16 @@ export function translationPanel({ translations, state }) {
     .join("");
 
   return `
-    <div class="popover-head">
-      <input type="search" data-role="translation-search" placeholder="Filter by language, translator or path…">
+   <div class="popover-head">
+      <div class="popover-title">
+        <h2 id="translation-title">Translations</h2>
+        <p class="popover-hint">Up to three editions can sit beside each verse.</p>
+      </div>
+      <label class="popover-search"><span class="visually-hidden">Filter translations</span><input type="search" data-role="translation-search" aria-label="Filter translations" placeholder="Filter by language, translator or path…"></label>
       <button class="button ghost" type="button" data-role="translation-clear">Clear</button>
-    </div>
-    <p class="popover-hint">Up to three translations side by side, joined to the Arabic on each verse's <code>id</code>.</p>
-    <div class="popover-list">${rows}</div>`;
+      <button class="button ghost" type="button" data-role="close-popover" aria-label="Close translations">Close</button>
+   </div>
+   <div class="popover-list">${rows}</div>`;
 }
 
 /* ------------------------------------------------------------------ reader --- */
@@ -251,20 +300,39 @@ export function readerView({
   perAyahDisabled = false,
   reciter = null,
   translationNote = null,
+  layerNote = null,
 }) {
   const previous = byId(chapters, chapter.id - 1);
   const next = byId(chapters, chapter.id + 1);
   const transliterationKey = transliteration?.key ?? null;
+  const furniture = (manifest?.scripts?.find((script) => script.id === state.script)?.chapter_furniture ?? [])
+    .filter((item) => item.chapter === chapter.id && item.position === "before-verses" && item.numbered === false);
+  const furnitureHTML = furniture
+    .map(
+      (item) =>
+        `<div class="chapter-furniture arabic" lang="ar" dir="rtl" data-furniture="${esc(item.kind)}">${esc(item.text)}</div>`,
+    )
+    .join("");
 
   const verses = text.verses
     .map((verse) => {
       const blocks = translations
-        .map(
-          (edition) => `
-          <p class="translation" dir="${edition.direction}" lang="${esc(edition.code)}">
-            ${esc(verse.translations?.[editionKey(edition)] ?? "")}
-          </p>`,
-        )
+        .map((edition) => {
+          const key = editionKey(edition);
+          const label = `${edition.author ?? key} · ${edition.code ?? ""}`;
+          const editionNote = verse.footnotes?.[key]
+            ? `<details class="footnotes"><summary>${esc(label)} note</summary><p>${esc(
+                verse.footnotes[key],
+              )}</p></details>`
+            : "";
+          return `<div class="translation-block">
+            <p class="translation-label">${esc(label)}</p>
+            <p class="translation" dir="${edition.direction ?? "ltr"}" lang="${esc(edition.code ?? "und")}">${esc(
+              verse.translations?.[key] ?? "",
+            )}</p>
+            ${editionNote}
+          </div>`;
+        })
         .join("");
 
       const footnote = verse.footnote
@@ -274,7 +342,7 @@ export function readerView({
         : "";
 
       const romanised = transliterationKey
-        ? `<p class="transliteration">${esc(verse.transliteration ?? "")}</p>`
+        ? `<p class="transliteration" lang="${esc(transliteration?.edition?.code ?? "und-Latn")}">${esc(verse.transliteration ?? "")}</p>`
         : "";
 
       return `
@@ -283,7 +351,7 @@ export function readerView({
       }">
         <div class="verse-gutter">
           <button class="verse-no" type="button" data-role="play-verse" data-verse="${verse.id}"
-            ${perAyahDisabled ? 'disabled title="Per-ayah recitations follow the Hafs numbering; choose a surah recitation to listen."' : ""}
+            ${perAyahDisabled ? 'disabled title="Per-ayah audio is not declared compatible with this script; choose a surah recitation to listen."' : ""}
             aria-label="Play verse ${chapter.id}:${verse.id}">${verse.id}</button>
         </div>
         <div class="verse-body">
@@ -316,11 +384,11 @@ export function readerView({
       : "no translation selected";
 
   return `
-    <article class="reader" style="${arabicStyle(state, coverage, state.script)}">
+   <article class="reader" aria-labelledby="chapter-title" style="${arabicStyle(state, coverage, state.script)}">
       <header class="chapter-head">
         <div class="chapter-title">
           <p class="muted">Surah ${chapter.id} of ${chapters.length} · ${esc(chapter.type)}</p>
-          <h1>
+          <h1 id="chapter-title">
             <span class="latin">${esc(chapter.transliteration)}</span>
             <span class="arabic" lang="ar" dir="rtl">${esc(chapter.name)}</span>
           </h1>
@@ -328,7 +396,7 @@ export function readerView({
             ${esc(chapter.translation)} · ${chapter.total_verses} verses · ${editionNames}
           </p>
         </div>
-        <nav class="chapter-nav">
+        <nav class="chapter-nav" aria-label="Chapter navigation">
           ${
             previous
               ? `<a class="button" href="#/${previous.id}">← ${previous.id}</a>`
@@ -345,7 +413,11 @@ export function readerView({
           }
         </nav>
       </header>
-      ${translationNote ? `<p class="note warn">${esc(translationNote)}</p>` : ""}
+      ${[translationNote, layerNote]
+        .filter(Boolean)
+        .map((note) => `<p class="note warn" role="note">${esc(note)}</p>`)
+        .join("")}
+      ${furnitureHTML}
       <ol class="verses">${verses}</ol>
       <details class="data-paths">
         <summary>Data behind this page</summary>
@@ -374,7 +446,7 @@ export function readerView({
         </ul>
       </details>
       <footer class="chapter-foot">
-        <nav class="chapter-nav">
+        <nav class="chapter-nav" aria-label="Adjacent chapters">
           ${
             previous
               ? `<a class="button" href="#/${previous.id}">← ${esc(previous.transliteration)}</a>`
@@ -409,7 +481,7 @@ export function playerView({ reciter, host, state, playing, progress, error, mis
         <span class="player-sub${error || mismatch ? " warn" : ""}">${esc(
           error ??
             (mismatch
-              ? `Hafs numbering — the selected ${state.script} text does not share it`
+              ? "Per-ayah audio is not declared compatible with this script"
               : reciter.recitation ??
                   `${reciter.bitrate_kbps ? `${reciter.bitrate_kbps} kbps · ` : ""}${host.name}`),
         )}</span>
@@ -428,17 +500,18 @@ export function playerView({ reciter, host, state, playing, progress, error, mis
     </div>`;
 }
 
-export function reciterPanel({ reciters, host, state }) {
-  const usable = reciters.reciters.filter(
-    (reciter) => reciter.scope === "surah" || !["warsh", "qalun"].includes(state.script),
-  );
+export function reciterPanel({ reciters, host, state, script = null }) {
+  script ??= { id: state.script };
+  const identity = scriptReadingIdentity(script);
+  const usable = recitersForScript(reciters.reciters, script);
   const sorted = [...usable].sort((a, b) => {
-    const score = (reciter) =>
-      (["warsh", "qalun"].includes(state.script)
-        ? reciter.recitation?.toLowerCase().includes(state.script === "warsh" ? "warsh" : "qalon")
-        : true)
-        ? 0
-        : 1;
+    const desired = [identity.riwayah, identity.name, identity.id]
+      .filter(Boolean)
+      .map((value) => String(value).toLowerCase());
+    const score = (reciter) => {
+      const text = `${reciter.recitation ?? ""} ${reciter.name} ${reciter.id}`.toLowerCase();
+      return desired.some((value) => text.includes(value)) ? 0 : 1;
+    };
     return score(a) - score(b) || a.name.localeCompare(b.name);
   });
 
@@ -466,14 +539,16 @@ export function reciterPanel({ reciters, host, state }) {
     .join("");
 
   return `
-    <div class="popover-head">
-      <input type="search" data-role="reciter-search" placeholder="Filter by reciter or recitation…" value="">
-    </div>
+   <div class="popover-head">
+      <div class="popover-title"><h2 id="reciter-title">Recitation</h2></div>
+      <label class="popover-search"><span class="visually-hidden">Filter reciters</span><input type="search" data-role="reciter-search" aria-label="Filter reciters" placeholder="Filter by reciter or recitation…" value=""></label>
+      <button class="button ghost" type="button" data-role="close-popover" aria-label="Close recitation choices">Close</button>
+   </div>
     <p class="popover-hint">
       Recitations are hosted by ${esc(host.name)} and others; this site publishes URL templates and
       hosts no audio. ${
-        ["warsh", "qalun"].includes(state.script)
-          ? "The selected script is a riwayah, so per-ayah recitations — which follow the Hafs count — are hidden."
+        !identity.perAyah
+          ? "Per-ayah recitations are hidden because their Hafs reading and numbering are not declared compatible with this script."
           : ""
       }
     </p>

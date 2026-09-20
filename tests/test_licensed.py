@@ -110,7 +110,7 @@ def test_tanzil_structural_indexes_have_the_canonical_counts() -> None:
 
 
 def test_every_published_translation_is_complete(licensed: Sources) -> None:
-    """75 QuranEnc editions, 2 ClearQuran, and 4 public-domain English translations."""
+    """The granted catalogue, seven complete supplemental editions, and local supplements."""
     expected = {
         "english_itani",
         "english_itani_allah",
@@ -120,9 +120,16 @@ def test_every_published_translation_is_complete(licensed: Sources) -> None:
         "english_sale",
         "russian_sablukov",
         "russian_krachkovsky",
+        "bengali_zakaria",
+        "bengali_rwwad",
+        "malay_basumayyah",
+        "russian_rwwad",
+        "korean_hamid",
+        "italian_rwwad",
+        "ukrainian_yakubovych",
     }
 
-    assert len(licensed.editions) == 83
+    assert len(licensed.editions) == 90
     assert expected <= set(licensed.editions)
 
     for key, chapters in licensed.editions.items():
@@ -192,7 +199,7 @@ def test_published_manifest_declares_every_edition_as_granted(cdn_tree: Path) ->
     assert manifest["transliteration"]["status"] == "withheld"
 
     editions = manifest["editions"]
-    assert len(editions) == 83
+    assert len(editions) == 90
     assert {entry["status"] for entry in editions} == {"granted"}
 
     # QuranEnc condition 3: state the version of a republished translation.
@@ -234,7 +241,7 @@ def test_footnotes_travel_with_the_verse(licensed: Sources, cdn_tree: Path) -> N
 
 
 def test_every_published_edition_has_a_whole_and_a_per_chapter_file(cdn_tree: Path) -> None:
-    """One edition is reachable whole or chapter by chapter, for all 83."""
+    """One edition is reachable whole or chapter by chapter, for all 90."""
     for edition in published_editions():
         base = cdn_tree / "translations" / edition_url_key(edition)
 

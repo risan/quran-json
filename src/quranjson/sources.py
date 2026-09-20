@@ -11,7 +11,7 @@ import json
 import unicodedata
 from collections import Counter
 from collections.abc import Callable
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from hashlib import sha256
 from pathlib import Path
@@ -53,6 +53,16 @@ class FetchTask:
     #: primary -- it is what `verify_snapshots` checks -- and these record the rest, so a
     #: reader of the provenance file sees every verdict the file's bytes are held under.
     extra_licenses: tuple[config.License, ...] = ()
+    #: A manually reviewed metadata snapshot is recorded and verified but never overwritten
+    #: by `fetch --force`; its source URL is the review evidence, not a replacement payload.
+    refresh: bool = True
+    #: SHA-256 of the raw upstream archive before parsing. This catches a changed bulk file
+    #: even when its parsed JSON happens to retain the same shape.
+    source_sha256: str | None = None
+    #: Source archive byte count, when the upstream manifest or review pins it.
+    source_bytes: int | None = None
+    #: Source-specific identity and freshness fields retained in provenance.
+    source_metadata: dict[str, Any] = field(default_factory=dict)
 
     @property
     def rel(self) -> str:
@@ -180,11 +190,27 @@ def licensed_tasks() -> list[FetchTask]:
         )
     )
 
-    catalogue = (
-        read_json(config.quranenc_catalogue_path())
-        if config.quranenc_catalogue_path().exists()
-        else None
-    )
+    # The list endpoint is not complete. This reviewed catalogue is deliberately a
+    # committed input: it is checked against the official browse/terms page and its
+    # versioned bulk URLs, but `--force` must not replace it with the incomplete list.
+    if config.quranenc_supplemental_catalogue_path().exists():
+        tasks.append(
+            FetchTask(
+                path=config.quranenc_supplemental_catalogue_path(),
+                url=quranenc.TERMS_URL,
+                source="quranenc.com manually reviewed supplemental catalogue",
+                license=config.QURANENC,
+                refresh=False,
+                source_metadata={
+                    "manual_registration": True,
+                    "catalogue_endpoint": quranenc.CATALOGUE_URL,
+                },
+            )
+        )
+
+    catalogues = quranenc.load_catalogues()
+    if catalogues:
+        quranenc.merged_catalogue(catalogues)
 
     from . import clearquran
 
@@ -207,15 +233,44 @@ def licensed_tasks() -> list[FetchTask]:
             )
         )
 
-    if catalogue is not None:
+    for catalogue in catalogues:
+        quranenc.validate_catalogue(catalogue)
         tasks.extend(
             FetchTask(
                 path=config.quranenc_path(entry["key"]),
                 url=entry["database_url"],
                 source=f"quranenc.com/{entry['key']} v{entry['version']}",
                 license=config.QURANENC,
-                parse=quranenc.parse_translation,
+                parse=(
+                    quranenc.parse_complete_translation_allow_empty
+                    if entry.get("allow_empty")
+                    else quranenc.parse_complete_translation
+                ),
                 compact=True,
+                source_sha256=entry.get("archive_sha256"),
+                source_bytes=entry.get("archive_bytes"),
+                source_metadata={
+                    "provider": "quranenc",
+                    "key": entry["key"],
+                    "language": entry["lang"],
+                    "direction": entry["direction"],
+                    "title": entry["title"],
+                    "version": entry["version"],
+                    "browse_url": entry.get(
+                        "browse_url", f"https://quranenc.com/en/browse/{entry['key']}/"
+                    ),
+                    "terms_url": quranenc.TERMS_URL,
+                    **({"manual_registration": True} if entry.get("manual_registration") else {}),
+                    **(
+                        {
+                            "availability": entry["availability"],
+                            "availability_reason": entry["availability_reason"],
+                            "allow_empty": True,
+                        }
+                        if entry.get("availability") == "withheld"
+                        else {}
+                    ),
+                },
             )
             for entry in catalogue["translations"]
         )
@@ -257,9 +312,27 @@ def licensed_tasks() -> list[FetchTask]:
                 f"({script}, {config.SCRIPT_LABELS[script][0]})"
             ),
             license=config.QURANPEDIA,
-            parse=quranpedia.parse_dump,
+            parse=quranpedia.parse_dump_for(script),
+            source_sha256=quranpedia.DUMP_METADATA.get(script, {}).get("archive_sha256"),
+            source_bytes=quranpedia.DUMP_METADATA.get(script, {}).get("archive_bytes"),
+            source_metadata=(
+                {
+                    "provider": "quranpedia",
+                    "mushaf_id": quranpedia.MOUNT[script],
+                    "name": quranpedia.DUMP_METADATA.get(script, {}).get(
+                        "name", config.SCRIPT_LABELS[script][0]
+                    ),
+                    "dump_version": quranpedia.DUMP_METADATA.get(script, {}).get(
+                        "dump_version", "unknown"
+                    ),
+                    "built_at": quranpedia.DUMP_METADATA.get(script, {}).get("built_at"),
+                    "license_url": quranpedia.LICENSE_URL,
+                    "description": quranpedia.DUMP_METADATA.get(script, {}).get("description"),
+                    "bismillah": quranpedia.DUMP_METADATA.get(script, {}).get("bismillah"),
+                }
+            ),
         )
-        for script in config.RIWAYAH_SCRIPTS
+        for script in config.QURANPEDIA_SCRIPTS
     )
 
     return tasks
@@ -342,6 +415,22 @@ def _rare_codepoints(reference: Counter[str], subject: Counter[str]) -> list[str
     ]
 
 
+def _validate_source_payload(task: FetchTask, raw: bytes) -> None:
+    """Check a pinned bulk artifact before parsing or replacing its snapshot."""
+    if task.source_sha256 is not None:
+        actual_sha256 = sha256(raw).hexdigest()
+        if actual_sha256 != task.source_sha256:
+            raise ValueError(
+                f"source archive hash mismatch for {task.rel}: "
+                f"expected {task.source_sha256[:12]}, got {actual_sha256[:12]}"
+            )
+    if task.source_bytes is not None and len(raw) != task.source_bytes:
+        raise ValueError(
+            f"source archive size mismatch for {task.rel}: "
+            f"expected {task.source_bytes}, got {len(raw)}"
+        )
+
+
 def fetch_all(
     *,
     force: bool = False,
@@ -363,7 +452,9 @@ def fetch_all(
         # tasks only exist once it has been fetched. The second pass picks those up.
         for _ in range(2):
             selected = tasks(langs=langs)
-            pending = [task for task in selected if force or not task.path.exists()]
+            pending = [
+                task for task in selected if task.refresh and (force or not task.path.exists())
+            ]
 
             if not pending:
                 break
@@ -373,11 +464,12 @@ def fetch_all(
                 previous_sha = (
                     sha256(task.path.read_bytes()).hexdigest() if previous is not None else None
                 )
-                payload = (
-                    task.gather(client)
-                    if task.gather is not None
-                    else _normalise(client.get_bytes(task.url), task.transform, task.parse)
-                )
+                if task.gather is not None:
+                    payload = task.gather(client)
+                else:
+                    raw = client.get_bytes(task.url)
+                    _validate_source_payload(task, raw)
+                    payload = _normalise(raw, task.transform, task.parse)
                 summary = _summarise_change(previous, payload) if previous is not None else None
 
                 write_json(task.path, payload, pretty=not task.compact)
@@ -419,6 +511,13 @@ def _record(task: FetchTask) -> dict[str, Any]:
         "bytes": len(body),
         "revision": _revision(task.path),
     }
+
+    if task.source_sha256 is not None:
+        record["source_sha256"] = task.source_sha256
+    if task.source_bytes is not None:
+        record["source_bytes"] = task.source_bytes
+    if task.source_metadata:
+        record["source_metadata"] = task.source_metadata
 
     # A multipart snapshot carries bytes held under more than one verdict; record them all
     # so the provenance file never implies the primary licence covers the whole file.

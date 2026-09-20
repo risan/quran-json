@@ -42,8 +42,9 @@ Only editions with a verified redistribution grant are published; see
 
 from __future__ import annotations
 
+from collections import Counter
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 from . import config, licensing, qa, web
 from .jsonio import read_json, write_json
@@ -81,8 +82,16 @@ _HEADERS = """\
 /translations/*
   Cache-Control: public, max-age=31536000, immutable
 
+/translations/index.json
+  ! Cache-Control
+  Cache-Control: public, max-age=60, must-revalidate
+
 /transliteration/*
   Cache-Control: public, max-age=31536000, immutable
+
+/transliteration/index.json
+  ! Cache-Control
+  Cache-Control: public, max-age=60, must-revalidate
 
 /audio/*
   Cache-Control: public, max-age=3600
@@ -151,7 +160,7 @@ def _script_snapshot_path(script: str) -> Path:
     if script == config.DIGITALKHATT_SCRIPT:
         return config.digitalkhatt_path()
 
-    if script in config.RIWAYAH_SCRIPTS:
+    if script in config.QURANPEDIA_SCRIPTS:
         return config.quranpedia_path(script)
 
     return config.tanzil_text_path(script)
@@ -277,7 +286,96 @@ def _edition_chapters(edition: config.Edition) -> list[dict[str, Any]]:
     return chapters
 
 
-def _check_shape(label: str, chapters: list[dict[str, Any]], expected_verses: int) -> int:
+def _check_mapping(label: str, chapters: list[dict[str, Any]], script: str) -> None:
+    """Validate a source-provided Hafs map without erasing legitimate overlaps."""
+    chapter_counts = {chapter["id"]: chapter["total_verses"] for chapter in chapter_metadata()}
+    for chapter in chapters:
+        flattened: list[int] = []
+        for verse in chapter["verses"]:
+            numbers = verse.get("number_in_hafs")
+            if not isinstance(numbers, list) or not numbers or numbers != sorted(set(numbers)):
+                raise ValueError(
+                    f"{label}: invalid number_in_hafs at {chapter['id']}:{verse['id']}"
+                )
+            if script == config.HAFS_NASTALIQ_SCRIPT and numbers != [verse["id"]]:
+                raise ValueError(
+                    f"{label}: Hafs Nastaliq map is not native at {chapter['id']}:{verse['id']}"
+                )
+            limit = chapter_counts[chapter["id"]]
+            if not all(isinstance(number, int) and 1 <= number <= limit for number in numbers):
+                raise ValueError(
+                    f"{label}: out-of-range number_in_hafs at {chapter['id']}:{verse['id']}"
+                )
+            flattened.extend(numbers)
+
+        if flattened != sorted(flattened):
+            raise ValueError(f"{label}: non-monotonic number_in_hafs in chapter {chapter['id']}")
+        exception = next(
+            (
+                item
+                for item in config.SCRIPT_MAPPING_COVERAGE_EXCEPTIONS.get(script, ())
+                if item["chapter"] == chapter["id"]
+            ),
+            None,
+        )
+        expected = set(range(1, chapter_counts[chapter["id"]] + 1))
+        if exception is None:
+            if set(flattened) != expected:
+                raise ValueError(f"{label}: incomplete Hafs mapping in chapter {chapter['id']}")
+            continue
+
+        missing = set(cast(tuple[int, ...], exception["missing_hafs"]))
+        repeated = set(cast(tuple[int, ...], exception["repeated_hafs"]))
+        if set(flattened) != expected - missing:
+            raise ValueError(f"{label}: unexpected missing Hafs ids in chapter {chapter['id']}")
+        counts = Counter(flattened)
+        if any(counts[number] != 2 for number in repeated) or any(
+            counts[number] != 1 for number in expected - missing - repeated
+        ):
+            raise ValueError(f"{label}: unexpected Hafs overlap in chapter {chapter['id']}")
+
+
+def _native_chapter_counts(chapters: list[dict[str, Any]]) -> dict[str, int]:
+    """Return only source chapter counts that differ from shared Hafs metadata."""
+    canonical = {chapter["id"]: chapter["total_verses"] for chapter in chapter_metadata()}
+    return {
+        str(chapter["id"]): len(chapter["verses"])
+        for chapter in chapters
+        if len(chapter["verses"]) != canonical[chapter["id"]]
+    }
+
+
+def _chapter_furniture(script: str) -> list[dict[str, Any]]:
+    """Expose source furniture whose position is pinned by the source dump.
+
+    Quranpedia's al-Duri dump carries the basmala outside its numbered ayah rows.  It is
+    deliberately a manifest annotation: adding it as verse 1 would shift every source map
+    and invent a Hafs join.  The dump exposes no similarly bounded furniture contract for
+    the other chapters or scripts.
+    """
+    if script != config.DURI_SCRIPT:
+        return []
+
+    from .quranpedia import DUMP_METADATA
+
+    return [
+        {
+            "chapter": 1,
+            "position": "before-verses",
+            "kind": "bismillah",
+            "text": DUMP_METADATA[script]["bismillah"],
+            "numbered": False,
+        }
+    ]
+
+
+def _check_shape(
+    label: str,
+    chapters: list[dict[str, Any]],
+    expected_verses: int,
+    *,
+    script: str | None = None,
+) -> int:
     """Assert a rendered scripture is complete before it is written.
 
     The verse total is per script rather than a constant: the Hafs-count scripts run to
@@ -295,6 +393,11 @@ def _check_shape(label: str, chapters: list[dict[str, Any]], expected_verses: in
         ids = [verse["id"] for verse in chapter["verses"]]
         if ids != list(range(1, len(ids) + 1)):
             raise ValueError(f"{label}: chapter {chapter['id']} is not numbered 1..n")
+
+    if script is not None and (
+        config.SCRIPT_VERSE_IDS[script] == "mapped" or script == config.HAFS_NASTALIQ_SCRIPT
+    ):
+        _check_mapping(label, chapters, script)
 
     return verses
 
@@ -318,13 +421,14 @@ def published_editions(*, include_unverified: bool = False) -> list[config.Editi
     what `--include-unverified-licenses` means: publish these too, now that the rights have
     been cleared out of band.
     """
-    catalogue = config.quranenc_catalogue_path()
     editions: list[config.Edition] = []
 
-    if catalogue.exists():
-        from .quranenc import catalogue_editions
+    if config.quranenc_catalogue_path().exists():
+        from .quranenc import catalogue_editions, load_catalogues, merged_catalogue
 
-        editions.extend(catalogue_editions(read_json(catalogue)))
+        editions.extend(
+            catalogue_editions(merged_catalogue(load_catalogues()), include_withheld=False)
+        )
 
     editions.extend(
         edition
@@ -444,18 +548,28 @@ def build_site(
     ]
 
     counts: dict[str, int] = {}
+    native_counts: dict[str, dict[str, int]] = {}
+    furniture_by_script: dict[str, list[dict[str, Any]]] = {}
     corpora: dict[str, list[str]] = {}
     samples: dict[str, str] = {}
 
     for script in scripts:
         text = _script_chapters(script)
-        counts[script] = _check_shape(f"text/{script}", text, config.SCRIPT_VERSES[script])
+        counts[script] = _check_shape(
+            f"text/{script}", text, config.SCRIPT_VERSES[script], script=script
+        )
+        if differing := _native_chapter_counts(text):
+            native_counts[script] = differing
         _write_jsonl_dir(out_dir / "text" / script, text, pretty=pretty)
 
         # Kept for two measured outputs: the font coverage report, which needs every
         # codepoint the script uses, and the documentation page's per-script sample, which
         # is one verse rendered in that script's default font.
+        furniture = _chapter_furniture(script)
+        if furniture:
+            furniture_by_script[script] = furniture
         corpora[script] = [verse["text"] for chapter in text for verse in chapter["verses"]]
+        corpora[script].extend(item["text"] for item in furniture)
         samples[script] = _chapter(text, 112)["verses"][0]["text"]
 
     # What was actually published, so nothing published is also listed as withheld.
@@ -503,7 +617,8 @@ def build_site(
             _withheld_entry(edition)
             for edition in _withheld_editions(published_langs)
             if not _is_transliteration(edition)
-        ],
+        ]
+        + _catalogue_withheld_entries(published_langs),
     }
     write_json(out_dir / "translations" / "index.json", translations_manifest, pretty=pretty)
 
@@ -564,6 +679,26 @@ def build_site(
                     if script in config.SCRIPT_VERSE_ID_DIVERGENCE
                     else {}
                 ),
+                **(
+                    {"native_chapter_counts": native_counts[script]}
+                    if script in native_counts
+                    else {}
+                ),
+                **(
+                    {
+                        "mapping_coverage_exceptions": list(
+                            config.SCRIPT_MAPPING_COVERAGE_EXCEPTIONS[script]
+                        )
+                    }
+                    if script in config.SCRIPT_MAPPING_COVERAGE_EXCEPTIONS
+                    else {}
+                ),
+                **(config.SCRIPT_READING_IDENTITIES.get(script, {})),
+                **(
+                    {"chapter_furniture": furniture_by_script[script]}
+                    if script in furniture_by_script
+                    else {}
+                ),
             }
             for script in scripts
         ],
@@ -591,8 +726,10 @@ def build_site(
         "attribution": (
             "Quran text and chapter metadata: Tanzil.net (CC-BY 3.0, verbatim); the "
             "Mushaf Standar Indonesia script, LPMQ / Kementerian Agama RI; the Indo-Pak "
-            "script, DigitalKhatt (MIT); and the Warsh and Qalun riwayat, Qur'anpedia.net "
-            "(https://quranpedia.net, dump version 2026-09-18). Translations: each "
+            "script, DigitalKhatt (MIT); and the Warsh, Qalun, al-Duri and Hafs Nastaliq "
+            "texts, Qur'anpedia.net (https://quranpedia.net). Exact dump versions, mushaf "
+            "identities and archive checksums are recorded per snapshot in /meta/sources.json. "
+            "Translations: each "
             "edition's publisher, credited in /translations/index.json. Audio: linked "
             "from EveryAyah, Islamic Network and MP3Quran; no audio is hosted here."
         ),
@@ -637,20 +774,38 @@ def build_site(
 
 def _catalogue_metadata() -> dict[str, dict[str, Any]]:
     """Per-edition catalogue fields: direction, version, and the source description."""
-    catalogue = config.quranenc_catalogue_path()
-    if not catalogue.exists():
+    if not config.quranenc_catalogue_path().exists():
         return {}
-    return {entry["key"]: entry for entry in read_json(catalogue)["translations"]}
+    from .quranenc import load_catalogues, merged_catalogue
+
+    return {entry["key"]: entry for entry in merged_catalogue(load_catalogues())["translations"]}
 
 
 def _withheld_entry(edition: config.Edition) -> dict[str, Any]:
     """One withheld edition as a catalogue entry."""
-    return {
+    entry = {
         "edition": edition.lang,
         "author": edition.author,
         "status": edition.license.status,
         "license_url": edition.license.url,
     }
+    if edition.availability != "published":
+        entry["availability"] = edition.availability
+        entry["reason"] = edition.availability_reason
+    return entry
+
+
+def _catalogue_withheld_entries(published_langs: set[str]) -> list[dict[str, Any]]:
+    """Report technically incomplete supplemental editions without publishing their bytes."""
+    if not config.quranenc_catalogue_path().exists():
+        return []
+    from .quranenc import catalogue_editions, load_catalogues, merged_catalogue
+
+    return [
+        _withheld_entry(edition)
+        for edition in catalogue_editions(merged_catalogue(load_catalogues()))
+        if not edition.available and edition.lang not in published_langs
+    ]
 
 
 def _withheld_editions(published_langs: set[str]) -> list[config.Edition]:
@@ -748,5 +903,6 @@ def sources_manifest(
             }
             for edition in editions
         ],
-        "withheld": [_withheld_entry(edition) for edition in _withheld_editions(published_langs)],
+        "withheld": [_withheld_entry(edition) for edition in _withheld_editions(published_langs)]
+        + _catalogue_withheld_entries(published_langs),
     }

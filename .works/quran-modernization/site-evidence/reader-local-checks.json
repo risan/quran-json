@@ -1,0 +1,39 @@
+{
+  "capturedAt": "2026-09-20",
+  "base": "http://127.0.0.1:8765",
+  "servedFrom": "temporary copy of cdn with web/app files",
+  "browser": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+  "viewports": [320, 375, 1440],
+  "checks": {
+    "mobileSettings": {
+      "overflow": false,
+      "triggerAccessibleName": "Open reader settings",
+      "dialogLabel": "Reader settings",
+      "openFocus": "script",
+      "escapeFocusReturn": "settings",
+      "tabWrap": "script",
+      "arabicSizeReachableAfterScroll": true,
+      "axeViolations": []
+    },
+    "indoPakChapter1": {
+      "arabicNodes": 8,
+      "translationBlocks": 0,
+      "transliterationNodes": 0,
+      "alignmentNote": true
+    },
+    "optionalChapter503": {
+      "arabicNodes": 287,
+      "translationBlocks": 0,
+      "status": "Arabic is ready; 1 optional layer could not be loaded."
+    },
+    "optionalMalformedChapter": {
+      "arabicNodes": 287,
+      "translationBlocks": 0,
+      "status": "Arabic is ready; 1 optional layer could not be loaded."
+    },
+    "staleChapterResponse": {
+      "gridRemainedVisible": true,
+      "chapterVersesRemainedAbsent": true
+    }
+  }
+}

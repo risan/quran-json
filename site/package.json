@@ -1,0 +1,25 @@
+{
+  "name": "quran-json-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "astro build",
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "reader:browser:install": "playwright install chromium",
+    "reader:browser": "node ../tests/reader/browser-regressions.mjs"
+  },
+  "dependencies": {
+    "@tailwindcss/vite": "4.3.3",
+    "astro": "7.3.3",
+    "tailwindcss": "4.3.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@types/node": "^24.10.1",
+    "playwright": "^1.63.0",
+    "typescript": "^6.0.3"
+  }
+}
