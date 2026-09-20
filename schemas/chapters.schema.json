@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/risan/quran-json/main/schemas/chapters.schema.json",
+  "title": "quran-json chapter metadata",
+  "description": "The shared 114-chapter metadata array at /chapters.json.",
+  "type": "array",
+  "minItems": 114,
+  "maxItems": 114,
+  "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "id",
+      "name",
+      "transliteration",
+      "translation",
+      "type",
+      "total_verses"
+    ],
+    "properties": {
+      "id": {
+        "type": "integer",
+        "minimum": 1,
+        "maximum": 114
+      },
+      "name": {
+        "type": "string",
+        "minLength": 1
+      },
+      "transliteration": {
+        "type": "string",
+        "minLength": 1
+      },
+      "translation": {
+        "type": "string",
+        "minLength": 1
+      },
+      "type": {
+        "enum": ["meccan", "medinan"]
+      },
+      "total_verses": {
+        "type": "integer",
+        "minimum": 1
+      }
+    }
+  }
+}

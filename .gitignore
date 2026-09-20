@@ -15,6 +15,9 @@ __pycache__/
 
 # Generated deploy artifact, rebuilt from data/ in ~1s
 cdn/
+.build/
+site/dist/
+site/.astro/
 
-# Cloudflare local state (wrangler pages dev)
+# Cloudflare local state (wrangler dev)
 .wrangler/

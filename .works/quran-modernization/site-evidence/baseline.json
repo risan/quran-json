@@ -1,0 +1,5464 @@
+{
+  "capturedAt": "2026-09-20T06:38:58.714Z",
+  "base": "https://quran-json.risanb.com",
+  "browser": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+  "results": [
+    {
+      "case": "docs",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "elapsedMs": 3971,
+      "gotoError": null,
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence/docs-desktop.png",
+      "dom": {
+        "title": "quran-json — Quran text, translations, transliterations and audio in JSON",
+        "h1": [
+          "Quran text as dataٱلْقُرْآن"
+        ],
+        "bodyScrollWidth": 1440,
+        "innerWidth": 1440,
+        "bodyScrollHeight": 8222,
+        "innerHeight": 1000,
+        "visibleText": "quran-json\nQuickstart\nEndpoints\nScripts\nTranslations\nTransliteration\nAudio\nLicensing\n◐\nOpen the reader\n\nSTATIC JSON · NO VERSION SEGMENT · NO AUTH\n\nQuran text as data\nٱلْقُرْآن\n\nEvery published byte is generated from sources that license redistribution. One path per scripture, a chapter at a time or the whole book at once, and the same JSON whether a browser, a server or a script asks for it.\n\nOpen the reader\nmanifest.json\nchapters.json\nSCRIPTS\n10\nTRANSLATIONS\n84\nLANGUAGES\n57\nTRANSLITERATIONS\n1\nCHAPTERS\n114\nVERSES\n6,236\nRECITATIONS\n595\n\nEverything below is served from https://quran-json.risanb.com — the same tree as https://quran-json.risan.workers.dev. CORS is *, there is no key, no quota and no rate limit.\n\nQuickstart\n\nEverything is a GET on a JSON file. Chapter files number their verses 1..n with the key id; a translation file carries the translation only, so the Arabic and the translation are joined on that id.\n\nOne chapter, one script\ncurl\nJavaScript\nPython\ncurl -s https://quran-json.risanb.com/text/uthmani/chapters/2.json | head -c 400\ncopy\nJoin the Arabic to a translation\nJavaScript\nPython\nconst [arabic, translated] = await Promise.all([\n  fetch(`${base}/text/uthmani/chapter",
+        "controls": [
+          {
+            "tag": "A",
+            "role": null,
+            "text": "quran-json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Quickstart",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Endpoints",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Scripts",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Translations",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Transliteration",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Audio",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Licensing",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "◐",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Open the reader",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Open the reader",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "manifest.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "chapters.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "curl",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "JavaScript",
+            "tabIndex": -1
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "Python",
+            "tabIndex": -1
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "JavaScript",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "Python",
+            "tabIndex": -1
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "INPUT",
+            "role": null,
+            "text": "Filter by language, author or path…",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/en-rwwad/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/en-saheeh/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/en-hilali-khan/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/fr-rashid/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/fr-montada/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/es-garcia/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          }
+        ]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/base.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/docs.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/site.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/scheherazade-new-regular.woff2"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/",
+          "contentType": "text/html",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/base.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/docs.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/site.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/scheherazade-new-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        }
+      ],
+      "axe": {
+        "url": "https://quran-json.risanb.com/",
+        "passes": 50,
+        "incomplete": 1,
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": [
+                  "button[data-lang=\"curl\"][role=\"tab\"]"
+                ],
+                "html": "<button role=\"tab\" data-lang=\"curl\" aria-selected=\"true\" tabindex=\"0\">curl</button>"
+              },
+              {
+                "target": [
+                  ".tabs[data-tabs=\"\"]:nth-child(6) > .tablist[role=\"tablist\"] > button[data-lang=\"js\"][role=\"tab\"]"
+                ],
+                "html": "<button role=\"tab\" data-lang=\"js\" aria-selected=\"true\" tabindex=\"0\">JavaScript</button>"
+              }
+            ]
+          },
+          {
+            "id": "scrollable-region-focusable",
+            "impact": "serious",
+            "help": "Scrollable region must have keyboard access",
+            "nodes": [
+              {
+                "target": [
+                  "#endpoints > .table-wrap"
+                ],
+                "html": "<div class=\"table-wrap\">"
+              },
+              {
+                "target": [
+                  "#scripts > .table-wrap:nth-child(3)"
+                ],
+                "html": "<div class=\"table-wrap\">"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case": "reader-home",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "elapsedMs": 3297,
+      "gotoError": null,
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence/reader-home-desktop.png",
+      "dom": {
+        "title": "quran-json — read the Quran",
+        "h1": [
+          "Read the Quran"
+        ],
+        "bodyScrollWidth": 1440,
+        "innerWidth": 1440,
+        "bodyScrollHeight": 4734,
+        "innerHeight": 1000,
+        "visibleText": "quran-json\nReader\n◐\nDocs\nSCRIPT\nUthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun\nFONT\nAuto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic\nTRANSLATION\n1 selected\n▾\nTRANSLITERATION\nOff\nRECITATION\nChoose…\n▾\nARABIC SIZE\nA−\nA+\nRead the Quran\n\n114 chapters · Uthmani · Amiri, chosen for this script\n\nFind a chapter \n1\nAl-Faatiha\nالفاتحة\nThe Opening\n·\n7 verses\nMECCAN\n2\nAl-Baqara\nالبقرة\nThe Cow\n·\n286 verses\nMEDINAN\n3\nAal-i-Imraan\nآل عمران\nThe Family of Imraan\n·\n200 verses\nMEDINAN\n4\nAn-Nisaa\nالنساء\nThe Women\n·\n176 verses\nMEDINAN\n5\nAl-Maaida\nالمائدة\nThe Table\n·\n120 verses\nMEDINAN\n6\nAl-An'aam\nالأنعام\nThe Cattle\n·\n165 verses\nMECCAN\n7\nAl-A'raaf\nالأعراف\nThe Heights\n·\n206 verses\nMECCAN\n8\nAl-Anfaal\nالأنفال\nThe Spoils of War\n·\n75 verses\nMEDINAN\n9\nAt-Tawba\nالتوبة\nThe Repentance\n·\n129 verses\nMEDINAN\n10\nYunus\nيونس\nJonas\n·\n109 verses\nMECCAN\n11\nHud\nهود\nHud\n·\n123 verses\nMECCAN\n12\nYusuf\nيوسف\nJoseph\n·\n111 verses\nMECCAN\n13\nAr-Ra'd\nالرعد\nThe Thunder\n·\n43 verses\nMEDINAN\n14\nIbrahim\nابراهيم\nAbraham\n·\n52 verses\nMECCAN\n15\nAl-Hijr\nالحجر\nThe Rock\n·\n99 verses\nMECCAN\n16\nAn-Nahl\nالنحل\nThe Bee\n·\n128 verses\nMECCAN\n17\nAl-Israa\nالإسراء\nThe Night Jo",
+        "controls": [
+          {
+            "tag": "A",
+            "role": null,
+            "text": "quran-json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "◐",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Docs",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Uthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Auto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "1 selected\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Off",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Choose…\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A−",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A+",
+            "tabIndex": 0
+          },
+          {
+            "tag": "INPUT",
+            "role": null,
+            "text": "Find a chapter by number, name or meaning…",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "1\nAl-Faatiha\nالفاتحة\nThe Opening\n·\n7 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "2\nAl-Baqara\nالبقرة\nThe Cow\n·\n286 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "3\nAal-i-Imraan\nآل عمران\nThe Family of Imraan\n·\n200 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "4\nAn-Nisaa\nالنساء\nThe Women\n·\n176 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "5\nAl-Maaida\nالمائدة\nThe Table\n·\n120 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "6\nAl-An'aam\nالأنعام\nThe Cattle\n·\n165 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "7\nAl-A'raaf\nالأعراف\nThe Heights\n·\n206 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "8\nAl-Anfaal\nالأنفال\nThe Spoils of War\n·\n75 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "9\nAt-Tawba\nالتوبة\nThe Repentance\n·\n129 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "10\nYunus\nيونس\nJonas\n·\n109 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "11\nHud\nهود\nHud\n·\n123 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "12\nYusuf\nيوسف\nJoseph\n·\n111 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "13\nAr-Ra'd\nالرعد\nThe Thunder\n·\n43 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "14\nIbrahim\nابراهيم\nAbraham\n·\n52 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "15\nAl-Hijr\nالحجر\nThe Rock\n·\n99 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "16\nAn-Nahl\nالنحل\nThe Bee\n·\n128 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "17\nAl-Israa\nالإسراء\nThe Night Journey\n·\n111 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "18\nAl-Kahf\nالكهف\nThe Cave\n·\n110 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "19\nMaryam\nمريم\nMary\n·\n98 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "20\nTaa-Haa\nطه\nTaa-Haa\n·\n135 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "21\nAl-Anbiyaa\nالأنبياء\nThe Prophets\n·\n112 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "22\nAl-Hajj\nالحج\nThe Pilgrimage\n·\n78 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "23\nAl-Muminoon\nالمؤمنون\nThe Believers\n·\n118 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "24\nAn-Noor\nالنور\nThe Light\n·\n64 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "25\nAl-Furqaan\nالفرقان\nThe Criterion\n·\n77 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "26\nAsh-Shu'araa\nالشعراء\nThe Poets\n·\n227 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "27\nAn-Naml\nالنمل\nThe Ant\n·\n93 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "28\nAl-Qasas\nالقصص\nThe Stories\n·\n88 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "29\nAl-Ankaboot\nالعنكبوت\nThe Spider\n·\n69 verses\nMECCAN",
+            "tabIndex": 0
+          }
+        ]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/base.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/api.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/audio.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/store.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/ui.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/manifest.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/chapters.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/translations/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/transliteration/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/fonts.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/",
+          "contentType": "text/html",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/base.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/api.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/ui.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/audio.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/store.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/manifest.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/chapters.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/transliteration/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/fonts.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/translations/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        }
+      ],
+      "axe": {
+        "url": "https://quran-json.risanb.com/app/",
+        "passes": 40,
+        "incomplete": 1,
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": [
+                  "a[href$=\"#/1\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/2\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/3\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/4\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/5\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/6\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/7\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/8\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/9\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/10\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">10</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/10\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/11\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">11</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/11\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/12\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">12</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/12\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/13\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">13</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/13\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/14\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">14</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/14\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/15\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">15</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/15\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/16\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">16</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/16\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/17\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">17</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/17\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/18\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">18</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/18\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/19\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">19</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/19\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/20\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">20</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/20\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/21\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">21</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/21\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/22\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">22</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/22\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/23\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">23</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/23\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/24\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">24</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/24\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/25\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">25</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/25\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/26\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">26</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/26\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/27\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">27</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/27\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/28\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">28</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/28\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/29\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">29</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/29\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/30\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">30</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/30\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/31\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">31</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/31\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/32\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">32</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/32\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/33\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">33</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/33\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/34\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">34</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/34\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/35\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">35</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/35\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/36\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">36</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/36\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/37\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">37</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/37\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/38\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">38</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/38\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/39\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">39</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/39\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/40\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">40</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/40\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/41\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">41</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/41\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/42\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">42</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/42\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/43\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">43</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/43\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/44\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">44</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/44\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/45\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">45</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/45\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/46\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">46</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/46\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/47\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">47</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/47\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/48\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">48</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/48\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/49\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">49</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/49\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/50\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">50</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/50\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/51\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">51</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/51\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/52\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">52</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/52\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/53\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">53</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/53\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/54\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">54</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/54\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/55\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">55</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/55\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/56\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">56</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/56\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/57\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">57</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/57\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/58\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">58</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/58\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/59\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">59</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/59\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/60\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">60</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/60\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/61\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">61</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/61\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/62\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">62</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/62\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/63\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">63</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/63\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/64\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">64</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/64\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/65\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">65</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/65\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/66\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">66</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/66\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/67\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">67</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/67\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/68\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">68</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/68\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/69\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">69</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/69\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/70\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">70</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/70\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/71\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">71</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/71\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/72\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">72</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/72\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/73\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">73</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/73\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/74\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">74</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/74\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/75\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">75</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/75\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/76\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">76</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/76\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/77\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">77</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/77\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/78\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">78</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/78\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/79\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">79</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/79\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/80\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">80</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/80\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/81\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">81</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/81\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/82\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">82</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/82\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/83\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">83</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/83\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/84\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">84</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/84\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/85\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">85</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/85\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/86\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">86</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/86\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/87\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">87</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/87\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/88\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">88</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/88\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/89\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">89</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/89\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/90\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">90</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/90\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/91\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">91</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/91\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/92\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">92</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/92\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/93\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">93</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/93\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/94\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">94</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/94\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/95\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">95</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/95\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/96\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">96</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/96\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/97\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">97</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/97\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/98\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">98</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/98\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/99\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">99</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/99\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/100\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">100</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/100\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/101\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">101</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/101\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/102\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">102</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/102\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/103\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">103</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/103\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/104\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">104</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/104\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/105\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">105</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/105\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/106\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">106</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/106\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/107\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">107</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/107\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/108\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">108</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/108\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/109\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">109</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/109\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/110\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">110</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/110\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/111\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">111</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/111\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/112\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">112</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/112\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/113\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">113</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/113\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/114\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">114</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/114\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              }
+            ]
+          },
+          {
+            "id": "region",
+            "impact": "moderate",
+            "help": "All page content should be contained by landmarks",
+            "nodes": [
+              {
+                "target": [
+                  "label:nth-child(1)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  ".toolbar-inner > label:nth-child(2)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  ".field:nth-child(3) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Translation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(4) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Transliteration</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(5) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Recitation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(6) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Arabic size</span>"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case": "reader-chapter-2",
+      "viewport": {
+        "name": "desktop",
+        "width": 1440,
+        "height": 1000
+      },
+      "elapsedMs": 12855,
+      "gotoError": null,
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence/reader-chapter-2-desktop.png",
+      "dom": {
+        "title": "2. Al-Baqara — quran-json",
+        "h1": [
+          "Al-Baqara\n            البقرة"
+        ],
+        "bodyScrollWidth": 1440,
+        "innerWidth": 1440,
+        "bodyScrollHeight": 81843,
+        "innerHeight": 1000,
+        "visibleText": "quran-json\nReader\n◐\nDocs\nSCRIPT\nUthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun\nFONT\nAuto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic\nTRANSLATION\n1 selected\n▾\nTRANSLITERATION\nOff\nRECITATION\nChoose…\n▾\nARABIC SIZE\nA−\nA+\n\nSurah 2 of 114 · medinan\n\nAl-Baqara\nالبقرة\n\nThe Cow · 286 verses · English Translation - Rowwad Translation Center\n\n← 1\nAll chapters\n▶ Listen\n3 →\n1\n\nبِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ الٓمٓ\n\nAlif Lām Mīm[1].\n\nTranslator's note\nCopy\nLink\n2\n\nذَٰلِكَ ٱلْكِتَٰبُ لَا رَيْبَ فِيهِ هُدًى لِّلْمُتَّقِينَ\n\nThis is the Book about which there is no doubt, a guidance for the righteous[2],\n\nTranslator's note\nCopy\nLink\n3\n\nٱلَّذِينَ يُؤْمِنُونَ بِٱلْغَيْبِ وَيُقِيمُونَ ٱلصَّلَوٰةَ وَمِمَّا رَزَقْنَٰهُمْ يُنفِقُونَ\n\nthose who believe in the unseen, establish prayer[3], and spend out of what We[4] have provided for them,\n\nTranslator's note\nCopy\nLink\n4\n\nوَٱلَّذِينَ يُؤْمِنُونَ بِمَآ أُنزِلَ إِلَيْكَ وَمَآ أُنزِلَ مِن قَبْلِكَ وَبِٱلْـَٔاخِرَةِ هُمْ يُوقِنُونَ\n\nand those who believe in what has been sent down to you [O Prophet] and in what was sent down before you[5], and in the Hereafter they believ",
+        "controls": [
+          {
+            "tag": "A",
+            "role": null,
+            "text": "quran-json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "◐",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Docs",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Uthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Auto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "1 selected\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Off",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Choose…\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A−",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A+",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "← 1",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "All chapters",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "▶ Listen",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "3 →",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "1",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "2",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "3",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "4",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "5",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "6",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "7",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "8",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "9",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          }
+        ]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/base.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/api.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/audio.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/store.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/ui.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/manifest.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/chapters.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/translations/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/transliteration/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/fonts.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/text/uthmani/chapters/2.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/translations/en-rwwad/chapters/2.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/",
+          "contentType": "text/html",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/base.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/audio.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/api.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/ui.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/store.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/chapters.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/translations/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/transliteration/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/manifest.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/fonts.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/text/uthmani/chapters/2.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/translations/en-rwwad/chapters/2.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        }
+      ],
+      "axe": {
+        "url": "https://quran-json.risanb.com/app/#/2",
+        "passes": 42,
+        "incomplete": 1,
+        "violations": [
+          {
+            "id": "landmark-unique",
+            "impact": "moderate",
+            "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "nodes": [
+              {
+                "target": [
+                  ".chapter-head > nav"
+                ],
+                "html": "<nav class=\"chapter-nav\">"
+              }
+            ]
+          },
+          {
+            "id": "region",
+            "impact": "moderate",
+            "help": "All page content should be contained by landmarks",
+            "nodes": [
+              {
+                "target": [
+                  "label:nth-child(1)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  "label:nth-child(2)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  ".field:nth-child(3) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Translation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(4) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Transliteration</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(5) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Recitation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(6) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Arabic size</span>"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case": "docs",
+      "viewport": {
+        "name": "mobile",
+        "width": 375,
+        "height": 812
+      },
+      "elapsedMs": 3624,
+      "gotoError": null,
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence/docs-mobile.png",
+      "dom": {
+        "title": "quran-json — Quran text, translations, transliterations and audio in JSON",
+        "h1": [
+          "Quran text as dataٱلْقُرْآن"
+        ],
+        "bodyScrollWidth": 375,
+        "innerWidth": 375,
+        "bodyScrollHeight": 12426,
+        "innerHeight": 812,
+        "visibleText": "quran-json\n◐\nOpen the reader\n\nSTATIC JSON · NO VERSION SEGMENT · NO AUTH\n\nQuran text as data\nٱلْقُرْآن\n\nEvery published byte is generated from sources that license redistribution. One path per scripture, a chapter at a time or the whole book at once, and the same JSON whether a browser, a server or a script asks for it.\n\nOpen the reader\nmanifest.json\nchapters.json\nSCRIPTS\n10\nTRANSLATIONS\n84\nLANGUAGES\n57\nTRANSLITERATIONS\n1\nCHAPTERS\n114\nVERSES\n6,236\nRECITATIONS\n595\n\nEverything below is served from https://quran-json.risanb.com — the same tree as https://quran-json.risan.workers.dev. CORS is *, there is no key, no quota and no rate limit.\n\nQuickstart\n\nEverything is a GET on a JSON file. Chapter files number their verses 1..n with the key id; a translation file carries the translation only, so the Arabic and the translation are joined on that id.\n\nOne chapter, one script\ncurl\nJavaScript\nPython\ncurl -s https://quran-json.risanb.com/text/uthmani/chapters/2.json | head -c 400\ncopy\nJoin the Arabic to a translation\nJavaScript\nPython\nconst [arabic, translated] = await Promise.all([\n  fetch(`${base}/text/uthmani/chapters/2.json`).then((r) => r.json()),\n  fetch(`${base}/translations/en-rwwad/c",
+        "controls": [
+          {
+            "tag": "A",
+            "role": null,
+            "text": "quran-json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Quickstart",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Endpoints",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Scripts",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Translations",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Transliteration",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Audio",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Licensing",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "◐",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Open the reader",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Open the reader",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "manifest.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "chapters.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "curl",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "JavaScript",
+            "tabIndex": -1
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "Python",
+            "tabIndex": -1
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "JavaScript",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": "tab",
+            "text": "Python",
+            "tabIndex": -1
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "INPUT",
+            "role": null,
+            "text": "Filter by language, author or path…",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/en-rwwad/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/en-saheeh/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/en-hilali-khan/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/fr-rashid/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/fr-montada/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "/translations/es-garcia/quran.json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "granted",
+            "tabIndex": 0
+          }
+        ]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/base.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/docs.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/site.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/scheherazade-new-regular.woff2"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/",
+          "contentType": "text/html",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/base.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/docs.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/site.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/scheherazade-new-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        }
+      ],
+      "axe": {
+        "url": "https://quran-json.risanb.com/",
+        "passes": 50,
+        "incomplete": 1,
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": [
+                  "button[data-lang=\"curl\"][role=\"tab\"]"
+                ],
+                "html": "<button role=\"tab\" data-lang=\"curl\" aria-selected=\"true\" tabindex=\"0\">curl</button>"
+              },
+              {
+                "target": [
+                  ".tabs[data-tabs=\"\"]:nth-child(6) > .tablist[role=\"tablist\"] > button[data-lang=\"js\"][role=\"tab\"]"
+                ],
+                "html": "<button role=\"tab\" data-lang=\"js\" aria-selected=\"true\" tabindex=\"0\">JavaScript</button>"
+              }
+            ]
+          },
+          {
+            "id": "scrollable-region-focusable",
+            "impact": "serious",
+            "help": "Scrollable region must have keyboard access",
+            "nodes": [
+              {
+                "target": [
+                  "#endpoints > .table-wrap"
+                ],
+                "html": "<div class=\"table-wrap\">"
+              },
+              {
+                "target": [
+                  "#scripts > .table-wrap:nth-child(3)"
+                ],
+                "html": "<div class=\"table-wrap\">"
+              },
+              {
+                "target": [
+                  ".table-wrap:nth-child(6)"
+                ],
+                "html": "<div class=\"table-wrap\">"
+              },
+              {
+                "target": [
+                  "#audio > .table-wrap"
+                ],
+                "html": "<div class=\"table-wrap\">"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case": "reader-home",
+      "viewport": {
+        "name": "mobile",
+        "width": 375,
+        "height": 812
+      },
+      "elapsedMs": 3292,
+      "gotoError": null,
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence/reader-home-mobile.png",
+      "dom": {
+        "title": "quran-json — read the Quran",
+        "h1": [
+          "Read the Quran"
+        ],
+        "bodyScrollWidth": 375,
+        "innerWidth": 375,
+        "bodyScrollHeight": 10786,
+        "innerHeight": 812,
+        "visibleText": "quran-json\nReader\n◐\nDocs\nSCRIPT\nUthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun\nFONT\nAuto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic\nTRANSLATION\n1 selected\n▾\nTRANSLITERATION\nOff\nRECITATION\nChoose…\n▾\nARABIC SIZE\nA−\nA+\nRead the Quran\n\n114 chapters · Uthmani · Amiri, chosen for this script\n\nFind a chapter \n1\nAl-Faatiha\nالفاتحة\nThe Opening\n·\n7 verses\nMECCAN\n2\nAl-Baqara\nالبقرة\nThe Cow\n·\n286 verses\nMEDINAN\n3\nAal-i-Imraan\nآل عمران\nThe Family of Imraan\n·\n200 verses\nMEDINAN\n4\nAn-Nisaa\nالنساء\nThe Women\n·\n176 verses\nMEDINAN\n5\nAl-Maaida\nالمائدة\nThe Table\n·\n120 verses\nMEDINAN\n6\nAl-An'aam\nالأنعام\nThe Cattle\n·\n165 verses\nMECCAN\n7\nAl-A'raaf\nالأعراف\nThe Heights\n·\n206 verses\nMECCAN\n8\nAl-Anfaal\nالأنفال\nThe Spoils of War\n·\n75 verses\nMEDINAN\n9\nAt-Tawba\nالتوبة\nThe Repentance\n·\n129 verses\nMEDINAN\n10\nYunus\nيونس\nJonas\n·\n109 verses\nMECCAN\n11\nHud\nهود\nHud\n·\n123 verses\nMECCAN\n12\nYusuf\nيوسف\nJoseph\n·\n111 verses\nMECCAN\n13\nAr-Ra'd\nالرعد\nThe Thunder\n·\n43 verses\nMEDINAN\n14\nIbrahim\nابراهيم\nAbraham\n·\n52 verses\nMECCAN\n15\nAl-Hijr\nالحجر\nThe Rock\n·\n99 verses\nMECCAN\n16\nAn-Nahl\nالنحل\nThe Bee\n·\n128 verses\nMECCAN\n17\nAl-Israa\nالإسراء\nThe Night Jo",
+        "controls": [
+          {
+            "tag": "A",
+            "role": null,
+            "text": "quran-json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "◐",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Docs",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Uthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Auto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "1 selected\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Off",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Choose…\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A−",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A+",
+            "tabIndex": 0
+          },
+          {
+            "tag": "INPUT",
+            "role": null,
+            "text": "Find a chapter by number, name or meaning…",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "1\nAl-Faatiha\nالفاتحة\nThe Opening\n·\n7 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "2\nAl-Baqara\nالبقرة\nThe Cow\n·\n286 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "3\nAal-i-Imraan\nآل عمران\nThe Family of Imraan\n·\n200 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "4\nAn-Nisaa\nالنساء\nThe Women\n·\n176 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "5\nAl-Maaida\nالمائدة\nThe Table\n·\n120 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "6\nAl-An'aam\nالأنعام\nThe Cattle\n·\n165 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "7\nAl-A'raaf\nالأعراف\nThe Heights\n·\n206 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "8\nAl-Anfaal\nالأنفال\nThe Spoils of War\n·\n75 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "9\nAt-Tawba\nالتوبة\nThe Repentance\n·\n129 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "10\nYunus\nيونس\nJonas\n·\n109 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "11\nHud\nهود\nHud\n·\n123 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "12\nYusuf\nيوسف\nJoseph\n·\n111 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "13\nAr-Ra'd\nالرعد\nThe Thunder\n·\n43 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "14\nIbrahim\nابراهيم\nAbraham\n·\n52 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "15\nAl-Hijr\nالحجر\nThe Rock\n·\n99 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "16\nAn-Nahl\nالنحل\nThe Bee\n·\n128 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "17\nAl-Israa\nالإسراء\nThe Night Journey\n·\n111 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "18\nAl-Kahf\nالكهف\nThe Cave\n·\n110 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "19\nMaryam\nمريم\nMary\n·\n98 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "20\nTaa-Haa\nطه\nTaa-Haa\n·\n135 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "21\nAl-Anbiyaa\nالأنبياء\nThe Prophets\n·\n112 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "22\nAl-Hajj\nالحج\nThe Pilgrimage\n·\n78 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "23\nAl-Muminoon\nالمؤمنون\nThe Believers\n·\n118 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "24\nAn-Noor\nالنور\nThe Light\n·\n64 verses\nMEDINAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "25\nAl-Furqaan\nالفرقان\nThe Criterion\n·\n77 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "26\nAsh-Shu'araa\nالشعراء\nThe Poets\n·\n227 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "27\nAn-Naml\nالنمل\nThe Ant\n·\n93 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "28\nAl-Qasas\nالقصص\nThe Stories\n·\n88 verses\nMECCAN",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "29\nAl-Ankaboot\nالعنكبوت\nThe Spider\n·\n69 verses\nMECCAN",
+            "tabIndex": 0
+          }
+        ]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/base.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/api.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/audio.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/store.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/ui.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/manifest.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/chapters.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/translations/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/transliteration/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/fonts.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/",
+          "contentType": "text/html",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/base.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/api.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/audio.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/store.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/ui.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/chapters.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/translations/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/transliteration/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/manifest.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/fonts.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        }
+      ],
+      "axe": {
+        "url": "https://quran-json.risanb.com/app/",
+        "passes": 41,
+        "incomplete": 1,
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": [
+                  "a[href$=\"#/1\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/2\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/3\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/4\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/5\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/6\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/7\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/8\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/9\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/10\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">10</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/10\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/11\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">11</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/11\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/12\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">12</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/12\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/13\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">13</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/13\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/14\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">14</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/14\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/15\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">15</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/15\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/16\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">16</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/16\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/17\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">17</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/17\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/18\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">18</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/18\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/19\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">19</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/19\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/20\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">20</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/20\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/21\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">21</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/21\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/22\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">22</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/22\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/23\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">23</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/23\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/24\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">24</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/24\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/25\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">25</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/25\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/26\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">26</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/26\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/27\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">27</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/27\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/28\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">28</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/28\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/29\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">29</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/29\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/30\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">30</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/30\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/31\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">31</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/31\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/32\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">32</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/32\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/33\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">33</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/33\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/34\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">34</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/34\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/35\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">35</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/35\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/36\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">36</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/36\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/37\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">37</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/37\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/38\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">38</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/38\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/39\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">39</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/39\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/40\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">40</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/40\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/41\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">41</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/41\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/42\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">42</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/42\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/43\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">43</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/43\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/44\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">44</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/44\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/45\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">45</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/45\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/46\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">46</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/46\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/47\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">47</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/47\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/48\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">48</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/48\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/49\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">49</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/49\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/50\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">50</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/50\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/51\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">51</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/51\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/52\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">52</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/52\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/53\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">53</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/53\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/54\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">54</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/54\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/55\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">55</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/55\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/56\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">56</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/56\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/57\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">57</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/57\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/58\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">58</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/58\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/59\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">59</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/59\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/60\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">60</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/60\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/61\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">61</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/61\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/62\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">62</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/62\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/63\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">63</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/63\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/64\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">64</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/64\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/65\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">65</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/65\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/66\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">66</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/66\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/67\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">67</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/67\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/68\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">68</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/68\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/69\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">69</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/69\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/70\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">70</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/70\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/71\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">71</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/71\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/72\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">72</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/72\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/73\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">73</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/73\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/74\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">74</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/74\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/75\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">75</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/75\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/76\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">76</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/76\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/77\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">77</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/77\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/78\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">78</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/78\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/79\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">79</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/79\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/80\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">80</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/80\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/81\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">81</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/81\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/82\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">82</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/82\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/83\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">83</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/83\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/84\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">84</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/84\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/85\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">85</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/85\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/86\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">86</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/86\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/87\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">87</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/87\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/88\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">88</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/88\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/89\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">89</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/89\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/90\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">90</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/90\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/91\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">91</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/91\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/92\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">92</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/92\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/93\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">93</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/93\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/94\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">94</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/94\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/95\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">95</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/95\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/96\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">96</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/96\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/97\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">97</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/97\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/98\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">98</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/98\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/99\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">99</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/99\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/100\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">100</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/100\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/101\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">101</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/101\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/102\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">102</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/102\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/103\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">103</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/103\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/104\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">104</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/104\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/105\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">105</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/105\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/106\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">106</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/106\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/107\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">107</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/107\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/108\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">108</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/108\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/109\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">109</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/109\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/110\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">110</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/110\"] > .surah-meta > .medinan.tag"
+                ],
+                "html": "<span class=\"tag medinan\">medinan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/111\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">111</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/111\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/112\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">112</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/112\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/113\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">113</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/113\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/114\"] > .surah-no"
+                ],
+                "html": "<span class=\"surah-no\">114</span>"
+              },
+              {
+                "target": [
+                  "a[href$=\"#/114\"] > .surah-meta > .meccan.tag"
+                ],
+                "html": "<span class=\"tag meccan\">meccan</span>"
+              }
+            ]
+          },
+          {
+            "id": "region",
+            "impact": "moderate",
+            "help": "All page content should be contained by landmarks",
+            "nodes": [
+              {
+                "target": [
+                  "label:nth-child(1)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  ".toolbar-inner > label:nth-child(2)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  ".field:nth-child(3) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Translation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(4) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Transliteration</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(5) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Recitation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(6) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Arabic size</span>"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "case": "reader-chapter-2",
+      "viewport": {
+        "name": "mobile",
+        "width": 375,
+        "height": 812
+      },
+      "elapsedMs": 8157,
+      "gotoError": null,
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence/reader-chapter-2-mobile.png",
+      "dom": {
+        "title": "2. Al-Baqara — quran-json",
+        "h1": [
+          "Al-Baqara\n            البقرة"
+        ],
+        "bodyScrollWidth": 375,
+        "innerWidth": 375,
+        "bodyScrollHeight": 166354,
+        "innerHeight": 812,
+        "visibleText": "quran-json\nReader\n◐\nDocs\nSCRIPT\nUthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun\nFONT\nAuto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic\nTRANSLATION\n1 selected\n▾\nTRANSLITERATION\nOff\nRECITATION\nChoose…\n▾\nARABIC SIZE\nA−\nA+\n\nSurah 2 of 114 · medinan\n\nAl-Baqara\nالبقرة\n\nThe Cow · 286 verses · English Translation - Rowwad Translation Center\n\n← 1\nAll chapters\n▶ Listen\n3 →\n1\n\nبِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ الٓمٓ\n\nAlif Lām Mīm[1].\n\nTranslator's note\nCopy\nLink\n2\n\nذَٰلِكَ ٱلْكِتَٰبُ لَا رَيْبَ فِيهِ هُدًى لِّلْمُتَّقِينَ\n\nThis is the Book about which there is no doubt, a guidance for the righteous[2],\n\nTranslator's note\nCopy\nLink\n3\n\nٱلَّذِينَ يُؤْمِنُونَ بِٱلْغَيْبِ وَيُقِيمُونَ ٱلصَّلَوٰةَ وَمِمَّا رَزَقْنَٰهُمْ يُنفِقُونَ\n\nthose who believe in the unseen, establish prayer[3], and spend out of what We[4] have provided for them,\n\nTranslator's note\nCopy\nLink\n4\n\nوَٱلَّذِينَ يُؤْمِنُونَ بِمَآ أُنزِلَ إِلَيْكَ وَمَآ أُنزِلَ مِن قَبْلِكَ وَبِٱلْـَٔاخِرَةِ هُمْ يُوقِنُونَ\n\nand those who believe in what has been sent down to you [O Prophet] and in what was sent down before you[5], and in the Hereafter they believ",
+        "controls": [
+          {
+            "tag": "A",
+            "role": null,
+            "text": "quran-json",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "◐",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "Docs",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Uthmani\nUthmani minimal\nImlaei\nImlaei plain\nImlaei minimal\nImlaei unvocalised\nMushaf Standar Indonesia\nIndo-Pak\nWarsh\nQalun",
+            "tabIndex": 0
+          },
+          {
+            "tag": "SELECT",
+            "role": null,
+            "text": "Auto (Amiri)\nAmiri\nScheherazade New\nNoto Naskh Arabic",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "1 selected\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Off",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Choose…\n▾",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A−",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "A+",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "← 1",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "All chapters",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "▶ Listen",
+            "tabIndex": 0
+          },
+          {
+            "tag": "A",
+            "role": null,
+            "text": "3 →",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "1",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "2",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "3",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "4",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "5",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "6",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "7",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "8",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Link",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "9",
+            "tabIndex": 0
+          },
+          {
+            "tag": "BUTTON",
+            "role": null,
+            "text": "Copy",
+            "tabIndex": 0
+          }
+        ]
+      },
+      "requests": [
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/base.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.css"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/app.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/api.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/audio.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/store.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/ui.js"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/manifest.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/chapters.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/translations/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/transliteration/index.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/app/fonts.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/text/uthmani/chapters/2.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/translations/en-rwwad/chapters/2.json"
+        },
+        {
+          "method": "GET",
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2"
+        }
+      ],
+      "responses": [
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/",
+          "contentType": "text/html",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/base.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.css",
+          "contentType": "text/css",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/app.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/store.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/api.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/audio.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/ui.js",
+          "contentType": "text/javascript",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/translations/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/transliteration/index.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/manifest.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/chapters.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/app/fonts.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=0, must-revalidate",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/text/uthmani/chapters/2.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/translations/en-rwwad/chapters/2.json",
+          "contentType": "application/json",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "zstd"
+        },
+        {
+          "status": 200,
+          "url": "https://quran-json.risanb.com/assets/fonts/amiri-regular.woff2",
+          "contentType": "font/woff2",
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": ""
+        }
+      ],
+      "axe": {
+        "url": "https://quran-json.risanb.com/app/#/2",
+        "passes": 43,
+        "incomplete": 1,
+        "violations": [
+          {
+            "id": "landmark-unique",
+            "impact": "moderate",
+            "help": "Landmarks should have a unique role or role/label/title (i.e. accessible name) combination",
+            "nodes": [
+              {
+                "target": [
+                  ".chapter-head > nav"
+                ],
+                "html": "<nav class=\"chapter-nav\">"
+              }
+            ]
+          },
+          {
+            "id": "region",
+            "impact": "moderate",
+            "help": "All page content should be contained by landmarks",
+            "nodes": [
+              {
+                "target": [
+                  "label:nth-child(1)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  "label:nth-child(2)"
+                ],
+                "html": "<label class=\"field\">"
+              },
+              {
+                "target": [
+                  ".field:nth-child(3) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Translation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(4) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Transliteration</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(5) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Recitation</span>"
+              },
+              {
+                "target": [
+                  ".field:nth-child(6) > .field-label"
+                ],
+                "html": "<span class=\"field-label\">Arabic size</span>"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "keyboard": {
+    "docs": {
+      "firstFocusable": [
+        {
+          "tag": "A",
+          "text": "quran-json",
+          "href": "/"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "◐",
+          "href": null
+        },
+        {
+          "tag": "A",
+          "text": "Open the reader",
+          "href": "/app/"
+        },
+        {
+          "tag": "A",
+          "text": "Open the reader",
+          "href": "/app/"
+        },
+        {
+          "tag": "A",
+          "text": "manifest.json",
+          "href": "/manifest.json"
+        },
+        {
+          "tag": "A",
+          "text": "chapters.json",
+          "href": "/chapters.json"
+        },
+        {
+          "tag": "BUTTON",
+          "text": "curl",
+          "href": null
+        },
+        {
+          "tag": "BUTTON",
+          "text": "copy",
+          "href": null
+        },
+        {
+          "tag": "BUTTON",
+          "text": "JavaScript",
+          "href": null
+        },
+        {
+          "tag": "BUTTON",
+          "text": "copy",
+          "href": null
+        },
+        {
+          "tag": "BUTTON",
+          "text": "copy",
+          "href": null
+        },
+        {
+          "tag": "BUTTON",
+          "text": "copy",
+          "href": null
+        }
+      ],
+      "tabAfterArrow": {
+        "focused": "js",
+        "selected": "curl",
+        "visible": [
+          "curl",
+          "js"
+        ]
+      }
+    },
+    "readerPicker": {
+      "opened": {
+        "hidden": false,
+        "expanded": "false",
+        "active": "translation-search",
+        "dialogLabel": "Choices"
+      },
+      "closed": {
+        "hidden": true,
+        "active": null,
+        "activeTag": "BODY"
+      }
+    }
+  }
+}

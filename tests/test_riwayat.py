@@ -15,6 +15,7 @@ from pathlib import Path
 from quranjson import config, jsonio
 
 CHAPTERS = 114
+MAGHRIBI_SCRIPTS = (config.WARSH_SCRIPT, config.QALUN_SCRIPT)
 VERSES = 6214
 
 #: Surahs where Nafiʿ's count differs from the Kufi count. Pinned because 50 is the figure
@@ -27,7 +28,7 @@ def _script(cdn_tree: Path, script: str) -> list[dict[str, object]]:
 
 
 def test_both_riwayat_are_published_whole(cdn_tree: Path) -> None:
-    for script in config.RIWAYAH_SCRIPTS:
+    for script in MAGHRIBI_SCRIPTS:
         chapters = _script(cdn_tree, script)
 
         assert len(chapters) == CHAPTERS, script
@@ -48,7 +49,7 @@ def test_the_riwayat_are_different_readings_not_relabelled_hafs(cdn_tree: Path) 
     """
     fingerprints: dict[str, collections.Counter[int]] = {}
 
-    for script in config.RIWAYAH_SCRIPTS:
+    for script in MAGHRIBI_SCRIPTS:
         counter: collections.Counter[int] = collections.Counter()
         for chapter in _script(cdn_tree, script):
             for verse in chapter["verses"]:
@@ -94,6 +95,11 @@ def test_the_verse_counts_differ_from_the_hafs_metadata(cdn_tree: Path) -> None:
     """
     hafs = jsonio.read_json(config.kemenag_path())
 
+    expected_differences = {
+        config.WARSH_SCRIPT: 50,
+        config.QALUN_SCRIPT: 50,
+        config.DURI_SCRIPT: 44,
+    }
     for script in config.RIWAYAH_SCRIPTS:
         chapters = _script(cdn_tree, script)
         differing = [
@@ -102,7 +108,7 @@ def test_the_verse_counts_differ_from_the_hafs_metadata(cdn_tree: Path) -> None:
             if len(chapter["verses"]) != len(hafs[str(chapter["id"])])
         ]
 
-        assert len(differing) == DIFFERING_SURAHS, script
+        assert len(differing) == expected_differences[script], script
         assert 2 in differing and 9 in differing
 
         note = next(
@@ -110,5 +116,32 @@ def test_the_verse_counts_differ_from_the_hafs_metadata(cdn_tree: Path) -> None:
             for entry in jsonio.read_json(cdn_tree / "manifest.json")["scripts"]
             if entry["id"] == script
         )
-        assert "6,214" in note
+        assert f"{config.SCRIPT_VERSES[script]:,}" in note
         assert "number_in_hafs" in note
+
+
+def test_duri_fatiha_preserves_the_non_surjective_source_map(cdn_tree: Path) -> None:
+    chapter = _script(cdn_tree, config.DURI_SCRIPT)[0]
+    assert [verse["number_in_hafs"] for verse in chapter["verses"]] == [
+        [2],
+        [3],
+        [4],
+        [5],
+        [6],
+        [7],
+        [7],
+    ]
+
+    descriptor = next(
+        entry
+        for entry in jsonio.read_json(cdn_tree / "manifest.json")["scripts"]
+        if entry["id"] == config.DURI_SCRIPT
+    )
+    assert descriptor["mapping_coverage_exceptions"] == [
+        {
+            "chapter": 1,
+            "missing_hafs": [1],
+            "repeated_hafs": [7],
+            "reason": "source bismillah is unnumbered; retain source map without inventing Hafs 1",
+        }
+    ]

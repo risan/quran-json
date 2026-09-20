@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/risan/quran-json/main/schemas/translation-catalogue.schema.json",
+  "title": "quran-json translation catalogue",
+  "description": "The discovery index at /translations/index.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["count", "editions", "withheld"],
+  "properties": {
+    "count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "editions": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/edition"
+      }
+    },
+    "withheld": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/withheld"
+      }
+    }
+  },
+  "$defs": {
+    "edition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "edition",
+        "language",
+        "code",
+        "direction",
+        "author",
+        "source",
+        "license",
+        "version",
+        "chapters",
+        "files"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "pattern": "^/translations/[a-z0-9-]+/$"
+        },
+        "edition": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:_[a-z0-9-]+)+$"
+        },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "code": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "direction": {
+          "enum": ["ltr", "rtl"]
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "type": "string",
+          "format": "uri",
+          "minLength": 1
+        },
+        "license": {
+          "$ref": "#/$defs/license"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "chapters": {
+          "const": 114
+        },
+        "files": {
+          "$ref": "#/$defs/files"
+        }
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["quran", "chapters"],
+      "properties": {
+        "quran": {
+          "type": "string",
+          "pattern": "^/translations/[a-z0-9-]+/quran\\.json$"
+        },
+        "chapters": {
+          "type": "string",
+          "pattern": "^/translations/[a-z0-9-]+/chapters/\\{1-114\\}\\.json$"
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "text", "url"],
+      "properties": {
+        "status": {
+          "enum": ["granted", "restricted", "unknown"]
+        },
+        "text": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "minLength": 1
+        }
+      }
+    },
+    "withheld": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edition", "author", "status", "license_url"],
+      "properties": {
+        "edition": {
+          "type": "string",
+          "minLength": 1
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": ["granted", "restricted", "unknown"]
+        },
+        "license_url": {
+          "type": "string",
+          "format": "uri",
+          "minLength": 1
+        },
+        "availability": {
+          "enum": ["published", "withheld"]
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

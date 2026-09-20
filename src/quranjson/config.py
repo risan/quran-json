@@ -55,13 +55,16 @@ KEMENAG_SCRIPT: Final = "kemenag"
 #: Arabic Extended-B marks).
 DIGITALKHATT_SCRIPT: Final = "indopak"
 
-#: Qur'anpedia.net's two Nafiʿ riwayat -- Warsh (the Maghrib: Morocco, Algeria, West
-#: Africa) and Qalun (Libya, Tunisia). Riwayat, not orthographies: their ayah numbering is
-#: Nafiʿ's, 6,214, so they are not interchangeable with the Hafs scripts and are not
-#: forced into a 6,236-slot array. See `quranjson.quranpedia`.
+#: Qur'anpedia.net's text identities. Warsh and Qalun are Nafiʿ riwayat. Al-Duri is a
+#: separate riwayah with its own source count. Hafs Nastaliq is a distinct digital Hafs
+#: edition and must not replace the existing Indo-Pak text or imply printed-edition
+#: compatibility. See `quranjson.quranpedia`.
 WARSH_SCRIPT: Final = "warsh"
 QALUN_SCRIPT: Final = "qalun"
-RIWAYAH_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT)
+DURI_SCRIPT: Final = "duri"
+HAFS_NASTALIQ_SCRIPT: Final = "hafs-nastaliq"
+RIWAYAH_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT, DURI_SCRIPT)
+QURANPEDIA_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT, HAFS_NASTALIQ_SCRIPT, DURI_SCRIPT)
 
 #: Order matters: it determines key order in `verses/*.json`.
 LANG_CODES: Final = (
@@ -237,6 +240,16 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
         "Qalun",
         "Qalun ʿan Nafiʿ (Libya, Tunisia), 6,214 ayahs to Nafiʿ's count",
     ),
+    HAFS_NASTALIQ_SCRIPT: (
+        "Hafs Nastaliq",
+        "Quranpedia mushaf 3: Hafs text in Nastaliq for parts of Asia; a distinct digital "
+        "edition explicitly described by Quranpedia as not matching the printed edition",
+    ),
+    DURI_SCRIPT: (
+        "al-Duri",
+        "Quranpedia mushaf 6: al-Duri ʿan Abi ʿAmr with its own 6,218-ayah source count and "
+        "per-ayah mapping to Hafs numbering",
+    ),
 }
 
 
@@ -253,6 +266,7 @@ SCRIPT_VERSE_IDS: Final[dict[str, str]] = {
     **dict.fromkeys(TANZIL_VARIANTS, "hafs"),
     KEMENAG_SCRIPT: "hafs",
     DIGITALKHATT_SCRIPT: "own",
+    HAFS_NASTALIQ_SCRIPT: "hafs",
     **dict.fromkeys(RIWAYAH_SCRIPTS, "mapped"),
 }
 
@@ -260,7 +274,65 @@ SCRIPT_VERSE_IDS: Final[dict[str, str]] = {
 #: segmentation of Al-Fatiha leaves the basmala unnumbered, so its verse 1 is Hafs 2 and its
 #: last two verses split Hafs 7: a Hafs-keyed translation cannot be aligned there by id, and
 #: the reader says so instead of pairing the wrong verses.
-SCRIPT_VERSE_ID_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {DIGITALKHATT_SCRIPT: (1,)}
+SCRIPT_VERSE_ID_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {
+    DIGITALKHATT_SCRIPT: (1,),
+}
+
+#: Chapters whose source-provided Hafs map is intentionally not a complete join. The
+#: al-Duri dump's Al-Fatiha maps its rows to Hafs 2..7 and repeats Hafs 7; the missing Hafs 1
+#: is a source numbering convention, not a value this project may invent.
+SCRIPT_MAPPING_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {DURI_SCRIPT: (1,)}
+
+#: Machine-readable source semantics for the non-surjective Duri Al-Fatiha map. The source
+#: dump includes the basmala as separate ``data.bismillah`` furniture, so Hafs 1 is absent
+#: from the numbered Duri rows and Hafs 7 is intentionally covered twice.
+SCRIPT_MAPPING_COVERAGE_EXCEPTIONS: Final[dict[str, tuple[dict[str, object], ...]]] = {
+    DURI_SCRIPT: (
+        {
+            "chapter": 1,
+            "missing_hafs": (1,),
+            "repeated_hafs": (7,),
+            "reason": "source bismillah is unnumbered; retain source map without inventing Hafs 1",
+        },
+    )
+}
+
+#: Reader-facing identity and audio safety. A mapped riwayah must never inherit Hafs
+#: per-ayah audio merely because some chapter happens to have the same native count.
+SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
+    WARSH_SCRIPT: {
+        "reading": {
+            "riwayah": "Warsh",
+            "qiraah": "Nafiʿ",
+            "verse_numbering": "mapped",
+        },
+        "audio": {"verse_numbering": "mapped", "per_ayah": False},
+    },
+    QALUN_SCRIPT: {
+        "reading": {
+            "riwayah": "Qalun",
+            "qiraah": "Nafiʿ",
+            "verse_numbering": "mapped",
+        },
+        "audio": {"verse_numbering": "mapped", "per_ayah": False},
+    },
+    DURI_SCRIPT: {
+        "reading": {
+            "riwayah": "al-Duri",
+            "qiraah": "Abu ʿAmr",
+            "verse_numbering": "mapped",
+        },
+        "audio": {"verse_numbering": "mapped", "per_ayah": False},
+    },
+    HAFS_NASTALIQ_SCRIPT: {
+        "reading": {
+            "riwayah": "Hafs",
+            "qiraah": "ʿAsim",
+            "verse_numbering": "hafs",
+        },
+        "audio": {"verse_numbering": "hafs", "per_ayah": True},
+    },
+}
 
 
 #: Qur'an Kemenag -- the LPMQ (Ministry of Religious Affairs) mushaf text, its 2019
@@ -344,7 +416,8 @@ DIGITALKHATT = License(
 QURANPEDIA = License(
     status="granted",
     text=(
-        "Qur'anpedia.net Data License (version 2026-09-18): 'Free to use inside apps, "
+        "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is "
+        "recorded per snapshot): 'Free to use inside apps, "
         "websites, bots, and research tools -- no attribution required ... Republishing "
         "this data -- in full or in part -- as a downloadable database or dataset "
         "requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating "
@@ -364,13 +437,13 @@ SCRIPT_IDS: Final = (
     *TANZIL_VARIANTS,
     KEMENAG_SCRIPT,
     DIGITALKHATT_SCRIPT,
-    *RIWAYAH_SCRIPTS,
+    *QURANPEDIA_SCRIPTS,
 )
 SCRIPT_LICENSES: Final[dict[str, License]] = {
     **dict.fromkeys(TANZIL_VARIANTS, TANZIL_TEXT),
     KEMENAG_SCRIPT: KEMENAG_TEXT,
     DIGITALKHATT_SCRIPT: DIGITALKHATT,
-    **dict.fromkeys(RIWAYAH_SCRIPTS, QURANPEDIA),
+    **dict.fromkeys(QURANPEDIA_SCRIPTS, QURANPEDIA),
 }
 
 #: Verses a script is expected to hold. The Hafs-count scripts all run to 6,236; Nafiʿ's
@@ -381,6 +454,8 @@ SCRIPT_VERSES: Final[dict[str, int]] = {
     **dict.fromkeys(SCRIPT_IDS, 6236),
     WARSH_SCRIPT: 6214,
     QALUN_SCRIPT: 6214,
+    HAFS_NASTALIQ_SCRIPT: 6236,
+    DURI_SCRIPT: 6218,
 }
 
 #: What a consumer must know before reading a script's bytes, published per script in
@@ -408,6 +483,16 @@ SCRIPT_NOTES: Final[dict[str, str]] = {
         "Qalun ʿan Nafiʿ, a different riwayah, not an orthography: 6,214 ayahs to Nafiʿ's "
         "count, of which 50 surahs differ in length from the Hafs count in /chapters.json. "
         "Each verse's `number_in_hafs` gives the Hafs ayah number or numbers it covers."
+    ),
+    HAFS_NASTALIQ_SCRIPT: (
+        "Hafs Nastaliq is Quranpedia mushaf 3, a separate digital text in Nastaliq. Its source "
+        "description says it does not match the printed edition; the label does not promise "
+        "byte compatibility with Indo-Pak, QuranWBW, or another Hafs product."
+    ),
+    DURI_SCRIPT: (
+        "al-Duri ʿan Abi ʿAmr is a different riwayah, not an orthography: the pinned "
+        "Quranpedia mushaf 6 contains 6,218 source ayahs. Forty-four chapters differ from "
+        "the Hafs count; each verse's `number_in_hafs` preserves the source mapping."
     ),
 }
 
@@ -521,10 +606,18 @@ class Edition:
     #: `/translations/en-pickthall/`. QuranEnc supplies this authoritatively in its
     #: catalogue; the extra editions declare it here.
     code: str = ""
+    #: Technical publication state. Rights may be granted while an upstream archive is still
+    #: incomplete; such an edition remains visible as withheld until its corpus is complete.
+    availability: Literal["published", "withheld"] = "published"
+    availability_reason: str = ""
 
     @property
     def redistributable(self) -> bool:
         return self.license.allows_publication
+
+    @property
+    def available(self) -> bool:
+        return self.availability == "published"
 
 
 #: The editions the frozen `dist/` tree was built from. Slugs are frozen too: changing one
@@ -638,6 +731,11 @@ def tanzil_chapters_path() -> Path:
 def quranenc_catalogue_path() -> Path:
     """Path to the committed QuranEnc translation catalogue."""
     return DATA / "quranenc" / "catalogue.json"
+
+
+def quranenc_supplemental_catalogue_path() -> Path:
+    """Path to manually reviewed QuranEnc editions omitted by the list endpoint."""
+    return DATA / "quranenc" / "supplemental.json"
 
 
 def quranenc_path(key: str) -> Path:

@@ -5,10 +5,11 @@ from __future__ import annotations
 import io
 import sqlite3
 import zipfile
+from pathlib import Path
 
 import pytest
 
-from quranjson import config, quranenc, tanzil
+from quranjson import config, quranenc, quranpedia, sources, tanzil
 from quranjson.clearquran import parse_verse_files
 from quranjson.jsonio import read_json
 from quranjson.sources import _chapter_list, _group_by_chapter, _summarise_change
@@ -260,6 +261,111 @@ def test_quranenc_translation_rejects_a_non_sqlite_archive() -> None:
 
     with pytest.raises(ValueError, match=r"no \.sqlite member"):
         quranenc.parse_translation(buffer.getvalue())
+
+
+def test_quranenc_supplemental_catalogue_is_explicit_and_fail_closed() -> None:
+    catalogue = read_json(config.quranenc_supplemental_catalogue_path())
+    quranenc.validate_catalogue(catalogue)
+
+    keys = {entry["key"] for entry in catalogue["translations"]}
+    assert keys == {
+        "bengali_zakaria",
+        "bengali_rwwad",
+        "malay_basumayyah",
+        "russian_rwwad",
+        "korean_hamid",
+        "korean_rwwad",
+        "italian_rwwad",
+        "ukrainian_yakubovych",
+    }
+    withheld = next(entry for entry in catalogue["translations"] if entry["key"] == "korean_rwwad")
+    assert withheld["availability"] == "withheld"
+    assert withheld["allow_empty"] is True
+
+    malformed = {"translations": [dict(withheld, availability="published")]}
+    with pytest.raises(ValueError, match="allowing empty"):
+        quranenc.validate_catalogue(malformed)
+
+
+def test_quranenc_catalogue_merge_rejects_cross_catalogue_collisions() -> None:
+    entry = {
+        "key": "same",
+        "lang": "en",
+        "direction": "ltr",
+        "version": "1",
+        "title": "Same",
+        "description": "same",
+        "database_url": "https://example.test/same.zip",
+    }
+    with pytest.raises(ValueError, match="more than once"):
+        quranenc.merged_catalogue([{"translations": [entry]}, {"translations": [entry]}])
+
+
+def test_quranenc_candidate_with_empty_rows_is_structurally_complete_but_not_strict() -> None:
+    snapshot = read_json(config.quranenc_path("korean_rwwad"))
+    counts = {
+        int(chapter["id"]): int(chapter["total_verses"])
+        for chapter in read_json(config.tanzil_chapters_path())["chapters"]
+    }
+
+    with pytest.raises(ValueError, match="empty text"):
+        quranenc.validate_translation(snapshot, chapter_counts=counts)
+    quranenc.validate_translation(snapshot, chapter_counts=counts, allow_empty=True)
+
+
+def test_quranpedia_hafs_nastaliq_requires_native_ids() -> None:
+    with pytest.raises(ValueError, match="not native"):
+        quranpedia._validate_mapping(
+            {"1": [{"verse": 1, "number_in_hafs": [1, 2]}]},
+            {1: 2},
+            script=config.HAFS_NASTALIQ_SCRIPT,
+        )
+
+
+def test_quranpedia_duri_coverage_exception_is_exact() -> None:
+    malformed = {
+        "1": [
+            *({"verse": verse, "number_in_hafs": [verse + 1]} for verse in range(1, 6)),
+            {"verse": 6, "number_in_hafs": [6]},
+            {"verse": 7, "number_in_hafs": [7]},
+        ]
+    }
+    with pytest.raises(ValueError, match="unexpected Hafs overlap"):
+        quranpedia._validate_mapping(malformed, {1: 7}, script=config.DURI_SCRIPT)
+
+
+def test_pinned_source_hash_fails_before_snapshot_replacement(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    # Point the registry root at pytest's disposable directory so a broken guard can never
+    # overwrite a committed source while this negative fixture is running.
+    target_root = tmp_path
+    monkeypatch.setattr(config, "ROOT", target_root)
+    target = target_root / "data" / "quranpedia" / "duri.json"
+    target.parent.mkdir(parents=True)
+    target.write_bytes(b"{}")
+    before = target.read_bytes()
+    task = sources.FetchTask(
+        path=target,
+        url="https://example.test/mushaf.json.gz",
+        source="fixture",
+        license=config.QURANPEDIA,
+        parse=lambda raw: raw,
+        source_sha256="0" * 64,
+    )
+
+    class FakeFetcher:
+        def get_bytes(self, url: str, *, headers: dict[str, str] | None = None) -> bytes:
+            return b"changed upstream artifact"
+
+        def close(self) -> None:
+            pass
+
+    monkeypatch.setattr(sources, "tasks", lambda **kwargs: [task])
+    with pytest.raises(ValueError, match="source archive hash mismatch"):
+        sources.fetch_all(force=True, fetcher=FakeFetcher())
+
+    assert target.read_bytes() == before
 
 
 # --- ClearQuran (Talal Itani) -------------------------------------------------

@@ -86,11 +86,17 @@ class Sources:
         self.text = read_json(config.tanzil_text_path("uthmani"))
 
         chapters = read_json(config.tanzil_chapters_path())["chapters"]
-        catalogue = read_json(config.quranenc_catalogue_path())["translations"]
+        from .quranenc import load_catalogues, merged_catalogue
+
+        catalogue = merged_catalogue(load_catalogues())["translations"]
 
         self.chapters = {None: chapters}
 
-        for key in (entry["key"] for entry in catalogue):
+        for key in (
+            entry["key"]
+            for entry in catalogue
+            if entry.get("availability", "published") == "published"
+        ):
             # Chapter names come from Tanzil and are identical across editions, so each
             # edition reuses the same list.
             self.chapters[key] = chapters

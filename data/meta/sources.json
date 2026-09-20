@@ -374,6 +374,21 @@
     "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
+    "path": "data/quranenc/supplemental.json",
+    "url": "https://quranenc.com/en/home/api",
+    "source": "quranenc.com manually reviewed supplemental catalogue",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "661f430243a68f7ae4af56a5050b79faaf17463a3d988e29cb3791f5bf726d38",
+    "bytes": 5677,
+    "revision": "",
+    "source_metadata": {
+      "manual_registration": true,
+      "catalogue_endpoint": "https://quranenc.com/api/v1/translations/list"
+    }
+  },
+  {
     "path": "data/extra/english_itani.json",
     "url": "https://www.clearquran.com/downloads/quran-verse-by-verse-text.zip",
     "source": "https://www.clearquran.com/downloads/quran-verse-by-verse-text.zip",
@@ -470,7 +485,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d5b599f24bc48b9759e9737afb1cb84aebc68070aa618e3afdf553857b1c7763",
     "bytes": 1337992,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "english_rwwad",
+      "language": "en",
+      "direction": "ltr",
+      "title": "English Translation - Rowwad Translation Center",
+      "version": "1.0.19",
+      "browse_url": "https://quranenc.com/en/browse/english_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/english_saheeh.json",
@@ -481,7 +506,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "c12b5bed64837cb744e075fdd3b79f885aee1522d92468f36c38ff565bfdc439",
     "bytes": 1317330,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "english_saheeh",
+      "language": "en",
+      "direction": "ltr",
+      "title": "English Translation - Noor International Center",
+      "version": "1.1.2",
+      "browse_url": "https://quranenc.com/en/browse/english_saheeh/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/english_hilali_khan.json",
@@ -492,7 +527,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ec5c98ca82f3bd65995b0702c7a00ab1f6689d34056f9d157eb4750545170515",
     "bytes": 1782630,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "english_hilali_khan",
+      "language": "en",
+      "direction": "ltr",
+      "title": "English Translation - Hilali and Khan",
+      "version": "1.1.2",
+      "browse_url": "https://quranenc.com/en/browse/english_hilali_khan/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/french_rashid.json",
@@ -503,7 +548,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "1f02ad33e5a6b959fe4133a95017c343633d2b2dd82e5411837ce174246d4778",
     "bytes": 1424575,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "french_rashid",
+      "language": "fr",
+      "direction": "ltr",
+      "title": "French Translation - Rachid Maach",
+      "version": "1.0.3",
+      "browse_url": "https://quranenc.com/en/browse/french_rashid/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/french_montada.json",
@@ -514,7 +569,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ce010ea175f02d592dc76e8c066b58e5d600061c86999c00d1da9d2fcea675ad",
     "bytes": 1325634,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "french_montada",
+      "language": "fr",
+      "direction": "ltr",
+      "title": "French translation - Noor International Center",
+      "version": "1.0.0",
+      "browse_url": "https://quranenc.com/en/browse/french_montada/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/spanish_garcia.json",
@@ -525,7 +590,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "29a5896209b2d8e5ec04b42f3fda559a55b085bcd0402c66872c53398ba3b9ea",
     "bytes": 1383560,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "spanish_garcia",
+      "language": "es",
+      "direction": "ltr",
+      "title": "Spanish Translation - Isa Garcia",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/spanish_garcia/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/spanish_montada_eu.json",
@@ -536,7 +611,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "34dea6ef3c1f8e5a5da694d8009bd22a5596be26b6f75ff350ad07eb3e181c87",
     "bytes": 1592364,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "spanish_montada_eu",
+      "language": "es",
+      "direction": "ltr",
+      "title": "Spanish Translation - Noor International Center",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/spanish_montada_eu/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/spanish_montada_latin.json",
@@ -547,7 +632,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8192983af4d381ffc5d7d854aa5f10cb8aa0c29edcf4417dab1a2c3e29eb4b52",
     "bytes": 1614987,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "spanish_montada_latin",
+      "language": "es",
+      "direction": "ltr",
+      "title": "Spanish Translation (Latin American) - issued by Noor International",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/spanish_montada_latin/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/portuguese_nasr.json",
@@ -558,7 +653,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d1791cc14a64a703f3a537f75440cd0cd4f5ffd875577e0fc8dcd982e275e9d3",
     "bytes": 1384943,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "portuguese_nasr",
+      "language": "pt",
+      "direction": "ltr",
+      "title": "Portuguese Translation - Helmi Nasr",
+      "version": "1.4.1",
+      "browse_url": "https://quranenc.com/en/browse/portuguese_nasr/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/german_rwwad.json",
@@ -569,7 +674,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "b67353a2e936cffdd62095a5a91d1d566b30ae1c7c605ec74ab7a10a33be4464",
     "bytes": 1220713,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "german_rwwad",
+      "language": "de",
+      "direction": "ltr",
+      "title": "German Translation - Rowwad Translation Center",
+      "version": "1.0.15",
+      "browse_url": "https://quranenc.com/en/browse/german_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/german_bubenheim.json",
@@ -580,7 +695,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "84e47c93b693d61cfdfaf107e6a0f4e53373ae2c303802f7016165de250dccee",
     "bytes": 1163618,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "german_bubenheim",
+      "language": "de",
+      "direction": "ltr",
+      "title": "German Translation - Frank Bubenheim",
+      "version": "1.1.4",
+      "browse_url": "https://quranenc.com/en/browse/german_bubenheim/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/romanian_project.json",
@@ -591,7 +716,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "e806647f92a16e1c662f5553220a20784a43d38f6e5f27b43ab738fe829a19b0",
     "bytes": 1300333,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "romanian_project",
+      "language": "ro",
+      "direction": "ltr",
+      "title": "Romanian Translation - Islam4ro.com",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/romanian_project/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/dutch_center.json",
@@ -602,7 +737,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "312c580d2edf99b157d04d7d723fc867b2844cd3dfb7f3eea5c0b3b897343aa7",
     "bytes": 1263346,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "dutch_center",
+      "language": "nl",
+      "direction": "ltr",
+      "title": "Dutch Translation - Rowwad Translation Center",
+      "version": "2.0.10",
+      "browse_url": "https://quranenc.com/en/browse/dutch_center/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/swedish_rwwad.json",
@@ -613,7 +758,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "026bdbdd26ead591c6832f8d1b5d92a2acee327721700346c63826b7404df08a",
     "bytes": 1073084,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "swedish_rwwad",
+      "language": "sv",
+      "direction": "ltr",
+      "title": "Swedish Translation - Rowad Translation",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/swedish_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/turkish_rwwad.json",
@@ -624,7 +779,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a12c7e334500160b3234fc4129e32498faabe2c0d6f1e91a04f71cfcd72d2ab2",
     "bytes": 1101265,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "turkish_rwwad",
+      "language": "tr",
+      "direction": "ltr",
+      "title": "Turkish Translation - Rowwad Translation Center",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/turkish_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/turkish_shaban.json",
@@ -635,7 +800,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8ba50b4394e6d2f69f91d6a0aa9f35da805752dabe9ae12987f17ad5cca86295",
     "bytes": 1042238,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "turkish_shaban",
+      "language": "tr",
+      "direction": "ltr",
+      "title": "Turkish Translation - Shaaban British",
+      "version": "1.1.0",
+      "browse_url": "https://quranenc.com/en/browse/turkish_shaban/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/turkish_shahin.json",
@@ -646,7 +821,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "681d48b91b93c122e383ecc7d05c80555bdd63a0487a2bb081866ea5a10dd70a",
     "bytes": 1134396,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "turkish_shahin",
+      "language": "tr",
+      "direction": "ltr",
+      "title": "Turkish Translation - Dr. Ali Ozek and others",
+      "version": "1.0.0",
+      "browse_url": "https://quranenc.com/en/browse/turkish_shahin/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/azeri_musayev.json",
@@ -657,7 +842,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8b6cfd8d22ce719b582b3efb652fe4df85f90baa9e6635779641b438d82a7eeb",
     "bytes": 1196510,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "azeri_musayev",
+      "language": "az",
+      "direction": "ltr",
+      "title": "Azerbaijani Translation - Ali Khan Musayev",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/azeri_musayev/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/macedonian_group.json",
@@ -668,7 +863,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "6cc4acd8bedb873c4b322989469e98072b3b50e61a449cd416771d51283ead38",
     "bytes": 1730180,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "macedonian_group",
+      "language": "mk",
+      "direction": "ltr",
+      "title": "Macedonian Translation - a group of Macedonian scholars",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/macedonian_group/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/albanian_rwwad.json",
@@ -679,7 +884,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9aeb4c96b9c41e1f85936d0020f2f65973abf6c366d8bd56d5bd5023926c4874",
     "bytes": 1120210,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "albanian_rwwad",
+      "language": "sq",
+      "direction": "ltr",
+      "title": "Albanian Translation - Rowwad Translation Center",
+      "version": "1.0.5",
+      "browse_url": "https://quranenc.com/en/browse/albanian_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/albanian_nahi.json",
@@ -690,7 +905,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "edec15720e4fdae9e4a330f7b0e61e1bd007378547ab974bb9a8bc4102e2b735",
     "bytes": 1238809,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "albanian_nahi",
+      "language": "sq",
+      "direction": "ltr",
+      "title": "Albanian Translation - Hassan Nahi",
+      "version": "1.1.0",
+      "browse_url": "https://quranenc.com/en/browse/albanian_nahi/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/bosnian_rwwad.json",
@@ -701,7 +926,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a379ccf6ef8fe3458cfe2c6fa12dcc931e604901cc0431a4b9dc2422d88f4248",
     "bytes": 999367,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "bosnian_rwwad",
+      "language": "bs",
+      "direction": "ltr",
+      "title": "Bosnian Translation - Rowwad Translation Centre",
+      "version": "2.0.4",
+      "browse_url": "https://quranenc.com/en/browse/bosnian_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/bosnian_mihanovich.json",
@@ -712,7 +947,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "78c70bfb5427543a02b2131bf1b9397a3fc7bd43a7cb6d6f614509b44c6ec838",
     "bytes": 986618,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "bosnian_mihanovich",
+      "language": "bs",
+      "direction": "ltr",
+      "title": "Bosnian Translation - Muhammad Mahanovic",
+      "version": "1.1.0",
+      "browse_url": "https://quranenc.com/en/browse/bosnian_mihanovich/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/serbian_rwwad.json",
@@ -723,7 +968,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "05d251bbb20d7f4ba50a6be3da9714510529ebc830caba736c064c29f724bec6",
     "bytes": 1530903,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "serbian_rwwad",
+      "language": "sr",
+      "direction": "ltr",
+      "title": "Serbian Translation - Rowwad Translation Center",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/serbian_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/croatian_rwwad.json",
@@ -734,7 +989,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "cf8403e576537fc453dbe2aa8eccfc4a1f53e1f99e44bb50654d2a73b760043b",
     "bytes": 994035,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "croatian_rwwad",
+      "language": "hr",
+      "direction": "ltr",
+      "title": "Croatian Translation - Rowwad Translation Center",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/croatian_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/lithuanian_rwwad.json",
@@ -745,7 +1010,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "26157a508ec4570fa517f889dbd4e27eb240ec0328c36345edffd971bd880611",
     "bytes": 1405014,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "lithuanian_rwwad",
+      "language": "lt",
+      "direction": "ltr",
+      "title": "Lithuanian Translation - Rowwad Translation Center",
+      "version": "1.0.8",
+      "browse_url": "https://quranenc.com/en/browse/lithuanian_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/uzbek_rwwad.json",
@@ -756,7 +1031,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f3215e5a75066a246013563a75164d59e3a91de13fc7f867fc4433a4c90b4bbb",
     "bytes": 1665087,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "uzbek_rwwad",
+      "language": "uz",
+      "direction": "ltr",
+      "title": "Uzbek Translation - Rowwad Translation Center",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/uzbek_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/uzbek_mansour.json",
@@ -767,7 +1052,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "acdbe3490aacb1a4f9febc7778a16bf2b5925c2ca70306d0ec19d088577d11cb",
     "bytes": 2763149,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "uzbek_mansour",
+      "language": "uz",
+      "direction": "ltr",
+      "title": "Uzbek Translation - Alaauddin Mansour",
+      "version": "1.0.0",
+      "browse_url": "https://quranenc.com/en/browse/uzbek_mansour/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/tajik_arifi.json",
@@ -778,7 +1073,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "11329e74aea3ba4768b569d4c4daaeeb91c1681ba3dac97c8299c25c7dfe5470",
     "bytes": 1995478,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "tajik_arifi",
+      "language": "tg",
+      "direction": "ltr",
+      "title": "Tajiki Translation - Rowwad Translation Center",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/tajik_arifi/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/kyrgyz_hakimov.json",
@@ -789,7 +1094,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "1dee95fc0add04fb924ce5c974e303a4c08533fa49753097ff0e3dc8bbd2c1c9",
     "bytes": 2603619,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "kyrgyz_hakimov",
+      "language": "ky",
+      "direction": "ltr",
+      "title": "Kyrgyz Translation - Shamsuddin Hakimov",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/kyrgyz_hakimov/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/indonesian_sabiq.json",
@@ -800,7 +1115,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "20b2414625991dd95b8a6922e23f4186da48dda4a7940cffec38b863b4a72e9e",
     "bytes": 1497326,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "indonesian_sabiq",
+      "language": "id",
+      "direction": "ltr",
+      "title": "Indonesian Translation - Sabiq Company",
+      "version": "1.1.3",
+      "browse_url": "https://quranenc.com/en/browse/indonesian_sabiq/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/indonesian_affairs.json",
@@ -811,7 +1136,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "5990a1522965daef7fd721d21e4f9c3d7ac77404060cf1343a8fedc07cc72406",
     "bytes": 1465306,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "indonesian_affairs",
+      "language": "id",
+      "direction": "ltr",
+      "title": "Indonesian Translation - Ministry of Religious Affairs",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/indonesian_affairs/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/indonesian_complex.json",
@@ -822,7 +1157,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "10e943dc82ed31757165f97f3590897b51913a9d7eeaf4ec1e6af96667f3321b",
     "bytes": 1639666,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "indonesian_complex",
+      "language": "id",
+      "direction": "ltr",
+      "title": "Indonesian Translation - The Complex",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/indonesian_complex/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/tagalog_rwwad.json",
@@ -833,7 +1178,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "aa4f270b81a6496dbfee473ab4d00f9d09750bdb0531ac68e393eea3f47c0168",
     "bytes": 1344443,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "tagalog_rwwad",
+      "language": "tl",
+      "direction": "ltr",
+      "title": "Filipino Translation (Tagalog) - Rowwad Translation Center",
+      "version": "1.1.4",
+      "browse_url": "https://quranenc.com/en/browse/tagalog_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/bisayan_rwwad.json",
@@ -844,7 +1199,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "954cb0cfb90ec015f3e8048e2f09f8d52d99576f718e59c870b583d005224243",
     "bytes": 1466823,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "bisayan_rwwad",
+      "language": "ceb",
+      "direction": "ltr",
+      "title": "Filipino Translation (Bisayan) - Rowwad Translation Center",
+      "version": "1.1.3",
+      "browse_url": "https://quranenc.com/en/browse/bisayan_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/maguindanao_rwwad.json",
@@ -855,7 +1220,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d0f7e5eba82475315f29b949cfe9accdf6ac55f799d67d75edc354c7296a79de",
     "bytes": 1194845,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "maguindanao_rwwad",
+      "language": "mdh",
+      "direction": "ltr",
+      "title": "Filipino Translation (Maguindanaon) - Rowwad Translation Center",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/maguindanao_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/chinese_suliman.json",
@@ -866,7 +1241,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "220752d594795547d950200cc48c896324f2177e0aeed9a46736718e8e4cca29",
     "bytes": 967561,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "chinese_suliman",
+      "language": "zh",
+      "direction": "ltr",
+      "title": "Chinese Translation - Muhammad Suleiman",
+      "version": "1.0.8",
+      "browse_url": "https://quranenc.com/en/browse/chinese_suliman/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/chinese_makin.json",
@@ -877,7 +1262,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d784005446da9f1887be6d3999e1fa87dcf47fcc05cbb1841f9095d4bd53559b",
     "bytes": 958986,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "chinese_makin",
+      "language": "zh",
+      "direction": "ltr",
+      "title": "Chinese Translation - Muhammad Makeen",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/chinese_makin/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/uyghur_saleh.json",
@@ -888,7 +1283,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "3e3c33fe3bc0dc7d4fb68d5a082c6ae1e52042373d1b2237c4225e1afef9fb80",
     "bytes": 2334447,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "uyghur_saleh",
+      "language": "ug",
+      "direction": "rtl",
+      "title": "Uyghur Translation - Muhammad Saleh",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/uyghur_saleh/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/japanese_saeedsato.json",
@@ -899,7 +1304,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "6ceeff9bc3125e480dc3b05c41cf7755f1ba54674b7f341f55074cfe0b963b93",
     "bytes": 2856316,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "japanese_saeedsato",
+      "language": "ja",
+      "direction": "ltr",
+      "title": "Japanese Translation - Saeed Sato",
+      "version": "1.0.13",
+      "browse_url": "https://quranenc.com/en/browse/japanese_saeedsato/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/vietnamese_rwwad.json",
@@ -910,7 +1325,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d9142fc4f0ba0845d8cc4733cbc2a7513e9b3a77a217457a8a21ce7f7f463747",
     "bytes": 1773176,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "vietnamese_rwwad",
+      "language": "vi",
+      "direction": "ltr",
+      "title": "Vietnamese Translation - Rowwad Translation Center",
+      "version": "1.0.8",
+      "browse_url": "https://quranenc.com/en/browse/vietnamese_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/thai_rwwad.json",
@@ -921,7 +1346,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9557d3166aba98848f6ed63a82369dfa66945af83c1d0a37592e803c0be0c3b2",
     "bytes": 2989527,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "thai_rwwad",
+      "language": "th",
+      "direction": "ltr",
+      "title": "Thai Translation - Rowwad Translation Center",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/thai_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/khmer_rwwad.json",
@@ -932,7 +1367,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "40fc687c26ee9a1ba9c22c8fd6bb9e3445a1c092ce772fc0c5163ce7fb6a4bd1",
     "bytes": 3491264,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "khmer_rwwad",
+      "language": "km",
+      "direction": "ltr",
+      "title": "Khmer Translation - Rowwad Translation Center",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/khmer_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/khmer_cambodia.json",
@@ -943,7 +1388,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "fe9da44597ed1eb45a42ea043c17c429b543f463165624a9176fada9d4eafe05",
     "bytes": 3223909,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "khmer_cambodia",
+      "language": "km",
+      "direction": "ltr",
+      "title": "Khmer Translation - Islamic Community Development Association",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/khmer_cambodia/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/persian_ih.json",
@@ -954,7 +1409,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "5b21933679d53d34d49e2abc2ce5baf0ce70b0f8deb3e4a02a03f5ba853078c3",
     "bytes": 1791606,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "persian_ih",
+      "language": "fa",
+      "direction": "rtl",
+      "title": "Persian Translation - Rowwad Translation Center",
+      "version": "1.1.3",
+      "browse_url": "https://quranenc.com/en/browse/persian_ih/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/kurdish_bamoki.json",
@@ -965,7 +1430,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "96a8636fce34a718b37e07e68447c0dcf134f637085ecdb4b9a7ee306c060704",
     "bytes": 1864637,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "kurdish_bamoki",
+      "language": "ku",
+      "direction": "rtl",
+      "title": "Kurdish Translation - Muhammad Salih Bamoki",
+      "version": "1.1.1",
+      "browse_url": "https://quranenc.com/en/browse/kurdish_bamoki/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/pashto_rwwad.json",
@@ -976,7 +1451,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "2a329924bc034b7cfd40d93055e0a75813bcd15e4665e7a7f53cdde2a191ca39",
     "bytes": 1564684,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "pashto_rwwad",
+      "language": "ps",
+      "direction": "rtl",
+      "title": "Pashto Translation - Rowwad Translation Center",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/pashto_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/urdu_junagarhi.json",
@@ -987,7 +1472,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "2741c0001abbe8a588bb70698383a7d7599af105f4e85a6013265978a2ee307d",
     "bytes": 6090816,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "urdu_junagarhi",
+      "language": "ur",
+      "direction": "rtl",
+      "title": "Urdu Translation - Muhammad Junagarhi",
+      "version": "1.1.3",
+      "browse_url": "https://quranenc.com/en/browse/urdu_junagarhi/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/hindi_omari.json",
@@ -998,7 +1493,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ce5463c940e83f6a8e3cefa4d49fac2e30f8aecc1e9805ab7d8daebfe25a0a1a",
     "bytes": 3417003,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "hindi_omari",
+      "language": "hi",
+      "direction": "ltr",
+      "title": "Hindi Translation - Azizul Haq Al-Omari",
+      "version": "1.1.5",
+      "browse_url": "https://quranenc.com/en/browse/hindi_omari/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/telugu_muhammad.json",
@@ -1009,7 +1514,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "0318306db89c11c4b4280abc666b2630688f3c0880c9c2e0e90309019f5fa109",
     "bytes": 4100815,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "telugu_muhammad",
+      "language": "te",
+      "direction": "ltr",
+      "title": "Telugu Translation - Abdurrahim ibn Muhammad",
+      "version": "1.0.7",
+      "browse_url": "https://quranenc.com/en/browse/telugu_muhammad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/gujarati_omari.json",
@@ -1020,7 +1535,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f5ffcf684c3a0ef970a2a80af0a844a3e34f38290b66bbf48e04f0fab7bc27ca",
     "bytes": 2506554,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "gujarati_omari",
+      "language": "gu",
+      "direction": "ltr",
+      "title": "Gujarati Translation - Rabella Al-Omari",
+      "version": "1.1.3",
+      "browse_url": "https://quranenc.com/en/browse/gujarati_omari/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/malayalam_kunhi.json",
@@ -1031,7 +1556,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "11b656f1fa0e8831062da0c0dd366a78e5eed9cd284074b56ca8f295a368f76a",
     "bytes": 4384787,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "malayalam_kunhi",
+      "language": "ml",
+      "direction": "ltr",
+      "title": "Malayalam Translation - Abdul Hamid Haidar and Kunhi Muhammad",
+      "version": "1.0.3",
+      "browse_url": "https://quranenc.com/en/browse/malayalam_kunhi/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/kannada_hamza.json",
@@ -1042,7 +1577,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9b90673c6bd58de81311244cb8af0492819fe596bb31c567812ba6366f95b2f5",
     "bytes": 3089967,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "kannada_hamza",
+      "language": "kn",
+      "direction": "ltr",
+      "title": "Kannada Translation - Hamza Butur",
+      "version": "1.0.3",
+      "browse_url": "https://quranenc.com/en/browse/kannada_hamza/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/assamese_rafeeq.json",
@@ -1053,7 +1598,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a1d10870efff6ed9f69e60657ce130c0547250c4a21423ba94353ca43ce077c2",
     "bytes": 2667134,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "assamese_rafeeq",
+      "language": "as",
+      "direction": "ltr",
+      "title": "Assamese Translation - Rafiqul Islam Habibur-Rahman",
+      "version": "1.0.5",
+      "browse_url": "https://quranenc.com/en/browse/assamese_rafeeq/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/punjabi_arif.json",
@@ -1064,7 +1619,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ca4a98de5d363087015065bc47dd8b4998636b5628c44de6a4ae062e7e2fc7fe",
     "bytes": 3095903,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "punjabi_arif",
+      "language": "pa",
+      "direction": "ltr",
+      "title": "Punjabi Translation - Arif Haleem",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/punjabi_arif/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/tamil_omar_brief.json",
@@ -1075,7 +1640,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "d46e624a53eb85dc33af06a04063853895054056c58b1a32b9d381acc50010d1",
     "bytes": 3353688,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "tamil_omar_brief",
+      "language": "ta",
+      "direction": "ltr",
+      "title": "Tamil Translation - Omar Sharif - Abridged Version",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/tamil_omar_brief/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/tamil_omar.json",
@@ -1086,7 +1661,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f7d2cb8289203036c726b4460e2f9d9b8512f9052146d0f17e85d3a85067c577",
     "bytes": 3714782,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "tamil_omar",
+      "language": "ta",
+      "direction": "ltr",
+      "title": "Tamil Translation - Omar Sharif",
+      "version": "1.0.3",
+      "browse_url": "https://quranenc.com/en/browse/tamil_omar/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/tamil_baqavi.json",
@@ -1097,7 +1682,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "7eeefbca9ff7b9c9854ede055583e1506ae68e7fd2d2032db5970f9ec5fd6b45",
     "bytes": 3875602,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "tamil_baqavi",
+      "language": "ta",
+      "direction": "ltr",
+      "title": "Tamil Translation - Abdulhamid Baqawi",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/tamil_baqavi/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/sinhalese_mahir.json",
@@ -1108,7 +1703,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "c93c0efbc78a1fa425f1090b9133c19e5706b92a87ccaad4cfca945279c23017",
     "bytes": 2619016,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "sinhalese_mahir",
+      "language": "si",
+      "direction": "ltr",
+      "title": "Sinhalese Translation - Rowwad Translation Center",
+      "version": "1.0.6",
+      "browse_url": "https://quranenc.com/en/browse/sinhalese_mahir/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/swahili_rwwad.json",
@@ -1119,7 +1724,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "f506e9f4f0ddb539912075adf6997d266cb501d39073dd654f15af3af81b60c3",
     "bytes": 1024983,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "swahili_rwwad",
+      "language": "sw",
+      "direction": "ltr",
+      "title": "Swahili Translation - Rowad Translation Center",
+      "version": "1.0.5",
+      "browse_url": "https://quranenc.com/en/browse/swahili_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/swahili_barawani.json",
@@ -1130,7 +1745,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "7c2b426183ba6339f04a3cc7602c9913fa97b33f29520314b2a95a08d6f95d1e",
     "bytes": 2743965,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "swahili_barawani",
+      "language": "sw",
+      "direction": "ltr",
+      "title": "Swahili Translation - Ali Mohsin Al-Barwani",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/swahili_barawani/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/somali_yacob.json",
@@ -1141,7 +1766,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "ef649f183635945a52bde77e56ec164359ffa0ba1da923f84516063b631170fc",
     "bytes": 1320380,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "somali_yacob",
+      "language": "so",
+      "direction": "ltr",
+      "title": "Somali Translation - Abdullah Hasan Yaqoub",
+      "version": "1.0.26",
+      "browse_url": "https://quranenc.com/en/browse/somali_yacob/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/amharic_zain.json",
@@ -1152,7 +1787,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "dabfe5f6663dd6c7febf3429bc1449b381be20971441f926ac8d8384bf67f18f",
     "bytes": 1626148,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "amharic_zain",
+      "language": "am",
+      "direction": "ltr",
+      "title": "Amharic Translation - Africa Academy",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/amharic_zain/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/amharic_sadiq.json",
@@ -1163,7 +1808,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "a6997681f253a19dd4d1aff33d14a1d69c84c586a9d5747efffc9cd1d89b30c0",
     "bytes": 1532289,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "amharic_sadiq",
+      "language": "am",
+      "direction": "ltr",
+      "title": "Amharic Translation - Muhammad Sadiq",
+      "version": "1.1.2",
+      "browse_url": "https://quranenc.com/en/browse/amharic_sadiq/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/yoruba_mikail.json",
@@ -1174,7 +1829,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "6021045bde9b300282d5b33ec4abd7e9b8e6889123a2f561438188cadfec6e1f",
     "bytes": 1932414,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "yoruba_mikail",
+      "language": "yo",
+      "direction": "ltr",
+      "title": "Yoruba Translation - Abu Rahimah Mikael",
+      "version": "1.0.9",
+      "browse_url": "https://quranenc.com/en/browse/yoruba_mikail/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/hausa_gummi.json",
@@ -1185,7 +1850,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "58e5a1a8792e4da8d2266748df835db82fbc79d2ff99bd7ef847744705a58bf1",
     "bytes": 1444862,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "hausa_gummi",
+      "language": "ha",
+      "direction": "ltr",
+      "title": "Hausa Translation - Abu Bakr Jumi",
+      "version": "1.2.2",
+      "browse_url": "https://quranenc.com/en/browse/hausa_gummi/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/oromo_ababor.json",
@@ -1196,7 +1871,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "31e166682c2617d74844a4f34cb6a911e16d8b47d49c351c6d29904d7eb68322",
     "bytes": 1112189,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "oromo_ababor",
+      "language": "om",
+      "direction": "ltr",
+      "title": "Oromo Translation - Gali Ababor",
+      "version": "1.0.3",
+      "browse_url": "https://quranenc.com/en/browse/oromo_ababor/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/afar_hamza.json",
@@ -1207,7 +1892,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "9ca4dc35bb5b4f2f7420fc9ea66ce3a1ae294e3a3ffa4e61db5bb79fce3be9b6",
     "bytes": 1395885,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "afar_hamza",
+      "language": "aa",
+      "direction": "ltr",
+      "title": "Afar Translation - Mahmoud Abdulqader Hamza",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/afar_hamza/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/ankobambara_dayyan.json",
@@ -1218,7 +1913,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "96a880b3095e032866059892c79564da7f404d67a7eeddffb74fbc4c16af22df",
     "bytes": 1801566,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "ankobambara_dayyan",
+      "language": "nqo",
+      "direction": "rtl",
+      "title": "N'ko Translation - Baba Mamadi",
+      "version": "1.0.5",
+      "browse_url": "https://quranenc.com/en/browse/ankobambara_dayyan/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/kinyarwanda_assoc.json",
@@ -1229,7 +1934,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "267abf6aa99feab90356682fe8e21a26614914e52383908fcfcd731014b62bfa",
     "bytes": 1211050,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "kinyarwanda_assoc",
+      "language": "rw",
+      "direction": "ltr",
+      "title": "Kinyarwanda Translation - Rwanda Muslim Association",
+      "version": "1.0.5",
+      "browse_url": "https://quranenc.com/en/browse/kinyarwanda_assoc/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/ikirundi_gehiti.json",
@@ -1240,7 +1955,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8abf4f678a66abde4852534b574196ce1a067944e55c0eb2472e60a58a439fa2",
     "bytes": 1851953,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "ikirundi_gehiti",
+      "language": "rn",
+      "direction": "ltr",
+      "title": "Kirundi Translation - Yusuf Gahiti",
+      "version": "1.0.4",
+      "browse_url": "https://quranenc.com/en/browse/ikirundi_gehiti/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/moore_rwwad.json",
@@ -1251,7 +1976,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "135c518f6bcff8cb27193f32156786b28a8fdf869489a57df553e5b556f44cc3",
     "bytes": 1113202,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "moore_rwwad",
+      "language": "mos",
+      "direction": "ltr",
+      "title": "Moore Translation - Rowwad Translation Center",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/moore_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/asante_harun.json",
@@ -1262,7 +1997,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "8511f1e8aa5b82733e660fbb989e7f6325d913961d2efef9883d521b55c94881",
     "bytes": 1174118,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "asante_harun",
+      "language": "ak",
+      "direction": "ltr",
+      "title": "Akan Translation (Asante) - Harun Ismail",
+      "version": "1.0.3",
+      "browse_url": "https://quranenc.com/en/browse/asante_harun/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/fulani_rwwad.json",
@@ -1273,7 +2018,17 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "da57dac461adbc0e8674d1ba71f8f4edc82559bfdedc1e5895b61734e7e820bb",
     "bytes": 1005146,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "fulani_rwwad",
+      "language": "ff",
+      "direction": "ltr",
+      "title": "Fulani Translation - Rowwad Translation Center",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/fulani_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
   },
   {
     "path": "data/quranenc/lingala_zakaria.json",
@@ -1284,7 +2039,212 @@
     "license_url": "https://quranenc.com/en/home/api",
     "sha256": "27dfa05c203a026cd6906e67bc93eefd87adfa19aa268cfbcc72aa25d04759cb",
     "bytes": 1114164,
-    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
+    "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77",
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "lingala_zakaria",
+      "language": "ln",
+      "direction": "ltr",
+      "title": "Lingala Translation - Mohammed Balangogo",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/lingala_zakaria/",
+      "terms_url": "https://quranenc.com/en/home/api"
+    }
+  },
+  {
+    "path": "data/quranenc/bengali_zakaria.json",
+    "url": "https://quranenc.com/downloads/sqlite/bengali_zakaria.zip",
+    "source": "quranenc.com/bengali_zakaria v1.1.1",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "dc09d6ed6fbcc943d25599b55685b3d536618accfff9f0ef731895a837d10936",
+    "bytes": 13812651,
+    "revision": "",
+    "source_sha256": "3fa5450da0fd89de6988763035eecc86b9bb3f38216539f2517d9f089fe5bd8e",
+    "source_bytes": 4178560,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "bengali_zakaria",
+      "language": "bn",
+      "direction": "ltr",
+      "title": "Bengali Translation - Abu Bakr Zakaria",
+      "version": "1.1.1",
+      "browse_url": "https://quranenc.com/en/browse/bengali_zakaria/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true
+    }
+  },
+  {
+    "path": "data/quranenc/bengali_rwwad.json",
+    "url": "https://quranenc.com/downloads/sqlite/bengali_rwwad.zip",
+    "source": "quranenc.com/bengali_rwwad v1.1.2",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "feb05d172633f96f4ba2783b91c9d03771e7c0399e2c6a6f12fa6213b6f9c5a1",
+    "bytes": 3122948,
+    "revision": "",
+    "source_sha256": "0e5ad67ff327c50a0014351436fff85e344247d38c4b447a3a2ae9f7c235ae5b",
+    "source_bytes": 976160,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "bengali_rwwad",
+      "language": "bn",
+      "direction": "ltr",
+      "title": "Bengali Translation - Rowwad Translation Center",
+      "version": "1.1.2",
+      "browse_url": "https://quranenc.com/en/browse/bengali_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true
+    }
+  },
+  {
+    "path": "data/quranenc/malay_basumayyah.json",
+    "url": "https://quranenc.com/downloads/sqlite/malay_basumayyah.zip",
+    "source": "quranenc.com/malay_basumayyah v1.0.0",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "4047ad429f79bbce93a2ee684c12143179f69c7a419f563d8634bc33fc11721e",
+    "bytes": 1678014,
+    "revision": "",
+    "source_sha256": "b35aacd919a5a21ac96059d587ee47edb8e18afc79334d3fb97dc8e197c4ff63",
+    "source_bytes": 599711,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "malay_basumayyah",
+      "language": "ms",
+      "direction": "ltr",
+      "title": "Malay Translation - Abdullah Basumayyah",
+      "version": "1.0.0",
+      "browse_url": "https://quranenc.com/en/browse/malay_basumayyah/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true
+    }
+  },
+  {
+    "path": "data/quranenc/russian_rwwad.json",
+    "url": "https://quranenc.com/downloads/sqlite/russian_rwwad.zip",
+    "source": "quranenc.com/russian_rwwad v1.0.1",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "0e8aaf248e2b60d1efc7662aa1369452d0c372832cd609fddcc01208cdc2795d",
+    "bytes": 1669067,
+    "revision": "",
+    "source_sha256": "210c2049df6fb20c44fc980c3ae0b52856794722d050b5e9cdbcf9b8cf4d9123",
+    "source_bytes": 576373,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "russian_rwwad",
+      "language": "ru",
+      "direction": "ltr",
+      "title": "Russian Translation - Rowwad Translation Center",
+      "version": "1.0.1",
+      "browse_url": "https://quranenc.com/en/browse/russian_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true
+    }
+  },
+  {
+    "path": "data/quranenc/korean_hamid.json",
+    "url": "https://quranenc.com/downloads/sqlite/korean_hamid.zip",
+    "source": "quranenc.com/korean_hamid v1.0.3",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "576e6e27d3c69a6666d1d0bed2c2c256a7524d975024318bcf22b44309dcfa99",
+    "bytes": 1261336,
+    "revision": "",
+    "source_sha256": "138e9899d4e03aeebe7d1943682babb0ed9ecf425b9c24f669b6a40627990752",
+    "source_bytes": 477502,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "korean_hamid",
+      "language": "ko",
+      "direction": "ltr",
+      "title": "Korean Translation - Hamid Choi",
+      "version": "1.0.3",
+      "browse_url": "https://quranenc.com/en/browse/korean_hamid/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true
+    }
+  },
+  {
+    "path": "data/quranenc/korean_rwwad.json",
+    "url": "https://quranenc.com/downloads/sqlite/korean_rwwad.zip",
+    "source": "quranenc.com/korean_rwwad v1.0.11",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "d80053f734bb4671e8184a4ab4334593a093049df6c2408cc635d0cbf32b939a",
+    "bytes": 1077710,
+    "revision": "",
+    "source_sha256": "7f4447a96e36903e0b02b8ec15915ca8238c8ce871cc9ef6acbe83fded5d15ab",
+    "source_bytes": 370647,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "korean_rwwad",
+      "language": "ko",
+      "direction": "ltr",
+      "title": "Korean Translation - Rowwad Translation Center",
+      "version": "1.0.11",
+      "browse_url": "https://quranenc.com/en/browse/korean_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true,
+      "availability": "withheld",
+      "availability_reason": "Official v1.0.11 archive has 1,955 empty translation rows in surahs 14-35; retained for review, not published as a complete translation.",
+      "allow_empty": true
+    }
+  },
+  {
+    "path": "data/quranenc/italian_rwwad.json",
+    "url": "https://quranenc.com/downloads/sqlite/italian_rwwad.zip",
+    "source": "quranenc.com/italian_rwwad v1.0.2",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "e5a15e78dc9836d08ef41cf89ac04915ae65e19dfb97e660b404748a86e32089",
+    "bytes": 1032409,
+    "revision": "",
+    "source_sha256": "80defdf474dba341957f563e217ef60b1fa1b529213f263c02c2224792b9cc26",
+    "source_bytes": 418384,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "italian_rwwad",
+      "language": "it",
+      "direction": "ltr",
+      "title": "Italian Translation - Rowwad Translation Center",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/italian_rwwad/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true
+    }
+  },
+  {
+    "path": "data/quranenc/ukrainian_yakubovych.json",
+    "url": "https://quranenc.com/downloads/sqlite/ukrainian_yakubovych.zip",
+    "source": "quranenc.com/ukrainian_yakubovych v1.0.2",
+    "license": "QuranEnc.com permits download and re-publication of translation contents on 7 conditions: no modification/addition/deletion; credit the publisher and QuranEnc.com; state the version number; keep the transcript information; report notes back; keep up to date with the latest version; no inappropriate advertising.",
+    "license_status": "granted",
+    "license_url": "https://quranenc.com/en/home/api",
+    "sha256": "6b93070dd26e75193cd469d6264a48c53bef79c6ed7e750f90836f2489b74922",
+    "bytes": 1635679,
+    "revision": "",
+    "source_sha256": "7f5dc69ca86a80761ccf9123be47334bd67dad7c13e3fd0fb38c10dc8ae35b54",
+    "source_bytes": 578129,
+    "source_metadata": {
+      "provider": "quranenc",
+      "key": "ukrainian_yakubovych",
+      "language": "uk",
+      "direction": "ltr",
+      "title": "Ukrainian Translation - Mikhailo Yakubovych",
+      "version": "1.0.2",
+      "browse_url": "https://quranenc.com/en/browse/ukrainian_yakubovych/",
+      "terms_url": "https://quranenc.com/en/home/api",
+      "manual_registration": true
+    }
   },
   {
     "path": "data/kemenag/quran.json",
@@ -1318,28 +2278,94 @@
     "license_url": "https://raw.githubusercontent.com/DigitalKhatt/digitalkhatt-js/HEAD/LICENSE",
     "sha256": "cd4901ed2b9d47038379a3b0e81e767988663ee6d4516a9832eb98335927b85d",
     "bytes": 1796408,
-    "revision": ""
+    "revision": "6377022b7774887e1fbc3d47f9078846c3ee3c02"
   },
   {
     "path": "data/quranpedia/warsh.json",
     "url": "https://api.quranpedia.net/dumps/mushafs-4.json.gz",
     "source": "quranpedia.net dumps/mushafs-4 (warsh, Warsh)",
-    "license": "Qur'anpedia.net Data License (version 2026-09-18): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
+    "license": "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is recorded per snapshot): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
     "license_status": "granted",
     "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
     "sha256": "f9d98e5089add2626479936ca48b8904508f208a5350855aa00ee8aa7b2b61aa",
     "bytes": 2101026,
-    "revision": ""
+    "revision": "6377022b7774887e1fbc3d47f9078846c3ee3c02",
+    "source_metadata": {
+      "provider": "quranpedia",
+      "mushaf_id": 4,
+      "name": "Warsh",
+      "dump_version": "2026-09-18",
+      "built_at": null,
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "description": null,
+      "bismillah": null
+    }
   },
   {
     "path": "data/quranpedia/qalun.json",
     "url": "https://api.quranpedia.net/dumps/mushafs-7.json.gz",
     "source": "quranpedia.net dumps/mushafs-7 (qalun, Qalun)",
-    "license": "Qur'anpedia.net Data License (version 2026-09-18): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
+    "license": "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is recorded per snapshot): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
     "license_status": "granted",
     "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
     "sha256": "ece0a2b0efe44d496211c595d0a34f495413bc93f78fba8095a666e2048d1303",
     "bytes": 2096323,
-    "revision": ""
+    "revision": "6377022b7774887e1fbc3d47f9078846c3ee3c02",
+    "source_metadata": {
+      "provider": "quranpedia",
+      "mushaf_id": 7,
+      "name": "Qalun",
+      "dump_version": "2026-09-18",
+      "built_at": null,
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "description": null,
+      "bismillah": null
+    }
+  },
+  {
+    "path": "data/quranpedia/hafs-nastaliq.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-3.json.gz",
+    "source": "quranpedia.net dumps/mushafs-3 (hafs-nastaliq, Hafs Nastaliq)",
+    "license": "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is recorded per snapshot): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
+    "license_status": "granted",
+    "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+    "sha256": "7276ed5158d314d4f323545e24ff2912d411a3ac4e3c6bdc6ae3ffcf2c3a3c67",
+    "bytes": 2064534,
+    "revision": "",
+    "source_sha256": "fbec857dd613946604fd4c004d7322778ecf1c058c46080e30702e9bf9959b02",
+    "source_bytes": 395980,
+    "source_metadata": {
+      "provider": "quranpedia",
+      "mushaf_id": 3,
+      "name": "مصحف حفص نستعليق",
+      "dump_version": "2026-09-20",
+      "built_at": "2026-09-20T03:46:39+00:00",
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "description": "مصحف حفص نستعليق — not matching the printed edition",
+      "bismillah": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ ؀"
+    }
+  },
+  {
+    "path": "data/quranpedia/duri.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-6.json.gz",
+    "source": "quranpedia.net dumps/mushafs-6 (duri, al-Duri)",
+    "license": "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is recorded per snapshot): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
+    "license_status": "granted",
+    "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+    "sha256": "d4734c7176dd666530c066e638d602669be6ac016b3da699fff599cb746a89ac",
+    "bytes": 2098819,
+    "revision": "",
+    "source_sha256": "f6024036b0040afea6af7973abd78b883ab2a0837ae72f6360b69e597c53999a",
+    "source_bytes": 421957,
+    "source_metadata": {
+      "provider": "quranpedia",
+      "mushaf_id": 6,
+      "name": "مصحف الدوري",
+      "dump_version": "2026-09-20",
+      "built_at": "2026-09-20T03:46:42+00:00",
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "description": "مصحف الدوري — al-Duri from Abu Amr, own source numbering",
+      "bismillah": "بِسۡمِ اِ۬للَّهِ اِ۬لرَّحۡمَٰنِ اِ۬لرَّحِيمِ "
+    }
   }
 ]

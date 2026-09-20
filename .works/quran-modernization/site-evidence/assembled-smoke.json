@@ -1,0 +1,121 @@
+{
+  "capturedAt": "2026-09-20T07:51:37.392Z",
+  "base": "http://127.0.0.1:8777",
+  "browser": "Playwright 1.63.0 / Chromium 153.0.8010.12",
+  "captures": [
+    {
+      "name": "assembled-docs-desktop",
+      "path": "/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence//assembled-docs-desktop.png",
+      "title": "quran-json — Quran data, clearly published",
+      "h1": [
+        "Read the text. Use the data."
+      ],
+      "bodyScrollWidth": 1440,
+      "innerWidth": 1440
+    },
+    {
+      "name": "assembled-docs-mobile",
+      "path": "/",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence//assembled-docs-mobile.png",
+      "title": "quran-json — Quran data, clearly published",
+      "h1": [
+        "Read the text. Use the data."
+      ],
+      "bodyScrollWidth": 375,
+      "innerWidth": 375
+    },
+    {
+      "name": "assembled-reader-home-desktop",
+      "path": "/app/",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence//assembled-reader-home-desktop.png",
+      "title": "quran-json — read the Quran",
+      "h1": [
+        "Read the Quran"
+      ],
+      "bodyScrollWidth": 1440,
+      "innerWidth": 1440
+    },
+    {
+      "name": "assembled-reader-home-mobile",
+      "path": "/app/",
+      "viewport": {
+        "width": 375,
+        "height": 812
+      },
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence//assembled-reader-home-mobile.png",
+      "title": "quran-json — read the Quran",
+      "h1": [
+        "Read the Quran"
+      ],
+      "bodyScrollWidth": 375,
+      "innerWidth": 375
+    },
+    {
+      "name": "assembled-reader-dark",
+      "path": "/app/#/2?t=en-rwwad",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence//assembled-reader-dark.png",
+      "title": "2. Al-Baqara — quran-json",
+      "h1": [
+        "\n            Al-Baqara\n            البقرة\n          "
+      ],
+      "bodyScrollWidth": 1440,
+      "innerWidth": 1440
+    },
+    {
+      "name": "assembled-reader-rtl",
+      "path": "/app/#/2?t=nqo-dayyan",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "screenshot": "/home/risan/projects/code/quran-json/.works/quran-modernization/site-evidence//assembled-reader-rtl.png",
+      "title": "2. Al-Baqara — quran-json",
+      "h1": [
+        "\n            Al-Baqara\n            البقرة\n          "
+      ],
+      "bodyScrollWidth": 1440,
+      "innerWidth": 1440
+    }
+  ],
+  "navigation": [
+    {
+      "text": "Start here",
+      "href": "#quickstart"
+    },
+    {
+      "text": "Endpoints",
+      "href": "#endpoints"
+    },
+    {
+      "text": "Catalogues",
+      "href": "#catalogues"
+    },
+    {
+      "text": "Licensing",
+      "href": "#licensing"
+    }
+  ],
+  "noJs": {
+    "h1": "Read the text. Use the data.",
+    "readerLinks": 3,
+    "primaryNavLinks": 4
+  },
+  "readerRegressionCommand": "READER_BASE_URL=http://127.0.0.1:8776 node tests/reader/browser-regressions.mjs"
+}

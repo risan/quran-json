@@ -1,0 +1,241 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/risan/quran-json/main/schemas/manifest.schema.json",
+  "title": "quran-json CDN manifest",
+  "description": "The top-level discovery document emitted by quran-json cdn.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "chapters",
+    "scripts",
+    "translations",
+    "transliteration",
+    "audio",
+    "license",
+    "attribution"
+  ],
+  "properties": {
+    "chapters": {
+      "$ref": "#/$defs/chaptersPointer"
+    },
+    "scripts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/script"
+      }
+    },
+    "translations": {
+      "$ref": "#/$defs/translationPointer"
+    },
+    "transliteration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "index"],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "index": {
+          "const": "/transliteration/index.json"
+        }
+      }
+    },
+    "audio": {
+      "type": ["string", "null"],
+      "pattern": "^/audio/reciters\\.json$"
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["project", "text"],
+      "properties": {
+        "project": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "$ref": "#/$defs/license"
+        }
+      }
+    },
+    "attribution": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "$defs": {
+    "chaptersPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "path"],
+      "properties": {
+        "count": {
+          "const": 114
+        },
+        "path": {
+          "const": "/chapters.json"
+        }
+      }
+    },
+    "translationPointer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["count", "languages", "index"],
+      "properties": {
+        "count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "languages": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "index": {
+          "const": "/translations/index.json"
+        }
+      }
+    },
+    "script": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "name",
+        "description",
+        "verses",
+        "verse_ids",
+        "path",
+        "chapters"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verses": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "verse_ids": {
+          "enum": ["hafs", "mapped", "own"]
+        },
+        "path": {
+          "type": "string",
+          "pattern": "^/text/[a-z0-9-]+/quran\\.json$"
+        },
+        "chapters": {
+          "type": "string",
+          "pattern": "^/text/[a-z0-9-]+/chapters/\\{1-114\\}\\.json$"
+        },
+        "note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "verse_ids_differ_in": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 114
+          },
+          "uniqueItems": true
+        },
+        "native_chapter_counts": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^(?:[1-9]|[1-9][0-9]|1[0-1][0-9]|114)$"
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "mapping_coverage_exceptions": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["chapter", "missing_hafs", "repeated_hafs", "reason"],
+            "properties": {
+              "chapter": {"type": "integer", "minimum": 1, "maximum": 114},
+              "missing_hafs": {
+                "type": "array",
+                "items": {"type": "integer", "minimum": 1},
+                "uniqueItems": true
+              },
+              "repeated_hafs": {
+                "type": "array",
+                "items": {"type": "integer", "minimum": 1},
+                "uniqueItems": true
+              },
+              "reason": {"type": "string", "minLength": 1}
+            }
+          }
+        },
+        "reading": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["riwayah", "qiraah", "verse_numbering"],
+          "properties": {
+            "riwayah": {"type": "string", "minLength": 1},
+            "qiraah": {"type": "string", "minLength": 1},
+            "verse_numbering": {"enum": ["hafs", "mapped", "own"]}
+          }
+        },
+        "audio": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["verse_numbering", "per_ayah"],
+          "properties": {
+            "verse_numbering": {"enum": ["hafs", "mapped", "own"]},
+            "per_ayah": {"type": "boolean"}
+          }
+        },
+        "chapter_furniture": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["chapter", "position", "kind", "text", "numbered"],
+            "properties": {
+              "chapter": {"type": "integer", "minimum": 1, "maximum": 114},
+              "position": {"const": "before-verses"},
+              "kind": {"const": "bismillah"},
+              "text": {"type": "string", "minLength": 1},
+              "numbered": {"const": false}
+            }
+          }
+        }
+      }
+    },
+    "license": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source", "status", "url"],
+      "properties": {
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": ["granted", "restricted", "unknown"]
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

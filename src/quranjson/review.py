@@ -19,7 +19,7 @@ from . import config
 __all__ = ["REVIEWED", "SourceReview", "review_manifest"]
 
 #: When the review below was last carried out.
-REVIEWED = "2026-09-18"
+REVIEWED = "2026-09-20"
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,7 +62,12 @@ CANDIDATES: tuple[SourceReview, ...] = (
         kind="translation",
         status="granted",
         license_url="https://quranenc.com/en/home/api",
-        evidence="database_url field per catalogue entry; 75 translations, 56 languages.",
+        evidence=(
+            "database_url field per catalogue entry; 75 endpoint translations plus eight "
+            "manually reviewed supplemental archives. Seven supplemental editions are complete "
+            "and published; Korean Rowwad v1.0.11 remains withheld because 1,955 source rows "
+            "are empty."
+        ),
     ),
     SourceReview(
         name="Tanzil.net en.transliteration",
@@ -402,7 +407,10 @@ CANDIDATES: tuple[SourceReview, ...] = (
         ),
     ),
     SourceReview(
-        name="Qur'anpedia.net dumps -- Warsh and Qalun (mushafs 4 and 7)",
+        name=(
+            "Qur'anpedia.net dumps -- Warsh, Qalun, Hafs Nastaliq and al-Duri "
+            "(mushafs 4, 7, 3 and 6)"
+        ),
         kind="text",
         status="granted",
         license_url="https://api.quranpedia.net/dumps/LICENSE.md",
@@ -412,10 +420,13 @@ CANDIDATES: tuple[SourceReview, ...] = (
             "database or dataset requires: (1) crediting Qur'anpedia.net as the source with "
             "a link, and (2) stating this dump's version.' Both conditions are met: the "
             "attribution is in manifest.json, meta/sources.json and the README, and the "
-            "dump version (2026-09-18) travels in the provenance record. VERIFIED "
-            "2026-09-18: mushafs-4 (Warsh, 422,507 bytes) and mushafs-7 (Qalun, 418,528 "
-            "bytes) each parse to 114 surahs / 6,214 ayahs, Nafiʿ's count rather than the "
-            "Kufi 6,236, with per-verse `number_in_hafs` covering all 6,214. Both texts are "
+            "per-snapshot dump version travels in the provenance record. The existing "
+            "mushafs-4 and -7 snapshots are versioned 2026-09-18; the new mushaf-3 and -6 "
+            "archives are versioned 2026-09-20. All four parse to 114 surahs; Warsh/Qalun "
+            "have 6,214 rows, Hafs Nastaliq 6,236 and al-Duri 6,218, with the latter count "
+            "derived from its dump rather than conflicting catalogue metadata. Warsh and "
+            "Qalun use Nafiʿ's count rather than the Kufi 6,236, with per-verse "
+            "`number_in_hafs` covering their Hafs joins. The texts are "
             "genuinely the riwayah and not relabelled Hafs: Warsh carries U+06D2 yeh barree "
             "2,996x and U+06EC 10,055x with no U+0671 alef wasla, and Warsh and Qalun differ "
             "in 4,566 of 6,214 ayahs. The licence's currency clause ('distributing outdated "
@@ -674,7 +685,11 @@ def review_manifest() -> dict[str, Any]:
         ),
         "sources": [asdict(review) for review in CANDIDATES],
         "published": {
-            "quranenc": "all 75 catalogue editions (see data/quranenc/catalogue.json)",
+            "quranenc": (
+                "82 published editions: 75 endpoint editions plus 7 complete supplemental "
+                "archives; Korean Rowwad is registered but withheld for incomplete source rows "
+                "(see data/quranenc/{catalogue,supplemental}.json)"
+            ),
             "extra": [
                 {
                     "lang": edition.lang,
@@ -686,8 +701,9 @@ def review_manifest() -> dict[str, Any]:
             "text": (
                 "tanzil variants (CC-BY 3.0, verbatim), kemenag (the Indonesian mushaf "
                 "text, which its publishing regulation holds to be uncopyrightable), "
-                "indopak (DigitalKhatt, MIT), and warsh and qalun (Qur'anpedia.net, whose "
-                "licence requires crediting them and stating the dump version)"
+                "indopak (DigitalKhatt, MIT), and Warsh, Qalun, Hafs Nastaliq and al-Duri "
+                "(Qur'anpedia.net, whose licence requires crediting them and stating each "
+                "dump version)"
             ),
         },
     }

@@ -1,0 +1,52 @@
+---
+const title = "quran-json — read the Quran";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content="Read the Quran by chapter with published scripts, translations, and recitations." />
+    <meta name="theme-color" content="#0d7a63" />
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/assets/base.css" />
+    <link rel="stylesheet" href="/app/app.css" />
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem("quran-json:theme");
+        if (theme) document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+    <script type="module" src="/app/app.js"></script>
+  </head>
+  <body class="app">
+    <a class="visually-hidden" href="#view">Skip to reader</a>
+    <header class="topbar">
+      <a class="brand" href="/">quran-json</a>
+      <span class="crumb">Reader</span>
+      <div class="actions">
+        <button class="button icon" type="button" data-role="theme" aria-label="Switch colour theme">◐</button>
+        <a class="button ghost" href="/">Docs</a>
+      </div>
+    </header>
+    <div class="toolbar" id="toolbar"></div>
+    <p class="status" id="status" role="status" aria-live="polite" hidden></p>
+    <main id="view"><p class="loading">Loading the dataset…</p></main>
+    <div class="popover" id="popover" role="dialog" aria-label="Reader choices" aria-modal="true" hidden></div>
+    <audio id="audio" preload="none"></audio>
+    <div class="player" id="player" hidden></div>
+    <footer>
+      <p>
+        Text, translations and romanisations from <a href="/meta/sources.json">published sources</a>.
+        Recitations are linked from their hosts. <a href="/">How to use the data</a>.
+      </p>
+    </footer>
+    <noscript>
+      <p class="status" data-kind="error">
+        The reader needs JavaScript. The <a href="/">documentation</a> and every JSON endpoint work without it.
+      </p>
+    </noscript>
+  </body>
+</html>

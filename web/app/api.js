@@ -68,10 +68,7 @@ export function fillTemplate(template, host, { surah, ayah, global }) {
     .replaceAll("{ayah}", pad(ayahValue, host.ayah_pad ?? 0));
 }
 
-/** The recitation's riwayah, as far as the host names it: "Warsh", "Qalon", or Hafs. */
+/** Return a reciter's declared reading identity when a source provides one. */
 export function riwayahOf(reciter) {
-  const text = `${reciter.recitation ?? ""} ${reciter.name} ${reciter.id}`;
-  if (/warsh/i.test(text)) return "warsh";
-  if (/qal[ou]n/i.test(text)) return "qalun";
-  return "hafs";
+  return reciter?.reading?.riwayah ?? reciter?.riwayah ?? null;
 }

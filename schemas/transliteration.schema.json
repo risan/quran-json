@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/risan/quran-json/main/schemas/transliteration.schema.json",
+  "title": "quran-json transliteration layer",
+  "description": "A complete transliteration quran.json array. Arabic text is joined from /text/.",
+  "oneOf": [
+    {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/chapter"
+      }
+    },
+    {
+      "$ref": "#/$defs/chapter"
+    }
+  ],
+  "$defs": {
+    "chapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "verses"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 114
+        },
+        "verses": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/verse"
+          }
+        }
+      }
+    },
+    "verse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "transliteration"],
+      "properties": {
+        "id": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "transliteration": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

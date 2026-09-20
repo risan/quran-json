@@ -49,11 +49,9 @@ AYAH: dict[str, Any] = {
 
 
 @pytest.fixture(scope="module")
-def unverified_tree(tmp_path_factory: pytest.TempPathFactory) -> Path:
+def unverified_tree(cdn_override_tree: Path) -> Path:
     """The site as published under `--include-unverified-licenses`."""
-    out = tmp_path_factory.mktemp("cdn-unverified")
-    build_site(out, include_unverified_licenses=True)
-    return out
+    return cdn_override_tree
 
 
 def _payload(*ayahs: dict[str, Any]) -> bytes:

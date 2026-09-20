@@ -133,6 +133,7 @@ def font_coverage(
     scripts: Mapping[str, Sequence[str]],
     *,
     names: Sequence[str] = (),
+    furniture: Mapping[str, Sequence[str]] | None = None,
 ) -> dict[str, Any]:
     """Measure every bundled font against every published script.
 
@@ -140,6 +141,8 @@ def font_coverage(
         scripts: script id -> the text of its verses.
         names: chapter names, rendered in the same font as the scripture and so part of
             what a script's font has to cover.
+        furniture: optional script id -> unnumbered source furniture rendered with a script,
+            such as a source-provided bismillah before Duri chapter 1.
 
     Returns:
         The coverage report published as `/app/fonts.json`: per script, the font that
@@ -153,11 +156,12 @@ def font_coverage(
     bundled = fonts()
     cmaps = {font.id: _codepoints(ASSETS / "fonts" / font.file) for font in bundled}
     name_counts = _used(names)
+    furniture = furniture or {}
 
     report: dict[str, Any] = {}
 
     for script, texts in scripts.items():
-        counts = _used(texts) + name_counts
+        counts = _used(texts) + _used(furniture.get(script, ())) + name_counts
         missing: dict[str, dict[str, int]] = {}
 
         for font in bundled:

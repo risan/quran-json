@@ -265,6 +265,16 @@ main {
   padding: 0;
 }
 
+.chapter-furniture {
+  border-bottom: 1px solid var(--border);
+  color: var(--muted);
+  font-size: var(--arabic-size);
+  line-height: var(--arabic-leading);
+  margin: 1rem 0 0;
+  padding: 0.75rem 0;
+  text-align: right;
+}
+
 .verse {
   border-bottom: 1px solid var(--border);
   display: grid;
@@ -571,5 +581,207 @@ main {
 
   .verse {
     grid-template-columns: 2rem 1fr;
+  }
+}
+
+/* Reader refinements: one clear settings entry on small screens. */
+.toolbar-inner {
+  align-items: center;
+  overflow: visible;
+}
+
+.toolbar-primary,
+.toolbar-controls {
+  align-items: flex-end;
+  display: flex;
+  gap: 0.75rem;
+}
+
+.toolbar-primary {
+  flex: 0 0 auto;
+}
+
+.toolbar-controls {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.settings-trigger {
+  display: none;
+}
+
+.reader {
+  margin: 0 auto;
+  max-width: 53rem;
+}
+
+.reader .chapter-title {
+  max-width: 32rem;
+}
+
+.reader .verse-body {
+  min-width: 0;
+}
+
+.translation-block {
+  border-left: 2px solid var(--border);
+  margin: 0.8rem 0 0.75rem;
+  padding-left: 0.75rem;
+}
+
+.translation-label {
+  color: var(--muted);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  margin: 0 0 0.15rem;
+  text-transform: uppercase;
+}
+
+.translation-block .translation {
+  margin-bottom: 0;
+}
+
+.popover {
+  max-height: min(78vh, 42rem);
+}
+
+.popover-title {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+
+.popover-title h2 {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.popover-title .popover-hint {
+  padding: 0;
+}
+
+.popover-search {
+  flex: 1 1 12rem;
+}
+
+.popover-search input {
+  width: 100%;
+}
+
+.settings-grid {
+  display: grid;
+  gap: 0.85rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: 0.9rem;
+}
+
+.settings-sheet {
+  min-height: 0;
+  overflow-y: auto;
+}
+
+.settings-grid .field select,
+.settings-grid .field .button {
+  width: 100%;
+}
+
+.settings-grid .stepper .button {
+  width: auto;
+}
+
+.button:focus-visible,
+.field select:focus-visible,
+.search input:focus-visible,
+.popover input:focus-visible,
+.verse-no:focus-visible,
+.surah-card:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 72%, white);
+  outline-offset: 2px;
+}
+
+.surah-no,
+.tag.meccan,
+.tag.medinan {
+  color: var(--text);
+}
+
+@media (max-width: 720px) {
+  main {
+    padding-left: 0.9rem;
+    padding-right: 0.9rem;
+  }
+
+  .toolbar-inner {
+    align-items: stretch;
+    display: block;
+    padding-bottom: 0.55rem;
+    padding-top: 0.55rem;
+  }
+
+  .toolbar-primary {
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .toolbar-primary .field {
+    flex: 1 1 auto;
+  }
+
+  .toolbar-primary .field select {
+    max-width: none;
+    width: 100%;
+  }
+
+  .settings-trigger {
+    display: inline-flex;
+  }
+
+  .toolbar-controls {
+    display: none;
+  }
+
+  .popover {
+    bottom: 0.75rem;
+    left: 0.75rem;
+    max-height: calc(100dvh - 1.5rem);
+    right: 0.75rem;
+    top: auto;
+    width: auto;
+  }
+
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chapter-head {
+    margin-top: 1.3rem;
+  }
+
+  .chapter-head h1 {
+    gap: 0.45rem;
+  }
+
+  .chapter-head .arabic {
+    font-size: 1.7rem;
+  }
+
+  .verse {
+    padding: 1rem 0;
+  }
+
+  .translation-block {
+    margin-top: 0.65rem;
+    padding-left: 0.6rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
   }
 }

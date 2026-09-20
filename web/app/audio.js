@@ -10,13 +10,13 @@
  * * **Surah scope** (mp3quran, cdn.islamic.network): one file per chapter. It cannot be
  *   followed verse by verse, since no host here publishes timings.
  *
- * Riwayah safety: every per-ayah recitation in the index is Hafs, and a Hafs ayah number
- * means nothing in Warsh or Qalun, which number 6,214 ayahs. So per-ayah playback is
- * refused for those scripts rather than playing the wrong verse, and the caller only offers
- * surah-scope recitations there.
+ * Reading safety: every per-ayah recitation in the index follows the published Hafs identity.
+ * The reader only offers it when the selected manifest script declares compatible reading and
+ * verse numbering; a different script must use a surah-scope recitation instead.
  */
 
 import { fillTemplate, globalAyah } from "./api.js";
+import { scriptReadingIdentity } from "./reader-core.js";
 
 export class Player {
   constructor(audio) {
@@ -28,7 +28,8 @@ export class Player {
     this.offsets = null;
     this.autoplay = true;
     this.repeat = false;
-    this.riwayah = "hafs";
+    this.script = null;
+    this.reading = scriptReadingIdentity({ verse_ids: "hafs" });
     this.error = null;
     this.open = false; // the bar is shown from the first play until it is closed
 
@@ -48,17 +49,24 @@ export class Player {
     });
   }
 
-  /** Point the player at a chapter, and at the riwayah the reader is looking at. */
-  configure({ reciters, chapter, offsets, riwayah = "hafs" }) {
+  /** Point the player at a chapter and the manifest-declared reading the reader is viewing. */
+  configure({ reciters, chapter, offsets, script = null, riwayah = null }) {
     this.reciters = reciters;
     this.chapter = chapter;
     this.offsets = offsets;
-    this.riwayah = riwayah;
+    this.script = script;
+    this.reading = script
+      ? scriptReadingIdentity(script)
+      : scriptReadingIdentity({
+          name: riwayah ?? "selected script",
+          reading: { riwayah: riwayah ?? "hafs" },
+          verse_ids: riwayah && riwayah !== "hafs" ? "mapped" : "hafs",
+        });
   }
 
-  /** Every per-ayah recitation published here is Hafs; a Nafiʿ script numbers differently. */
+  /** Refuse an ayah URL unless the manifest declares its numbering and reading compatible. */
   get conflicted() {
-    return this.riwayah !== "hafs" && this.reciter?.scope === "ayah";
+    return !this.reading.perAyah && this.reciter?.scope === "ayah";
   }
 
   get playing() {
@@ -93,7 +101,8 @@ export class Player {
     this.open = true;
 
     if (this.conflicted) {
-      this.error = `This recitation follows the Hafs ayah numbering, and ${this.riwayah} does not share it. Pick a ${this.riwayah} surah recitation instead.`;
+      this.error =
+        `Per-ayah audio follows the Hafs reading and numbering; it is not declared compatible with ${this.reading.name}. Pick a surah recitation instead.`;
       this.onState();
       return;
     }
