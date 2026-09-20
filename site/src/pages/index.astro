@@ -1,4 +1,5 @@
 ---
+import { Code } from "astro:components";
 import Base from "../layouts/Base.astro";
 import { chapterPath, chapterUrl, editionKey, loadCatalog } from "../lib/catalog";
 
@@ -12,310 +13,395 @@ const {
 } = loadCatalog();
 const firstScript = manifest.scripts[0];
 const firstTranslation = translations.editions[0];
-const firstChapter = chapters[1];
+const firstChapter = chapters.find((chapter) => chapter.id === 1) ?? chapters[0];
 const firstChapterPath = chapterPath(firstTranslation, firstChapter.id);
 const firstChapterReaderUrl = `${chapterUrl(firstChapter)}?s=${firstScript.id}`;
-const unverified = [...translations.editions, ...transliterations.editions].filter(
-  (edition) => edition.license.status !== "granted",
-);
-const profileNote = unverified.length
-  ? `This build includes ${unverified.length} edition${unverified.length === 1 ? "" : "s"} whose redistribution status is recorded as ${unverified.map((edition) => edition.license.status).join(" and ")}.`
-  : "This build contains editions with a recorded redistribution grant.";
 const translationLanguages = manifest.translations.languages;
-const totalReciters = reciters ? reciters.reciters.length : 0;
-const joinJavaScript = `const [arabic, translated] = await Promise.all([
-  fetch("/text/${firstScript.id}/chapters/${firstChapter.id}.json").then((r) => r.json()),
-  fetch("${firstChapterPath}").then((r) => r.json()),
-]);
+const sortedTranslations = [...translations.editions].sort((a, b) => {
+  const left = `${a.language}\u0000${a.author}\u0000${editionKey(a)}`;
+  const right = `${b.language}\u0000${b.author}\u0000${editionKey(b)}`;
+  return left.localeCompare(right, "en", { sensitivity: "base", numeric: true });
+});
 
-const translatedById = new Map(translated.verses.map((verse) => [verse.id, verse]));
+const quickstartCurl = `curl -sS https://quran-json.risanb.com/text/${firstScript.id}/chapters/${firstChapter.id}.json`;
+const quickstartJavaScript = `const response = await fetch(
+  "https://quran-json.risanb.com/text/${firstScript.id}/chapters/${firstChapter.id}.json"
+);
+const chapter = await response.json();
+console.log(chapter.verses);`;
+const joinJavaScript = `const arabic = await fetch(
+  "https://quran-json.risanb.com/text/${firstScript.id}/chapters/${firstChapter.id}.json"
+).then((response) => response.json());
+const translated = await fetch(
+  "https://quran-json.risanb.com${firstChapterPath}"
+).then((response) => response.json());
+
+const translatedById = new Map(
+  translated.verses.map((verse) => [verse.id, verse.translation])
+);
 const rows = arabic.verses.map((verse) => ({
-  id: verse.id,
-  text: verse.text,
-  translation: translatedById.get(verse.id)?.translation,
+  ...verse,
+  translation: translatedById.get(verse.id),
 }));`;
-const joinPython = `import httpx
+const mappedExample = `const duri = await fetch(
+  "https://quran-json.risanb.com/text/duri/chapters/2.json"
+).then((response) => response.json());
 
-base = "https://quran-json.risanb.com"
-arabic = httpx.get(f"{base}/text/${firstScript.id}/chapters/${firstChapter.id}.json").json()
-translated = httpx.get(f"{base}${firstChapterPath}").json()
-by_id = {verse["id"]: verse for verse in translated["verses"]}
-rows = [{**verse, "translation": by_id[verse["id"]]["translation"]}
-        for verse in arabic["verses"]]`;
-const mappedExample = `const covering = warsh.verses.filter((verse) =>
-  verse.number_in_hafs.includes(255)
+const versesCoveringHafs255 = duri.verses.filter((verse) =>
+  verse.number_in_hafs?.includes(255)
 );`;
 ---
 
 <Base
   title="quran-json — Quran data, clearly published"
-  description={`A stable Quran JSON API with ${manifest.scripts.length} text scripts, ${translations.count} translations, and chapter-first endpoints.`}
+  description={`Readable Quran text and static JSON with ${manifest.scripts.length} scripts, ${translations.count} translations, and chapter-first endpoints.`}
 >
   <section class="hero">
     <div class="hero-copy">
-      <p class="eyebrow">A small, readable Quran data service</p>
-      <h1>Read the text. Use the data.</h1>
+      <p class="eyebrow">Quran text + static JSON</p>
+      <h1>Al-Quran</h1>
       <p>
-        Stable JSON paths for scripts, translations, transliteration layers, and recitations.
-        Start with the reader or fetch one chapter in a single request.
+        Read a chapter or use a stable JSON path. Arabic editions, translations, and audio
+        references stay simple enough to inspect in a browser or a shell.
       </p>
-      <span class="hero-arabic" lang="ar" dir="rtl">ٱلْقُرْآن</span>
       <div class="actions">
         <a class="button-link primary" href="/app/">Open the reader <span aria-hidden="true">↗</span></a>
-        <a class="button-link" href="#quickstart">Use one chapter <span aria-hidden="true">↓</span></a>
+        <a class="button-link" href={firstChapterReaderUrl}>Read {firstChapter.transliteration} <span aria-hidden="true">↗</span></a>
+        <a class="button-link" href="#quickstart">Fetch one chapter <span aria-hidden="true">↓</span></a>
+      </div>
+      <div class="hero-facts" aria-label="Published data counts">
+        <span><strong>{manifest.scripts.length}</strong> Arabic editions</span>
+        <span><strong>{translations.count}</strong> translations</span>
+        <span><strong>{translationLanguages}</strong> languages</span>
+        <span><strong>{manifest.chapters.count}</strong> chapters</span>
       </div>
     </div>
-    <aside class="hero-note" aria-label="Published profile">
-      <strong>{profileNote}</strong>
-      <span>Counts and catalogue rows below come from this generated build profile.</span>
-    </aside>
   </section>
-
-  <div class="stats" aria-label="Published counts">
-    <div class="stat"><strong>{manifest.scripts.length}</strong><span>scripts</span></div>
-    <div class="stat"><strong>{translations.count}</strong><span>translations</span></div>
-    <div class="stat"><strong>{translationLanguages}</strong><span>languages</span></div>
-    <div class="stat"><strong>{transliterations.count}</strong><span>transliteration</span></div>
-    <div class="stat"><strong>{manifest.chapters.count}</strong><span>chapters</span></div>
-    <div class="stat"><strong>{totalReciters}</strong><span>reciters</span></div>
-  </div>
 
   <section id="quickstart" class="section">
     <div class="section-heading">
-      <h2>Start with a chapter</h2>
+      <div>
+        <p class="section-kicker">Start here</p>
+        <h2>One request, one chapter</h2>
+      </div>
       <p>
-        Chapter files are small enough for a reader and complete enough for a useful API call.
-        Verse identity lives in <code>id</code>; mapped readings carry their explicit Hafs join.
+        Chapter files are ordinary JSON. Copy a complete command or paste the JavaScript into a
+        console; no SDK, account, or setup is required.
       </p>
     </div>
-    <div class="task-grid">
-      <article class="task">
-        <span class="number">01 · READ</span>
-        <h3>Open a chapter</h3>
-        <p>Use the reader for script, font, translation, and recitation choices.</p>
-        <a href={firstChapterReaderUrl}>Read {firstChapter.transliteration} ↗</a>
+    <div class="quickstart-grid">
+      <article class="code-card">
+        <div class="code-card-heading">
+          <div><span class="number">01</span><h3>Try curl</h3></div>
+          <button class="copy-button" type="button" data-copy={quickstartCurl} aria-label="Copy the curl chapter example">Copy</button>
+        </div>
+        <Code code={quickstartCurl} lang="bash" theme="github-dark" />
+        <p class="copy-status" data-copy-status aria-live="polite"></p>
+        <a class="inline-link" href={`/text/${firstScript.id}/chapters/${firstChapter.id}.json`}>Open the JSON response <span aria-hidden="true">↗</span></a>
       </article>
-      <article class="task">
-        <span class="number">02 · FETCH</span>
-        <h3>Fetch one chapter</h3>
-        <p>Use a plain GET. The Arabic and translation files keep their own verse identity.</p>
-        <a href={`/text/${firstScript.id}/chapters/${firstChapter.id}.json`}>Fetch Arabic JSON ↗</a>
-      </article>
-      <article class="task">
-        <span class="number">03 · BROWSE</span>
-        <h3>Choose an edition</h3>
-        <p>Browse generated catalogues with source, direction, version, and licence status.</p>
-        <a href="#catalogues">Browse catalogues ↓</a>
+      <article class="code-card">
+        <div class="code-card-heading">
+          <div><span class="number">02</span><h3>Use fetch</h3></div>
+          <button class="copy-button" type="button" data-copy={quickstartJavaScript} aria-label="Copy the JavaScript chapter example">Copy</button>
+        </div>
+        <Code code={quickstartJavaScript} lang="javascript" theme="github-dark" />
+        <p class="copy-status" data-copy-status aria-live="polite"></p>
       </article>
     </div>
+    <noscript><p class="noscript-note">The examples remain selectable without JavaScript.</p></noscript>
 
-    <div class="sample-block">
-      <span class="sample-label">Join by verse identity</span>
-      <pre><code>{joinJavaScript}</code></pre>
-    </div>
-    <div class="sample-block">
-      <span class="sample-label">Python, same contract</span>
-      <pre><code>{joinPython}</code></pre>
-    </div>
+    <details class="advanced-detail">
+      <summary>Advanced: join a translation by verse id</summary>
+      <div class="advanced-content">
+        <p>
+          Load the two chapter files separately, then join on <code>id</code>. This is optional
+          when you only need Arabic text.
+        </p>
+        <div class="code-card">
+          <div class="code-card-heading">
+            <h3>JavaScript</h3>
+            <button class="copy-button" type="button" data-copy={joinJavaScript} aria-label="Copy the translation join example">Copy</button>
+          </div>
+          <Code code={joinJavaScript} lang="javascript" theme="github-dark" />
+          <p class="copy-status" data-copy-status aria-live="polite"></p>
+        </div>
+      </div>
+    </details>
   </section>
 
   <section id="endpoints" class="section">
     <div class="section-heading">
-      <h2>Endpoints that stay legible</h2>
-      <p>Every path is a static JSON file. There is no authentication, SDK, or request protocol to learn.</p>
+      <div>
+        <p class="section-kicker">The data map</p>
+        <h2>Paths that stay legible</h2>
+      </div>
+      <p>Every endpoint is a static JSON file. Follow a chapter path when you need a small response.</p>
     </div>
     <dl class="endpoint-list">
-      <dt><code>/manifest.json</code></dt><dd>Counts, script identity, catalogue pointers, and profile licence.</dd>
+      <dt><code>/manifest.json</code></dt><dd>Counts, script identity, and catalogue pointers.</dd>
       <dt><code>/chapters.json</code></dt><dd>Shared metadata for {manifest.chapters.count} chapters.</dd>
       <dt><code>/text/{'{script}'}/chapters/{'{n}'}.json</code></dt><dd>Arabic text, one chapter at a time.</dd>
-      <dt><code>/translations/index.json</code></dt><dd>Published translation editions and withheld records.</dd>
+      <dt><code>/translations/index.json</code></dt><dd>Translation editions and their source records.</dd>
       <dt><code>/translations/{'{edition}'}/chapters/{'{n}'}.json</code></dt><dd>Translation text and source footnotes.</dd>
-      <dt><code>/transliteration/index.json</code></dt><dd>Romanisation availability and licence status, including an empty answer.</dd>
+      <dt><code>/transliteration/index.json</code></dt><dd>Romanisation availability, including an empty answer.</dd>
       <dt><code>/audio/reciters.json</code></dt><dd>Host URL templates; audio itself is never copied here.</dd>
-      <dt><code>/meta/sources.json</code></dt><dd>Provenance, source versions, and publishing decisions.</dd>
+      <dt><code>/meta/sources.json</code></dt><dd>Full provenance, rights notes, and withheld records.</dd>
     </dl>
   </section>
 
   <section id="scripts" class="section">
     <div class="section-heading">
-      <h2>Scripts carry their identity</h2>
+      <div>
+        <p class="section-kicker">Arabic editions</p>
+        <h2>Choose the text first</h2>
+      </div>
       <p>
-        A script can describe orthography, a reading, or a numbering system. The manifest says
-        which one a consumer is receiving, so joins do not rely on array position.
+        Names, counts, and verse identity are declared in the manifest. The JSON link in each row
+        opens the complete edition.
       </p>
     </div>
     <div class="table-wrap">
-      <table>
-        <thead><tr><th>Id</th><th>Name</th><th>Verses</th><th>Verse identity</th><th>Default font</th><th>JSON</th></tr></thead>
+      <table class="edition-table">
+        <thead><tr><th>Id</th><th>Edition</th><th>Verses</th><th>Identity</th><th>Font</th><th>Data</th></tr></thead>
         <tbody>
           {manifest.scripts.map((script) => (
             <tr>
-              <td><code>{script.id}</code></td>
-              <td>{script.name}<br /><span class="muted">{script.description}</span></td>
-              <td>{script.verses.toLocaleString()}</td>
-              <td><span class="badge">{script.verse_ids}</span>{script.verse_ids_differ_in?.length ? ` · differs in ${script.verse_ids_differ_in.join(", ")}` : ""}</td>
-              <td><code>{coverage.scripts[script.id]?.default ?? "—"}</code></td>
-              <td><a href={script.path}>quran.json ↗</a></td>
+              <td class="id-cell"><code>{script.id}</code></td>
+              <td class="name-cell">
+                <strong>{script.name}</strong>
+                <span class="secondary">{script.description}</span>
+                {script.note ? (
+                  <details class="row-details">
+                    <summary>Edition notes</summary>
+                    <p>{script.note}</p>
+                  </details>
+                ) : null}
+              </td>
+              <td class="numeric-cell">{script.verses.toLocaleString()}</td>
+              <td><span class="badge">{script.verse_ids}</span>{script.verse_ids_differ_in?.length ? <span class="secondary">differs in {script.verse_ids_differ_in.join(", ")}</span> : null}</td>
+              <td class="id-cell"><code>{coverage.scripts[script.id]?.default ?? "—"}</code></td>
+              <td class="file-cell"><a href={script.path}>quran.json <span aria-hidden="true">↗</span></a></td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
-    <div class="prose">
-      <h3>Mapped readings</h3>
-      <p>
-        Warsh and Qalun carry their own 6,214 verse count. Each verse has a
-        <code>number_in_hafs</code> array; use it as a lookup when pairing a translation keyed
-        to the 6,236-verse Hafs count. Indo-Pak chapter 1 declares its own verse identity and
-        is kept separate from Hafs translations.
-      </p>
-      <pre><code>{mappedExample}</code></pre>
-    </div>
+
+    <details class="advanced-detail mapped-detail">
+      <summary>Advanced: mapped readings</summary>
+      <div class="advanced-content">
+        <p>
+          Warsh and Qalun each have 6,214 source verses. Duri has 6,218 source verses and maps
+          each source verse to Hafs with <code>number_in_hafs</code>; its chapter 1 source
+          bismillah is separate furniture, not a numbered verse. Use the declared map instead of
+          array position when pairing a mapped reading with Hafs translation data.
+        </p>
+        <div class="code-card">
+          <div class="code-card-heading">
+            <h3>Duri · Hafs lookup</h3>
+            <button class="copy-button" type="button" data-copy={mappedExample} aria-label="Copy the Duri mapping example">Copy</button>
+          </div>
+          <Code code={mappedExample} lang="javascript" theme="github-dark" />
+          <p class="copy-status" data-copy-status aria-live="polite"></p>
+        </div>
+      </div>
+    </details>
   </section>
 
   <section id="catalogues" class="section">
     <div class="section-heading">
-      <h2>Generated catalogues</h2>
-      <p>
-        These rows are rendered from the same JSON files served to clients. Follow an edition to
-        its whole Quran or chapter endpoint, then inspect its source and licence record.
-      </p>
+      <div>
+        <p class="section-kicker">Translations</p>
+        <h2>Find an edition</h2>
+      </div>
+      <p>Search by language, translator, or id. The complete table remains in the HTML for people without JavaScript.</p>
     </div>
 
-    <div id="translations" class="prose">
-      <h3>Translations · {translations.count}</h3>
+    <div id="translations" class="catalogue-panel" data-translation-table>
+      <div class="catalogue-toolbar">
+        <div class="search-field">
+          <label for="translation-search">Search translations</label>
+          <input id="translation-search" type="search" autocomplete="off" placeholder="Language, name, or id" aria-controls="translation-table" />
+        </div>
+        <button class="button-link clear-button" type="button" data-translation-clear hidden>Clear</button>
+        <p class="catalogue-count" data-translation-count aria-live="polite">{translations.count} translations</p>
+      </div>
+      <noscript><p class="noscript-note">All {translations.count} translations are shown below. Search and paging are optional enhancements.</p></noscript>
       <div class="table-wrap">
-        <table>
-          <thead><tr><th>Language</th><th>Edition</th><th>Direction</th><th>Version</th><th>Status</th><th>Files</th></tr></thead>
+        <table id="translation-table" class="translation-table">
+          <thead><tr><th>Language</th><th>Edition</th><th>Data</th></tr></thead>
           <tbody>
-            {translations.editions.map((edition) => (
-              <tr>
-                <td>{edition.language} <code>{edition.code}</code></td>
-                <td><a href={edition.source}>{edition.author}</a></td>
-                <td><span class="badge">{edition.direction}</span></td>
-                <td>{edition.version ?? "n/a"}</td>
-                <td><a href={edition.license.url}>{edition.license.status}</a></td>
-                <td><a href={`${edition.path}quran.json`}><code>{editionKey(edition)}</code> ↗</a></td>
+            {sortedTranslations.map((edition) => (
+              <tr data-translation-row data-search={`${edition.language} ${edition.code} ${edition.author} ${edition.edition} ${editionKey(edition)}`.toLowerCase()}>
+                <td class="language-cell" data-label="Language"><span>{edition.language}</span> <code>{edition.code}</code></td>
+                <td class="name-cell" data-label="Edition">
+                  <strong>{edition.author}</strong>
+                  <details class="row-details">
+                    <summary>Edition details</summary>
+                    <p>
+                      {edition.direction ?? "unknown"} · {edition.version ?? "version not listed"} ·
+                      <a href={edition.source}>source</a> ·
+                      <a href={edition.license.url}>licence ({edition.license.status})</a>
+                    </p>
+                  </details>
+                </td>
+                <td class="file-cell" data-label="Data"><a href={`${edition.path}quran.json`}><code>{editionKey(edition)}</code> <span aria-hidden="true">↗</span></a></td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <p class="empty-state" data-translation-empty hidden>No translations match that search. <button type="button" class="inline-button" data-translation-reset>Clear search</button></p>
+      <nav class="catalogue-pagination" data-translation-pagination aria-label="Translation pages">
+        <button type="button" class="button-link" data-translation-previous>Previous</button>
+        <span data-translation-page aria-live="polite"></span>
+        <button type="button" class="button-link" data-translation-next>Next</button>
+      </nav>
     </div>
 
-    <div id="transliteration" class="prose">
+    <div id="transliteration" class="catalogue-summary">
       <h3>Transliteration · {transliterations.count}</h3>
       <p>
-        The catalogue is always present. An empty catalogue is an explicit answer when no
-        romanisation has a verified grant in the safe default build.
+        No transliteration is published in the safe catalogue. The empty answer and withheld
+        candidate records remain available in <a href="/transliteration/index.json">the catalogue JSON</a>.
       </p>
-      {transliterations.editions.length ? (
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Edition</th><th>Author</th><th>Status</th><th>Files</th></tr></thead>
-            <tbody>
-              {transliterations.editions.map((edition) => (
-                <tr>
-                  <td><code>{editionKey(edition)}</code></td>
-                  <td>{edition.author}</td>
-                  <td><a href={edition.license.url}>{edition.license.status}</a></td>
-                  <td><a href={`${edition.path}quran.json`}>quran.json ↗</a></td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : <p class="badge">No verified transliteration in this build profile.</p>}
     </div>
   </section>
 
   <section id="audio" class="section">
     <div class="section-heading">
-      <h2>Audio stays a reference</h2>
-      <p>Recitations are linked by URL template, so the dataset stays small and hosts retain their files.</p>
+      <div>
+        <p class="section-kicker">Audio references</p>
+        <h2>Audio stays a reference</h2>
+      </div>
+      <p>Recitations remain linked by URL template, so the dataset stays small and hosts retain their files.</p>
     </div>
     <div class="task-grid">
       <article class="task"><span class="number">HOSTS</span><h3>{reciters ? Object.keys(reciters.hosts).length : 0} hosts</h3><p>Each host declares its indexing mode and padding rules in the reciter index.</p><a href="/audio/reciters.json">Open reciter index ↗</a></article>
       <article class="task"><span class="number">REQUESTS</span><h3>Chapter first</h3><p>The reader loads an audio URL only after you choose a reciter and a verse.</p><a href="/app/">Listen in the reader ↗</a></article>
-      <article class="task"><span class="number">SOURCES</span><h3>Attribution travels</h3><p>Host and reciter status is recorded beside every generated audio template.</p><a href="/meta/sources.json">Read source records ↗</a></article>
+      <article class="task"><span class="number">SOURCES</span><h3>Attribution travels</h3><p>Host and reciter source records stay beside every public template.</p><a href="/meta/sources.json">Read source records ↗</a></article>
     </div>
   </section>
 
   <section id="fonts" class="section">
     <div class="section-heading">
-      <h2>Fonts are measured at build time</h2>
-      <p>
-        The reader chooses a bundled font that covers every codepoint a script uses. Coverage is
-        a build gate; a missing mark does not become a silent fallback.
-      </p>
+      <div>
+        <p class="section-kicker">Typography</p>
+        <h2>Font coverage</h2>
+      </div>
+      <p>The reader chooses a bundled font that covers every codepoint used by an edition.</p>
     </div>
     <div class="table-wrap">
-      <table>
+      <table class="font-table">
         <thead><tr><th>Script</th><th>Default</th><th>Usable fonts</th></tr></thead>
         <tbody>
           {manifest.scripts.map((script) => (
-            <tr><td><code>{script.id}</code></td><td><code>{coverage.scripts[script.id]?.default}</code></td><td>{coverage.scripts[script.id]?.usable.join(", ")}</td></tr>
+            <tr><td class="id-cell"><code>{script.id}</code></td><td class="id-cell"><code>{coverage.scripts[script.id]?.default}</code></td><td>{coverage.scripts[script.id]?.usable.join(", ")}</td></tr>
           ))}
         </tbody>
       </table>
     </div>
-    <p class="muted">For provenance and the measured gaps, see <a href="/app/fonts.json">fonts.json</a> and <a href="/meta/sources.json">source records</a>.</p>
+    <p class="muted">For measured coverage and source notes, see <a href="/app/fonts.json">fonts.json</a>.</p>
   </section>
 
-  <section id="compatibility" class="section">
+  <section id="sources" class="section">
     <div class="section-heading">
-      <h2>Compatibility is part of the API</h2>
-      <p>Public data paths are unversioned because published bytes are not rewritten.</p>
+      <div>
+        <p class="section-kicker">Sources</p>
+        <h2>Read the source record</h2>
+      </div>
+      <p>Every edition links to its source and licence. Full provenance, rights notes, and withheld records remain in the machine-readable JSON.</p>
     </div>
-    <div class="prose">
-      <ul>
-        <li>Use <code>id</code> to join verse layers. Use <code>number_in_hafs</code> for mapped readings.</li>
-        <li>Translations and transliterations omit Arabic text; load the selected script separately.</li>
-        <li>Chapter files avoid whole-corpus downloads. Full <code>quran.json</code> remains available for bulk consumers.</li>
-        <li>The frozen npm <code>dist/</code> tree remains a separate compatibility surface.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="licensing" class="section">
-    <div class="section-heading">
-      <h2>Licence status stays visible</h2>
-      <p>{profileNote} Read the source manifest before redistributing a layer.</p>
-    </div>
-    <div class="prose">
-      <p>
-        The Python publisher is the only catalogue authority. A safe build publishes only
-        editions with a recorded grant; the explicit override is a deliberate operator choice
-        and keeps its <code>restricted</code> or <code>unknown</code> status in the JSON.
-      </p>
-      <p><a href="/meta/sources.json">Open provenance and licence records ↗</a></p>
-      {translations.withheld.length + transliterations.withheld.length ? (
-        <div class="table-wrap">
-          <table>
-            <thead><tr><th>Withheld edition</th><th>Author</th><th>Status</th><th>Terms</th></tr></thead>
-            <tbody>
-              {[...translations.withheld, ...transliterations.withheld].map((entry) => (
-                <tr><td><code>{entry.edition}</code></td><td>{entry.author}</td><td>{entry.status}</td><td><a href={entry.license_url}>Open terms ↗</a></td></tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : null}
+    <div class="source-links">
+      <a class="button-link primary" href="/meta/sources.json">Open sources and licences <span aria-hidden="true">↗</span></a>
+      <a class="button-link" href="/manifest.json">Open manifest <span aria-hidden="true">↗</span></a>
+      <a class="button-link" href="/translations/index.json">Open translation catalogue <span aria-hidden="true">↗</span></a>
     </div>
   </section>
 
-  <section id="attribution" class="section">
-    <div class="section-heading">
-      <h2>Source and build notes</h2>
-      <p>Generated facts stay next to their data; deeper provenance stays in the machine-readable manifest.</p>
-    </div>
-    <div class="prose">
-      <p>{manifest.attribution}</p>
-      <p>
-        Build the safe site with <code>npm run site</code>. To publish the explicit rights
-        override, pass <code>--include-unverified-licenses</code> to that command and review the
-        resulting catalogue before deployment.
-      </p>
-    </div>
-  </section>
+  <script is:inline>
+    (() => {
+      document.documentElement.classList.add("js");
+
+      const copy = async (text) => {
+        if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
+        await navigator.clipboard.writeText(text);
+      };
+
+      const showSelectionFallback = (button, text, status) => {
+        const card = button.closest(".code-card");
+        if (!card) return;
+        let selection = card.querySelector(".copy-fallback");
+        if (!selection) {
+          selection = document.createElement("textarea");
+          selection.className = "copy-fallback";
+          selection.readOnly = true;
+          selection.setAttribute("aria-label", "Code selected for copying");
+          card.append(selection);
+        }
+        selection.value = text;
+        selection.hidden = false;
+        selection.focus();
+        selection.select();
+        if (status) status.textContent = "Clipboard unavailable. Code selected. Press Ctrl+C or ⌘C to copy.";
+      };
+
+      for (const button of document.querySelectorAll("[data-copy]")) {
+        const originalLabel = button.textContent;
+        const status = button.closest(".code-card")?.querySelector("[data-copy-status]");
+        button.addEventListener("click", async () => {
+          try {
+            await copy(button.getAttribute("data-copy") ?? "");
+            button.textContent = "Copied";
+            if (status) status.textContent = "Copied to clipboard.";
+            button.closest(".code-card")?.querySelector(".copy-fallback")?.setAttribute("hidden", "");
+          } catch {
+            button.textContent = "Copy failed";
+            showSelectionFallback(button, button.getAttribute("data-copy") ?? "", status);
+          }
+          window.setTimeout(() => {
+            button.textContent = originalLabel;
+            if (status) status.textContent = "";
+          }, 2400);
+        });
+      }
+
+      const panel = document.querySelector("[data-translation-table]");
+      if (!panel) return;
+      const rows = [...panel.querySelectorAll("[data-translation-row]")];
+      const search = panel.querySelector("#translation-search");
+      const clear = panel.querySelector("[data-translation-clear]");
+      const count = panel.querySelector("[data-translation-count]");
+      const empty = panel.querySelector("[data-translation-empty]");
+      const reset = panel.querySelector("[data-translation-reset]");
+      const pageStatus = panel.querySelector("[data-translation-page]");
+      const previous = panel.querySelector("[data-translation-previous]");
+      const next = panel.querySelector("[data-translation-next]");
+      const pageSize = 12;
+      let page = 1;
+
+      const render = () => {
+        const term = (search?.value ?? "").trim().toLowerCase();
+        const matches = rows.filter((row) => (row.getAttribute("data-search") ?? "").includes(term));
+        const pages = Math.max(1, Math.ceil(matches.length / pageSize));
+        page = Math.min(page, pages);
+        const start = (page - 1) * pageSize;
+        const visible = new Set(matches.slice(start, start + pageSize));
+        rows.forEach((row) => { row.hidden = !visible.has(row); });
+        if (count) count.textContent = matches.length ? `Showing ${start + 1}–${Math.min(start + pageSize, matches.length)} of ${matches.length} translations` : "0 translations";
+        if (empty) empty.hidden = matches.length !== 0;
+        if (pageStatus) pageStatus.textContent = matches.length ? `Page ${page} of ${pages}` : "No pages";
+        if (previous) previous.disabled = page <= 1 || matches.length === 0;
+        if (next) next.disabled = page >= pages || matches.length === 0;
+        if (clear) clear.hidden = term.length === 0;
+      };
+
+      search?.addEventListener("input", () => { page = 1; render(); });
+      clear?.addEventListener("click", () => { if (search) search.value = ""; page = 1; search?.focus(); render(); });
+      reset?.addEventListener("click", () => { if (search) search.value = ""; page = 1; search?.focus(); render(); });
+      previous?.addEventListener("click", () => { page -= 1; render(); });
+      next?.addEventListener("click", () => { page += 1; render(); });
+      render();
+    })();
+  </script>
 </Base>

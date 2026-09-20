@@ -30,7 +30,7 @@ def _resolves(tree: Path, url: str) -> bool:
     return target.is_file() or (target / "index.html").is_file()
 
 
-def test_assembled_astro_pages_keep_generated_profile_and_legacy_sections() -> None:
+def test_assembled_astro_pages_keep_profile_and_catalogue_contract() -> None:
     tree = _assembled_tree()
     manifest = json.loads((tree / "manifest.json").read_text(encoding="utf-8"))
     chapters = json.loads((tree / "chapters.json").read_text(encoding="utf-8"))
@@ -48,9 +48,7 @@ def test_assembled_astro_pages_keep_generated_profile_and_legacy_sections() -> N
         "transliteration",
         "audio",
         "fonts",
-        "compatibility",
-        "licensing",
-        "attribution",
+        "sources",
     ):
         assert f'id="{anchor}"' in page
     page_ids = set(re.findall(r'id="([^"]+)"', page))
@@ -66,8 +64,8 @@ def test_assembled_astro_pages_keep_generated_profile_and_legacy_sections() -> N
         assert _resolves(tree, edition["files"]["quran"])
         assert _resolves(tree, edition["files"]["chapters"].replace("{1-114}", "1"))
 
-    # The sample chapter is generated from `chapters[1]`, so its reader route must use id 2.
-    assert f"/app/#/{chapters[1]['id']}?s={manifest['scripts'][0]['id']}" in page
+    # The quickstart uses the first chapter, so its reader route must use id 1.
+    assert f"/app/#/{chapters[0]['id']}?s={manifest['scripts'][0]['id']}" in page
     assert manifest["transliteration"]["count"] == 0
     assert not (tree / "transliteration" / "kemenag").exists()
 

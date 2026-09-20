@@ -5,6 +5,7 @@
   "scripts": {
     "build": "astro build",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "homepage:browser": "node ../tests/site/homepage-regressions.mjs",
     "reader:browser:install": "playwright install chromium",
     "reader:browser": "node ../tests/reader/browser-regressions.mjs"
   },
