@@ -14,6 +14,47 @@ from quranjson.clearquran import parse_verse_files
 from quranjson.jsonio import read_json
 from quranjson.sources import _group_by_chapter, _summarise_change
 
+A2B_QURANENC_KEYS = {
+    "ankobambara_foudi",
+    "belarusian_krivtsov",
+    "bosnian_korkut",
+    "bulgarian_translation",
+    "chichewa_betala",
+    "chinese_mayolong",
+    "chinese_suliman_modern",
+    "dagbani_ghatubo",
+    "dari_badkhashani",
+    "french_hameedullah",
+    "georgian_rwwad",
+    "german_aburida",
+    "greek_rwwad",
+    "hebrew_darussalam",
+    "iranun_sarro",
+    "kannada_bashir",
+    "kazakh_altai",
+    "kurdish_salahuddin",
+    "kurmanji_ismail",
+    "luganda_foundation",
+    "luhya_center",
+    "malagasy_rwwad",
+    "marathi_ansari",
+    "nepali_central",
+    "oromo_rwwad",
+    "pashto_sarfaraz",
+    "pashto_zakaria",
+    "russian_aboadel",
+    "shona_institute",
+    "swahili_abubakr",
+    "tajik_khawaja",
+    "thai_complex",
+    "uzbek_sadiq",
+    "vietnamese_hassan",
+    "yaw_silika",
+    "zulu_adel",
+    "circassian_rwwad",
+    "english_waleed",
+}
+
 
 def test_verse_grouping_preserves_chapter_and_verse_order() -> None:
     payload = {
@@ -240,16 +281,20 @@ def test_quranenc_supplemental_catalogue_is_explicit_and_fail_closed() -> None:
     quranenc.validate_catalogue(catalogue)
 
     keys = {entry["key"] for entry in catalogue["translations"]}
-    assert keys == {
-        "bengali_zakaria",
-        "bengali_rwwad",
-        "malay_basumayyah",
-        "russian_rwwad",
-        "korean_hamid",
-        "korean_rwwad",
-        "italian_rwwad",
-        "ukrainian_yakubovych",
-    }
+    assert (
+        keys
+        == {
+            "bengali_zakaria",
+            "bengali_rwwad",
+            "malay_basumayyah",
+            "russian_rwwad",
+            "korean_hamid",
+            "korean_rwwad",
+            "italian_rwwad",
+            "ukrainian_yakubovych",
+        }
+        | A2B_QURANENC_KEYS
+    )
     withheld = next(entry for entry in catalogue["translations"] if entry["key"] == "korean_rwwad")
     assert withheld["availability"] == "withheld"
     assert withheld["allow_empty"] is True

@@ -149,9 +149,13 @@ def test_every_published_translation_is_complete(licensed: Sources) -> None:
         "korean_hamid",
         "italian_rwwad",
         "ukrainian_yakubovych",
+        "english_rodwell",
+        "urdu_kanzuliman",
+        "urdu_mahmudulhasan",
+        "dutch_keyzer",
     }
 
-    assert len(licensed.editions) == 90
+    assert len(licensed.editions) == 130
     assert expected <= set(licensed.editions)
 
     for key, chapters in licensed.editions.items():
@@ -191,7 +195,7 @@ def test_public_domain_verdicts_state_their_basis() -> None:
     for edition in config.EXTRA_EDITIONS:
         if edition.license.status != "granted":
             continue
-        if edition.kind != "quran-api":
+        if edition.kind not in {"quran-api", "tanzil"}:
             continue
 
         assert edition.license.text.startswith("Public domain."), edition.lang
@@ -221,7 +225,7 @@ def test_published_manifest_declares_every_edition_as_granted(cdn_tree: Path) ->
     assert manifest["transliteration"]["status"] == "withheld"
 
     editions = manifest["editions"]
-    assert len(editions) == 90
+    assert len(editions) == 130
     assert {entry["status"] for entry in editions} == {"granted"}
 
     # QuranEnc condition 3: state the version of a republished translation.
@@ -263,7 +267,7 @@ def test_footnotes_travel_with_the_verse(licensed: Sources, cdn_tree: Path) -> N
 
 
 def test_every_published_edition_has_a_whole_and_a_per_chapter_file(cdn_tree: Path) -> None:
-    """One edition is reachable whole or chapter by chapter, for all 90."""
+    """One edition is reachable whole or chapter by chapter, for all 130."""
     for edition in published_editions():
         base = cdn_tree / "translations" / edition_url_key(edition)
 

@@ -108,7 +108,7 @@ try {
       viewport: { width: 1100, height: 900 },
     });
     assert.equal(await page.locator("[data-translation-row]:not([hidden])").count(), 12);
-    assert.equal(await page.locator("[data-translation-count]").innerText(), "Showing 1–12 of 90 translations");
+    assert.equal(await page.locator("[data-translation-count]").innerText(), "Showing 1–12 of 130 translations");
     assert.equal(await page.locator("[data-translation-page]").innerText(), "Page 1 of 8");
 
     await page.locator("#translation-search").fill("en-rwwad");
@@ -161,8 +161,8 @@ try {
       viewport: { width: 1100, height: 900 },
       javaScriptEnabled: false,
     });
-    assert.equal(await page.locator("#translation-table tbody tr").count(), 90);
-    assert.equal(await page.locator("#translation-table tbody tr:not([hidden])").count(), 90);
+    assert.equal(await page.locator("#translation-table tbody tr").count(), 130);
+    assert.equal(await page.locator("#translation-table tbody tr:not([hidden])").count(), 130);
     assert.equal(await page.locator("#translation-search").count(), 1);
     assert.deepEqual({ errors, failed }, { errors: [], failed: [] });
     await context.close();
