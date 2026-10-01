@@ -2,7 +2,8 @@ name: upstream
 
 # Quranpedia's licence requires keeping copies current, and every other upstream can be
 # corrected too. This compares each upstream with the committed snapshots once a week and
-# fails when any differ; a maintainer then runs `uv run quran-json fetch --force`, reviews
+# fails when any differ; a maintainer then runs `uv run quran-json fetch --force` (add
+# `--only data/quranpedia` to refresh one source), reviews
 # the diff, and records any text correction in data/meta/qa.json.
 on:
   schedule:

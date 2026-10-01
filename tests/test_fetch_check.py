@@ -113,13 +113,67 @@ def test_a_missing_snapshot_and_an_unreachable_upstream_are_reported(
 
 
 def test_the_command_exits_one_on_any_finding(monkeypatch: pytest.MonkeyPatch) -> None:
-    monkeypatch.setattr(sources, "check_all", lambda: ["CHANGED data/x.json: content differs"])
+    monkeypatch.setattr(sources, "check_all", lambda **_: ["CHANGED data/x.json: content differs"])
     result = CliRunner().invoke(app, ["fetch", "--check"])
 
     assert result.exit_code == 1
     assert "CHANGED data/x.json" in result.output
 
-    monkeypatch.setattr(sources, "check_all", lambda: [])
+    monkeypatch.setattr(sources, "check_all", lambda **_: [])
     result = CliRunner().invoke(app, ["fetch", "--check"])
 
     assert result.exit_code == 0
+
+
+def test_only_limits_the_check_and_the_refresh_to_matching_paths(
+    monkeypatch: pytest.MonkeyPatch, data_dir: Path
+) -> None:
+    kept = data_dir / "kept.json"
+    other = data_dir / "other.json"
+    kept.write_bytes(SNAPSHOT)
+    other.write_bytes(SNAPSHOT)
+    new = b'{"1": [{"verse": 1, "text": "b"}]}'
+    bodies = {"https://example.test/kept.json": new, "https://example.test/other.json": new}
+    monkeypatch.setattr(
+        sources,
+        "tasks",
+        lambda: [
+            _task(kept, "https://example.test/kept.json"),
+            _task(other, "https://example.test/other.json"),
+        ],
+    )
+    monkeypatch.setattr(sources, "_record", lambda task: {"path": task.rel})
+    monkeypatch.setattr(sources.qa, "write_manifest", lambda: None)
+    monkeypatch.setattr(config, "DATA", data_dir)
+    (data_dir / "meta").mkdir()
+
+    findings = sources.check_all(fetcher=_BodyFetcher(bodies), only=["data/kept"])
+
+    assert [line.split(":")[0] for line in findings] == ["CHANGED data/kept.json"]
+
+    sources.fetch_all(force=True, fetcher=_BodyFetcher(bodies), only=["data/kept"])
+
+    assert orjson.loads(kept.read_bytes()) == orjson.loads(new)
+    assert other.read_bytes() == SNAPSHOT
+
+
+def test_a_refresh_appends_to_the_drift_history(
+    monkeypatch: pytest.MonkeyPatch, data_dir: Path
+) -> None:
+    target = data_dir / "a.json"
+    target.write_bytes(SNAPSHOT)
+    meta = data_dir / "meta"
+    meta.mkdir()
+    monkeypatch.setattr(config, "DATA", data_dir)
+    (meta / "drift.json").write_bytes(b'[{"path": "data/earlier.json", "changed": 1}]')
+    monkeypatch.setattr(sources, "tasks", lambda: [_task(target, "https://example.test/a.json")])
+    monkeypatch.setattr(sources, "_record", lambda task: {"path": task.rel})
+    monkeypatch.setattr(sources.qa, "write_manifest", lambda: None)
+    body = b'{"1": [{"verse": 1, "text": "b"}]}'
+
+    sources.fetch_all(force=True, fetcher=_BodyFetcher({"https://example.test/a.json": body}))
+
+    history = orjson.loads((meta / "drift.json").read_bytes())
+
+    assert [entry["path"] for entry in history] == ["data/earlier.json", "data/a.json"]
+    assert history[1]["changed_verses"] == ["1:1"]

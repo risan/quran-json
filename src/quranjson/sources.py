@@ -11,7 +11,7 @@ import json
 import re
 import unicodedata
 from collections import Counter
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from hashlib import sha256
@@ -25,6 +25,9 @@ from .http import Fetcher
 from .jsonio import read_json, write_json
 
 __all__ = ["FetchTask", "check_all", "fetch_all", "tasks", "verify_snapshots"]
+
+#: A refresh that changes more verses than this is summarised by count only.
+MAX_LISTED_VERSES: Final = 100
 
 EDITION_BASE: Final = "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions"
 
@@ -132,6 +135,11 @@ def tasks() -> list[FetchTask]:
     out.extend(audio_tasks())
     out.extend(licensed_tasks())
     return out
+
+
+def _selected(task: FetchTask, only: Sequence[str] | None) -> bool:
+    """Whether a task is in scope: no filter selects everything, else a path prefix match."""
+    return not only or any(task.rel.startswith(prefix) for prefix in only)
 
 
 def licensed_tasks() -> list[FetchTask]:
@@ -379,6 +387,9 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
 
         summary: dict[str, Any] = {"kind": "records", "records": total, "changed": changed}
 
+        if 0 < changed <= MAX_LISTED_VERSES:
+            summary["changed_verses"] = _changed_verses(old, new)
+
         if changed:
             summary["codepoint_delta"] = {
                 "added": _rare_codepoints(before_text, after_text),
@@ -396,6 +407,18 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
         }
 
     return {"kind": "opaque", "changed": int(old != new)}
+
+
+def _changed_verses(old: dict[str, Any], new: dict[str, Any]) -> list[str]:
+    """`chapter:verse` of every record that differs, for a small refresh."""
+    out: list[str] = []
+
+    for key in sorted(old, key=int):
+        for before, after in zip(old[key], new.get(key, []), strict=False):
+            if before != after:
+                out.append(f"{key}:{before.get('verse', '?')}")
+
+    return out
 
 
 def _rare_codepoints(reference: Counter[str], subject: Counter[str]) -> list[str]:
@@ -435,7 +458,7 @@ def _download(task: FetchTask, client: Fetcher) -> Any:
     return _normalise(raw, task.transform, task.parse)
 
 
-def check_all(*, fetcher: Fetcher | None = None) -> list[str]:
+def check_all(*, fetcher: Fetcher | None = None, only: Sequence[str] | None = None) -> list[str]:
     """Compare every upstream with its committed snapshot, writing nothing.
 
     Returns one line per snapshot that differs or could not be checked; empty means every
@@ -448,7 +471,7 @@ def check_all(*, fetcher: Fetcher | None = None) -> list[str]:
 
     try:
         for task in tasks():
-            if not task.refresh:
+            if not task.refresh or not _selected(task, only):
                 continue
 
             if not task.path.exists():
@@ -486,12 +509,14 @@ def fetch_all(
     *,
     force: bool = False,
     fetcher: Fetcher | None = None,
+    only: Sequence[str] | None = None,
 ) -> list[dict[str, Any]]:
     """Download every missing snapshot and refresh the provenance manifest.
 
     Existing files are kept unless ``force`` is set, so the build stays reproducible.
-    With ``force``, any snapshot whose content changed is recorded in
-    ``data/meta/drift.json`` before it is replaced.
+    With ``force``, any snapshot whose content changed is appended to
+    ``data/meta/drift.json`` before it is replaced. ``only`` limits the refresh to snapshots
+    whose repo-relative path starts with one of the given prefixes.
     """
     drift: list[dict[str, Any]] = []
     owned = fetcher is None
@@ -503,7 +528,9 @@ def fetch_all(
         for _ in range(2):
             selected = tasks()
             pending = [
-                task for task in selected if task.refresh and (force or not task.path.exists())
+                task
+                for task in selected
+                if task.refresh and _selected(task, only) and (force or not task.path.exists())
             ]
 
             if not pending:
@@ -535,7 +562,9 @@ def fetch_all(
             client.close()
 
     if drift:
-        write_json(config.DATA / "meta" / "drift.json", drift, pretty=True)
+        drift_path = config.DATA / "meta" / "drift.json"
+        history = read_json(drift_path) if drift_path.exists() else []
+        write_json(drift_path, [*history, *drift], pretty=True)
 
     records = [_record(task) for task in tasks()]
     write_json(config.DATA / "meta" / "sources.json", records, pretty=True)
