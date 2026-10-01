@@ -186,6 +186,30 @@ const otherTextIds = scripts.map((script) => script.id).filter((id) => !knownIds
 const fontLicences = [...new Set(coverage.fonts.map((font) => font.license))];
 
 const notUsed = [...sources.withheld];
+const notUsedSources = [
+  ["Tanzil translations and transliteration", "non-commercial use only, no redistribution."],
+  ["Quran.com API", "personal, non-commercial terms."],
+  [
+    "Saheeh International via Tanzil",
+    "all rights reserved. The Saheeh edition QuranEnc grants is published.",
+  ],
+  ["QuranWBW and Quran.com Indo-Pak text", "the notice forbids distribution."],
+  [
+    "KFGQPC direct downloads",
+    "all rights reserved. We use Quranpedia's grant for the KFGQPC-based texts instead.",
+  ],
+  ["Diyanet Turkish text", "the Presidency refuses redistribution."],
+  [
+    "Kemenag 2019 translation and Latin romanisation",
+    "no grant. Our transliterations are generated instead.",
+  ],
+  ["fawazahmed0 quran-api", "no licence per edition."],
+  ["QUL and Tarteel resources", "no licence stated."],
+  [
+    "Quranpedia al-Bazzi and Qunbul",
+    "granted, but the verse map is broken in Al-Jinn, so they are not published yet.",
+  ],
+] as const;
 
 const toc = [
   { id: "quick-start", label: "Quick start" },
@@ -697,10 +721,22 @@ const stats = [
             </tbody>
           </table>
         </div>
+        <details class="text-[13px]">
+          <summary class="cursor-pointer font-medium">
+            Sources we checked and do not use ({notUsedSources.length})
+          </summary>
+          <ul class="text-muted-foreground mt-2 list-disc space-y-1 pl-5">
+            {notUsedSources.map(([name, reason]) => (
+              <li>
+                {name}: {reason}
+              </li>
+            ))}
+          </ul>
+        </details>
         {notUsed.length > 0 && (
           <details class="text-[13px]">
             <summary class="cursor-pointer font-medium">
-              Sources we checked and do not use ({notUsed.length})
+              QuranEnc editions we do not publish because they are incomplete ({notUsed.length})
             </summary>
             <ul class="text-muted-foreground mt-2 list-disc space-y-1 pl-5">
               {notUsed.map((item) => (
