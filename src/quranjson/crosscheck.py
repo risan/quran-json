@@ -94,7 +94,13 @@ _OPEN_TANWEEN_GAP: Final = re.compile(
     " +([\u0627\u0649])(?= |$)"
 )
 
-_TANWEEN_AS_HARAKA: Final = {"\u064b": "\u064e", "\u064c": "\u064f", "\u064d": "\u0650"}
+#: A tanween that carries an iqlab small meem (U+06E2 or U+06ED) later in the same word.
+#: Tanzil keeps the doubled vowel and adds the meem; KFGQPC writes the single vowel with the
+#: meem. Matching on the meem keeps the fold out of every other word, so a tanween lost
+#: elsewhere (before an izhar letter, say) is still reported.
+_IQLAB_TANWEEN: Final = re.compile("([ً-ٍ])(?=[ؐ-ًؚ-ٰٟۖ-ۣۡ-۬]*[ۭۢ])")
+
+_TANWEEN_AS_HARAKA: Final = {"ً": "َ", "ٌ": "ُ", "ٍ": "ِ"}
 
 #: Letters that mean one Arabic letter in a script-specific form.
 _LETTER_VARIANTS: Final = {
@@ -144,8 +150,8 @@ def _hamza_madda_order(text: str) -> str:
     return text.replace("أ\u0653", "\u0654ا").replace("\u064e\u0654ا", "\u0654ا")
 
 
-def _tanween_as_haraka(text: str) -> str:
-    return "".join(_TANWEEN_AS_HARAKA.get(char, char) for char in text)
+def _iqlab_tanween_as_haraka(text: str) -> str:
+    return _IQLAB_TANWEEN.sub(lambda match: _TANWEEN_AS_HARAKA[match.group(1)], text)
 
 
 def _remove_spaces(text: str) -> str:
@@ -171,7 +177,8 @@ class Equivalence:
 #: The reviewed table, applied in order. Keep it short: every row hides a class of
 #: difference, so it must be a pure encoding choice, never a different reading.
 #: Deliberately NOT folded: alef wasla vs plain alef, dagger alef vs full alef, hamza seats and
-#: tanween vs a different haraka in the same position; those differences are reported.
+#: tanween vs a different haraka in the same position, except for the iqlab convention above;
+#: those differences are reported.
 EQUIVALENCES: Final[tuple[Equivalence, ...]] = (
     Equivalence(
         "tatweel, zero-width, bidi and word-joiner controls, no-break and hair spaces",
@@ -226,13 +233,13 @@ EQUIVALENCES: Final[tuple[Equivalence, ...]] = (
         ("أ\u0653", "\u0654ا"),
     ),
     Equivalence(
-        "tanween vs the matching haraka",
-        "Tanzil and KFGQPC write the vowel before an idgham/iqlab noon as a doubled or "
-        "single mark depending on convention. This is the one row that widens what "
-        "'identical' means: a doubled mark and a single mark in the same position compare "
-        "equal.",
-        _tanween_as_haraka,
-        ("\u064b", "\u064e"),
+        "tanween vs the matching haraka, only where the word carries an iqlab small meem",
+        "Before a baa, Tanzil writes the doubled vowel plus the small meem (أَلِيمٌۢ) and "
+        "KFGQPC the single vowel plus the meem (أَلِيمُۢ): 338 words in the Uthmani text, all "
+        "of this one shape. The fold is tied to the meem, so a tanween lost anywhere else is "
+        "reported.",
+        _iqlab_tanween_as_haraka,
+        ("أَلِيمٌۢ", "أَلِيمُۢ"),
     ),
     Equivalence(
         "word spacing",
@@ -465,6 +472,30 @@ def _witnesses() -> dict[str, Witness]:
             tls_verify=False,
         ),
         Witness(
+            id="tanzil-uthmani-min",
+            label="tanzil.net uthmani-min, today",
+            urls=(config.TANZIL_DOWNLOAD.format(variant="uthmani-min"),),
+            parse=_parse_tanzil,
+            ancestry="Tanzil itself. A refresh check, not a second opinion.",
+            tls_verify=False,
+        ),
+        Witness(
+            id="tanzil-simple-min",
+            label="tanzil.net simple-min, today",
+            urls=(config.TANZIL_DOWNLOAD.format(variant="simple-min"),),
+            parse=_parse_tanzil,
+            ancestry="Tanzil itself. A refresh check, not a second opinion.",
+            tls_verify=False,
+        ),
+        Witness(
+            id="tanzil-simple-plain",
+            label="tanzil.net simple-plain, today",
+            urls=(config.TANZIL_DOWNLOAD.format(variant="simple-plain"),),
+            parse=_parse_tanzil,
+            ancestry="Tanzil itself. A refresh check, not a second opinion.",
+            tls_verify=False,
+        ),
+        Witness(
             id="alquran-uthmani",
             label="alquran.cloud quran-uthmani",
             urls=("https://api.alquran.cloud/v1/quran/quran-uthmani",),
@@ -478,6 +509,21 @@ def _witnesses() -> dict[str, Witness]:
             urls=("https://api.alquran.cloud/v1/quran/quran-simple",),
             parse=_parse_alquran_cloud,
             ancestry="Tanzil 1.0.x (Imlaei). Same origin as Tanzil.",
+        ),
+        Witness(
+            id="alquran-uthmani-min",
+            label="alquran.cloud quran-uthmani-min",
+            urls=("https://api.alquran.cloud/v1/quran/quran-uthmani-min",),
+            parse=_parse_alquran_cloud,
+            ancestry="Tanzil 1.0.x, minimal-marks Uthmani. Same origin as Tanzil: tests the "
+            "mirror, not the text.",
+        ),
+        Witness(
+            id="alquran-simple-min",
+            label="alquran.cloud quran-simple-min",
+            urls=("https://api.alquran.cloud/v1/quran/quran-simple-min",),
+            parse=_parse_alquran_cloud,
+            ancestry="Tanzil 1.0.x, minimal-marks Imlaei. Same origin as Tanzil.",
         ),
         Witness(
             id="digitalkhatt-madina",
@@ -649,6 +695,21 @@ SCRIPTS: Final[dict[str, Script]] = {
             "simple",
             _tanzil_path("simple"),
             ("qp-1", "faw-quranspelled", "alquran-simple"),
+        ),
+        Script(
+            "uthmani-min",
+            _tanzil_path("uthmani-min"),
+            ("tanzil-uthmani-min", "alquran-uthmani-min"),
+        ),
+        Script(
+            "simple-plain",
+            _tanzil_path("simple-plain"),
+            ("tanzil-simple-plain",),
+        ),
+        Script(
+            "simple-min",
+            _tanzil_path("simple-min"),
+            ("tanzil-simple-min", "alquran-simple-min"),
         ),
         Script(
             "simple-clean",

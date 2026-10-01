@@ -37,8 +37,13 @@ vowels in the same position (all are reported).
 - open tanween U+08F0-08F2, U+0656, U+0657, U+065E vs the standard tanween code points.
 - alef maksura, Farsi yeh, yeh barree, keheh, heh goal vs the Arabic letters.
 - hamza and madda order on alef; Tanzil's fatha before a hamza-alef pair.
-- tanween vs the matching single haraka (widens "identical": a doubled and a single mark in
-  the same position compare equal; this is the research's idgham/iqlab convention).
+- tanween vs the matching single haraka, only in a word that carries an iqlab small meem
+  (U+06E2 or U+06ED): Tanzil writes أَلِيمٌۢ, KFGQPC أَلِيمُۢ. Revised 2026-10-01: the first
+  version folded every tanween to its haraka everywhere, which would have hidden a lost tanween
+  (`كِتَابٌ هُوَ` vs `كِتَابُ هُوَ`). Measured against the real witnesses the blanket fold was
+  hiding exactly 338 words (Tanzil Uthmani vs KFGQPC and DigitalKhatt), every one an iqlab
+  word before baa, so the restricted fold leaves every count in this file unchanged; mutation
+  tests now require a tanween lost elsewhere to be reported.
 - word spacing (ignored below raw, counted in the spacing column).
 
 ## Interpretation
@@ -49,6 +54,9 @@ Nothing in these runs points at a wrong word in any script.
 |---|---|---|
 | `uthmani` | skeleton 100% against Tanzil today, KFGQPC Hafs (two copies), DigitalKhatt Madina and Khaled Hosny; 99.9% (6,234/6,236) against alquran.cloud | alquran.cloud is Tanzil 1.0.x and lacks the 12:39 and 12:41 fix from Tanzil 1.1. Vocalised against KFGQPC 98.0% (6,113/6,236): dabt conventions only (fatha on a hamza-alef pair 62, round silent sign vs sukun 33, small high madda 26, hamza below 14, ئ vs ي 13) |
 | `simple` | skeleton 6,233/6,236 against Quranpedia Imlaei and alquran.cloud; 6,230/6,236 against Wikisource | the three Tanzil 1.1 spellings (5:31, 17:32, 39:56) plus three spacing or spelling choices in Wikisource. Vocalised differs everywhere because Imlaei marks assimilation differently (shadda vs sukun), which the table deliberately does not hide |
+| `uthmani-min` | byte-identical to Tanzil today; skeleton 6,234/6,236 and vocalised 5,931/6,236 against alquran.cloud | alquran.cloud is Tanzil 1.0.x (same origin): hamza on alef written as separate hamza (215+62) and small-vowel encodings (U+06E7 vs U+06E6, 34). Registered 2026-10-01; no independent witness exists for the minimal variant |
+| `simple-plain` | byte-identical to Tanzil today | registered 2026-10-01; no mirror carries this variant, so Tanzil itself is the only witness |
+| `simple-min` | byte-identical to Tanzil today; skeleton and vocalised 6,233/6,236 against alquran.cloud | the same three Tanzil 1.1 spellings. Registered 2026-10-01 |
 | `simple-clean` | byte-identical to Tanzil today; skeleton 6,233/6,236 against Quranpedia Imlaei | the same three verses |
 | `kemenag` | 6,235/6,236 identical to the 2025 scrape of the same API; skeleton 6,226/6,236 against KFGQPC Hafs | the 10 rasm conventions of the Indonesian standard recorded in the research; vocalised against KFGQPC is not meaningful (different tradition and dabt) |
 | `indopak` | skeleton 6,219/6,229 verses against KFGQPC Nastaleeq | alef spelling (full vs dagger alef) and hamza seats; 10 verses (the research's L4 count for the same pair was 6,219/6,236, which includes the 7 Al-Fatiha verses left out here) |
@@ -115,12 +123,12 @@ faw-qurankhaledhosn    verse        6236    0.4%      49.5%    100.0%        0  
           1  [0652] -> []
   alquran-uthmani: alquran.cloud quran-uthmani. Ancestry: Tanzil 1.0.x, before the 2021-02-12 Tanzil 1.1 fix at 12:39 and 12:41. Same origin as Tanzil: tests the mirror, not the text.
     identical units raw/skeleton/vocalised of 6236: 1876/6234/2621
-       4708  [] -> [06ED]
-       1935  [] -> [06E2]
+       2617  [064B] -> [064E 06ED]
+       1863  [064D] -> [0650 06E2]
+       1708  [064C] -> [064F 06ED]
+        380  [] -> [06ED]
+        281  [064B] -> [064E]
         276  [0654] -> [0621 064E]
-         34  [06E7] -> [06E6]
-          3  [] -> [0652 06E6]
-          3  [0652 06E7] -> []
   digitalkhatt-madina: DigitalKhatt quran_text_madina.ts. Ancestry: Tanzil's Uthmani text re-encoded for DigitalKhatt's font (it even keeps Tanzil's three word-spacing choices). Not independent of Tanzil.
     identical units raw/skeleton/vocalised of 6236: 1454/6236/6233
           1  [06EA] -> [065C]
@@ -163,6 +171,43 @@ alquran-simple         verse        6236   27.8%      36.8%     99.9%        0  
           3  [064A 0670] -> [0627]
   residual differences: <repo>/.cache/crosscheck/simple.tsv
 
+## uthmani-min
+witness                unit     compared     raw  vocalised  skeleton  spacing  chapters = skeleton
+---------------------------------------------------------------------------------------------------
+tanzil-uthmani-min     verse        6236  100.0%     100.0%    100.0%        0        114/114      
+alquran-uthmani-min    verse        6236   54.0%      95.1%     99.9%        3        113/114      
+  tanzil-uthmani-min: tanzil.net uthmani-min, today. Ancestry: Tanzil itself. A refresh check, not a second opinion.
+    identical units raw/skeleton/vocalised of 6236: 6236/6236/6236
+  alquran-uthmani-min: alquran.cloud quran-uthmani-min. Ancestry: Tanzil 1.0.x, minimal-marks Uthmani. Same origin as Tanzil: tests the mirror, not the text.
+    identical units raw/skeleton/vocalised of 6236: 3368/6234/5931
+        215  [0654] -> [0621]
+         62  [0654] -> [064E 0621]
+         34  [06E7] -> [06E6]
+          4  [] -> [06E6]
+          4  [06E7] -> []
+          2  [] -> [064A]
+  residual differences: <repo>/.cache/crosscheck/uthmani-min.tsv
+
+## simple-plain
+witness                unit     compared     raw  vocalised  skeleton  spacing  chapters = skeleton
+---------------------------------------------------------------------------------------------------
+tanzil-simple-plain    verse        6236  100.0%     100.0%    100.0%        0        114/114      
+  tanzil-simple-plain: tanzil.net simple-plain, today. Ancestry: Tanzil itself. A refresh check, not a second opinion.
+    identical units raw/skeleton/vocalised of 6236: 6236/6236/6236
+  residual differences: <repo>/.cache/crosscheck/simple-plain.tsv
+
+## simple-min
+witness                unit     compared     raw  vocalised  skeleton  spacing  chapters = skeleton
+---------------------------------------------------------------------------------------------------
+tanzil-simple-min      verse        6236  100.0%     100.0%    100.0%        0        114/114      
+alquran-simple-min     verse        6236   56.3%      99.9%     99.9%        3        111/114      
+  tanzil-simple-min: tanzil.net simple-min, today. Ancestry: Tanzil itself. A refresh check, not a second opinion.
+    identical units raw/skeleton/vocalised of 6236: 6236/6236/6236
+  alquran-simple-min: alquran.cloud quran-simple-min. Ancestry: Tanzil 1.0.x, minimal-marks Imlaei. Same origin as Tanzil.
+    identical units raw/skeleton/vocalised of 6236: 3514/6233/6233
+          3  [064A 0670] -> [0627]
+  residual differences: <repo>/.cache/crosscheck/simple-min.tsv
+
 ## simple-clean
 witness                unit     compared     raw  vocalised  skeleton  spacing  chapters = skeleton
 ---------------------------------------------------------------------------------------------------
@@ -190,12 +235,12 @@ qp-2                   verse        6236    0.0%       0.3%     99.8%        0  
           1  [] -> [0670]
   qp-2: Quranpedia mushaf 2 (KFGQPC Hafs). Ancestry: KFGQPC Hafs v13 via Quranpedia; same origin as the fawazahmed0 copy (vocalised 6,234/6,236 identical to it in the research).
     identical units raw/skeleton/vocalised of 6236: 0/6226/23
-      25059  [0652] -> []
+      25060  [0652] -> []
       12593  [0627] -> [0671]
-       8604  [] -> [064E]
+       8617  [] -> [064E]
        7733  [0627] -> [0623]
-       4591  [0627] -> [0625]
-       4184  [0670] -> []
+       4589  [0627] -> [0625]
+       4183  [0670] -> []
   residual differences: <repo>/.cache/crosscheck/kemenag.tsv
 
 ## indopak
@@ -222,8 +267,8 @@ faw-quranindopak       verse        6236    0.4%      46.9%    100.0%        0  
   faw-quranindopak: KFGQPC Hafs Nastaleeq (fawazahmed0 ara-quranindopak). Ancestry: KFGQPC Hafs Nastaleeq v10 via the fawazahmed0 mirror on jsDelivr
     identical units raw/skeleton/vocalised of 6236: 30/6236/2925
        3467  [] -> [0615]
-        544  [06E3] -> [06ED]
         542  [] -> [08D6]
+        342  [06E3] -> [06ED]
         230  [] -> [0617]
         147  [] -> [08D5]
         122  [] -> [08DE]
@@ -319,5 +364,4 @@ faw-quranuthmanihaf    verse        6236   40.1%      99.9%    100.0%        5  
           1  [0621 0652] -> [0654]
           1  [06EA] -> [065C]
   residual differences: <repo>/.cache/crosscheck/qpc-hafs.tsv
-
 ```

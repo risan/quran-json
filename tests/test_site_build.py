@@ -62,6 +62,15 @@ def test_the_coverage_report_is_never_published() -> None:
     assert (tree.parent / "fonts.json").is_file()
 
 
+def test_the_romanisation_report_is_built_but_never_published() -> None:
+    tree = _tree()
+    report = tree.parent / "romanize-report.md"
+
+    assert report.is_file()
+    assert "## Every non-matching verse" in report.read_text(encoding="utf-8")
+    assert not list(tree.rglob("romanize-report*"))
+
+
 def test_every_local_link_and_asset_resolves() -> None:
     tree = _tree()
     sources = [tree / "index.html", tree / "app" / "index.html"]

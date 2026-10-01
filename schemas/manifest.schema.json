@@ -140,7 +140,12 @@
             "status": {"enum": ["granted", "restricted", "unknown"]},
             "url": {"type": "string", "format": "uri", "minLength": 1},
             "attribution": {"type": "string", "minLength": 1},
-            "notice": {"type": "string", "minLength": 1}
+            "notice": {"type": "string", "minLength": 1},
+            "version": {
+              "description": "The upstream dump version, stated where the source's licence requires it (Quranpedia).",
+              "type": "string",
+              "minLength": 1
+            }
           }
         },
         "path": {

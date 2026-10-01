@@ -88,6 +88,11 @@ run("uv", ["run", "quran-json", "cdn", "--out", data], { env: uvEnv });
 // Outside the data tree on purpose: the report feeds the site build and is never published.
 run("uv", ["run", "quran-json", "fonts", "--data", data, "--out", fontCoverage], { env: uvEnv });
 
+// Likewise outside the published tree: a review aid, not part of the dataset.
+run("uv", ["run", "quran-json", "romanize-report", "--out", join(staging, "romanize-report.md")], {
+  env: uvEnv,
+});
+
 run("npm", ["run", "build"], {
   cwd: site,
   env: {

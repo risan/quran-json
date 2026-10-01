@@ -9,7 +9,7 @@ import httpx
 import orjson
 import pytest
 
-from quranjson import crosscheck
+from quranjson import config, crosscheck
 from quranjson.crosscheck import (
     EQUIVALENCES,
     SCRIPTS,
@@ -97,6 +97,28 @@ def test_listed_encoding_differences_are_not_reported_as_vocalised(
 
 def test_tanween_marks_stay_distinct_from_each_other() -> None:
     assert vocalised_key("مً") != vocalised_key("مٌ")
+
+
+@pytest.mark.parametrize(
+    ("ours", "lost"),
+    [
+        ("كِتَابٌ هُوَ", "كِتَابُ هُوَ"),
+        ("غَفُورٌ رَّحِيمٌ", "غَفُورُ رَّحِيمٌ"),
+        ("يَوْمًا عَظِيمًا", "يَوْمَا عَظِيمًا"),
+        ("مَاءٍ دَافِقٍ", "مَاءِ دَافِقٍ"),
+    ],
+)
+def test_a_lost_tanween_is_reported_at_the_vocalised_level(ours: str, lost: str) -> None:
+    assert levels(ours, lost) == (False, False, True)
+
+
+def test_tanween_is_folded_only_where_the_word_carries_an_iqlab_meem() -> None:
+    tanzil = "عَذَابٌ أَلِيمٌۢ بِمَا"
+    kfgqpc = "عَذَابٌ أَلِيمُۢ بِمَا"
+    lost_elsewhere = "عَذَابُ أَلِيمُۢ بِمَا"
+
+    assert levels(tanzil, kfgqpc) == (False, True, True)
+    assert levels(tanzil, lost_elsewhere) == (False, False, True)
 
 
 def test_alef_wasla_is_not_folded_into_plain_alef_at_the_vocalised_level() -> None:
@@ -267,6 +289,10 @@ def test_every_script_witness_exists_and_states_its_ancestry() -> None:
         assert script.witnesses
         for witness_id in script.witnesses:
             assert WITNESSES[witness_id].ancestry
+
+
+def test_every_published_script_is_registered_for_crosscheck() -> None:
+    assert set(config.SCRIPT_IDS) <= set(SCRIPTS)
 
 
 def test_riwayat_scripts_use_their_own_numbering() -> None:

@@ -145,6 +145,9 @@ def _script_snapshot_path(script: str) -> Path:
     if script in config.QURANPEDIA_SCRIPTS:
         return config.quranpedia_path(script)
 
+    if script == config.KEMENAG_SCRIPT:
+        return config.kemenag_path()
+
     return config.tanzil_text_path(script)
 
 
@@ -201,11 +204,7 @@ def _edition_chapters(edition: config.Edition) -> list[dict[str, Any]]:
     The Arabic verse text is deliberately absent: it is identical for every edition and
     lives under `/text/`, so including it here duplicated the corpus 83 times.
     """
-    path = (
-        config.quranenc_path(edition.lang)
-        if edition.kind == "quranenc"
-        else config.extra_edition_path(edition.lang)
-    )
+    path = _edition_snapshot_path(edition)
     snapshot: dict[str, list[dict[str, Any]]] = read_json(path)
 
     chapters: list[dict[str, Any]] = []
@@ -706,7 +705,44 @@ def _script_license(script: str) -> dict[str, str]:
         "url": license_.url,
         "attribution": config.SCRIPT_ATTRIBUTIONS[script],
         **({"notice": config.TANZIL_NOTICE} if script in config.TANZIL_VARIANTS else {}),
+        # Quranpedia's data licence requires republishers to state the dump version.
+        **(
+            {"version": quranpedia.DUMP_METADATA[script]["dump_version"]}
+            if script in config.QURANPEDIA_SCRIPTS
+            else {}
+        ),
     }
+
+
+def _snapshot_provenance(path: Path) -> dict[str, Any]:
+    """Where a committed snapshot came from, as `data/meta/sources.json` recorded it.
+
+    Carries the upstream version when the source states one (a QuranEnc edition version, a
+    Quranpedia dump version), because both licences require republishers to state it.
+    """
+    relative = path.relative_to(config.DATA.parent).as_posix()
+    records: list[dict[str, Any]] = read_json(config.DATA / "meta" / "sources.json")
+    record = next((entry for entry in records if entry["path"] == relative), None)
+
+    if record is None:
+        raise ValueError(f"{relative} has no entry in data/meta/sources.json")
+
+    metadata = record.get("source_metadata", {})
+    version = metadata.get("version") or metadata.get("dump_version")
+
+    return {
+        "snapshot": relative,
+        "upstream_url": record["url"],
+        **({"version": version} if version else {}),
+        "sha256": record["sha256"],
+    }
+
+
+def _edition_snapshot_path(edition: config.Edition) -> Path:
+    if edition.kind == "quranenc":
+        return config.quranenc_path(edition.lang)
+
+    return config.extra_edition_path(edition.lang)
 
 
 def _catalogue_metadata() -> dict[str, dict[str, Any]]:
@@ -776,6 +812,7 @@ def sources_manifest(
                     "status": config.SCRIPT_LICENSES[script].status,
                     "license_url": config.SCRIPT_LICENSES[script].url,
                     "verses": config.SCRIPT_VERSES[script],
+                    **_snapshot_provenance(_script_snapshot_path(script)),
                 }
                 for script in config.SCRIPT_IDS
             ],
@@ -820,6 +857,7 @@ def sources_manifest(
             "license_url": romanize.EDITIONS[0]["license"]["url"],
             "reading": "hafs",
             "verse_ids": "hafs",
+            "source_text_provenance": _snapshot_provenance(config.kemenag_path()),
             "index": "/transliteration/index.json",
             "editions": [
                 {"edition": entry["edition"], "path": entry["path"], "language": entry["language"]}
@@ -836,6 +874,11 @@ def sources_manifest(
                 "license": edition.license.text,
                 "license_url": edition.license.url,
                 "version": versions.get(edition.lang, "n/a"),
+                **{
+                    key: value
+                    for key, value in _snapshot_provenance(_edition_snapshot_path(edition)).items()
+                    if key != "version"
+                },
             }
             for edition in editions
         ],

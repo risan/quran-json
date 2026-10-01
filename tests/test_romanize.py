@@ -180,6 +180,19 @@ def test_the_fatiha_in_all_three_renderers(
     assert fatiha["en-simple"][6].endswith("walad-daalleen")
 
 
+MINIMUM_GOLDEN_VERSES = 50
+
+
+def test_the_golden_set_has_enough_distinct_verses_for_every_renderer() -> None:
+    distinct = {(v["chapter"], v["verse"]) for entry in load_golden() for v in entry["verses"]}
+
+    assert len(distinct) >= MINIMUM_GOLDEN_VERSES
+
+    for entry in load_golden():
+        for verse in entry["verses"]:
+            assert set(romanize.RENDERERS) <= set(verse)
+
+
 def test_every_hafs_exception_has_a_golden_verse() -> None:
     golden = {(v["chapter"], v["verse"]) for entry in load_golden() for v in entry["verses"]}
 
@@ -440,6 +453,24 @@ def test_the_report_lists_counts_and_at_most_fifty_examples_per_class(
 
     for section in sections:
         assert section.count("\n* ") <= validation.EXAMPLES_PER_CLASS
+
+
+def test_the_report_lists_every_non_matching_verse_with_its_class(
+    snapshot: Mapping[str, Sequence[Mapping[str, Any]]],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    chosen = {key: snapshot[key] for key in ("2", "3", "4")}
+    monkeypatch.setattr(validation, "load_snapshot", lambda: chosen)
+    report = tmp_path / "report.md"
+    romanize.write_report(report)
+    text = report.read_text(encoding="utf-8")
+    found = list(validation.mismatches(chosen))
+    table = text.split("| verse | class |\n|---|---|\n")[1].strip().splitlines()
+
+    assert len(found) > validation.EXAMPLES_PER_CLASS
+    assert table == [f"| {item.key} | {item.category} |" for item in found]
+    assert f"## Every non-matching verse ({len(found)})" in text
 
 
 # -- comparison helpers -------------------------------------------------------------------------

@@ -415,7 +415,10 @@ def skeleton_error_rate(pairs: Sequence[tuple[str, str]]) -> float:
 
 
 def write_report(path: Path) -> None:
-    """Write the Metric A numbers and every disagreement class, with examples, as markdown."""
+    """Write the Metric A numbers, every disagreement class with examples, and the full verse table.
+
+    The per-class sections are capped for readability; the closing table is not.
+    """
     snapshot = load_snapshot()
     agreement = measure_agreement(snapshot)
     found = list(mismatches(snapshot))
@@ -443,6 +446,15 @@ def write_report(path: Path) -> None:
                 lines.append(f"  * reference `{reference}`, generated `{generated}`")
 
         lines.append("")
+
+    lines += [
+        f"## Every non-matching verse ({len(found)})",
+        "",
+        "| verse | class |",
+        "|---|---|",
+        *(f"| {item.key} | {item.category} |" for item in found),
+        "",
+    ]
 
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("\n".join(lines), encoding="utf-8")
