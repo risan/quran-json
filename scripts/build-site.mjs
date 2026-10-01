@@ -11,7 +11,6 @@ const staging = join(root, ".build");
 const data = join(staging, "data");
 const siteOutput = join(staging, "site");
 const assembled = join(staging, "assembled");
-const includeUnverified = process.argv.includes("--include-unverified-licenses");
 const writeCdn = !process.argv.includes("--no-cdn");
 
 function run(command, args, options = {}) {
@@ -73,9 +72,7 @@ async function overlayAstro() {
 await rm(staging, { recursive: true, force: true });
 await mkdir(staging, { recursive: true });
 
-const dataArgs = ["run", "quran-json", "cdn", "--out", data];
-if (includeUnverified) dataArgs.push("--include-unverified-licenses");
-run("uv", dataArgs, {
+run("uv", ["run", "quran-json", "cdn", "--out", data], {
   env: { UV_CACHE_DIR: process.env.UV_CACHE_DIR ?? join(root, ".cache", "uv") },
 });
 
@@ -101,6 +98,5 @@ const output = writeCdn ? "cdn/" : ".build/assembled/";
 console.log(
   `built ${output} with ${manifest.scripts.length} scripts, ` +
     `${manifest.translations.count} translations, ` +
-    `${manifest.transliteration.count} transliterations` +
-    (includeUnverified ? " (explicit unverified override)" : " (safe default)"),
+    `${manifest.transliteration.count} transliterations`,
 );

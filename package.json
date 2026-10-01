@@ -1,38 +1,8 @@
 {
   "name": "quran-json",
-  "version": "3.1.2",
-  "private": false,
-  "description": "Quran text, transliteration, and translations in JSON format.",
-  "keywords": [
-    "quran",
-    "islam",
-    "translations",
-    "transliteration",
-    "dataset",
-    "json"
-  ],
-  "homepage": "https://github.com/risan/quran-json#readme",
-  "bugs": {
-    "url": "https://github.com/risan/quran-json/issues"
-  },
+  "private": true,
   "license": "CC-BY-SA-4.0",
-  "author": {
-    "name": "Risan Bagja Pradana",
-    "email": "risanbagja@gmail.com",
-    "url": "https://risanb.com"
-  },
-  "main": "dist/chapters/en/index.json",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/risan/quran-json.git"
-  },
-  "files": [
-    "dist/",
-    "README.md",
-    "LICENSE.txt"
-  ],
   "scripts": {
-    "build": "uv run quran-json build",
     "site": "node scripts/build-site.mjs",
     "cdn": "uv run quran-json cdn",
     "deploy": "npx wrangler deploy",
