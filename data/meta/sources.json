@@ -52,7 +52,7 @@
     "license_url": "https://everyayah.com/data/",
     "sha256": "9d327a3ee76f84d5500e0f343f7fda0decccdb14c6e517dc3c617e7eec00d76f",
     "bytes": 1783,
-    "revision": "",
+    "revision": "c9a124c561e9025af111ff18931ac58f1c7164e5",
     "source_metadata": {
       "manual_registration": true,
       "manifest": "https://everyayah.com/data/recitations.js"
@@ -2985,8 +2985,8 @@
     "license": "Minister of Religious Affairs Regulation 44/2016, Pasal 8(1): 'Teks Mushaf Al-Qur'an tidak memiliki hak cipta.' Copyright Law 28/2014, Pasal 42(e): 'Tidak ada Hak Cipta atas hasil karya berupa: ... e. kitab suci atau simbol keagamaan.' Pasal 8(2) reserves the publisher's rights in khat, tanda baca/tajwid/qira'at and ornamentation, so only the plain UTF-8 text is published: no fonts, no mushaf layout, no ornaments.",
     "license_status": "granted",
     "license_url": "https://jdih.kemenag.go.id/regulation-download/penerbitan-pentashihan-dan-peredaran-mushaf-al-qur%27an",
-    "sha256": "7a08902c0591c0774df916fb2e969e58a7ab95e2ff6743ca894122db6be98a94",
-    "bytes": 4093138,
+    "sha256": "01788dff3f4eeae066238f54a2f5ad111a088dd526fdd49fdbb780570c5d10c1",
+    "bytes": 4093139,
     "revision": "80e8ca67c21193eb716917d475695073139b4212",
     "extra_licenses": [
       {
@@ -3022,15 +3022,17 @@
     "sha256": "f9d98e5089add2626479936ca48b8904508f208a5350855aa00ee8aa7b2b61aa",
     "bytes": 2101026,
     "revision": "6377022b7774887e1fbc3d47f9078846c3ee3c02",
+    "source_sha256": "af5fbabbd69c34c5ac60c31d65ef37bde64b54fe499939942cbc6a662a7ca51d",
+    "source_bytes": 422507,
     "source_metadata": {
       "provider": "quranpedia",
       "mushaf_id": 4,
-      "name": "Warsh",
-      "dump_version": "2026-09-18",
+      "name": "مصحف ورش",
+      "dump_version": "2026-09-29",
       "built_at": null,
       "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
       "description": null,
-      "bismillah": null
+      "bismillah": "بِسْمِ اِ۬للَّهِ اِ۬لرَّحْمَٰنِ اِ۬لرَّحِيمِ "
     }
   },
   {
@@ -3043,15 +3045,17 @@
     "sha256": "ece0a2b0efe44d496211c595d0a34f495413bc93f78fba8095a666e2048d1303",
     "bytes": 2096323,
     "revision": "6377022b7774887e1fbc3d47f9078846c3ee3c02",
+    "source_sha256": "ebb01c297e2fe4e2eaa6bdf903cc3c0b7c59bd0bf54c47d82906d873d966b80f",
+    "source_bytes": 418528,
     "source_metadata": {
       "provider": "quranpedia",
       "mushaf_id": 7,
-      "name": "Qalun",
-      "dump_version": "2026-09-18",
+      "name": "مصحف قالون",
+      "dump_version": "2026-09-30",
       "built_at": null,
       "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
       "description": null,
-      "bismillah": null
+      "bismillah": "بِسْمِ اِ۬للَّهِ اِ۬لرَّحْمَٰنِ اِ۬لرَّحِيمِ"
     }
   },
   {
@@ -3064,14 +3068,14 @@
     "sha256": "7276ed5158d314d4f323545e24ff2912d411a3ac4e3c6bdc6ae3ffcf2c3a3c67",
     "bytes": 2064534,
     "revision": "a8b5918b0c6f636e61a0cb57fb3366667e45d712",
-    "source_sha256": "fbec857dd613946604fd4c004d7322778ecf1c058c46080e30702e9bf9959b02",
+    "source_sha256": "46e39149452c3da020b56372a33832f55d81ce7a306a0a338b0b904c0cbed103",
     "source_bytes": 395980,
     "source_metadata": {
       "provider": "quranpedia",
       "mushaf_id": 3,
       "name": "مصحف حفص نستعليق",
-      "dump_version": "2026-09-20",
-      "built_at": "2026-09-20T03:46:39+00:00",
+      "dump_version": "2026-09-30",
+      "built_at": null,
       "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
       "description": "مصحف حفص نستعليق — not matching the printed edition",
       "bismillah": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ ؀"
@@ -3087,14 +3091,14 @@
     "sha256": "d4734c7176dd666530c066e638d602669be6ac016b3da699fff599cb746a89ac",
     "bytes": 2098819,
     "revision": "a8b5918b0c6f636e61a0cb57fb3366667e45d712",
-    "source_sha256": "f6024036b0040afea6af7973abd78b883ab2a0837ae72f6360b69e597c53999a",
+    "source_sha256": "c9432307e197bae97ff54d36be89e6ab0d08ffa9ffc2364e4f626000f7b32302",
     "source_bytes": 421957,
     "source_metadata": {
       "provider": "quranpedia",
       "mushaf_id": 6,
       "name": "مصحف الدوري",
-      "dump_version": "2026-09-20",
-      "built_at": "2026-09-20T03:46:42+00:00",
+      "dump_version": "2026-09-30",
+      "built_at": null,
       "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
       "description": "مصحف الدوري — al-Duri from Abu Amr, own source numbering",
       "bismillah": "بِسۡمِ اِ۬للَّهِ اِ۬لرَّحۡمَٰنِ اِ۬لرَّحِيمِ "
@@ -3109,7 +3113,7 @@
     "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
     "sha256": "0136b913aeb5a6a0389681f988215791ddd848c4347f7cf5e9d2574db7f1da49",
     "bytes": 2051942,
-    "revision": "",
+    "revision": "8528abfcb55d808562ae9675217c07890322178f",
     "source_sha256": "af546911a592c7b8a5a35b668c0f885d7b37b52536c5032bd6fb2b42c5819f33",
     "source_bytes": 414537,
     "source_metadata": {
@@ -3132,7 +3136,7 @@
     "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
     "sha256": "d53c421448e19c54ee639387895e71e63ff70ae40748bd65b299e90bf02cd8a8",
     "bytes": 2051956,
-    "revision": "",
+    "revision": "8528abfcb55d808562ae9675217c07890322178f",
     "source_sha256": "24856d89627b6d9f35da525f98935d551e2bc49ca3ccf9107784172e920bbdae",
     "source_bytes": 414588,
     "source_metadata": {
@@ -3155,7 +3159,7 @@
     "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
     "sha256": "f7fbfb6f78732ae5408e47a79ad762baff4e5a232034bf46f25ee324737b6c93",
     "bytes": 2089641,
-    "revision": "",
+    "revision": "8528abfcb55d808562ae9675217c07890322178f",
     "source_sha256": "9bf54a7e2b87ba0a062f6e46aca25179a3cedffc5bf35fcc9bbb8a47f084fdac",
     "source_bytes": 420794,
     "source_metadata": {

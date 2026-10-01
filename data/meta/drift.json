@@ -52,5 +52,79 @@
         "U+0098 ? x1"
       ]
     }
+  },
+  {
+    "path": "data/kemenag/quran.json",
+    "url": "https://web-api.qurankemenag.net/quran-ayah?start=0&limit=286&surah={1-114}",
+    "detected_at": "2026-10-01T11:42:37+00:00",
+    "kind": "records",
+    "records": 6236,
+    "changed": 1,
+    "changed_verses": [
+      "23:78"
+    ],
+    "codepoint_delta": {
+      "added": [
+        "U+0027 APOSTROPHE x2",
+        "U+1E63 LATIN SMALL LETTER S WITH DOT BELOW x1"
+      ],
+      "removed": [
+        "U+1E25 LATIN SMALL LETTER H WITH DOT BELOW x1"
+      ]
+    },
+    "previous_sha256": "7a08902c0591c0774df916fb2e969e58a7ab95e2ff6743ca894122db6be98a94",
+    "sha256": "01788dff3f4eeae066238f54a2f5ad111a088dd526fdd49fdbb780570c5d10c1"
+  },
+  {
+    "path": "data/quranpedia/warsh.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-4.json.gz",
+    "detected_at": "2026-10-01T11:42:37+00:00",
+    "kind": "archive",
+    "records": 6214,
+    "changed": 0,
+    "note": "New dump archive, every verse and Hafs mapping identical; only the pin changed.",
+    "previous_dump_version": "2026-09-18",
+    "dump_version": "2026-09-29",
+    "previous_source_sha256": null,
+    "source_sha256": "af5fbabbd69c34c5ac60c31d65ef37bde64b54fe499939942cbc6a662a7ca51d"
+  },
+  {
+    "path": "data/quranpedia/qalun.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-7.json.gz",
+    "detected_at": "2026-10-01T11:42:37+00:00",
+    "kind": "archive",
+    "records": 6214,
+    "changed": 0,
+    "note": "New dump archive, every verse and Hafs mapping identical; only the pin changed.",
+    "previous_dump_version": "2026-09-18",
+    "dump_version": "2026-09-30",
+    "previous_source_sha256": null,
+    "source_sha256": "ebb01c297e2fe4e2eaa6bdf903cc3c0b7c59bd0bf54c47d82906d873d966b80f"
+  },
+  {
+    "path": "data/quranpedia/hafs-nastaliq.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-3.json.gz",
+    "detected_at": "2026-10-01T11:42:37+00:00",
+    "kind": "archive",
+    "records": 6236,
+    "changed": 0,
+    "note": "New dump archive, every verse and Hafs mapping identical; only the pin changed.",
+    "previous_dump_version": "2026-09-20",
+    "dump_version": "2026-09-30",
+    "previous_source_sha256": "fbec857dd613946604fd4c004d7322778ecf1c058c46080e30702e9bf9959b02",
+    "source_sha256": "46e39149452c3da020b56372a33832f55d81ce7a306a0a338b0b904c0cbed103"
+  },
+  {
+    "path": "data/quranpedia/duri.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-6.json.gz",
+    "detected_at": "2026-10-01T11:42:37+00:00",
+    "kind": "archive",
+    "records": 6218,
+    "changed": 0,
+    "note": "New dump archive, every verse and Hafs mapping identical; only the pin changed.",
+    "previous_dump_version": "2026-09-20",
+    "dump_version": "2026-09-30",
+    "previous_source_sha256": "f6024036b0040afea6af7973abd78b883ab2a0837ae72f6360b69e597c53999a",
+    "source_sha256": "c9432307e197bae97ff54d36be89e6ab0d08ffa9ffc2364e4f626000f7b32302"
   }
 ]
