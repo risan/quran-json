@@ -40,6 +40,8 @@ select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 # The review record is a set of verbatim quotes from rights holders -- Arabic, Indonesian,
 # Turkish, Malay. RUF001 reads a Turkish dotless ı as a mistyped Latin i; it is neither.
 "src/quranjson/review.py" = ["RUF001"]
+# The cross-check maps phones to IPA, whose glottal stop and gamma RUF001 reads as `?` and `y`.
+"scripts/romanize_crosscheck.py" = ["RUF001"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

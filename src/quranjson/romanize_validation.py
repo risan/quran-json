@@ -15,11 +15,17 @@ Disagreement classes
 --------------------
 Every verse that does not match is given exactly one class by `classify`:
 
-* `reference-typo`: the reference is wrong, listed in `REFERENCE_TYPOS` with the fragment.
 * `pause-choice`: the verse matches once individual mid-verse pause decisions are flipped
   (Kemenag stops at some waqf signs and runs through others, and the signs do not decide).
 * `hamza-spacing`: the only difference is an apostrophe (Kemenag writes `fa'in` and `fa in`
   about equally often).
+* `reference-typo`: the reference deviates from the Arabic where the generator's phones are
+  confirmed by an independent engine (QUD `quranic-phonemizer`, MIT). Typical cases are a
+  missing macron (`'azizun`), a wrong letter (`rijaliukum` in 2:282, `wal ardhi` in 7:96,
+  `sabirun` in 8:65, `ubarri'u` in 3:49) and words dropped from the Latin line. The
+  confirmation is `tests/data/romanize_reference_witness.txt`: one line per verse, with a
+  digest of our phones at the time `scripts/romanize_crosscheck.py` compared them. A changed
+  digest voids the confirmation, so a later generator change cannot hide behind it.
 * `generator-gap`: anything else. `tests/data/romanize_generator_gaps.txt` lists the verses
   currently in this class; a verse that enters it fails the tests.
 
@@ -28,6 +34,8 @@ A verse that needs more than one excuse takes the first of the order above.
 
 from __future__ import annotations
 
+import hashlib
+import re
 import unicodedata
 from collections import Counter
 from collections.abc import Iterator, Mapping, Sequence
@@ -38,6 +46,7 @@ from typing import Any, Final
 from . import config
 from .jsonio import read_json
 from .romanize import (
+    ARTICLE_BOUNDARY,
     SCHEMES,
     iter_verses,
     render,
@@ -51,10 +60,14 @@ __all__ = [
     "Class",
     "Mismatch",
     "classify",
+    "connected_phones",
     "edit_distance",
+    "load_lines",
+    "load_witness",
     "measure_agreement",
     "mismatches",
     "normalise",
+    "phone_digest",
     "skeleton",
     "skeleton_error_rate",
     "write_report",
@@ -75,9 +88,9 @@ class Class:
     ALL: Final = (REFERENCE_TYPO, PAUSE_CHOICE, HAMZA_SPACING, GENERATOR_GAP)
 
 
-#: Kemenag typos, per verse: (reference fragment, what the Arabic says). A verse is a
-#: reference typo only if the corrected reference then matches the generator.
-REFERENCE_TYPOS: Final[Mapping[tuple[int, int], tuple[tuple[str, str], ...]]] = {}
+TESTS_DATA: Final = Path(__file__).resolve().parents[2] / "tests" / "data"
+WITNESS_PATH: Final = TESTS_DATA / "romanize_reference_witness.txt"
+GAPS_PATH: Final = TESTS_DATA / "romanize_generator_gaps.txt"
 
 
 def normalise(text: str) -> str:
@@ -208,11 +221,46 @@ def _without_hamza(text: str) -> str:
     return text.replace("'", "")
 
 
-def _apply_typos(chapter: int, verse: int, reference: str) -> str:
-    for wrong, right in REFERENCE_TYPOS.get((chapter, verse), ()):
-        reference = reference.replace(wrong, right)
+def connected_phones(text: str) -> list[str]:
+    """The phones of a verse read straight through: no stop except at the verse end.
 
-    return reference
+    This is the sequence the independent engine is compared with.
+    """
+    words = verse_words(text)
+    every_stop = frozenset(
+        word.mark_ordinal for word in words if word.pause_after and word.mark_ordinal is not None
+    )
+    spoken = speak(verse_words(text, flipped_stops=every_stop))
+
+    return [phone for word in spoken for phone in word.phones if phone != ARTICLE_BOUNDARY]
+
+
+def phone_digest(text: str) -> str:
+    """A short stable digest of `connected_phones`, to detect a generator change."""
+    joined = " ".join(connected_phones(text))
+
+    return hashlib.sha256(joined.encode("utf-8")).hexdigest()[:12]
+
+
+def load_lines(path: Path) -> list[str]:
+    """The non-blank, non-comment lines of a committed data file; missing means empty."""
+    if not path.exists():
+        return []
+
+    lines = path.read_text(encoding="utf-8").splitlines()
+
+    return [line.strip() for line in lines if line.strip() and not line.startswith("#")]
+
+
+def load_witness(path: Path = WITNESS_PATH) -> dict[str, str]:
+    """Verse key to the phone digest confirmed by the independent engine."""
+    witness: dict[str, str] = {}
+
+    for line in load_lines(path):
+        key, digest = line.split()
+        witness[key] = digest
+
+    return witness
 
 
 def _render_with_flips(text: str, flipped: frozenset[int]) -> str:
@@ -246,34 +294,36 @@ def _best_pause_variant(text: str, reference: str) -> frozenset[int]:
     return flipped
 
 
-def classify(chapter: int, verse: int, text: str, reference: str) -> str | None:
+def classify(
+    chapter: int, verse: int, text: str, reference: str, witness: Mapping[str, str]
+) -> str | None:
     """The disagreement class of one verse, or None when the generator agrees."""
     generated = normalise(romanize_verse(text, RENDERER, chapter=chapter, verse=verse))
 
     if generated == reference:
         return None
 
-    corrected = _apply_typos(chapter, verse, reference)
-    typo = corrected != reference
-    flipped = _best_pause_variant(text, corrected)
+    flipped = _best_pause_variant(text, reference)
     variant = _render_with_flips(text, flipped)
 
-    if _without_hamza(variant) != _without_hamza(corrected):
-        return Class.GENERATOR_GAP
+    if _without_hamza(variant) == _without_hamza(reference):
+        return Class.PAUSE_CHOICE if flipped else Class.HAMZA_SPACING
 
-    if typo:
+    if witness.get(f"{chapter}:{verse}") == phone_digest(text):
         return Class.REFERENCE_TYPO
 
-    if flipped:
-        return Class.PAUSE_CHOICE
-
-    return Class.HAMZA_SPACING
+    return Class.GENERATOR_GAP
 
 
-def mismatches(snapshot: Mapping[str, Sequence[Mapping[str, Any]]]) -> Iterator[Mismatch]:
+def mismatches(
+    snapshot: Mapping[str, Sequence[Mapping[str, Any]]], witness: Mapping[str, str] | None = None
+) -> Iterator[Mismatch]:
+    """Every verse the generator does not reproduce, with its class."""
+    witness = load_witness() if witness is None else witness
+
     for chapter, verse, record in iter_verses(snapshot):
         reference = normalise(record["transliteration"])
-        category = classify(chapter, verse, record["text"], reference)
+        category = classify(chapter, verse, record["text"], reference, witness)
 
         if category is not None:
             generated = _generated(record, chapter, verse)
@@ -294,31 +344,35 @@ _SKELETON_FOLDS: Final = {
     "\u1e6d": "t",
     "\u1e93": "z",
 }
+_SKELETON_SPELLINGS: Final = (
+    ("ee", "ii"),
+    ("oo", "uu"),
+    ("ay", "ai"),
+    ("aw", "au"),
+    ("dh", "z"),
+    ("th", "s"),
+)
 
 
 def skeleton(text: str) -> str:
     """A consonant and vowel-length skeleton, for comparing two English transliterations.
 
-    Long vowels are folded to doubled letters (`aa ii uu`; macrons, and the `ee`/`oo`
-    spellings, all land there), emphatics fold to their plain letters, hamza, ayn, hyphens,
-    spaces and punctuation are dropped, and runs of the same consonant collapse (spelling of
-    gemination and of assimilated `l` differs between sources).
+    Emphatics fold to their plain letters, `dh` and `th` fold to `z` and `s`, and the long
+    vowel spellings (macrons, `ee`, `oo`) and diphthong spellings (`ay`, `aw`) fold to one
+    form. Hamza, ayn, hyphens, spaces and punctuation are dropped. A run of the same vowel is
+    one long vowel whatever its length (Tanzil writes `laaa`), and a run of the same consonant
+    is one consonant (spelling of gemination and of assimilated `l` differs between sources).
     """
     text = unicodedata.normalize("NFC", text).lower()
-    text = text.replace("ee", "ii").replace("oo", "uu")
-    folded = "".join(_SKELETON_FOLDS.get(character, character) for character in text)
-    letters = [character for character in folded if character.isalpha() and character.isascii()]
-    result: list[str] = []
+    text = "".join(_SKELETON_FOLDS.get(character, character) for character in text)
+    text = "".join(character for character in text if "a" <= character <= "z")
 
-    for character in letters:
-        is_vowel = character in "aiu"
+    for spelling, folded in _SKELETON_SPELLINGS:
+        text = text.replace(spelling, folded)
 
-        if result and result[-1] == character and not is_vowel:
-            continue
+    text = re.sub(r"([aiu])\1+", r"\1\1", text)
 
-        result.append(character)
-
-    return "".join(result)
+    return re.sub(r"([^aiu])\1+", r"\1", text)
 
 
 def skeleton_error_rate(pairs: Sequence[tuple[str, str]]) -> float:

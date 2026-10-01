@@ -138,6 +138,8 @@ WAW: Final = "\u0648"
 LAM: Final = "\u0644"
 TEH_MARBUTA: Final = "\u0629"
 SAD: Final = "\u0635"
+TAH: Final = "\u0637"
+TEH: Final = "\u062a"
 
 # ---------------------------------------------------------------------------------------
 # Phones
@@ -195,6 +197,10 @@ CONSONANT_PHONES: Final = frozenset(CONSONANTS.values())
 ASSIMILABLE_FINALS: Final = frozenset(
     {"n", "l", "t", "d", "dh", "th", "b", "q", "k", "m", "T", "Z", "D", "S", "r"}
 )
+
+# The one-letter particles that attach to a word with a hamzat al-wasl: wa, fa, la, and the
+# interrogative alef.
+PREFIX_LETTERS: Final = "\u0648\u0641\u0644\u0627"
 
 # The nouns that begin with a hamzat al-wasl: ibn, ism, imru', ithnan.
 WASL_NOUN_STEMS: Final = frozenset(
@@ -268,6 +274,7 @@ class Word:
     wasl: bool = False
     ends_in_tanwin: bool = False
     iqlab: bool = False
+    pausal_alef: bool = False
     pause_after: bool = False
     sakta_after: bool = False
     starts_with_shadda: bool = False
@@ -323,6 +330,7 @@ class WordReader:
         self.wasl = False
         self.ends_in_tanwin = False
         self.iqlab = False
+        self.pausal_alef = False
         self.article_lam_assimilated = False
 
     def read(self) -> Word:
@@ -337,6 +345,7 @@ class WordReader:
             wasl=self.wasl,
             ends_in_tanwin=self.ends_in_tanwin,
             iqlab=self.iqlab,
+            pausal_alef=self.pausal_alef,
         )
 
     # -- helpers --
@@ -403,8 +412,16 @@ class WordReader:
 
             if tanwin:
                 self._add_tanwin(tanwin)
+        elif DAGGER_ALEF in cluster.marks:
+            self._lengthen_with_dagger()
         elif vowel:
             self.phones.append(vowel)
+
+    def _lengthen_with_dagger(self) -> None:
+        if self._last_phone() == "a":
+            self.phones[-1] = "A"
+        else:
+            self.phones.append("A")
 
     # -- alef --
 
@@ -413,11 +430,18 @@ class WordReader:
         vowel = cluster.short_vowel()
         tanwin = cluster.tanwin()
 
+        if RECTANGULAR_ZERO in cluster.marks and index == len(self.clusters) - 1:
+            self.pausal_alef = True
+
+            return
+
         if cluster.marks & SILENT_MARKS:
             return
 
         if DAGGER_ALEF in cluster.marks:
             self.phones += [HAMZA, "A"]
+        elif SUBSCRIPT_ALEF in cluster.marks:
+            self.phones += [HAMZA, "I"]
         elif cluster.marks & MADDAHS and not vowel:
             self._read_madda_alef(index)
         elif vowel:
@@ -431,10 +455,16 @@ class WordReader:
             self._lengthen_preceding_fatha()
 
     def _read_madda_alef(self, index: int) -> None:
-        if index == 0 or self._previous_vowel() != "a":
-            self.phones += [HAMZA, "A"]
-        else:
+        """An alef with a maddah lengthens a preceding fatha, follows a plural waw silently, or
+        is a hamza with a long a."""
+        previous = self._previous_vowel()
+
+        if index > 0 and previous == "a":
             self.phones[-1] = "A"
+        elif index > 0 and previous == "U":
+            return
+        else:
+            self.phones += [HAMZA, "A"]
 
     def _read_initial_bare_alef(self) -> None:
         """A hamzat al-wasl: dropped when the word is joined, pronounced after a pause."""
@@ -473,13 +503,13 @@ class WordReader:
             or SUKUN in following.marks
             or (SHADDA in following.marks and DAGGER_ALEF not in following.marks)
         )
-        wasl_after_conjunction = (
-            index == 1
-            and self.clusters[0].base in "\u0648\u0641\u0644"
+        wasl_after_prefixes = (
+            1 <= index <= 3
+            and all(cluster.base in PREFIX_LETTERS for cluster in prefixes)
             and bool(following.marks & {SUKUN, SHADDA})
         )
 
-        return (index <= 2 and lam_of_article and prefix_letters_only) or wasl_after_conjunction
+        return (index <= 2 and lam_of_article and prefix_letters_only) or wasl_after_prefixes
 
     def _lengthen_preceding_fatha(self) -> None:
         if self._last_phone() == "a" and not self.ends_in_tanwin:
@@ -490,10 +520,7 @@ class WordReader:
         vowel = cluster.short_vowel()
 
         if DAGGER_ALEF in cluster.marks:
-            if self._last_phone() == "a":
-                self.phones[-1] = "A"
-            else:
-                self.phones.append("A")
+            self._lengthen_with_dagger()
         elif SUBSCRIPT_ALEF in cluster.marks:
             self.phones[-1:] = ["I"]
         elif vowel and self._vowel_shifted_onto_alef_maksura(index):
@@ -504,11 +531,11 @@ class WordReader:
             return
         elif self._last_phone() == "a":
             self.phones[-1] = "A"
-        elif self._last_phone() == "i":
+        elif self._last_phone() == "i" and index == len(self.clusters) - 1:
             self.phones[-1] = "I"
 
     def _vowel_shifted_onto_alef_maksura(self, index: int) -> bool:
-        """`\u0641\u0649\u0650`: the kasra is written on the ya, but it is the vowel of the letter before.
+        """A kasra written on the final yeh is the vowel of the letter before it (`fi`).
 
         The result is a long vowel, not a consonant ya plus a short vowel.
         """
@@ -536,6 +563,8 @@ class WordReader:
 
         if SUKUN in cluster.marks and self._is_assimilated_into_next(index, base):
             return
+
+        self._keep_tah_before_teh(index, base)
 
         self._add_consonant(index, base, consonant)
         self._add_vowel_of(cluster)
@@ -631,6 +660,13 @@ class WordReader:
             and SHADDA in following.marks
         )
 
+    def _keep_tah_before_teh(self, index: int, base: str) -> None:
+        """`basatta`: the tah stays audible before a teh, so the teh's shadda adds nothing."""
+        following = self._cluster_after(index)
+
+        if base == TAH and following is not None and following.base == TEH:
+            following.marks.discard(SHADDA)
+
     def _is_assimilated_into_next(self, index: int, base: str) -> bool:
         """A consonant with sukun before a shadda letter is spoken as that letter."""
         following = self._cluster_after(index)
@@ -639,6 +675,7 @@ class WordReader:
             following is not None
             and SHADDA in following.marks
             and base not in (WAW, YEH, "\u0646", "\u0645")
+            and not (base == TAH and following.base == TEH)
         )
 
     def _add_consonant(self, index: int, base: str, consonant: str) -> None:
@@ -765,6 +802,9 @@ class _StopMarks:
 
 def _add_written_noon(word: Word) -> None:
     """A small noon at the start of the next word is the tanwin written as vowel plus noon."""
+    if word.ends_in_tanwin:
+        return
+
     word.phones.append("n")
     word.ends_in_tanwin = True
 
@@ -845,9 +885,16 @@ class SpokenWord:
     sakta: bool = False
 
 
-def pause_form(phones: Sequence[str], *, ends_in_tanwin: bool) -> list[str]:
+def pause_form(
+    phones: Sequence[str], *, ends_in_tanwin: bool, pausal_alef: bool = False
+) -> list[str]:
     """The word as spoken when stopping on it."""
     result = list(phones)
+
+    if pausal_alef and result and result[-1] == "a":
+        result[-1] = "A"
+
+        return result
 
     if ends_in_tanwin and len(result) >= 2 and result[-1] == "n":
         vowel = result[-2]
@@ -916,7 +963,9 @@ def speak(words: Sequence[Word]) -> list[SpokenWord]:
 
         if is_last or word.pause_after:
             spoken[index].phones = pause_form(
-                spoken[index].phones, ends_in_tanwin=word.ends_in_tanwin
+                spoken[index].phones,
+                ends_in_tanwin=word.ends_in_tanwin,
+                pausal_alef=word.pausal_alef,
             )
             spoken[index].pause = True
 

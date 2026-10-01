@@ -1,0 +1,14 @@
+# Verses in the generator-gap class. A verse not listed here must not enter it.
+2:61
+4:171
+5:8
+6:93
+7:148
+7:196
+21:71
+25:49
+27:36
+38:74
+46:33
+60:10
+75:40
