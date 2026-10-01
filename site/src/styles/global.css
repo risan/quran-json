@@ -144,6 +144,16 @@
     text-align: right;
   }
 
+  .theme-icon {
+    display: none;
+  }
+
+  html[data-theme="light"] .theme-icon-light,
+  html[data-theme="dark"] .theme-icon-dark,
+  html[data-theme="system"] .theme-icon-system {
+    display: block;
+  }
+
   .link {
     @apply text-brand underline-offset-4 hover:underline;
   }
@@ -164,7 +174,7 @@
     @apply border-b-0;
   }
 
-  .doc-prose p {
+  p.doc-prose {
     @apply text-muted-foreground max-w-[68ch] leading-6;
   }
 
@@ -183,6 +193,11 @@
   overflow-x: auto;
   border-radius: var(--radius);
   background-color: var(--muted) !important;
+}
+
+[data-tabs] .astro-code {
+  border-radius: 0;
+  background-color: transparent !important;
 }
 
 .dark .astro-code,

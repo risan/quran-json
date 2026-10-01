@@ -1,0 +1,61 @@
+---
+import { Code } from "astro:components";
+import { Check, Copy } from "lucide-react";
+import { buttonVariants } from "../ui/button";
+
+interface Props {
+  label: string;
+  tabs: { label: string; lang: string; code: string }[];
+}
+
+const { label, tabs } = Astro.props;
+---
+
+<div data-tabs class="overflow-hidden rounded-md border">
+  <div class="flex items-center justify-between border-b px-1 py-1">
+    <div role="tablist" aria-label={label} data-tablist hidden class="flex gap-0.5">
+      {
+        tabs.map((tab, index) => (
+          <button
+            type="button"
+            role="tab"
+            data-tab={index}
+            aria-selected={index === 0 ? "true" : "false"}
+            class="text-muted-foreground hover:text-foreground aria-selected:bg-muted aria-selected:text-foreground rounded px-2 py-1 text-xs font-medium"
+          >
+            {tab.label}
+          </button>
+        ))
+      }
+    </div>
+    <span class="text-muted-foreground px-2 text-xs" data-tabs-static>{label}</span>
+    <button
+      type="button"
+      data-copy
+      hidden
+      class={buttonVariants({ variant: "ghost", size: "xs" })}
+      aria-label="Copy the code"
+    >
+      <Copy class="size-3" data-copy-icon aria-hidden="true" />
+      <Check class="hidden size-3" data-copied-icon aria-hidden="true" />
+      <span data-copy-label>Copy</span>
+    </button>
+  </div>
+  {
+    tabs.map((tab, index) => (
+      <div role="tabpanel" data-panel={index} data-code={tab.code} aria-label={tab.label}>
+        <p class="text-muted-foreground px-3 pt-2 text-xs" data-panel-caption>
+          {tab.label}
+        </p>
+        <Code
+          code={tab.code}
+          lang={tab.lang}
+          themes={{ light: "github-light", dark: "github-dark" }}
+          defaultColor="light"
+          wrap={false}
+        />
+      </div>
+    ))
+  }
+  <p class="sr-only" role="status" data-copy-status></p>
+</div>
