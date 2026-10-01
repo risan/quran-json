@@ -145,3 +145,12 @@ npm run dev --prefix site      # site dev server (after one build)
 Builds read only the committed snapshots in `data/`, so they work offline. The site is in
 `site/` (Astro, React, Tailwind, shadcn/ui). Cloudflare Workers serves `cdn/`, which `npm run
 site` writes.
+
+Every push to `main` deploys through Cloudflare Workers Builds. `cdn/` is gitignored, so the
+build command must generate it (the build image has no `uv`):
+
+```text
+curl -LsSf https://astral.sh/uv/install.sh | sh && export PATH="$HOME/.local/bin:$PATH" && uv sync --locked && npm ci --prefix site && npm run site
+```
+
+The deploy command is `npx wrangler deploy`.
