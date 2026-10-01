@@ -1,9 +1,10 @@
-import { createReadStream, existsSync, statSync } from "node:fs";
-import { extname, join, normalize } from "node:path";
+import { createReadStream } from "node:fs";
+import { extname, normalize } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
 import tailwindcss from "@tailwindcss/vite";
+import { resolveDataFile } from "./src/dev-data.mjs";
 
 const DATA_PATHS = [
   "/manifest.json",
@@ -25,8 +26,8 @@ function serveData() {
     name: "quran-json-dev-data",
     apply: "serve",
     configureServer(server) {
-      server.middlewares.use((request, response, next) => {
-        const path = decodeURIComponent((request.url ?? "").split("?")[0]);
+      server.middlewares.use(async (request, response, next) => {
+        const path = (request.url ?? "").split("?")[0];
 
         if (!DATA_PATHS.some((prefix) => path === prefix || path.startsWith(prefix))) {
           next();
@@ -34,9 +35,9 @@ function serveData() {
           return;
         }
 
-        const file = normalize(join(dataRoot, path));
+        const file = await resolveDataFile(dataRoot, path);
 
-        if (!file.startsWith(dataRoot) || !existsSync(file) || !statSync(file).isFile()) {
+        if (!file) {
           next();
 
           return;
