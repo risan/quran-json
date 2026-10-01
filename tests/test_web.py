@@ -136,4 +136,4 @@ _MARKS = re.compile(r"[ـً-ٰٟۖ-ۭ࣢ࣰ-ࣿ\s]")
 
 def _letters(text: str) -> str:
     """The bare letters of a verse, with alef wasla read as a plain alef."""
-    return _MARKS.sub("", text).replace("ٱ", "ا")
+    return _MARKS.sub("", text).replace("\u0671", "\u0627")

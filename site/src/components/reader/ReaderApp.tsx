@@ -39,7 +39,13 @@ function initialState(boot: ReaderBoot): {
   warning: string | null;
 } {
   const parsed = parseReaderHash(location.hash);
-  const stored = normalizePrefs(loadStoredPrefs(), boot);
+  const saved = loadStoredPrefs();
+  // A first visit reads with an English translation rather than bare Arabic.
+  const english = boot.translations.find((edition) => edition.code === "en");
+  const stored = normalizePrefs(
+    saved ?? { translations: english ? [editionKey(english)] : [] },
+    boot,
+  );
   const prefs = applyLinkParams(stored, parsed.params, boot);
   const known = boot.chapters.some((chapter) => chapter.id === parsed.chapter);
   const chapter = known ? (parsed.chapter as number) : (prefs.resume?.chapter ?? 1);
@@ -49,6 +55,17 @@ function initialState(boot: ReaderBoot): {
       : null;
 
   return { prefs, route: { chapter, verse: known ? parsed.verse : null }, warning };
+}
+
+/** Jump (not glide) to a linked verse, or to the top of the chapter. */
+function scrollToVerse(verse: number | null) {
+  const target = verse ? document.getElementById(`v${verse}`) : null;
+
+  if (target) {
+    target.scrollIntoView({ block: "center", behavior: "instant" });
+  } else {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }
 }
 
 function pickDefaultReciter(playable: Reciter[]): Reciter | null {
@@ -157,10 +174,10 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
   }, [chapter]);
 
   // Once a chapter is on screen: remember it, validate a linked verse, and scroll to it.
-  const readyKey = state.status === "ready" && view ? `${view.scriptId}|${view.chapterId}` : null;
+  const readyKey = view ? view.chapterId : null;
 
   useEffect(() => {
-    if (!readyKey || !view) {
+    if (readyKey === null || !view) {
       return;
     }
 
@@ -174,11 +191,20 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
 
     setPrefs((previous) => ({ ...previous, resume: { chapter: chapter.id, verse: verse ?? 1 } }));
 
-    if (verse) {
-      document.getElementById(`v${verse}`)?.scrollIntoView({ block: "center" });
-    } else {
-      window.scrollTo({ top: 0 });
-    }
+    scrollToVerse(verse);
+
+    // Arabic fonts arrive after the first layout and change row heights: settle again.
+    let current = true;
+
+    void document.fonts?.ready.then(() => {
+      if (current) {
+        scrollToVerse(verse);
+      }
+    });
+
+    return () => {
+      current = false;
+    };
     // Runs when a chapter finishes loading or the linked verse changes, not on every render.
     // oxlint-disable-next-line react-hooks/exhaustive-deps
   }, [readyKey, route.verse]);

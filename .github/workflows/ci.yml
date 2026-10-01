@@ -26,11 +26,23 @@ jobs:
       - name: install the isolated site dependencies
         run: npm ci --prefix site
 
+      - name: lint the site
+        run: npm run lint --prefix site
+
+      - name: check site formatting
+        run: npm run fmt:check --prefix site
+
       - name: type-check the Astro site
         run: npm run check --prefix site
 
+      - name: test the reader logic
+        run: npm test --prefix site
+
       - name: build the assembled site
         run: npm run site -- --no-cdn
+
+      - name: check the assembled site
+        run: uv run pytest tests/test_site_build.py
 
       - name: snapshots and licences are intact
         run: uv run quran-json verify
