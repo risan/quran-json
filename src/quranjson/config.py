@@ -497,6 +497,43 @@ KRACHKOVSKY = public_domain(
 )
 
 
+# --- A2b: public-domain Rodwell, Kanzul Iman, Mahmud ul Hasan and Keyzer ---------------
+RODWELL = public_domain(
+    "J. M. Rodwell, The Koran, 1861",
+    "Translator died 1900 (https://en.wikipedia.org/wiki/John_Medows_Rodwell), "
+    "so out of copyright in life+70 jurisdictions and in the US. The snapshot is "
+    "fawazahmed0's verse-aligned copy of the text.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-johnmedowsrodwe.json",
+)
+
+KANZUL_IMAN = public_domain(
+    "Ahmed Raza Khan, Kanzul Iman, 1911",
+    "Translator died 1921 (https://en.wikipedia.org/wiki/Ahmed_Raza_Khan_Barelvi), "
+    "so out of copyright in life+70 jurisdictions (since 1992) and in the US. The snapshot is "
+    "Tanzil's copy of the text, `ur.kanzuliman`, last updated 2011-03-17.",
+    "https://tanzil.net/trans/ur.kanzuliman",
+)
+
+MAHMUD_UL_HASAN = public_domain(
+    "Mahmud ul Hasan (Shaykh al-Hind), Urdu translation, 1909",
+    "Translator died 1920 (https://en.wikipedia.org/wiki/Mahmud_Hasan_Deobandi), "
+    "so out of copyright in life+70 jurisdictions (since 1991) and in the US. The snapshot is "
+    "fawazahmed0's copy, taken from dailyayat.com; its dangling `[n]` footnote markers, whose "
+    "notes are not part of the text, are removed on import.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/urd-mahmoodulhassan.json",
+)
+
+KEYZER = public_domain(
+    "Salomo Keyzer, Dutch translation of the Koran, 1860",
+    "Translator died 1868 (https://nl.wikipedia.org/wiki/Salomo_Keyzer), "
+    "so out of copyright in life+70 jurisdictions and in the US. The snapshot is "
+    "fawazahmed0's copy of Tanzil's `nl.keyzer`; the chapter-opening letters it lost are "
+    "restored from Project Gutenberg #19786.",
+    "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/nld-salomokeyzer.json",
+)
+# --- end A2b ----------------------------------------------------------------------------
+
+
 #: Audio hosts. We publish URL templates and never mirror audio bytes, so these record
 #: the host's own terms for the consumer rather than gating our output.
 MP3QURAN_AUDIO = License(
@@ -539,7 +576,8 @@ class Edition:
     source: str
     license: License
     #: How the snapshot is parsed: "quran-api" (JSON, grouped by chapter),
-    #: "clearquran" (zip of per-verse text files), "quranenc" (zip of SQLite), or
+    #: "clearquran" (zip of per-verse text files), "tanzil" (`sura|aya|text` lines),
+    #: "quranenc" (zip of SQLite), or
     #: "kemenag" (the Qur'an Kemenag snapshot, one field per edition).
     kind: str = "quran-api"
     #: ISO 639 language code used in published URLs, e.g. the `en` in
@@ -550,6 +588,8 @@ class Edition:
     #: incomplete; such an edition remains visible as withheld until its corpus is complete.
     availability: Literal["published", "withheld"] = "published"
     availability_reason: str = ""
+    #: Text direction, for editions that QuranEnc's catalogue does not describe.
+    direction: Literal["ltr", "rtl"] = "ltr"
 
     @property
     def redistributable(self) -> bool:
@@ -695,4 +735,41 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
         source=f"{QURAN_API_EDITION}/rus-ignatyyulianovi.json",
         license=KRACHKOVSKY,
     ),
+    # --- A2b: public-domain editions ---------------------------------------------------
+    Edition(
+        lang="english_rodwell",
+        code="en",
+        slug="eng-johnmedowsrodwe",
+        author="J. M. Rodwell (1861)",
+        source=f"{QURAN_API_EDITION}/eng-johnmedowsrodwe.json",
+        license=RODWELL,
+    ),
+    Edition(
+        lang="urdu_kanzuliman",
+        code="ur",
+        slug="ur.kanzuliman",
+        author="Ahmed Raza Khan, Kanzul Iman (1911)",
+        source="https://tanzil.net/trans/ur.kanzuliman",
+        license=KANZUL_IMAN,
+        kind="tanzil",
+        direction="rtl",
+    ),
+    Edition(
+        lang="urdu_mahmudulhasan",
+        code="ur",
+        slug="urd-mahmoodulhassan",
+        author="Mahmud ul Hasan (1909)",
+        source=f"{QURAN_API_EDITION}/urd-mahmoodulhassan.json",
+        license=MAHMUD_UL_HASAN,
+        direction="rtl",
+    ),
+    Edition(
+        lang="dutch_keyzer",
+        code="nl",
+        slug="nld-salomokeyzer",
+        author="Salomo Keyzer (1860)",
+        source=f"{QURAN_API_EDITION}/nld-salomokeyzer.json",
+        license=KEYZER,
+    ),
+    # --- end A2b -----------------------------------------------------------------------
 )

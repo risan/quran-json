@@ -8,6 +8,7 @@ provenance (URL, sha256, fetch time, license) in `data/meta/sources.json`.
 from __future__ import annotations
 
 import json
+import re
 import unicodedata
 from collections import Counter
 from collections.abc import Callable
@@ -74,11 +75,54 @@ def _group_by_chapter(payload: dict[str, Any]) -> dict[str, list[dict[str, Any]]
     return grouped
 
 
+# --- A2b ---------------------------------------------------------------------------------
+#: Editions whose upstream text ends clauses with `[n]` markers that point at footnotes the
+#: snapshot does not carry. The markers are not the translator's text, so they are removed.
+FOOTNOTE_MARKER_EDITIONS: Final = frozenset({"urdu_mahmudulhasan"})
+
+#: A bracketed number (`\d` covers Persian digits), optionally `n/m`. Upstream mangles a few:
+#: either bracket may face the wrong way, and an alif stands in for a digit.
+#: Bracketed words (the translator's glosses) do not match.
+_FOOTNOTE_MARKER: Final = re.compile(r"\s*[\[\]][\d/\u0627]+[\]\[]")
+
+#: One marker lost its brackets and sits inside a word (72:2); digits are never the text.
+_STRAY_DIGIT: Final = re.compile(r"\d")
+
+#: Pinned upstream bytes for a public-domain text served from a host we cannot always reach
+#: (tanzil.net's TLS certificate expired in 2026), so a later refetch cannot change it silently.
+PINNED_EXTRA_SOURCES: Final = {
+    "urdu_kanzuliman": "b946a4072c9dd2ca2e302283b78b8c3e47a7ff98a90c8da6ff663a33703af801",
+}
+
+
+def strip_footnote_markers(
+    grouped: dict[str, list[dict[str, Any]]],
+) -> dict[str, list[dict[str, Any]]]:
+    """Remove dangling `[n]` footnote markers from every verse, in place."""
+    for verses in grouped.values():
+        for verse in verses:
+            text = _STRAY_DIGIT.sub("", _FOOTNOTE_MARKER.sub("", verse["text"])).strip()
+            # 4:171 opens with the remains of a marker whose number is lost.
+            if text.startswith("[") and "]" not in text:
+                text = text[1:].lstrip()
+
+            verse["text"] = text
+
+    return grouped
+
+
+# --- end A2b -----------------------------------------------------------------------------
+
+
 def _qa_transform(lang: str) -> Callable[[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
     """Group a flat edition into chapters, then restore known upstream defects."""
 
     def transform(payload: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
-        return qa.apply_corrections(lang, _group_by_chapter(payload))
+        grouped = _group_by_chapter(payload)
+        if lang in FOOTNOTE_MARKER_EDITIONS:
+            strip_footnote_markers(grouped)
+
+        return qa.apply_corrections(lang, grouped)
 
     return transform
 
@@ -160,6 +204,7 @@ def licensed_tasks() -> list[FetchTask]:
 
     parsers = {
         "clearquran": clearquran.parse_verse_files,
+        "tanzil": tanzil.parse_text,
         "quranenc": None,  # handled by the QuranEnc catalogue pass above
     }
 
@@ -174,6 +219,7 @@ def licensed_tasks() -> list[FetchTask]:
                 parse=parsers.get(kind),
                 transform=None if kind != "quran-api" else _qa_transform(edition.lang),
                 compact=True,
+                source_sha256=PINNED_EXTRA_SOURCES.get(edition.lang),
             )
         )
 
@@ -185,10 +231,18 @@ def licensed_tasks() -> list[FetchTask]:
                 url=entry["database_url"],
                 source=f"quranenc.com/{entry['key']} v{entry['version']}",
                 license=config.QURANENC,
+                # A2b: an edition without an archive is crawled surah by surah.
                 parse=(
-                    quranenc.parse_complete_translation_allow_empty
+                    None
+                    if entry.get("ingest") == "api"
+                    else quranenc.parse_complete_translation_allow_empty
                     if entry.get("allow_empty")
                     else quranenc.parse_complete_translation
+                ),
+                gather=(
+                    quranenc.api_gatherer(entry["key"], allow_empty=bool(entry.get("allow_empty")))
+                    if entry.get("ingest") == "api"
+                    else None
                 ),
                 compact=True,
                 source_sha256=entry.get("archive_sha256"),
@@ -205,6 +259,7 @@ def licensed_tasks() -> list[FetchTask]:
                     ),
                     "terms_url": quranenc.TERMS_URL,
                     **({"manual_registration": True} if entry.get("manual_registration") else {}),
+                    **({"ingest": "api"} if entry.get("ingest") == "api" else {}),
                     **(
                         {
                             "availability": entry["availability"],

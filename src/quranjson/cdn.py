@@ -473,7 +473,7 @@ def build_site(
                 "edition": edition.lang,
                 "language": edition.lang.partition("_")[0],
                 "code": edition.code,
-                "direction": meta.get("direction", "ltr"),
+                "direction": meta.get("direction", edition.direction),
                 "author": edition.author,
                 "source": edition.source,
                 "license": {

@@ -14,20 +14,26 @@ are present but omitted from that endpoint.
 
 from __future__ import annotations
 
-from collections.abc import Iterable
-from typing import Any, Final
+from collections.abc import Callable, Iterable
+from typing import TYPE_CHECKING, Any, Final
 
 from . import config
 
+if TYPE_CHECKING:
+    from .http import Fetcher
+
 __all__ = [
     "CATALOGUE_URL",
+    "SURA_URL",
     "TERMS_URL",
+    "api_gatherer",
     "catalogue_editions",
     "load_catalogues",
     "merged_catalogue",
     "parse_catalogue",
     "parse_complete_translation",
     "parse_complete_translation_allow_empty",
+    "parse_sura",
     "parse_translation",
     "validate_catalogue",
     "validate_translation",
@@ -35,6 +41,13 @@ __all__ = [
 
 CATALOGUE_URL = "https://quranenc.com/api/v1/translations/list"
 TERMS_URL: Final = "https://quranenc.com/en/home/api"
+
+#: One surah of one translation. Some editions are listed on the website and served here,
+#: yet have no SQLite archive, so their 114 surahs are fetched one by one.
+SURA_URL: Final = "https://quranenc.com/api/v1/translation/sura/{key}/{sura}"
+
+#: How a catalogue entry's text is obtained: its SQLite archive, or surah by surah.
+INGEST_MODES: Final = ("archive", "api")
 
 #: The dataset generation these editions belong to.
 EDITION_PREFIX = "quranenc"
@@ -88,6 +101,14 @@ def validate_catalogue(catalogue: dict[str, Any], *, expected_keys: set[str] | N
             raise ValueError(f"quranenc catalogue invalid direction for {key!r}")
         if not all(isinstance(entry[field], str) and entry[field] for field in required - {"key"}):
             raise ValueError(f"quranenc catalogue has empty metadata for {key!r}")
+        ingest = entry.get("ingest", "archive")
+        if ingest not in INGEST_MODES:
+            raise ValueError(f"quranenc catalogue invalid ingest mode for {key!r}")
+        if ingest == "api":
+            if "{sura}" not in entry["database_url"]:
+                raise ValueError(f"quranenc API entry has no surah URL pattern for {key!r}")
+            if "archive_sha256" in entry or "archive_bytes" in entry:
+                raise ValueError(f"quranenc API entry cannot pin an archive for {key!r}")
         availability = entry.get("availability", "published")
         if availability not in {"published", "withheld"}:
             raise ValueError(f"quranenc catalogue invalid availability for {key!r}")
@@ -247,6 +268,77 @@ def parse_translation(
         return verses
     finally:
         connection.close()
+
+
+def parse_sura(raw: bytes, *, sura: int) -> list[dict[str, Any]]:
+    """Parse one surah from the per-surah API into verse records, footnotes kept.
+
+    The response is checked row by row, because a truncated or reshaped answer must stop
+    the import rather than leave a translation with silently missing verses.
+    """
+    import orjson
+
+    payload = orjson.loads(raw)
+    rows = payload.get("result") if isinstance(payload, dict) else None
+    if not isinstance(rows, list) or not rows:
+        raise ValueError(f"quranenc surah {sura} response has no result rows")
+
+    verses: list[dict[str, Any]] = []
+    seen: set[int] = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            raise ValueError(f"quranenc surah {sura} response has a malformed row")
+
+        try:
+            chapter = int(row["sura"])
+            verse = int(row["aya"])
+        except (KeyError, TypeError, ValueError) as error:
+            raise ValueError(f"quranenc surah {sura} row has no valid sura/aya") from error
+
+        if chapter != sura:
+            raise ValueError(f"quranenc surah {sura} response contains verse {chapter}:{verse}")
+        if verse in seen:
+            raise ValueError(f"quranenc surah {sura} response repeats verse {verse}")
+        seen.add(verse)
+
+        text = row.get("translation")
+        footnotes = row.get("footnotes")
+        if not isinstance(text, str):
+            raise ValueError(f"quranenc translation has no text at {chapter}:{verse}")
+        if footnotes is not None and not isinstance(footnotes, str):
+            raise ValueError(f"quranenc translation has invalid footnotes at {chapter}:{verse}")
+
+        entry: dict[str, Any] = {"chapter": chapter, "verse": verse, "text": text}
+        if footnotes:
+            entry["footnotes"] = footnotes
+        verses.append(entry)
+
+    return sorted(verses, key=lambda entry: entry["verse"])
+
+
+def api_gatherer(
+    key: str, *, allow_empty: bool = False
+) -> Callable[[Fetcher], dict[str, list[dict[str, Any]]]]:
+    """A `FetchTask.gather` that crawls the 114 surahs of one translation.
+
+    The result has the same shape as `parse_translation`, so the snapshot is
+    indistinguishable from one imported from an archive.
+    """
+
+    def gather(client: Fetcher) -> dict[str, list[dict[str, Any]]]:
+        verses: dict[str, list[dict[str, Any]]] = {}
+        for sura in range(1, 115):
+            raw = client.get_bytes(SURA_URL.format(key=key, sura=sura))
+            verses[str(sura)] = parse_sura(raw, sura=sura)
+
+        validate_translation(
+            verses,
+            chapter_counts=_reference_chapter_counts(),
+            allow_empty=allow_empty,
+        )
+        return verses
+
+    return gather
 
 
 def parse_complete_translation(
