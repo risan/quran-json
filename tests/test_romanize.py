@@ -180,6 +180,19 @@ def test_the_fatiha_in_all_three_renderers(
     assert fatiha["en-simple"][6].endswith("walad-daalleen")
 
 
+MINIMUM_GOLDEN_VERSES = 50
+
+
+def test_the_golden_set_has_enough_distinct_verses_for_every_renderer() -> None:
+    distinct = {(v["chapter"], v["verse"]) for entry in load_golden() for v in entry["verses"]}
+
+    assert len(distinct) >= MINIMUM_GOLDEN_VERSES
+
+    for entry in load_golden():
+        for verse in entry["verses"]:
+            assert set(romanize.RENDERERS) <= set(verse)
+
+
 def test_every_hafs_exception_has_a_golden_verse() -> None:
     golden = {(v["chapter"], v["verse"]) for entry in load_golden() for v in entry["verses"]}
 
