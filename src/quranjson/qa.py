@@ -14,9 +14,9 @@ fails loudly instead of double-correcting.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Final
+from typing import Any, Final, Literal
 
-from . import jsonio
+from . import config, jsonio
 
 #: Project Gutenberg #16955 carries Yusuf Ali, Pickthall and Shakir side by side,
 #: "re-proofed and corrected for Project Gutenberg against paper copies of the
@@ -26,7 +26,10 @@ GUTENBERG: Final = "https://www.gutenberg.org/ebooks/16955"
 
 @dataclass(frozen=True)
 class Correction:
-    """One restored reading: `defective` must be present for `restored` to apply."""
+    """One restored reading: `defective` must be present for `restored` to apply.
+
+    `lang` names the translation edition, or for ``kind="script"`` the script id.
+    """
 
     lang: str
     chapter: int
@@ -34,9 +37,76 @@ class Correction:
     defective: str
     restored: str
     evidence: str
+    kind: Literal["translation", "script"] = "translation"
 
     def key(self) -> str:
         return f"{self.lang} {self.chapter}:{self.verse}"
+
+
+#: Qur'an Kemenag's text is typed, and in 33 places the typist dropped or added a space. Each
+#: row is (chapter, verse, upstream fragment, restored fragment); only the space differs.
+#: Tanzil Uthmani 1.1, KFGQPC's Hafs (Quranpedia mushaf 2) and KFGQPC's Nastaleeq (mushaf 3)
+#: all agree on the boundary for every row, and the letter at the break is a non-connecting
+#: one (alef, dal, dhal, ra, zay, waw), so the fix can never change a rasm.
+#: 31:27 `اَنَّ مَا` is deliberately absent: the break follows a connecting letter, so it can be
+#: a genuine Indonesian-standard spelling and no witness settles it.
+KEMENAG_SPACING: Final[tuple[tuple[int, int, str, str], ...]] = (
+    (2, 71, "لَّاشِيَةَ", "لَّا شِيَةَ"),
+    (2, 102, "مَاشَرَوْا", "مَا شَرَوْا"),
+    (2, 145, "مَاجَاۤءَكَ", "مَا جَاۤءَكَ"),
+    (2, 163, "لَآاِلٰهَ", "لَآ اِلٰهَ"),
+    (2, 177, "الْبِرَّاَنْ", "الْبِرَّ اَنْ"),
+    (2, 181, "بَعْدَمَا", "بَعْدَ مَا"),
+    (2, 205, "وَ اللّٰهُ", "وَاللّٰهُ"),
+    (2, 246, "وَقَدْاُخْرِجْنَا", "وَقَدْ اُخْرِجْنَا"),
+    (3, 21, "بِغَيْرِحَقٍّۖ", "بِغَيْرِ حَقٍّۖ"),
+    (3, 67, "مَاكَانَ", "مَا كَانَ"),
+    (3, 106, "اَ كَفَرْتُمْ", "اَكَفَرْتُمْ"),
+    (5, 58, "بِاَ نَّهُمْ", "بِاَنَّهُمْ"),
+    (8, 6, "بَعْدَمَا", "بَعْدَ مَا"),
+    (8, 47, "بِمَايَعْمَلُوْنَ", "بِمَا يَعْمَلُوْنَ"),
+    (8, 63, "لَوْاَنْفَقْتَ", "لَوْ اَنْفَقْتَ"),
+    (8, 67, "مَاكَانَ", "مَا كَانَ"),
+    (8, 67, "عَزِيْزٌحَكِيْمٌ", "عَزِيْزٌ حَكِيْمٌ"),
+    (8, 68, "لَوْلَاكِتٰبٌ", "لَوْلَا كِتٰبٌ"),
+    (8, 69, "مِمَّاغَنِمْتُمْ", "مِمَّا غَنِمْتُمْ"),
+    (9, 9, "مَاكَانُوْا", "مَا كَانُوْا"),
+    (9, 17, "وَ فِى", "وَفِى"),
+    (11, 22, "لَاجَرَمَ", "لَا جَرَمَ"),
+    (11, 32, "فَاَ كْثَرْتَ", "فَاَكْثَرْتَ"),
+    (11, 53, "مَاجِئْتَنَا", "مَا جِئْتَنَا"),
+    (13, 37, "بَعْدَمَا", "بَعْدَ مَا"),
+    (36, 43, "وَلَاهُمْ", "وَلَا هُمْ"),
+    (38, 19, "وَالطَّيْرَمَحْشُوْرَةً", "وَالطَّيْرَ مَحْشُوْرَةً"),
+    (40, 53, "وَلَقَدْاٰتَيْنَا", "وَلَقَدْ اٰتَيْنَا"),
+    (42, 15, "لَاحُجَّةَ", "لَا حُجَّةَ"),
+    (43, 68, "لَاخَوْفٌ", "لَا خَوْفٌ"),
+    (43, 84, "وَّ فِى", "وَّفِى"),
+    (45, 26, "لَارَيْبَ", "لَا رَيْبَ"),
+    (56, 51, "الضَّاۤ لُّوْنَ", "الضَّاۤلُّوْنَ"),
+)
+
+KEMENAG_SPACING_WITNESS: Final = "https://api.quranpedia.net/dumps/mushafs-2.json.gz"
+
+
+def _kemenag_spacing_corrections() -> tuple[Correction, ...]:
+    return tuple(
+        Correction(
+            lang=config.KEMENAG_SCRIPT,
+            chapter=chapter,
+            verse=verse,
+            defective=defective,
+            restored=restored,
+            kind="script",
+            evidence=(
+                f"{KEMENAG_SPACING_WITNESS} (KFGQPC Hafs), Tanzil Uthmani 1.1 and KFGQPC "
+                f"Nastaleeq all {'separate' if ' ' in restored else 'join'} these letters; "
+                "only the space is "
+                f"{'inserted' if ' ' in restored else 'removed'}, the letters are untouched."
+            ),
+        )
+        for chapter, verse, defective, restored in KEMENAG_SPACING
+    )
 
 
 CORRECTIONS: Final[tuple[Correction, ...]] = (
@@ -52,6 +122,7 @@ CORRECTIONS: Final[tuple[Correction, ...]] = (
             "within reach of', a duplication artefact."
         ),
     ),
+    *_kemenag_spacing_corrections(),
 )
 
 
@@ -100,11 +171,14 @@ def manifest() -> dict[str, Any]:
     return {
         "note": (
             "Upstream transcription defects restored on load. Additive fixes only: the "
-            "translator's wording is never edited, only repair of damaged text."
+            "translator's wording is never edited, only repair of damaged text. Script "
+            "corrections (`kind: script`) change only a space the upstream typist dropped or "
+            "added; the letters are never touched."
         ),
         "witness": GUTENBERG,
         "corrections": [
             {
+                "kind": c.kind,
                 "lang": c.lang,
                 "chapter": c.chapter,
                 "verse": c.verse,
@@ -119,6 +193,4 @@ def manifest() -> dict[str, Any]:
 
 def write_manifest() -> None:
     """Persist the correction record next to the other build metadata."""
-    from . import config
-
     jsonio.write_json(config.QA_PATH, manifest(), pretty=True)

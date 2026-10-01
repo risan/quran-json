@@ -49,8 +49,33 @@ WARSH_SCRIPT: Final = "warsh"
 QALUN_SCRIPT: Final = "qalun"
 DURI_SCRIPT: Final = "duri"
 HAFS_NASTALIQ_SCRIPT: Final = "hafs-nastaliq"
-RIWAYAH_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT, DURI_SCRIPT)
-QURANPEDIA_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT, HAFS_NASTALIQ_SCRIPT, DURI_SCRIPT)
+
+# --- Track A2a: KFGQPC Hafs and the specialist riwayat from Quranpedia -------------------
+#: KFGQPC's Uthmanic Hafs text (Quranpedia mushaf 2), the text Quran.com and KFGQPC's own
+#: apps use. Shuʿbah ʿan ʿAsim (mushaf 9) and al-Susi ʿan Abi ʿAmr (mushaf 10) are readings
+#: KFGQPC itself describes as mostly used by specialists. al-Bazzi and Qunbul (mushafs 5 and
+#: 8) are deliberately absent: their per-ayah Hafs map is malformed in Al-Jinn (72), see
+#: `quranjson.quranpedia`.
+QPC_HAFS_SCRIPT: Final = "qpc-hafs"
+SHUBAH_SCRIPT: Final = "shubah"
+SUSI_SCRIPT: Final = "susi"
+#: Quranpedia scripts whose ayah numbers are Hafs ayah numbers (`number_in_hafs == [id]`).
+NATIVE_HAFS_QURANPEDIA_SCRIPTS: Final = (HAFS_NASTALIQ_SCRIPT, QPC_HAFS_SCRIPT, SHUBAH_SCRIPT)
+#: Scripts a manifest marks `group: "specialist"`.
+SPECIALIST_SCRIPTS: Final = (SHUBAH_SCRIPT, SUSI_SCRIPT)
+SPECIALIST_GROUP_NOTE: Final = "A reading mostly used by specialists in the qira'at."
+# -----------------------------------------------------------------------------------------
+
+RIWAYAH_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT, DURI_SCRIPT, SUSI_SCRIPT)
+QURANPEDIA_SCRIPTS: Final = (
+    WARSH_SCRIPT,
+    QALUN_SCRIPT,
+    HAFS_NASTALIQ_SCRIPT,
+    DURI_SCRIPT,
+    QPC_HAFS_SCRIPT,
+    SHUBAH_SCRIPT,
+    SUSI_SCRIPT,
+)
 
 #: Version of the dataset generation served from the CDN.
 DATASET_VERSION: Final = "4.0.0"
@@ -176,6 +201,20 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
         "Quranpedia mushaf 6: al-Duri ʿan Abi ʿAmr with its own 6,218-ayah source count and "
         "per-ayah mapping to Hafs numbering",
     ),
+    QPC_HAFS_SCRIPT: (
+        "QPC Hafs (KFGQPC)",
+        "Quranpedia mushaf 2: the King Fahd Complex's Uthmanic Hafs ʿan ʿAsim text, the one "
+        "Quran.com and KFGQPC's own apps use, with Hafs numbering",
+    ),
+    SHUBAH_SCRIPT: (
+        "Shuʿbah",
+        f"Quranpedia mushaf 9: Shuʿbah ʿan ʿAsim, Kufi count. {SPECIALIST_GROUP_NOTE}",
+    ),
+    SUSI_SCRIPT: (
+        "al-Susi",
+        "Quranpedia mushaf 10: al-Susi ʿan Abi ʿAmr, 6,217 ayahs with a per-ayah mapping to "
+        f"Hafs numbering. {SPECIALIST_GROUP_NOTE}",
+    ),
 }
 
 
@@ -192,7 +231,7 @@ SCRIPT_VERSE_IDS: Final[dict[str, str]] = {
     **dict.fromkeys(TANZIL_VARIANTS, "hafs"),
     KEMENAG_SCRIPT: "hafs",
     DIGITALKHATT_SCRIPT: "own",
-    HAFS_NASTALIQ_SCRIPT: "hafs",
+    **dict.fromkeys(NATIVE_HAFS_QURANPEDIA_SCRIPTS, "hafs"),
     **dict.fromkeys(RIWAYAH_SCRIPTS, "mapped"),
 }
 
@@ -207,7 +246,10 @@ SCRIPT_VERSE_ID_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {
 #: Chapters whose source-provided Hafs map is intentionally not a complete join. The
 #: al-Duri dump's Al-Fatiha maps its rows to Hafs 2..7 and repeats Hafs 7; the missing Hafs 1
 #: is a source numbering convention, not a value this project may invent.
-SCRIPT_MAPPING_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {DURI_SCRIPT: (1,)}
+SCRIPT_MAPPING_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {
+    DURI_SCRIPT: (1,),
+    SUSI_SCRIPT: (1,),
+}
 
 #: Machine-readable source semantics for the non-surjective Duri Al-Fatiha map. The source
 #: dump includes the basmala as separate ``data.bismillah`` furniture, so Hafs 1 is absent
@@ -220,7 +262,15 @@ SCRIPT_MAPPING_COVERAGE_EXCEPTIONS: Final[dict[str, tuple[dict[str, object], ...
             "repeated_hafs": (7,),
             "reason": "source bismillah is unnumbered; retain source map without inventing Hafs 1",
         },
-    )
+    ),
+    SUSI_SCRIPT: (
+        {
+            "chapter": 1,
+            "missing_hafs": (1,),
+            "repeated_hafs": (7,),
+            "reason": "source bismillah is unnumbered; retain source map without inventing Hafs 1",
+        },
+    ),
 }
 
 #: Reader-facing identity and audio safety. A mapped riwayah must never inherit Hafs
@@ -260,7 +310,32 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
         },
         "audio": {"verse_numbering": "mapped", "per_ayah": False},
     },
+    SUSI_SCRIPT: {
+        "reading": {
+            "riwayah": "al-Susi",
+            "qiraah": "Abu ʿAmr",
+            "verse_numbering": "mapped",
+        },
+        "audio": {"verse_numbering": "mapped", "per_ayah": False},
+    },
+    SHUBAH_SCRIPT: {
+        "reading": {
+            "riwayah": "Shuʿbah",
+            "qiraah": "ʿAsim",
+            "verse_numbering": "hafs",
+        },
+        # Shuʿbah shares the Kufi count, but Hafs per-ayah recordings are not Shuʿbah's reading.
+        "audio": {"verse_numbering": "hafs", "per_ayah": False},
+    },
     HAFS_NASTALIQ_SCRIPT: {
+        "reading": {
+            "riwayah": "Hafs",
+            "qiraah": "ʿAsim",
+            "verse_numbering": "hafs",
+        },
+        "audio": {"verse_numbering": "hafs", "per_ayah": True},
+    },
+    QPC_HAFS_SCRIPT: {
         "reading": {
             "riwayah": "Hafs",
             "qiraah": "ʿAsim",
@@ -404,6 +479,7 @@ SCRIPT_VERSES: Final[dict[str, int]] = {
     QALUN_SCRIPT: 6214,
     HAFS_NASTALIQ_SCRIPT: 6236,
     DURI_SCRIPT: 6218,
+    SUSI_SCRIPT: 6217,
 }
 
 #: What a consumer must know before reading a script's bytes, published per script in
@@ -441,7 +517,28 @@ SCRIPT_NOTES: Final[dict[str, str]] = {
     DURI_SCRIPT: (
         "al-Duri ʿan Abi ʿAmr is a different riwayah, not an orthography: the pinned "
         "Quranpedia mushaf 6 contains 6,218 source ayahs. Forty-four chapters differ from "
-        "the Hafs count; each verse's `number_in_hafs` preserves the source mapping."
+        "the Hafs count; each verse's `number_in_hafs` preserves the source mapping. Al-Mulk "
+        "has 31 ayahs here: the source splits Hafs 67:9 after نَذِيرٞ, which al-Susi, the "
+        "other riwayah of Abu ʿAmr, does not."
+    ),
+    QPC_HAFS_SCRIPT: (
+        "KFGQPC's Uthmanic Hafs text (Quranpedia mushaf 2), Hafs numbering, 6,236 ayahs. The "
+        "basmala is verse 1 of Al-Fatiha only; no other verse 1 carries it, as in the "
+        "Indo-Pak (KFGQPC Nastaleeq) script and unlike the Tanzil scripts, which prefix it to "
+        "the first ayah of every surah except At-Tawbah. Uses KFGQPC's own mark encoding, so "
+        "its bytes differ from Tanzil's while the letters agree."
+    ),
+    SHUBAH_SCRIPT: (
+        "Shuʿbah ʿan ʿAsim (Quranpedia mushaf 9): a different riwayah, not an orthography. It "
+        "shares the Kufi count with Hafs, so verse ids are Hafs ayah numbers and "
+        "`number_in_hafs` is always the verse's own id. The basmala is verse 1 of Al-Fatiha "
+        "only. Hafs per-ayah recordings are not Shuʿbah's reading."
+    ),
+    SUSI_SCRIPT: (
+        "al-Susi ʿan Abi ʿAmr, a different riwayah, not an orthography: the pinned Quranpedia "
+        "mushaf 10 contains 6,217 source ayahs and 43 chapters differ from the Hafs count. "
+        "Each verse's `number_in_hafs` preserves the source mapping. The basmala of "
+        "Al-Fatiha is unnumbered, so the seven numbered rows map to Hafs 2..7 and Hafs 7 twice."
     ),
 }
 

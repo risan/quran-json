@@ -44,6 +44,21 @@
     "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
+    "path": "data/audio/everyayah_unlisted.json",
+    "url": "https://everyayah.com/data/",
+    "source": "EveryAyah",
+    "license": "everyayah.com states no licence: its license, terms and readme paths all return 404 and the homepage carries no matching terms. Treated as unknown -- we link to the files rather than redistribute them.",
+    "license_status": "unknown",
+    "license_url": "https://everyayah.com/data/",
+    "sha256": "9d327a3ee76f84d5500e0f343f7fda0decccdb14c6e517dc3c617e7eec00d76f",
+    "bytes": 1783,
+    "revision": "",
+    "source_metadata": {
+      "manual_registration": true,
+      "manifest": "https://everyayah.com/data/recitations.js"
+    }
+  },
+  {
     "path": "data/tanzil/uthmani.json",
     "url": "https://tanzil.net/pub/download/index.php?quranType=uthmani&outType=txt-2&agree=true",
     "source": "tanzil.net",
@@ -2124,6 +2139,75 @@
       "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
       "description": "مصحف الدوري — al-Duri from Abu Amr, own source numbering",
       "bismillah": "بِسۡمِ اِ۬للَّهِ اِ۬لرَّحۡمَٰنِ اِ۬لرَّحِيمِ "
+    }
+  },
+  {
+    "path": "data/quranpedia/qpc-hafs.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-2.json.gz",
+    "source": "quranpedia.net dumps/mushafs-2 (qpc-hafs, QPC Hafs (KFGQPC))",
+    "license": "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is recorded per snapshot): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
+    "license_status": "granted",
+    "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+    "sha256": "0136b913aeb5a6a0389681f988215791ddd848c4347f7cf5e9d2574db7f1da49",
+    "bytes": 2051942,
+    "revision": "",
+    "source_sha256": "af546911a592c7b8a5a35b668c0f885d7b37b52536c5032bd6fb2b42c5819f33",
+    "source_bytes": 414537,
+    "source_metadata": {
+      "provider": "quranpedia",
+      "mushaf_id": 2,
+      "name": "مصحف حفص نسخة نصية",
+      "dump_version": "2026-09-30",
+      "built_at": null,
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "description": "المصحف الكريم برواية حفص عن عاصم بالخط العثماني من إصدار مجمع الملك فهد لطباعة المصحف الشريف، غير موافق للمطبوع",
+      "bismillah": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ"
+    }
+  },
+  {
+    "path": "data/quranpedia/shubah.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-9.json.gz",
+    "source": "quranpedia.net dumps/mushafs-9 (shubah, Shuʿbah)",
+    "license": "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is recorded per snapshot): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
+    "license_status": "granted",
+    "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+    "sha256": "d53c421448e19c54ee639387895e71e63ff70ae40748bd65b299e90bf02cd8a8",
+    "bytes": 2051956,
+    "revision": "",
+    "source_sha256": "24856d89627b6d9f35da525f98935d551e2bc49ca3ccf9107784172e920bbdae",
+    "source_bytes": 414588,
+    "source_metadata": {
+      "provider": "quranpedia",
+      "mushaf_id": 9,
+      "name": "مصحف شعبة",
+      "dump_version": "2026-09-30",
+      "built_at": null,
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "description": "المصحف الكريم برواية شعبة عن عاصم بالخط العثماني من إصدار مجمع الملك فهد لطباعة المصحف الشريف، نسخة موافقة للمطبوع",
+      "bismillah": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ"
+    }
+  },
+  {
+    "path": "data/quranpedia/susi.json",
+    "url": "https://api.quranpedia.net/dumps/mushafs-10.json.gz",
+    "source": "quranpedia.net dumps/mushafs-10 (susi, al-Susi)",
+    "license": "Qur'anpedia.net Data License (terms checked 2026-09-20; exact dump version is recorded per snapshot): 'Free to use inside apps, websites, bots, and research tools -- no attribution required ... Republishing this data -- in full or in part -- as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version.' The same licence requires keeping a copy current via /api/v1/changes and holds the distributor responsible for outdated text; the snapshot records the dump version it was taken from. The underlying riwayah text is KFGQPC's printed mushaf per the dump's own description; the licence's own ownership clause treats the qira'at text as the ummah's shared heritage and claims only the digitisation, dabt and metadata. Fonts and per-page SVG packs are separate KFGQPC assets and are not published here.",
+    "license_status": "granted",
+    "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+    "sha256": "f7fbfb6f78732ae5408e47a79ad762baff4e5a232034bf46f25ee324737b6c93",
+    "bytes": 2089641,
+    "revision": "",
+    "source_sha256": "9bf54a7e2b87ba0a062f6e46aca25179a3cedffc5bf35fcc9bbb8a47f084fdac",
+    "source_bytes": 420794,
+    "source_metadata": {
+      "provider": "quranpedia",
+      "mushaf_id": 10,
+      "name": "مصحف السوسي",
+      "dump_version": "2026-10-01",
+      "built_at": null,
+      "license_url": "https://api.quranpedia.net/dumps/LICENSE.md",
+      "description": "المصحف الكريم برواية السوسي عن أبي عمر بالخط العثماني من إصدار مجمع الملك فهد لطباعة المصحف الشريف، غير موافق للمطبوع",
+      "bismillah": "بِسۡمِ اِ۬للَّهِ اِ۬لرَّحۡمَٰنِ اِ۬لرَّحِيمِ"
     }
   }
 ]

@@ -180,7 +180,9 @@ def _kemenag_chapters() -> list[dict[str, Any]]:
     The snapshot also holds the ministry's translation and transliteration, which are
     protected and never published; only the text is covered by a grant.
     """
-    snapshot: dict[str, list[dict[str, Any]]] = read_json(config.kemenag_path())
+    # The committed snapshot stays exactly as the upstream served it; its recorded spacing slips
+    # are restored here, and the build fails if upstream has already fixed one of them.
+    snapshot = qa.apply_corrections(config.KEMENAG_SCRIPT, read_json(config.kemenag_path()))
 
     return [
         {
@@ -238,9 +240,9 @@ def _check_mapping(label: str, chapters: list[dict[str, Any]], script: str) -> N
                 raise ValueError(
                     f"{label}: invalid number_in_hafs at {chapter['id']}:{verse['id']}"
                 )
-            if script == config.HAFS_NASTALIQ_SCRIPT and numbers != [verse["id"]]:
+            if script in config.NATIVE_HAFS_QURANPEDIA_SCRIPTS and numbers != [verse["id"]]:
                 raise ValueError(
-                    f"{label}: Hafs Nastaliq map is not native at {chapter['id']}:{verse['id']}"
+                    f"{label}: {script} map is not native at {chapter['id']}:{verse['id']}"
                 )
             limit = chapter_counts[chapter["id"]]
             if not all(isinstance(number, int) and 1 <= number <= limit for number in numbers):
@@ -289,12 +291,12 @@ def _native_chapter_counts(chapters: list[dict[str, Any]]) -> dict[str, int]:
 def _chapter_furniture(script: str) -> list[dict[str, Any]]:
     """Expose source furniture whose position is pinned by the source dump.
 
-    Quranpedia's al-Duri dump carries the basmala outside its numbered ayah rows.  It is
+    Quranpedia's al-Duri and al-Susi dumps carry the basmala outside its numbered ayah rows.  It is
     deliberately a manifest annotation: adding it as verse 1 would shift every source map
     and invent a Hafs join.  The dump exposes no similarly bounded furniture contract for
     the other chapters or scripts.
     """
-    if script != config.DURI_SCRIPT:
+    if script not in (config.DURI_SCRIPT, config.SUSI_SCRIPT):
         return []
 
     from .quranpedia import DUMP_METADATA
@@ -336,7 +338,8 @@ def _check_shape(
             raise ValueError(f"{label}: chapter {chapter['id']} is not numbered 1..n")
 
     if script is not None and (
-        config.SCRIPT_VERSE_IDS[script] == "mapped" or script == config.HAFS_NASTALIQ_SCRIPT
+        config.SCRIPT_VERSE_IDS[script] == "mapped"
+        or script in config.NATIVE_HAFS_QURANPEDIA_SCRIPTS
     ):
         _check_mapping(label, chapters, script)
 
@@ -524,6 +527,11 @@ def build_site(
                     else {}
                 ),
                 **(config.SCRIPT_READING_IDENTITIES.get(script, {})),
+                **(
+                    {"group": "specialist", "group_note": config.SPECIALIST_GROUP_NOTE}
+                    if script in config.SPECIALIST_SCRIPTS
+                    else {}
+                ),
                 **(
                     {"chapter_furniture": furniture_by_script[script]}
                     if script in furniture_by_script

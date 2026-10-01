@@ -30,6 +30,10 @@ to agree completely, not evidence of a shared text. It follows the Mushaf Standa
 (Imlaei rasm carrying Uthmani-style marks and waqf signs) rather than Tanzil's Uthmani or
 Imlaei.
 
+The snapshot is kept exactly as served. Its typing slips in word spacing (words run together
+or split by a stray space) are restored at build time by `quranjson.qa`, which fails the build
+once upstream fixes one so the table can be retired.
+
 Two upstream traits are preserved rather than corrected, because they are the text as
 published: the API leaves a trailing space on many fields (stripped, being invisible and
 outside the verse) and puts a double space after a waqf sign (kept -- it is inside the
