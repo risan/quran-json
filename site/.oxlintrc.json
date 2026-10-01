@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "react", "jsx-a11y", "import"],
+  "categories": { "correctness": "error" },
+  "ignorePatterns": ["dist/**", ".astro/**", "src/components/ui/**"],
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
+}
