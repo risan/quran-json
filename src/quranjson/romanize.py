@@ -47,8 +47,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Final
 
-from . import config
-from .jsonio import read_json
+from . import qa
 
 __all__ = [
     "EDITIONS",
@@ -1231,7 +1230,7 @@ def build_editions(
     and rendered three times.
     """
     if snapshot is None:
-        snapshot = read_json(config.kemenag_path())
+        snapshot = qa.corrected_kemenag()
 
     editions: dict[str, list[dict[str, Any]]] = {renderer: [] for renderer in RENDERERS}
 

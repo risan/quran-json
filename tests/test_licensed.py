@@ -222,7 +222,7 @@ def test_published_manifest_declares_every_edition_as_granted(cdn_tree: Path) ->
 
     assert manifest["text"]["status"] == "granted"
     assert manifest["text"]["scripts"] == list(config.SCRIPT_IDS)
-    assert manifest["transliteration"]["status"] == "withheld"
+    assert manifest["transliteration"]["status"] == "published"
 
     editions = manifest["editions"]
     assert len(editions) == 130

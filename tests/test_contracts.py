@@ -159,8 +159,19 @@ def test_default_generated_tree_validates_manifest_catalogues_and_layers(cdn_tre
         "transliteration-catalogue.schema.json",
         transliteration=True,
     )
-    assert transliterations["count"] == 0
-    assert manifest["transliteration"]["count"] == 0
+    assert transliterations["count"] == 3
+    assert manifest["transliteration"]["count"] == 3
+    for edition in transliterations["editions"]:
+        key = edition["path"].split("/")[2]
+        _assert_layer(
+            read_json(cdn_tree / "transliteration" / key / "quran.json"),
+            "transliteration.schema.json",
+        )
+        for chapter in range(1, CHAPTER_COUNT + 1):
+            _assert_layer(
+                read_json(cdn_tree / "transliteration" / key / "chapters" / f"{chapter}.json"),
+                "transliteration.schema.json",
+            )
 
 
 def test_malformed_catalogue_and_alignment_fixtures_fail_contract_checks(cdn_tree: Path) -> None:
@@ -257,6 +268,7 @@ def test_manifest_points_to_the_same_catalogues_that_were_validated(cdn_tree: Pa
 
     scripts = {script["id"]: script for script in manifest["scripts"]}
     assert scripts[config.DURI_SCRIPT]["reading"] == {
+        "id": "duri-abu-amr",
         "riwayah": "al-Duri",
         "qiraah": "Abu ʿAmr",
         "verse_numbering": "mapped",
@@ -276,6 +288,7 @@ def test_manifest_points_to_the_same_catalogues_that_were_validated(cdn_tree: Pa
         }
     ]
     assert scripts[config.HAFS_NASTALIQ_SCRIPT]["reading"] == {
+        "id": "hafs",
         "riwayah": "Hafs",
         "qiraah": "ʿAsim",
         "verse_numbering": "hafs",

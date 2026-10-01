@@ -44,7 +44,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, cast
 
-from . import config, licensing, qa
+from . import config, digitalkhatt, licensing, qa, quranpedia, romanize
 from .jsonio import read_json, write_json
 
 __all__ = [
@@ -180,9 +180,8 @@ def _kemenag_chapters() -> list[dict[str, Any]]:
     The snapshot also holds the ministry's translation and transliteration, which are
     protected and never published; only the text is covered by a grant.
     """
-    # The committed snapshot stays exactly as the upstream served it; its recorded spacing slips
-    # are restored here, and the build fails if upstream has already fixed one of them.
-    snapshot = qa.apply_corrections(config.KEMENAG_SCRIPT, read_json(config.kemenag_path()))
+    # The build fails if upstream has already fixed one of the recorded spacing slips.
+    snapshot = qa.corrected_kemenag()
 
     return [
         {
@@ -299,17 +298,63 @@ def _chapter_furniture(script: str) -> list[dict[str, Any]]:
     if script not in (config.DURI_SCRIPT, config.SUSI_SCRIPT):
         return []
 
-    from .quranpedia import DUMP_METADATA
-
     return [
         {
             "chapter": 1,
             "position": "before-verses",
             "kind": "bismillah",
-            "text": DUMP_METADATA[script]["bismillah"],
+            "text": quranpedia.DUMP_METADATA[script]["bismillah"],
             "numbered": False,
         }
     ]
+
+
+def _without_shadda(text: str) -> str:
+    return text.replace("\u0651", "")
+
+
+def _bismillah(script: str, text: list[dict[str, Any]]) -> dict[str, Any]:
+    """Where a script keeps the basmala, in its own orthography.
+
+    ``in_verse_one`` is read from the data, not declared: the basmala either opens verse 1 of
+    every chapter from 2 to 114 (except 9) or of none. Tanzil writes two of them (95 and 97)
+    with a shadda on the ba, so the comparison ignores it.
+    """
+    numbered = script in config.BISMILLAH_NUMBERED_SCRIPTS
+    furniture = _chapter_furniture(script)
+    source: str | None = None
+
+    if numbered:
+        sentence = _chapter(text, 1)["verses"][0]["text"]
+    elif furniture:
+        sentence = furniture[0]["text"].strip()
+        source = "Quranpedia's own `bismillah` field for this mushaf, printed outside the ayahs."
+    elif script == config.DIGITALKHATT_SCRIPT:
+        sentence = digitalkhatt.BISMILLAH
+        source = (
+            "The line the source prints under every surah header, outside the ayahs; "
+            "the same form as the Hafs Nastaliq text."
+        )
+    else:
+        sentence = quranpedia.DUMP_METADATA[script]["bismillah"].strip()
+        source = "Quranpedia's own `bismillah` field for this mushaf, printed outside the ayahs."
+
+    wanted = _without_shadda(sentence)
+    openers = [
+        _without_shadda(_chapter(text, chapter)["verses"][0]["text"]).startswith(wanted)
+        for chapter in range(2, CHAPTER_COUNT + 1)
+        if chapter != 9
+    ]
+
+    if any(openers) and not all(openers):
+        raise ValueError(f"{script}: the basmala opens only some chapters' first verse")
+
+    return {
+        "text": sentence,
+        "in_verse_one": all(openers),
+        "numbered_in_fatiha": numbered,
+        **({"source": source} if source else {}),
+    }
 
 
 def _check_shape(
@@ -430,6 +475,7 @@ def build_site(
     counts: dict[str, int] = {}
     native_counts: dict[str, dict[str, int]] = {}
     furniture_by_script: dict[str, list[dict[str, Any]]] = {}
+    bismillah_by_script: dict[str, dict[str, Any]] = {}
 
     for script in scripts:
         text = _script_chapters(script)
@@ -439,6 +485,8 @@ def build_site(
         if differing := _native_chapter_counts(text):
             native_counts[script] = differing
         _write_jsonl_dir(out_dir / "text" / script, text, pretty=pretty)
+
+        bismillah_by_script[script] = _bismillah(script, text)
 
         furniture = _chapter_furniture(script)
         if furniture:
@@ -489,9 +537,7 @@ def build_site(
     }
     write_json(out_dir / "translations" / "index.json", translations_manifest, pretty=pretty)
 
-    # The transliteration catalogue is always written, even when it publishes nothing: a
-    # consumer asking whether a romanisation exists deserves an answer, not a 404.
-    transliteration_manifest: dict[str, Any] = {"count": 0, "editions": [], "withheld": []}
+    transliteration_manifest = _write_transliterations(out_dir / "transliteration", pretty=pretty)
     write_json(out_dir / "transliteration" / "index.json", transliteration_manifest, pretty=pretty)
 
     manifest: dict[str, Any] = {
@@ -527,6 +573,7 @@ def build_site(
                     else {}
                 ),
                 **(config.SCRIPT_READING_IDENTITIES.get(script, {})),
+                "bismillah": bismillah_by_script[script],
                 **(
                     {"group": "specialist", "group_note": config.SPECIALIST_GROUP_NOTE}
                     if script in config.SPECIALIST_SCRIPTS
@@ -554,29 +601,25 @@ def build_site(
             "project": "CC BY-SA 4.0",
             "text": {
                 "source": (
-                    "tanzil.net, quran.kemenag.go.id, DigitalKhatt (MIT) and "
-                    "quranpedia.net -- see /meta/sources.json for the verdict on each"
+                    "Tanzil.net (CC BY 3.0), Qur'an Kemenag (no copyright, PMA 44/2016), "
+                    "DigitalKhatt (MIT) and Quranpedia.net (its data licence) -- see "
+                    "/meta/sources.json for the verdict on each"
                 ),
                 "status": config.TANZIL_TEXT.status,
                 "url": config.TANZIL_TEXT.url,
             },
         },
-        "attribution": (
-            "Quran text and chapter metadata: Tanzil.net (CC-BY 3.0, verbatim); the "
-            "Mushaf Standar Indonesia script, LPMQ / Kementerian Agama RI; the Indo-Pak "
-            "script, DigitalKhatt (MIT); and the Warsh, Qalun, al-Duri and Hafs Nastaliq "
-            "texts, Qur'anpedia.net (https://quranpedia.net). Exact dump versions, mushaf "
-            "identities and archive checksums are recorded per snapshot in /meta/sources.json. "
-            "Translations: each "
-            "edition's publisher, credited in /translations/index.json. Audio: linked "
-            "from EveryAyah, Islamic Network and MP3Quran; no audio is hosted here."
-        ),
+        "attribution": _attribution(),
     }
     write_json(out_dir / "manifest.json", manifest, pretty=pretty)
 
     write_json(
         out_dir / "meta" / "sources.json",
-        sources_manifest(scripts=scripts, editions=editions),
+        sources_manifest(
+            scripts=scripts,
+            editions=editions,
+            transliterations=transliteration_manifest["editions"],
+        ),
         pretty=pretty,
     )
     write_json(out_dir / "meta" / "qa.json", qa.manifest(), pretty=pretty)
@@ -587,6 +630,71 @@ def build_site(
         build_audio_index(out_dir / "audio", pretty=pretty)
 
     (out_dir / "_headers").write_text(_HEADERS, encoding="utf-8")
+
+
+def _write_transliterations(directory: Path, *, pretty: bool) -> dict[str, Any]:
+    """Generate and write every transliteration edition; return the catalogue.
+
+    The editions are generated from the Kemenag text exactly as `/text/kemenag/` publishes it,
+    spacing corrections included, so a word boundary is fixed in both or in neither.
+    """
+    generated = romanize.build_editions()
+    entries: list[dict[str, Any]] = []
+
+    for edition in romanize.EDITIONS:
+        key = edition["key"]
+        chapters = generated[key]
+        _check_shape(f"transliteration/{key}", chapters, HAFS_VERSES)
+        _write_jsonl_dir(directory / key, chapters, pretty=pretty)
+
+        entries.append(
+            {
+                **{field: value for field, value in edition.items() if field != "key"},
+                "path": f"/transliteration/{key}/",
+                "chapters": CHAPTER_COUNT,
+                "files": {
+                    "quran": f"/transliteration/{key}/quran.json",
+                    "chapters": f"/transliteration/{key}/chapters/{{1-{CHAPTER_COUNT}}}.json",
+                },
+            }
+        )
+
+    catalogue: dict[str, Any] = {"count": len(entries), "editions": entries, "withheld": []}
+    write_json(directory / "index.json", catalogue, pretty=pretty)
+
+    return catalogue
+
+
+def _attribution() -> str:
+    """One sentence per source group; the script ids come from the registry.
+
+    The generated transliterations and the audio hosts are credited here too, so a consumer
+    reading only the manifest knows who to credit for everything the site serves.
+    """
+
+    def ids(scripts: tuple[str, ...]) -> str:
+        return ", ".join(scripts)
+
+    return " ".join(
+        (
+            "Chapter metadata and the Arabic text variants "
+            f"({ids(config.TANZIL_VARIANTS)}): Tanzil.net, verbatim under CC BY 3.0, with the "
+            "notice carried in each file.",
+            f"Arabic text ({config.KEMENAG_SCRIPT}): the Mushaf Standar Indonesia of LPMQ / "
+            "Kementerian Agama RI, whose text carries no copyright (PMA 44/2016, Pasal 8(1)).",
+            f"Arabic text ({config.DIGITALKHATT_SCRIPT}): DigitalKhatt "
+            "(https://github.com/DigitalKhatt/digitalkhatt-js), MIT.",
+            f"Arabic text ({ids(config.QURANPEDIA_SCRIPTS)}): the KFGQPC editions as dumped by "
+            "Quranpedia.net (https://quranpedia.net), credited here, with each dump's version "
+            "in /meta/sources.json.",
+            "Translations: QuranEnc (https://quranenc.com) and the publishers it credits, "
+            "Talal Itani's ClearQuran, and public-domain translators; each edition's credit and "
+            "licence is in /translations/index.json.",
+            "Transliterations: generated by this project from the Kemenag Arabic text, "
+            "CC BY-SA 4.0.",
+            "Audio: linked from EveryAyah, Islamic Network and MP3Quran; no audio is hosted here.",
+        )
+    )
 
 
 def _script_license(script: str) -> dict[str, str]:
@@ -641,6 +749,7 @@ def sources_manifest(
     *,
     scripts: list[str],
     editions: list[config.Edition],
+    transliterations: list[dict[str, Any]],
 ) -> dict[str, Any]:
     """Provenance and licence status for the sources behind the published site.
 
@@ -693,9 +802,29 @@ def sources_manifest(
             "license_url": config.TANZIL_TEXT.url,
         },
         "transliteration": {
-            "status": "withheld",
-            "reason": "No transliteration with a redistribution grant is published yet.",
+            "status": "published",
+            "generated": True,
+            "source_text": (
+                "The Arabic text of Qur'an Kemenag (/text/kemenag/), after the spacing "
+                "corrections recorded in /meta/qa.json. The ministry's own Latin "
+                "transliteration is protected, never published, and used only to measure "
+                "agreement."
+            ),
+            "source": "https://quran.kemenag.go.id/",
+            "method": (
+                "Generated by this project: Hafs connected-reading and pausal rules applied to "
+                "the Arabic, then rendered by a table-driven scheme. Machine-generated and not "
+                "yet reviewed by a qualified reader."
+            ),
+            "license": romanize.EDITIONS[0]["license"]["text"],
+            "license_url": romanize.EDITIONS[0]["license"]["url"],
+            "reading": "hafs",
+            "verse_ids": "hafs",
             "index": "/transliteration/index.json",
+            "editions": [
+                {"edition": entry["edition"], "path": entry["path"], "language": entry["language"]}
+                for entry in transliterations
+            ],
         },
         "editions": [
             {

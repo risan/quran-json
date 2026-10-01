@@ -459,3 +459,17 @@ def test_clearquran_parser_rejects_empty_verse_text() -> None:
 
     with pytest.raises(ValueError, match="empty verse"):
         parse_verse_files(_clearquran_archive(verses))
+
+
+def test_a_small_change_lists_its_verses() -> None:
+    before = {
+        "1": [{"verse": 1, "text": "a"}],
+        "2": [{"verse": 1, "text": "a"}, {"verse": 2, "text": "b"}],
+    }
+    after = {
+        "1": [{"verse": 1, "text": "a"}],
+        "2": [{"verse": 1, "text": "a"}, {"verse": 2, "text": "c"}],
+    }
+
+    assert _summarise_change(before, after)["changed_verses"] == ["2:2"]
+    assert "changed_verses" not in _summarise_change(before, before)

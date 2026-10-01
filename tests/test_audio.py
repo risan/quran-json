@@ -141,7 +141,7 @@ def test_mp3quran_reading_comes_from_the_riwayah_in_the_moshaf_name() -> None:
     assert audio.mp3quran_reading("Rewayat Qalon A'n Nafi' Men Tariq Abi Nasheet - Murattal") == (
         "qalun"
     )
-    assert audio.mp3quran_reading("Rewayat Aldori A'n Abi Amr - Murattal") == "duri"
+    assert audio.mp3quran_reading("Rewayat Aldori A'n Abi Amr - Murattal") == "duri-abu-amr"
     assert audio.mp3quran_reading("Rewayat Assosi A'n Abi Amr - Murattal") == "susi"
     assert audio.mp3quran_reading("Sho'bah A'n Asim - Murattal") == "shubah"
     assert audio.mp3quran_reading("Almusshaf Al Mojawwad - Almusshaf Al Mojawwad") == "unknown"
@@ -170,7 +170,9 @@ def test_islamic_network_reading_is_read_from_the_edition_identifier(index: dict
     assert readings["islamic_network/surah/128/ar.aliabdurrahmanalhuthaifyqaloon"] == "qalun"
     assert readings["islamic_network/surah/128/ar.abdurrasheedsufishubahanasim"] == "shubah"
     assert readings["islamic_network/surah/128/ar.abdurrasheedsufisoosi"] == "susi"
-    assert readings["islamic_network/surah/128/ar.abdurrasheedsufiaddoorianabiamr"] == "duri"
+    assert (
+        readings["islamic_network/surah/128/ar.abdurrasheedsufiaddoorianabiamr"] == "duri-abu-amr"
+    )
     # Unmarked per-surah editions include Maghribi reciters; the host does not say Hafs.
     assert readings["islamic_network/surah/128/ar.benkirane"] == "unknown"
     assert readings["islamic_network/128/ar.alafasy"] == "hafs"

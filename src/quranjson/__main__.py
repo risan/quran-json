@@ -44,10 +44,18 @@ def fetch(
             "exit 1 if any differ.",
         ),
     ] = False,
+    only: Annotated[
+        list[str] | None,
+        typer.Option(
+            "--only",
+            help="Limit to snapshots whose path starts with this prefix, e.g. data/kemenag; "
+            "repeat for several.",
+        ),
+    ] = None,
 ) -> None:
     """Refresh the committed upstream snapshots and the provenance manifest."""
     if check:
-        findings = sources.check_all()
+        findings = sources.check_all(only=only)
 
         for finding in findings:
             typer.echo(finding)
@@ -58,7 +66,7 @@ def fetch(
         typer.echo("upstream matches the committed snapshots")
         return
 
-    records = sources.fetch_all(force=force)
+    records = sources.fetch_all(force=force, only=only)
     typer.echo(f"manifest covers {len(records)} snapshots")
 
 
