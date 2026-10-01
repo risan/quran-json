@@ -1,15 +1,13 @@
 """Tanzil.net as the Arabic text and chapter-metadata source.
 
 Tanzil is the only source found whose grant covers verbatim redistribution explicitly
-(CC-BY 3.0), which is why the licensed dataset generation uses it rather than the
-re-encoded derivative the frozen `dist/` tree was built from.
+(CC-BY 3.0).
 
 Two notes that matter to consumers:
 
 * Tanzil embeds the basmala at the head of the **first ayah of every surah except
-  At-Tawbah**, rather than treating it as chapter metadata. The shipped text did not.
-* The text is standard Uthmani orthography (Arabic Yeh U+064A, sukun U+0652), unlike the
-  Farsi Yeh (U+06CC) / U+06E1 style of the frozen tree.
+  At-Tawbah**, rather than treating it as chapter metadata.
+* The text is standard Uthmani orthography (Arabic Yeh U+064A, sukun U+0652).
 """
 
 from __future__ import annotations

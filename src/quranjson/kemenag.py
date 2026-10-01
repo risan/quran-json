@@ -7,7 +7,7 @@ fields per ayah -- `arabic`, `translation`, `latin` -- one surah window at a tim
 backend rather than a documented public service: it publishes no terms, and it answers
 **403 unless the request carries the site's own `Origin` header**, which is why that
 header is spelled out here instead of hidden in a config knob. Availability is not a
-licence; the verdicts live in `config` and are reported by `quranjson.review`.
+licence; the verdicts live in `config`.
 
 Licensing, all three items verified first-hand on 2026-09-18 (see `config`):
 
@@ -29,6 +29,10 @@ Imlaei (`simple`/`simple-plain`) texts. Those are verses where the two orthograp
 to agree completely, not evidence of a shared text. It follows the Mushaf Standar Indonesia
 (Imlaei rasm carrying Uthmani-style marks and waqf signs) rather than Tanzil's Uthmani or
 Imlaei.
+
+The snapshot is kept exactly as served. Its typing slips in word spacing (words run together
+or split by a stray space) are restored at build time by `quranjson.qa`, which fails the build
+once upstream fixes one so the table can be retired.
 
 Two upstream traits are preserved rather than corrected, because they are the text as
 published: the API leaves a trailing space on many fields (stripped, being invisible and

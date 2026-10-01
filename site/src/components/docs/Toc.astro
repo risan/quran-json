@@ -1,0 +1,23 @@
+---
+interface Props {
+  items: { id: string; label: string }[];
+}
+
+const { items } = Astro.props;
+---
+
+<nav aria-label="On this page" data-toc>
+  <ul class="space-y-0.5">
+    {items.map((item) => (
+      <li>
+        <a
+          href={`#${item.id}`}
+          data-toc-link={item.id}
+          class="text-muted-foreground hover:text-foreground aria-[current=true]:text-brand block rounded-md px-2 py-1 text-[13px] no-underline aria-[current=true]:font-medium"
+        >
+          {item.label}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>

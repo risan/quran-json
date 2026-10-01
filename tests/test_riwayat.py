@@ -99,6 +99,7 @@ def test_the_verse_counts_differ_from_the_hafs_metadata(cdn_tree: Path) -> None:
         config.WARSH_SCRIPT: 50,
         config.QALUN_SCRIPT: 50,
         config.DURI_SCRIPT: 44,
+        config.SUSI_SCRIPT: 43,
     }
     for script in config.RIWAYAH_SCRIPTS:
         chapters = _script(cdn_tree, script)

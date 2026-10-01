@@ -163,27 +163,6 @@ def test_default_generated_tree_validates_manifest_catalogues_and_layers(cdn_tre
     assert manifest["transliteration"]["count"] == 0
 
 
-def test_explicit_override_generated_transliteration_validates(cdn_override_tree: Path) -> None:
-    """The override remains available for an explicit rights decision.
-
-    This fixture is session-scoped with the existing gate tests, so schema checks do not
-    trigger a full CDN render for every assertion.
-    """
-    catalogue = read_json(cdn_override_tree / "transliteration" / "index.json")
-    _assert_catalogue(catalogue, "transliteration-catalogue.schema.json", transliteration=True)
-    assert catalogue["count"] == 1
-
-    key = catalogue["editions"][0]["path"].split("/")[2]
-    _assert_layer(
-        read_json(cdn_override_tree / "transliteration" / key / "quran.json"),
-        "transliteration.schema.json",
-    )
-    _assert_layer(
-        read_json(cdn_override_tree / "transliteration" / key / "chapters" / "1.json"),
-        "transliteration.schema.json",
-    )
-
-
 def test_malformed_catalogue_and_alignment_fixtures_fail_contract_checks(cdn_tree: Path) -> None:
     translations = read_json(cdn_tree / "translations" / "index.json")
     malformed_catalogue = copy.deepcopy(translations)

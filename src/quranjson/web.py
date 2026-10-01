@@ -1,32 +1,23 @@
-"""The site's own assets: the documentation page, the reader app, and the Arabic fonts.
+"""Font coverage: which bundled Arabic font can render which published script.
 
-`cdn/` is generated from `data/`; the page and the app are generated from `web/` the same
-way. They live there as real HTML, CSS and JavaScript -- editable, lintable, and readable as
-what they are -- and this module substitutes the catalogue into the page and copies both
-trees into the output.
-
-Two things are *measured* rather than written down:
-
-*   **The catalogue rows on the page** are rendered from the same structures the JSON
-    artifacts are written from, so the documentation cannot disagree with the data.
-*   **The font coverage table** is measured from the committed font files against the bytes
-    of every published script. A script no bundled font covers fails the build, because the
-    alternative is a page that renders missing-glyph boxes for a mushaf tradition and calls
-    it published.
+The site ships three Arabic fonts (`site/public/fonts/`). This module measures them with
+fontTools against every codepoint a script's verses, chapter names and unnumbered furniture
+use, and fails when a script has no font that covers it. That gate matters because the
+alternative is a reader that renders missing-glyph boxes for a mushaf tradition and calls it
+published.
 
 The fonts are the site's, never the dataset's: the dataset publishes UTF-8 text and names no
-font, so a consumer is free to render it their own way. Preference order is the manifest's
-order -- the first font complete for a script becomes that script's default. Amiri leads as
-the traditional naskh of the printed mushaf; Noto Naskh Arabic trails as the deliberate last
-resort, since it covers everything and so makes the gaps in the others visible instead of
-fatal.
+font. Preference order is the order of `sources.json` -- the first font complete for a script
+becomes that script's default. Amiri leads as the traditional naskh of the printed mushaf;
+Noto Naskh Arabic trails as the deliberate last resort, since it covers everything and so makes
+the gaps in the others visible instead of fatal.
+
+The measured result is written to a path the caller chooses (`quran-json fonts --out`), outside
+the published data tree: the site build reads it, and it is never deployed.
 """
 
 from __future__ import annotations
 
-import html
-import re
-import shutil
 from collections import Counter
 from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass
@@ -39,28 +30,13 @@ from fontTools.ttLib import TTFont
 from . import config
 from .jsonio import read_json, write_json
 
-__all__ = [
-    "APP",
-    "ASSETS",
-    "DOCS",
-    "Font",
-    "docs_context",
-    "font_coverage",
-    "fonts",
-    "write_docs",
-    "write_site_assets",
-]
+__all__ = ["FONTS", "Font", "coverage_from_data", "font_coverage", "fonts", "write_coverage"]
 
-#: Hand-written assets, copied verbatim into the output tree.
-ASSETS: Final = config.WEB / "assets"
-APP: Final = config.WEB / "app"
-DOCS: Final = config.WEB / "index.html"
+#: The bundled fonts, their licence texts and `sources.json`; served at `/fonts/`.
+FONTS: Final = config.ROOT / "site" / "public" / "fonts"
 
-#: Where the coverage report is published, for the app to consume.
-FONTS_JSON: Final = "app/fonts.json"
-
-#: `{{placeholder}}` in the page template; substituted, never left behind.
-_PLACEHOLDER: Final = re.compile(r"\{\{([a-z_0-9]+)\}\}")
+#: The public URL prefix of `FONTS`.
+FONT_URL: Final = "/fonts"
 
 
 @dataclass(frozen=True, slots=True)
@@ -78,17 +54,17 @@ class Font:
     license_file: str
 
     def payload(self, coverage: Mapping[str, Any]) -> dict[str, str]:
-        """This font as the app receives it, with the scripts it is complete for."""
+        """This font as the site receives it, with the scripts it is complete for."""
         return {
             "id": self.id,
             "name": self.family,
-            "file": f"/assets/fonts/{self.file}",
+            "file": f"{FONT_URL}/{self.file}",
             "version": self.version,
             "copyright": self.copyright,
             "source": self.source,
             "license": self.license,
             "license_url": self.license_url,
-            "license_file": f"/assets/fonts/{self.license_file}",
+            "license_file": f"{FONT_URL}/{self.license_file}",
             "covers": ",".join(
                 script
                 for script, entry in coverage["scripts"].items()
@@ -100,7 +76,7 @@ class Font:
 def fonts() -> list[Font]:
     """Every bundled font, in preference order (see the module docstring)."""
     fields = {field.name for field in dataclass_fields(Font)}
-    records: list[dict[str, Any]] = read_json(ASSETS / "fonts" / "sources.json")
+    records: list[dict[str, Any]] = read_json(FONTS / "sources.json")
 
     # The manifest carries provenance the build does not need (path, hash, byte count), so
     # the record is filtered rather than the dataclass widened.
@@ -145,16 +121,15 @@ def font_coverage(
             such as a source-provided bismillah before Duri chapter 1.
 
     Returns:
-        The coverage report published as `/app/fonts.json`: per script, the font that
-        covers it and, for each font that does not, the codepoints it is missing and how
-        often they occur.
+        The coverage report: per script, the font that covers it and, for each font that does
+        not, the codepoints it is missing and how often they occur.
 
     Raises:
         ValueError: a script no bundled font covers. Publishing it would render missing
             glyphs for a mushaf tradition, which is worse than failing the build.
     """
     bundled = fonts()
-    cmaps = {font.id: _codepoints(ASSETS / "fonts" / font.file) for font in bundled}
+    cmaps = {font.id: _codepoints(FONTS / font.file) for font in bundled}
     name_counts = _used(names)
     furniture = furniture or {}
 
@@ -199,202 +174,25 @@ def font_coverage(
     }
 
 
-def write_site_assets(out_dir: Path, coverage: Mapping[str, Any]) -> None:
-    """Copy the hand-written assets into the site and publish the coverage report."""
-    for source in (ASSETS, APP):
-        shutil.copytree(source, out_dir / source.name)
+def coverage_from_data(data_dir: Path) -> dict[str, Any]:
+    """Measure the fonts against the scripts of an already generated data tree."""
+    manifest = read_json(data_dir / "manifest.json")
+    names = [chapter["name"] for chapter in read_json(data_dir / "chapters.json")]
+    corpora: dict[str, list[str]] = {}
+    furniture: dict[str, list[str]] = {}
 
-    write_json(out_dir / FONTS_JSON, coverage)
+    for script in manifest["scripts"]:
+        script_id = script["id"]
+        quran = read_json(data_dir / "text" / script_id / "quran.json")
+        corpora[script_id] = [verse["text"] for chapter in quran for verse in chapter["verses"]]
+        furniture[script_id] = [item["text"] for item in script.get("chapter_furniture", [])]
 
-
-def write_docs(out_dir: Path, values: Mapping[str, str]) -> None:
-    """Render the documentation page from its template.
-
-    Raises:
-        KeyError: the template asks for a value the build does not supply.
-    """
-
-    def substitute(match: re.Match[str]) -> str:
-        key = match.group(1)
-        if key not in values:
-            raise KeyError(f"web/index.html asks for {{{{{key}}}}}, which the build does not set")
-        return values[key]
-
-    page = _PLACEHOLDER.sub(substitute, DOCS.read_text(encoding="utf-8"))
-    (out_dir / "index.html").write_text(page, encoding="utf-8")
+    return font_coverage(corpora, names=names, furniture=furniture)
 
 
-def _escape(value: Any) -> str:
-    return html.escape(str(value), quote=True)
+def write_coverage(data_dir: Path, out: Path) -> dict[str, Any]:
+    """Measure the fonts against `data_dir` and write the report to `out`."""
+    coverage = coverage_from_data(data_dir)
+    write_json(out, coverage, pretty=True)
 
-
-def _rows(rows: Iterable[Sequence[str]]) -> str:
-    """One `<tr>` per row; cells are escaped by the caller."""
-    return "\n".join(
-        "      <tr>" + "".join(f"<td>{cell}</td>" for cell in row) + "</tr>" for row in rows
-    )
-
-
-def _sample(
-    script: str, text: str, coverage: Mapping[str, Any], bundled: Mapping[str, Font]
-) -> str:
-    """A verse of the script, rendered in the font the app will use for it."""
-    font = bundled[coverage["scripts"][script]["default"]]
-    return (
-        '<span class="sample" lang="ar" dir="rtl" '
-        f'style="font-family:{_escape(font.family)}">{_escape(text)}</span>'
-    )
-
-
-def docs_context(
-    *,
-    manifest: Mapping[str, Any],
-    translations: Mapping[str, Any],
-    transliterations: Mapping[str, Any],
-    reciters: Mapping[str, Any] | None,
-    coverage: Mapping[str, Any],
-    chapters: Sequence[Mapping[str, Any]],
-    samples: Mapping[str, str],
-) -> dict[str, str]:
-    """Every value the documentation page's template asks for.
-
-    Args:
-        manifest: the manifest the site publishes, so the page cannot disagree with it.
-        translations: the published translation catalogue, as published.
-        transliterations: the published transliteration catalogue.
-        reciters: the reciter index, or None when the build skipped audio.
-        coverage: the measured font coverage report.
-        chapters: the 114 chapter metadata records.
-        samples: script id -> a verse from that script, for the scripts table.
-    """
-    bundled = {font.id: font for font in fonts()}
-    scripts = manifest["scripts"]
-    editions = translations["editions"]
-    published_transliterations = transliterations["editions"]
-
-    # The quickstart examples name a real script and a real edition, so a reader can paste
-    # them. Chapter 2 is the one every consumer ends up fetching; its 255th verse is the
-    # 262nd ayah of the Quran, which is what the global-ayah audio template needs.
-    global_ayah_2_255 = (
-        sum(int(chapter["total_verses"]) for chapter in chapters if int(chapter["id"]) < 2) + 255
-    )
-
-    script_rows = [
-        (
-            f"<code>{_escape(script['id'])}</code>",
-            _escape(script["name"]),
-            f"{script['verses']:,}",
-            _escape(script["description"]),
-            _sample(script["id"], samples[script["id"]], coverage, bundled),
-        )
-        for script in scripts
-    ]
-
-    font_rows = []
-    for script in scripts:
-        entry = coverage["scripts"][script["id"]]
-        marks = []
-        for font in bundled.values():
-            gaps = entry["missing"].get(font.id)
-            if not gaps:
-                marks.append('<span class="yes" title="every codepoint covered">yes</span>')
-                continue
-
-            title = ", ".join(f"{cp} x{count}" for cp, count in list(gaps.items())[:4])
-            marks.append(f'<span class="no" title="{_escape(title)}">{len(gaps)}</span>')
-
-        font_rows.append(
-            (
-                f"<code>{_escape(script['id'])}</code>",
-                str(entry["codepoints"]),
-                f"<code>{_escape(entry['default'])}</code>",
-                *marks,
-            )
-        )
-
-    translation_rows = [
-        (
-            f"<code>{_escape(edition['code'])}</code>",
-            _escape(edition["author"]),
-            _escape(edition["direction"]),
-            _escape(edition["version"]),
-            f'<a href="{_escape(edition["license"]["url"])}">'
-            f"{_escape(edition['license']['status'])}</a>",
-            # A directory has no index page on a static host: link the file it contains.
-            f'<a href="{_escape(edition["path"])}quran.json">'
-            f"<code>{_escape(edition['path'])}quran.json</code></a>",
-        )
-        for edition in editions
-    ]
-
-    return {
-        "chapter_count": str(len(chapters)),
-        "script_count": str(len(scripts)),
-        "translation_count": f"{translations['count']:,}",
-        "language_count": f"{manifest['translations']['languages']:,}",
-        "transliteration_count": f"{transliterations['count']:,}",
-        "verse_count": f"{int(manifest['scripts'][0]['verses']):,}",
-        "reciter_count": f"{len(reciters['reciters']):,}" if reciters else "0",
-        "host_count": str(len(reciters["hosts"])) if reciters else "0",
-        "scripts_rows": _rows(script_rows),
-        "font_rows": _rows(font_rows),
-        "font_columns": "".join(f"<th>{_escape(font.family)}</th>" for font in bundled.values()),
-        "translations_rows": _rows(translation_rows),
-        "withheld_rows": _rows(
-            (
-                _escape(entry["edition"]),
-                _escape(entry["author"]),
-                _escape(entry["status"]),
-                f'<a href="{_escape(entry["license_url"])}">terms</a>',
-            )
-            for entry in [*translations["withheld"], *transliterations["withheld"]]
-        ),
-        "withheld_count": str(len(translations["withheld"]) + len(transliterations["withheld"])),
-        "transliterations_rows": _rows(
-            (
-                f"<code>{_escape(edition['edition'])}</code>",
-                _escape(edition["author"]),
-                f'<a href="{_escape(edition["license"]["url"])}">'
-                f"{_escape(edition['license']['status'])}</a>",
-                f'<a href="{_escape(edition["path"])}quran.json">'
-                f"<code>{_escape(edition['path'])}quran.json</code></a>",
-            )
-            for edition in published_transliterations
-        ),
-        "transliteration_lead": _transliteration_lead(published_transliterations),
-        "audio_rows": _rows(
-            (
-                _escape(host["name"]),
-                f"<code>{_escape(host['template'])}</code>",
-                _escape(host["indexing"]),
-                _escape(host["license_status"]),
-            )
-            for host in (reciters or {}).get("hosts", {}).values()
-        ),
-        "default_script": scripts[0]["id"],
-        "default_translation": editions[0]["path"].strip("/").split("/")[-1],
-        "default_transliteration": (
-            published_transliterations[0]["path"].strip("/").split("/")[-1]
-            if published_transliterations
-            else ""
-        ),
-        "global_ayah_2_255": str(global_ayah_2_255),
-        "attribution": _escape(manifest["attribution"]),
-    }
-
-
-def _transliteration_lead(published: Sequence[Mapping[str, Any]]) -> str:
-    """One sentence saying whether a romanisation is published, and why not if none is."""
-    if not published:
-        return (
-            "No romanisation is published: Qur'an Kemenag's carries no grant and Tanzil's "
-            "is restricted to non-commercial use. The catalogue is written anyway, so a "
-            "client asking whether one exists gets an answer rather than a 404."
-        )
-
-    names = ", ".join(f"<code>{_escape(entry['edition'])}</code>" for entry in published)
-    return (
-        f"Published: {names}. The grant is not verified — the origin serves it under "
-        "<code>--include-unverified-licenses</code>, and the catalogue entry says so "
-        "instead of claiming rights the project does not hold."
-    )
+    return coverage

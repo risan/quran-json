@@ -13,12 +13,7 @@ Layout, all unversioned::
     /transliteration/{key}/quran.json
     /transliteration/{key}/chapters/{1-114}.json
     /audio/reciters.json
-    /index.html                                     the documentation page
-    /assets/{base,docs}.css, /assets/site.js
-    /assets/fonts/{amiri,scheherazade-new,noto-naskh-arabic}-regular.woff2
-    /app/index.html                                 the reader app
-    /app/{app,api,store,ui,audio}.js, /app/app.css
-    /app/fonts.json                                 measured font coverage
+    (the HTML pages, /_astro/* and /fonts/* are added by `npm run site`)
     /_headers
 
 Three deliberate choices, each reversing an earlier one:
@@ -32,9 +27,12 @@ Three deliberate choices, each reversing an earlier one:
 *   **Translations carry no Arabic.** Embedding the text in every edition duplicated one
     1.7 MB corpus 83 times -- 105 MB, a fifth of the deployment.
 
-Because paths are unversioned, ``_headers`` caches the data immutably on the strength of a
-promise: a published path is never renamed, removed, or rewritten. Adding a script, an
-edition, or a chapter is fine; changing one is not.
+Because paths are unversioned, a published path is never renamed or removed. Its content may
+receive upstream corrections (Quranpedia's licence requires keeping copies current); they are
+logged in `/meta/qa.json` and, for a new upstream release, in the source version recorded in
+`/meta/sources.json`. So ``_headers`` caches data for a day and lets a stale copy be served
+for a week while it revalidates, rather than caching it immutably. Only the hashed
+`/_astro/*` build output and the font files are immutable.
 
 Only editions with a verified redistribution grant are published; see
 `quranjson.licensing`.
@@ -46,15 +44,13 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, cast
 
-from . import config, licensing, qa, web
+from . import config, licensing, qa
 from .jsonio import read_json, write_json
 
 __all__ = [
     "build_site",
     "edition_url_key",
     "published_editions",
-    "published_transliterations",
-    "transliteration_url_key",
 ]
 
 #: Chapters in the Quran, asserted against the snapshots before anything is written.
@@ -77,17 +73,17 @@ _HEADERS = """\
   X-Content-Type-Options: nosniff
 
 /text/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /translations/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /translations/index.json
   ! Cache-Control
   Cache-Control: public, max-age=60, must-revalidate
 
 /transliteration/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /transliteration/index.json
   ! Cache-Control
@@ -96,7 +92,10 @@ _HEADERS = """\
 /audio/*
   Cache-Control: public, max-age=3600
 
-/assets/fonts/*
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_astro/*
   Cache-Control: public, max-age=31536000, immutable
 """
 
@@ -116,23 +115,6 @@ def edition_url_key(edition: config.Edition) -> str:
         raise ValueError(f"edition {edition.lang!r} is not `<language>_<translator>`")
 
     return f"{edition.code}-{translator.replace('_', '-')}"
-
-
-def _is_transliteration(edition: config.Edition) -> bool:
-    """A transliteration is language-shaped but is not a translation: it gets its own path."""
-    return edition.lang.startswith(config.TRANSLITERATION)
-
-
-def transliteration_url_key(edition: config.Edition) -> str:
-    """The path segment for a transliteration: ``transliteration_kemenag`` -> ``kemenag``.
-
-    Raises:
-        ValueError: the edition is not a transliteration.
-    """
-    if not _is_transliteration(edition):
-        raise ValueError(f"edition {edition.lang!r} is not a transliteration")
-
-    return edition.lang.partition("_")[2] or edition.lang
 
 
 def chapter_metadata() -> list[dict[str, Any]]:
@@ -169,13 +151,16 @@ def _script_snapshot_path(script: str) -> Path:
 def _script_chapters(script: str) -> list[dict[str, Any]]:
     """One script's text as 114 chapter objects, verses only."""
     if script == config.KEMENAG_SCRIPT:
-        return _kemenag_chapters("text")
+        return _kemenag_chapters()
 
     snapshot: dict[str, list[dict[str, Any]]] = read_json(_script_snapshot_path(script))
+
+    notice = {"notice": config.TANZIL_NOTICE} if script in config.TANZIL_VARIANTS else {}
 
     return [
         {
             "id": int(chapter),
+            **notice,
             "verses": [
                 {
                     "id": int(verse["verse"]),
@@ -189,65 +174,26 @@ def _script_chapters(script: str) -> list[dict[str, Any]]:
     ]
 
 
-def _kemenag_chapters(field: str) -> list[dict[str, Any]]:
-    """Qur'an Kemenag's snapshot as 114 chapter objects carrying one field per verse.
+def _kemenag_chapters() -> list[dict[str, Any]]:
+    """Qur'an Kemenag's snapshot as 114 chapter objects carrying the Arabic text only.
 
-    The snapshot keeps the text, the translation and the transliteration as three fields of
-    one ayah record -- they are one API response -- so each published artifact slices the
-    field it needs.
+    The snapshot also holds the ministry's translation and transliteration, which are
+    protected and never published; only the text is covered by a grant.
     """
-    snapshot: dict[str, list[dict[str, Any]]] = read_json(config.kemenag_path())
+    # The committed snapshot stays exactly as the upstream served it; its recorded spacing slips
+    # are restored here, and the build fails if upstream has already fixed one of them.
+    snapshot = qa.apply_corrections(config.KEMENAG_SCRIPT, read_json(config.kemenag_path()))
 
     return [
         {
             "id": int(chapter),
             "verses": [
-                {"id": int(verse["verse"]), field: verse[field]}
+                {"id": int(verse["verse"]), "text": verse["text"]}
                 for verse in sorted(verses, key=lambda item: int(item["verse"]))
             ],
         }
         for chapter, verses in sorted(snapshot.items(), key=lambda item: int(item[0]))
     ]
-
-
-def _kemenag_translation_chapters() -> list[dict[str, Any]]:
-    """Qur'an Kemenag's 2019 Indonesian translation, carrying the translator's footnotes."""
-    snapshot: dict[str, list[dict[str, Any]]] = read_json(config.kemenag_path())
-
-    chapters: list[dict[str, Any]] = []
-
-    for chapter in sorted(snapshot, key=int):
-        verses: list[dict[str, Any]] = []
-
-        for verse in sorted(snapshot[chapter], key=lambda item: int(item["verse"])):
-            entry: dict[str, Any] = {
-                "id": int(verse["verse"]),
-                "translation": verse["translation"],
-            }
-
-            # The ministry's footnotes are part of its translation, as QuranEnc's are.
-            if verse.get("footnotes"):
-                entry["footnotes"] = verse["footnotes"]
-
-            verses.append(entry)
-
-        chapters.append({"id": int(chapter), "verses": verses})
-
-    return chapters
-
-
-def _transliteration_chapters(edition: config.Edition) -> list[dict[str, Any]]:
-    """One transliteration as 114 chapter objects, romanisation text only.
-
-    Every transliteration registered so far is Qur'an Kemenag's, where the romanisation is
-    one field of the same ayah record as the text. A transliteration delivered as a
-    language-shaped snapshot would read `text` instead, as the editions do -- so an unknown
-    kind is refused rather than silently read from the wrong file.
-    """
-    if edition.kind != "kemenag":
-        raise ValueError(f"no reader for a {edition.kind!r} transliteration")
-
-    return _kemenag_chapters("transliteration")
 
 
 def _edition_chapters(edition: config.Edition) -> list[dict[str, Any]]:
@@ -256,9 +202,6 @@ def _edition_chapters(edition: config.Edition) -> list[dict[str, Any]]:
     The Arabic verse text is deliberately absent: it is identical for every edition and
     lives under `/text/`, so including it here duplicated the corpus 83 times.
     """
-    if edition.kind == "kemenag":
-        return _kemenag_translation_chapters()
-
     path = (
         config.quranenc_path(edition.lang)
         if edition.kind == "quranenc"
@@ -297,9 +240,9 @@ def _check_mapping(label: str, chapters: list[dict[str, Any]], script: str) -> N
                 raise ValueError(
                     f"{label}: invalid number_in_hafs at {chapter['id']}:{verse['id']}"
                 )
-            if script == config.HAFS_NASTALIQ_SCRIPT and numbers != [verse["id"]]:
+            if script in config.NATIVE_HAFS_QURANPEDIA_SCRIPTS and numbers != [verse["id"]]:
                 raise ValueError(
-                    f"{label}: Hafs Nastaliq map is not native at {chapter['id']}:{verse['id']}"
+                    f"{label}: {script} map is not native at {chapter['id']}:{verse['id']}"
                 )
             limit = chapter_counts[chapter["id"]]
             if not all(isinstance(number, int) and 1 <= number <= limit for number in numbers):
@@ -348,12 +291,12 @@ def _native_chapter_counts(chapters: list[dict[str, Any]]) -> dict[str, int]:
 def _chapter_furniture(script: str) -> list[dict[str, Any]]:
     """Expose source furniture whose position is pinned by the source dump.
 
-    Quranpedia's al-Duri dump carries the basmala outside its numbered ayah rows.  It is
+    Quranpedia's al-Duri and al-Susi dumps carry the basmala outside its numbered ayah rows.  It is
     deliberately a manifest annotation: adding it as verse 1 would shift every source map
     and invent a Hafs join.  The dump exposes no similarly bounded furniture contract for
     the other chapters or scripts.
     """
-    if script != config.DURI_SCRIPT:
+    if script not in (config.DURI_SCRIPT, config.SUSI_SCRIPT):
         return []
 
     from .quranpedia import DUMP_METADATA
@@ -395,7 +338,8 @@ def _check_shape(
             raise ValueError(f"{label}: chapter {chapter['id']} is not numbered 1..n")
 
     if script is not None and (
-        config.SCRIPT_VERSE_IDS[script] == "mapped" or script == config.HAFS_NASTALIQ_SCRIPT
+        config.SCRIPT_VERSE_IDS[script] == "mapped"
+        or script in config.NATIVE_HAFS_QURANPEDIA_SCRIPTS
     ):
         _check_mapping(label, chapters, script)
 
@@ -414,13 +358,8 @@ def _write_jsonl_dir(directory: Path, chapters: list[dict[str, Any]], *, pretty:
         write_json(directory / "chapters" / f"{chapter['id']}.json", chapter, pretty=pretty)
 
 
-def published_editions(*, include_unverified: bool = False) -> list[config.Edition]:
-    """Every translation we publish: the QuranEnc catalogue plus our extra editions.
-
-    With ``include_unverified`` the ingested-but-uncleared editions join the list, which is
-    what `--include-unverified-licenses` means: publish these too, now that the rights have
-    been cleared out of band.
-    """
+def published_editions() -> list[config.Edition]:
+    """Every translation we publish: the QuranEnc catalogue plus our extra editions."""
     editions: list[config.Edition] = []
 
     if config.quranenc_catalogue_path().exists():
@@ -436,83 +375,32 @@ def published_editions(*, include_unverified: bool = False) -> list[config.Editi
         if config.extra_edition_path(edition.lang).exists()
     )
 
-    if include_unverified:
-        editions.extend(
-            edition
-            for edition in config.PENDING_EDITIONS
-            if not _is_transliteration(edition) and _edition_snapshot(edition).exists()
-        )
-
     return editions
-
-
-def _edition_snapshot(edition: config.Edition) -> Path:
-    """Where an edition's committed snapshot lives, by the shape its source delivers."""
-    if edition.kind == "kemenag":
-        return config.kemenag_path()
-    if edition.kind == "quranenc":
-        return config.quranenc_path(edition.lang)
-    if edition in config.EXTRA_EDITIONS:
-        return config.extra_edition_path(edition.lang)
-    return config.edition_path(edition.lang)
-
-
-def published_transliterations(*, include_unverified: bool = False) -> list[config.Edition]:
-    """Every transliteration we publish, in registry order.
-
-    Today that is none, and the site publishes no romanisation: Qur'an Kemenag's has no
-    grant, so a tree here would be a tree of unchecked romanisations. The catalogue at
-    `/transliteration/index.json` says so rather than 404ing, and each candidate is
-    published only once its rights are cleared.
-
-    Like the translations, this covers the editions ingested for this generation rather
-    than the frozen `dist/` registry, so `--include-unverified-licenses` republishes what
-    we just ingested and not every romanisation the frozen tree once referenced.
-    """
-    return [
-        edition
-        for edition in config.PENDING_EDITIONS
-        if _is_transliteration(edition)
-        and (edition.redistributable or include_unverified)
-        and _edition_snapshot(edition).exists()
-    ]
 
 
 def build_site(
     out_dir: Path,
     *,
     pretty: bool = False,
-    include_unverified_licenses: bool = False,
     audio: bool = True,
-) -> list[licensing.Violation]:
+) -> None:
     """Render the site into ``out_dir``, replacing whatever is there.
 
     Args:
         out_dir: directory to write into; emptied first.
         pretty: indent the JSON by two spaces instead of emitting it compactly.
-        include_unverified_licenses: publish editions whose redistribution status is not
-            verified as granted. Only use once you have cleared the rights yourself.
         audio: also write the reciter index.
 
-    Returns:
-        The editions withheld for lack of a redistribution grant.
-
     Raises:
-        licensing.LicenseError: a published edition has no verified grant and
-            ``include_unverified_licenses`` was not set.
+        licensing.LicenseError: a published edition has no verified grant.
         ValueError: a snapshot is incomplete, or two editions collide on one URL.
     """
-    editions = published_editions(include_unverified=include_unverified_licenses)
-    transliterations = published_transliterations(include_unverified=include_unverified_licenses)
+    editions = published_editions()
 
     if not editions:
         raise licensing.LicenseError("no translations are committed; run `quran-json fetch` first")
 
-    if not include_unverified_licenses:
-        licensing.require_publishable(
-            (edition.lang for edition in editions),
-            editions=editions,
-        )
+    licensing.require_publishable(editions)
 
     if out_dir.exists():
         import shutil
@@ -530,28 +418,18 @@ def build_site(
             raise ValueError(f"URL collision on {key!r}: {written[key]} and {edition.lang}")
         written[key] = edition.lang
 
-    for edition in transliterations:
-        key = transliteration_url_key(edition)
-        if key in written:
-            raise ValueError(f"URL collision on {key!r}: {written[key]} and {edition.lang}")
-        written[key] = edition.lang
-
     write_json(out_dir / "chapters.json", chapters, pretty=pretty)
 
     # A script's bytes are published on the strength of its own licence, not because it
     # arrived with the others: Kemenag's text is covered by its publishing regulation,
     # Tanzil's by CC-BY 3.0, and anything else has to earn its place here first.
     scripts = [
-        script
-        for script in config.SCRIPT_IDS
-        if config.SCRIPT_LICENSES[script].allows_publication or include_unverified_licenses
+        script for script in config.SCRIPT_IDS if config.SCRIPT_LICENSES[script].allows_publication
     ]
 
     counts: dict[str, int] = {}
     native_counts: dict[str, dict[str, int]] = {}
     furniture_by_script: dict[str, list[dict[str, Any]]] = {}
-    corpora: dict[str, list[str]] = {}
-    samples: dict[str, str] = {}
 
     for script in scripts:
         text = _script_chapters(script)
@@ -562,18 +440,12 @@ def build_site(
             native_counts[script] = differing
         _write_jsonl_dir(out_dir / "text" / script, text, pretty=pretty)
 
-        # Kept for two measured outputs: the font coverage report, which needs every
-        # codepoint the script uses, and the documentation page's per-script sample, which
-        # is one verse rendered in that script's default font.
         furniture = _chapter_furniture(script)
         if furniture:
             furniture_by_script[script] = furniture
-        corpora[script] = [verse["text"] for chapter in text for verse in chapter["verses"]]
-        corpora[script].extend(item["text"] for item in furniture)
-        samples[script] = _chapter(text, 112)["verses"][0]["text"]
 
     # What was actually published, so nothing published is also listed as withheld.
-    published_langs = {edition.lang for edition in (*editions, *transliterations)}
+    published_langs = {edition.lang for edition in editions}
 
     index: list[dict[str, Any]] = []
     catalogue = _catalogue_metadata()
@@ -613,53 +485,13 @@ def build_site(
     translations_manifest: dict[str, Any] = {
         "count": len(index),
         "editions": index,
-        "withheld": [
-            _withheld_entry(edition)
-            for edition in _withheld_editions(published_langs)
-            if not _is_transliteration(edition)
-        ]
-        + _catalogue_withheld_entries(published_langs),
+        "withheld": _catalogue_withheld_entries(published_langs),
     }
     write_json(out_dir / "translations" / "index.json", translations_manifest, pretty=pretty)
 
     # The transliteration catalogue is always written, even when it publishes nothing: a
     # consumer asking whether a romanisation exists deserves an answer, not a 404.
-    transliteration_index: list[dict[str, Any]] = []
-
-    for edition in transliterations:
-        key = transliteration_url_key(edition)
-        romanised = _transliteration_chapters(edition)
-        _check_shape(f"transliteration/{key}", romanised, HAFS_VERSES)
-        _write_jsonl_dir(out_dir / "transliteration" / key, romanised, pretty=pretty)
-
-        transliteration_index.append(
-            {
-                "path": f"/transliteration/{key}/",
-                "edition": edition.lang,
-                "author": edition.author,
-                "source": edition.source,
-                "license": {
-                    "status": edition.license.status,
-                    "text": edition.license.text,
-                    "url": edition.license.url,
-                },
-                "chapters": CHAPTER_COUNT,
-                "files": {
-                    "quran": f"/transliteration/{key}/quran.json",
-                    "chapters": f"/transliteration/{key}/chapters/{{1-{CHAPTER_COUNT}}}.json",
-                },
-            }
-        )
-
-    transliteration_manifest: dict[str, Any] = {
-        "count": len(transliteration_index),
-        "editions": transliteration_index,
-        "withheld": [
-            _withheld_entry(edition)
-            for edition in _withheld_editions(published_langs)
-            if _is_transliteration(edition)
-        ],
-    }
+    transliteration_manifest: dict[str, Any] = {"count": 0, "editions": [], "withheld": []}
     write_json(out_dir / "transliteration" / "index.json", transliteration_manifest, pretty=pretty)
 
     manifest: dict[str, Any] = {
@@ -671,6 +503,7 @@ def build_site(
                 "description": config.SCRIPT_LABELS[script][1],
                 "verses": counts.get(script, 0),
                 "verse_ids": config.SCRIPT_VERSE_IDS[script],
+                "license": _script_license(script),
                 "path": f"/text/{script}/quran.json",
                 "chapters": f"/text/{script}/chapters/{{1-{CHAPTER_COUNT}}}.json",
                 **({"note": config.SCRIPT_NOTES[script]} if script in config.SCRIPT_NOTES else {}),
@@ -695,6 +528,11 @@ def build_site(
                 ),
                 **(config.SCRIPT_READING_IDENTITIES.get(script, {})),
                 **(
+                    {"group": "specialist", "group_note": config.SPECIALIST_GROUP_NOTE}
+                    if script in config.SPECIALIST_SCRIPTS
+                    else {}
+                ),
+                **(
                     {"chapter_furniture": furniture_by_script[script]}
                     if script in furniture_by_script
                     else {}
@@ -708,7 +546,7 @@ def build_site(
             "index": "/translations/index.json",
         },
         "transliteration": {
-            "count": len(transliteration_index),
+            "count": transliteration_manifest["count"],
             "index": "/transliteration/index.json",
         },
         "audio": "/audio/reciters.json" if audio else None,
@@ -738,38 +576,29 @@ def build_site(
 
     write_json(
         out_dir / "meta" / "sources.json",
-        sources_manifest(scripts=scripts, editions=editions, transliterations=transliterations),
+        sources_manifest(scripts=scripts, editions=editions),
         pretty=pretty,
     )
     write_json(out_dir / "meta" / "qa.json", qa.manifest(), pretty=pretty)
 
-    reciters = None
     if audio:
         from .audio import build_audio_index
 
-        reciters = build_audio_index(out_dir / "audio", pretty=pretty)
-
-    # The page and the app are measured against the published bytes, not against a
-    # hand-maintained copy of them: coverage comes from the scripts just rendered, and the
-    # documentation's rows from the catalogues just written.
-    coverage = web.font_coverage(corpora, names=[chapter["name"] for chapter in chapters])
-    web.write_site_assets(out_dir, coverage)
-    web.write_docs(
-        out_dir,
-        web.docs_context(
-            manifest=manifest,
-            translations=translations_manifest,
-            transliterations=transliteration_manifest,
-            reciters=reciters,
-            coverage=coverage,
-            chapters=chapters,
-            samples=samples,
-        ),
-    )
+        build_audio_index(out_dir / "audio", pretty=pretty)
 
     (out_dir / "_headers").write_text(_HEADERS, encoding="utf-8")
 
-    return [licensing.violation(edition) for edition in _withheld_editions(published_langs)]
+
+def _script_license(script: str) -> dict[str, str]:
+    """The licence object published beside a script, with Tanzil's notice where required."""
+    license_ = config.SCRIPT_LICENSES[script]
+
+    return {
+        "status": license_.status,
+        "url": license_.url,
+        "attribution": config.SCRIPT_ATTRIBUTIONS[script],
+        **({"notice": config.TANZIL_NOTICE} if script in config.TANZIL_VARIANTS else {}),
+    }
 
 
 def _catalogue_metadata() -> dict[str, dict[str, Any]]:
@@ -808,33 +637,18 @@ def _catalogue_withheld_entries(published_langs: set[str]) -> list[dict[str, Any
     ]
 
 
-def _withheld_editions(published_langs: set[str]) -> list[config.Edition]:
-    """Registered editions a build left out because their licence is not granted.
-
-    Not `licensing.blocked()`: under `--include-unverified-licenses` an uncleared edition is
-    published, so it is not withheld, and reporting it as such would misdescribe the tree.
-    """
-    return [
-        edition
-        for edition in config.REGISTERED
-        if not edition.redistributable and edition.lang not in published_langs
-    ]
-
-
 def sources_manifest(
     *,
     scripts: list[str],
     editions: list[config.Edition],
-    transliterations: list[config.Edition],
 ) -> dict[str, Any]:
     """Provenance and licence status for the sources behind the published site.
 
     Takes what the build actually published instead of recomputing it, so the manifest
-    describes the tree it is written into -- under `--include-unverified-licenses` a
-    granted-only view would be a lie.
+    describes the tree it is written into.
     """
     versions = {key: entry.get("version", "n/a") for key, entry in _catalogue_metadata().items()}
-    published_langs = {edition.lang for edition in (*editions, *transliterations)}
+    published_langs = {edition.lang for edition in editions}
 
     return {
         "text": {
@@ -879,16 +693,9 @@ def sources_manifest(
             "license_url": config.TANZIL_TEXT.url,
         },
         "transliteration": {
-            "status": "published" if transliterations else "withheld",
-            "reason": (
-                "Published under the verdicts recorded in the review record."
-                if transliterations
-                else "No transliteration with a redistribution grant: Qur'an Kemenag's is of "
-                "unknown status and Tanzil's is restricted. The review record states what "
-                "would unblock each."
-            ),
+            "status": "withheld",
+            "reason": "No transliteration with a redistribution grant is published yet.",
             "index": "/transliteration/index.json",
-            "review": "data/meta/licensing-review.json",
         },
         "editions": [
             {
@@ -903,6 +710,5 @@ def sources_manifest(
             }
             for edition in editions
         ],
-        "withheld": [_withheld_entry(edition) for edition in _withheld_editions(published_langs)]
-        + _catalogue_withheld_entries(published_langs),
+        "withheld": _catalogue_withheld_entries(published_langs),
     }

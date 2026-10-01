@@ -37,10 +37,12 @@ target-version = "py312"
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
 [tool.ruff.lint.per-file-ignores]
-# The review record is a set of verbatim quotes from rights holders -- Arabic, Indonesian,
-# Turkish, Malay. RUF001 reads a Turkish dotless ı as a mistyped Latin i; it is neither.
-"src/quranjson/review.py" = ["RUF001"]
-# The cross-check maps phones to IPA, whose glottal stop and gamma RUF001 reads as `?` and `y`.
+# The cross-check handles Arabic letters that RUF001 reads as look-alike Latin ones
+# (alef as l, heh as o); the code points are the point.
+"src/quranjson/crosscheck.py" = ["RUF001"]
+"tests/test_crosscheck.py" = ["RUF001"]
+# The romanisation cross-check maps phones to IPA, whose glottal stop and gamma RUF001 reads
+# as `?` and `y`.
 "scripts/romanize_crosscheck.py" = ["RUF001"]
 # The golden expectations are romanisations: ayn, hamza and the typographic quotes Kemenag uses.
 "tests/test_romanize.py" = ["RUF001"]

@@ -12,35 +12,7 @@ import pytest
 from quranjson import config, quranenc, quranpedia, sources, tanzil
 from quranjson.clearquran import parse_verse_files
 from quranjson.jsonio import read_json
-from quranjson.sources import _chapter_list, _group_by_chapter, _summarise_change
-
-
-def test_chapter_list_reshape_drops_unused_api_fields() -> None:
-    payload = {
-        "chapters": [
-            {
-                "id": 1,
-                "name_arabic": "\u0627\u0644\u0641\u0627\u062a\u062d\u0629",
-                "name_simple": "Al-Fatihah",
-                "translated_name": {"name": "The Opener", "language_name": "english"},
-                "revelation_place": "makkah",
-                "verses_count": 7,
-                "bismillah_pre": False,
-                "pages": [1, 1],
-            }
-        ]
-    }
-
-    assert _chapter_list(payload) == [
-        {
-            "id": 1,
-            "name": "\u0627\u0644\u0641\u0627\u062a\u062d\u0629",
-            "transliteration": "Al-Fatihah",
-            "translation": "The Opener",
-            "type": "meccan",
-            "total_verses": 7,
-        }
-    ]
+from quranjson.sources import _group_by_chapter, _summarise_change
 
 
 def test_verse_grouping_preserves_chapter_and_verse_order() -> None:

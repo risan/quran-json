@@ -223,3 +223,16 @@ Tanzil-derived file is a different file; no evidence the Indo-Pak file is copied
 disproven "0 shared verses" justification is removed; provenance confirmation is an owner
 action (D5).
 status: revised; session: fresh
+
+## Review round 2 — 2026-10-01
+
+Codex conceded #5 and #6. New, all accepted and forwarded to the tracks:
+#11 (A3) `schemas/transliteration-catalogue.schema.json` gains `reading`, `verse_ids`,
+`review` with constraints; a test validates the published entries and rejects bad identity.
+#12 (B) coverage is generated before Astro, passed by env var, and per-script `default` +
+`usable` fonts are embedded in the reader bundle; font choices are restricted and restored
+settings validated (test: `indopak` + persisted Amiri falls back).
+#13 (A3) the Kemenag reference is the snapshot's `transliteration` field (the importer renames
+the API's `latin`).
+Wording: `/app/fonts.json` was documented, so its removal is stated in the changes policy.
+status: converged (no open Blocker/Major after fixes); session: fresh

@@ -1,10 +1,9 @@
-"""Qur'an Kemenag as a source: the crawl, the three payloads, and the licence gate.
+"""Qur'an Kemenag as a source: the crawl, the three payloads, and what is published.
 
-The gate is the point of these tests. Qur'an Kemenag serves a text, a translation and a
-transliteration from one API, and only the text is publishable: the translation is a
-protected work and the romanisation has no grant at all. So the published tree has to gain
-a script and *not* gain a translation or a romanisation, while the manifests still describe
-what was held back, and why.
+Qur'an Kemenag serves a text, a translation and a transliteration from one API, and only
+the text is publishable: the translation is a protected work and the romanisation has no
+grant at all. So the published tree gains a script and *not* a translation or a
+romanisation.
 """
 
 from __future__ import annotations
@@ -17,7 +16,6 @@ import orjson
 import pytest
 
 from quranjson import config, kemenag
-from quranjson.cdn import build_site
 from quranjson.jsonio import read_json
 
 CHAPTERS = 114
@@ -46,12 +44,6 @@ AYAH: dict[str, Any] = {
     "updated_at": None,
     "surah": {"id": 2, "arabic": " \u0627\u0644\u0628\u0642\u0631\u0629", "latin": "Al-Baqarah "},
 }
-
-
-@pytest.fixture(scope="module")
-def unverified_tree(cdn_override_tree: Path) -> Path:
-    """The site as published under `--include-unverified-licenses`."""
-    return cdn_override_tree
 
 
 def _payload(*ayahs: dict[str, Any]) -> bytes:
@@ -166,14 +158,6 @@ def test_gather_refuses_a_truncated_crawl() -> None:
 # --- the verdicts --------------------------------------------------------------
 
 
-def test_kemenag_editions_carry_the_audited_verdicts() -> None:
-    """A restricted item must not silently regain a permissive label."""
-    assert {edition.lang: edition.license.status for edition in config.PENDING_EDITIONS} == {
-        "indonesian_kemenag": "restricted",
-        "transliteration_kemenag": "unknown",
-    }
-
-
 def test_the_mushaf_text_verdict_names_its_statutory_basis() -> None:
     assert config.KEMENAG_TEXT.status == "granted"
     assert "Pasal 8(1)" in config.KEMENAG_TEXT.text
@@ -233,15 +217,15 @@ def test_the_mushaf_text_is_its_own_orthography() -> None:
         assert identical == COINCIDENT_VERSES[variant], variant
 
 
-def test_the_uncleared_editions_are_withheld_by_default(cdn_tree: Path) -> None:
+def test_the_uncleared_editions_are_not_published(cdn_tree: Path) -> None:
     """No bytes, and no empty directory pretending to be an edition."""
     assert not (cdn_tree / "translations" / "id-kemenag").exists()
     assert not (cdn_tree / "transliteration" / "kemenag").exists()
 
-    catalogue = read_json(cdn_tree / "translations" / "index.json")
-    withheld = {entry["edition"] for entry in catalogue["withheld"]}
+    published = (cdn_tree / "text" / config.KEMENAG_SCRIPT / "quran.json").read_bytes()
 
-    assert "indonesian_kemenag" in withheld
+    assert b'"translation"' not in published
+    assert b'"transliteration"' not in published
 
 
 def test_the_transliteration_catalogue_answers_even_with_nothing_published(
@@ -252,81 +236,9 @@ def test_the_transliteration_catalogue_answers_even_with_nothing_published(
 
     assert catalogue["count"] == 0
     assert catalogue["editions"] == []
-    assert {entry["edition"] for entry in catalogue["withheld"]} == {
-        config.TRANSLITERATION,
-        "transliteration_kemenag",
-    }
+    assert catalogue["withheld"] == []
 
     manifest = read_json(cdn_tree / "manifest.json")
 
     assert manifest["transliteration"]["count"] == 0
     assert read_json(cdn_tree / "meta" / "sources.json")["transliteration"]["status"] == "withheld"
-
-
-def test_the_override_publishes_what_the_gate_withheld(unverified_tree: Path) -> None:
-    """`--include-unverified-licenses` is the documented way to publish cleared rights."""
-    translation = read_json(unverified_tree / "translations" / "id-kemenag" / "quran.json")
-
-    assert len(translation) == CHAPTERS
-    assert sum(len(chapter["verses"]) for chapter in translation) == VERSES
-    assert translation[0]["verses"][0]["translation"] == (
-        "Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang."
-    )
-    assert any("footnotes" in verse for verse in translation[1]["verses"])
-
-    romanised = read_json(unverified_tree / "transliteration" / "kemenag" / "quran.json")
-
-    assert len(romanised) == CHAPTERS
-    assert sum(len(chapter["verses"]) for chapter in romanised) == VERSES
-    assert romanised[0]["verses"][0]["transliteration"].startswith("Bismill\u0101hir-")
-
-    assert read_json(unverified_tree / "manifest.json")["transliteration"]["count"] == 1
-
-
-def test_the_override_still_reports_the_real_status(unverified_tree: Path) -> None:
-    """Publishing on an override must not relabel an edition as granted."""
-    sources = read_json(unverified_tree / "meta" / "sources.json")
-    statuses = {entry["edition"]: entry["status"] for entry in sources["editions"]}
-
-    assert statuses["indonesian_kemenag"] == "restricted"
-    assert sources["transliteration"]["status"] == "published"
-
-    published = {
-        entry["edition"]
-        for entry in read_json(unverified_tree / "translations" / "index.json")["editions"]
-    }
-    withheld = {entry["edition"] for entry in sources["withheld"]}
-
-    assert "indonesian_kemenag" in published
-    assert "indonesian_kemenag" not in withheld
-
-
-def test_the_build_reports_only_what_it_withheld(tmp_path: Path) -> None:
-    """`quran-json cdn` prints this list, so an override must not call published withheld."""
-    gated = {violation.lang for violation in build_site(tmp_path / "gated", audio=False)}
-    overridden = {
-        violation.lang
-        for violation in build_site(
-            tmp_path / "override", include_unverified_licenses=True, audio=False
-        )
-    }
-
-    assert {"indonesian_kemenag", "transliteration_kemenag"} <= gated
-    assert {"indonesian_kemenag", "transliteration_kemenag"}.isdisjoint(overridden)
-
-    # The editions nobody has cleared stay withheld under either build.
-    assert {"en", "bn", "ur"} <= overridden
-
-
-def test_the_override_keeps_the_frozen_editions_withheld(unverified_tree: Path) -> None:
-    """The flag clears what we ingested, not the editions whose rights nobody holds."""
-    catalogue = read_json(unverified_tree / "translations" / "index.json")
-    withheld = {entry["edition"] for entry in catalogue["withheld"]}
-    published = {entry["edition"] for entry in catalogue["editions"]}
-
-    assert {"en", "bn", "ur"} <= withheld
-    assert {"en", "bn", "ur"}.isdisjoint(published)
-
-    # Nor does it resurrect the frozen transliteration, which has its own rights holder.
-    romanisations = read_json(unverified_tree / "transliteration" / "index.json")
-    assert {entry["edition"] for entry in romanisations["withheld"]} == {config.TRANSLITERATION}
