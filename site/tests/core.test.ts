@@ -4,6 +4,7 @@ import {
   alignsWithHafs,
   applyLinkParams,
   canJoinWithHafs,
+  defaultTranslation,
   mergeChapter,
   nativeChapterCount,
   normalizePrefs,
@@ -13,6 +14,7 @@ import {
   resolveFont,
   scriptIdentity,
   scriptReading,
+  suggestedTransliteration,
   transliterationApplies,
   validateOptionalChapter,
   type BootCatalogue,
@@ -436,5 +438,48 @@ describe("hash routes", () => {
     expect(parseReaderHash("#/0")).toMatchObject({ chapter: null, invalidChapter: true });
     expect(readerHash(2, 255)).toBe("#/2:255");
     expect(readerHash(2)).toBe("#/2");
+  });
+});
+
+describe("reading id", () => {
+  it("prefers the machine id and matches the audio index spelling", () => {
+    const declared = script({
+      id: "duri",
+      verse_ids: "mapped",
+      reading: { id: "duri-abu-amr", riwayah: "al-Duri" },
+    });
+
+    expect(scriptReading(declared)).toBe("duri");
+    expect(scriptReading(script({ id: "x", verse_ids: "mapped", reading: { id: "warsh" } }))).toBe(
+      "warsh",
+    );
+  });
+});
+
+describe("first-visit defaults", () => {
+  const editions = [
+    edition("/translations/en-other/"),
+    edition("/translations/en-saheeh/"),
+    edition("/translations/id-kemenag/", { code: "id" }),
+    edition("/translations/id-other/", { code: "id" }),
+  ];
+
+  it("prefers the visitor's language, then Saheeh, then English", () => {
+    expect(defaultTranslation(editions, "id-ID")).toBe(editions[2]);
+    expect(defaultTranslation(editions, "fr-FR")).toBe(editions[1]);
+    expect(defaultTranslation(editions.slice(0, 1), "fr")).toBe(editions[0]);
+    expect(defaultTranslation([], "en")).toBeUndefined();
+  });
+
+  it("suggests Indonesian transliteration for Indonesian locales, else English", () => {
+    const list = [
+      edition("/transliteration/en-simple/"),
+      edition("/transliteration/en/"),
+      edition("/transliteration/id-skb/"),
+    ];
+
+    expect(suggestedTransliteration(list, "id")).toBe(list[2]);
+    expect(suggestedTransliteration(list, "de-DE")).toBe(list[1]);
+    expect(suggestedTransliteration([], "id")).toBeUndefined();
   });
 });

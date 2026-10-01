@@ -8,7 +8,7 @@ import { mkdir } from "node:fs/promises";
 import { chromium } from "playwright";
 import { serve } from "./serve.mjs";
 
-const { server, url: base } = await serve(".build/assembled");
+const { server, url: base } = await serve(process.env.ASSEMBLED ?? ".build/assembled");
 const out = process.env.OUT_DIR ?? ".works/quran-overhaul/site-evidence";
 
 await mkdir(out, { recursive: true });
@@ -38,6 +38,28 @@ for (const [device, viewport] of Object.entries(sizes)) {
     await page.waitForSelector("#v255");
     await page.waitForTimeout(400);
     await page.screenshot({ path: `${out}/reader-${device}-${mode}.png` });
+
+    // Needs published transliterations; the link parameter turns the first edition on.
+    const transliteration = await page.evaluate(async () => {
+      const index = await (await fetch("/transliteration/index.json")).json();
+
+      return index.editions[0]?.path.split("/").filter(Boolean).pop() ?? null;
+    });
+
+    if (transliteration) {
+      await page.goto(`${base}/app/#/2:255?tl=${transliteration}`, { waitUntil: "networkidle" });
+      await page.waitForSelector("#v255");
+      await page.waitForTimeout(400);
+      await page.screenshot({ path: `${out}/reader-${device}-${mode}-transliteration.png` });
+    }
+
+    await page.goto(`${base}/app/#/2?s=warsh`, { waitUntil: "networkidle" });
+    await page.waitForSelector("#v1");
+    await page.waitForTimeout(400);
+    await page.screenshot({ path: `${out}/reader-${device}-${mode}-warsh.png` });
+    await page.goto(`${base}/app/#/2:255?s=uthmani`, { waitUntil: "networkidle" });
+    await page.waitForSelector("#v255");
+    await page.waitForTimeout(300);
 
     if (mode === "light" || device === "desktop") {
       await page.getByRole("button", { name: "Settings" }).click();

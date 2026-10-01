@@ -84,7 +84,21 @@ export function audioAvailability(script: Script, reciter: Reciter): AudioAvaila
 
 /** The recordings that can play for this script. */
 export function recitersForScript(reciters: Reciter[], script: Script): Reciter[] {
-  return reciters.filter((reciter) => audioAvailability(script, reciter).ok);
+  return reciters.filter(
+    // Older indexes have no `content`; every entry in them is a recitation.
+    (reciter) =>
+      (reciter.content ?? "recitation") === "recitation" && audioAvailability(script, reciter).ok,
+  );
+}
+
+/** Alafasy 128 kbps per ayah when it plays for the script, else any per-ayah, else any. */
+export function pickDefaultReciter(playable: Reciter[]): Reciter | null {
+  return (
+    playable.find((reciter) => reciter.scope === "ayah" && /alafasy.*128/i.test(reciter.id)) ??
+    playable.find((reciter) => reciter.scope === "ayah") ??
+    playable[0] ??
+    null
+  );
 }
 
 /** Ayahs before each chapter, so a surah-relative verse can be turned into a global one. */

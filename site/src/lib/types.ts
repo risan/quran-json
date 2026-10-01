@@ -18,7 +18,14 @@ export interface License {
 }
 
 /** `reading` as a manifest or catalogue declares it: a bare riwayah or an object. */
-export type ReadingDeclaration = string | { qiraah?: string; riwayah?: string };
+export type ReadingDeclaration = string | { id?: string; qiraah?: string; riwayah?: string };
+
+/** How a script treats the opening basmala: its text, and where its source counts it. */
+export interface Bismillah {
+  text: string;
+  in_verse_one: boolean;
+  numbered_in_fatiha: boolean;
+}
 
 export interface ChapterFurniture {
   chapter: number;
@@ -39,6 +46,9 @@ export interface Script {
   note?: string;
   license?: License;
   reading?: ReadingDeclaration;
+  bismillah?: Bismillah;
+  group?: string;
+  group_note?: string;
   audio?: { per_ayah?: boolean; verse_ids?: string; verse_numbering?: string };
   verse_ids_differ_in?: number[];
   verse_ids_unjoinable_in?: number[];
@@ -127,6 +137,7 @@ export interface Reciter {
   url: string;
   bitrate_kbps?: number;
   recitation?: string;
+  content?: string;
   reading?: ReadingDeclaration;
   verse_ids?: string;
 }

@@ -10,16 +10,18 @@ import {
   count,
   editionKey,
   loadCatalog,
-  orderedScripts,
+  groupScripts,
   readingLabel,
   sortEditions,
+  transliterationSample,
   verseIdsLabel,
 } from "../lib/catalog";
 
 const { manifest, translations, transliterations, reciters, coverage, sources } = loadCatalog();
 
 const origin = "https://quran-json.risanb.com";
-const scripts = orderedScripts(manifest.scripts);
+const scriptGroups = groupScripts(manifest.scripts);
+const scripts = scriptGroups.flatMap((group) => group.scripts);
 const scriptIds = new Set(scripts.map((script) => script.id));
 const editions = sortEditions(translations.editions);
 const english = editions.find((edition) => edition.code === "en") ?? editions[0];
@@ -89,6 +91,11 @@ const endpoints: [string, string][] = [
 
 const guide: { use: string; ids: string[]; text: string }[] = [
   { use: "Most apps", ids: ["uthmani"], text: "Madinah mushaf style, Hafs reading." },
+  {
+    use: "KFGQPC fonts",
+    ids: ["qpc-hafs"],
+    text: "KFGQPC encoding, for KFGQPC fonts.",
+  },
   { use: "Search and matching", ids: ["simple-clean"], text: "No vowel marks." },
   {
     use: "South Asia",
@@ -121,13 +128,62 @@ const hosts = reciters
     })
   : [];
 
-// One licence row per distinct grant, so the table stays short however many editions exist.
-const editionLicences = [
-  ...Map.groupBy(
-    editions,
-    (edition) => edition.license?.url ?? edition.license?.text ?? "unknown",
-  ).entries(),
-].map(([url, group]) => ({ url, count: group.length, license: group[0].license }));
+const isPublicDomain = (edition: (typeof editions)[number]) =>
+  /^public domain/i.test(edition.license?.text ?? "");
+const publicDomain = editions.filter(isPublicDomain);
+const quranEnc = editions.filter((edition) => (edition.source ?? "").includes("quranenc.com"));
+const clearQuran = editions.filter((edition) =>
+  (edition.license?.url ?? "").includes("clearquran"),
+);
+const grouped = new Set([...publicDomain, ...quranEnc, ...clearQuran]);
+const otherEditions = editions.filter((edition) => !grouped.has(edition));
+
+function publicDomainLabel(edition: (typeof editions)[number]): string {
+  const name = edition.author.replace(/\s*\(\d{4}\)\s*$/, "");
+  const died = edition.license?.text?.match(/died (\d{4})/)?.[1];
+
+  return died ? `${name} (d. ${died})` : name;
+}
+
+// The Arabic text rows: one per source, whichever scripts it supplies.
+const textSources = [
+  {
+    match: "tanzil.net",
+    name: "Tanzil",
+    terms:
+      "CC BY 3.0, verbatim. Tanzil texts may not be changed and carry Tanzil's notice in every chapter file.",
+  },
+  {
+    match: "quranpedia",
+    name: "Qur'anpedia.net (KFGQPC and qira'at texts)",
+    terms:
+      "Credit Qur'anpedia.net and state the dump version, which /meta/sources.json records per snapshot.",
+  },
+  {
+    match: "kemenag",
+    name: "Kemenag (LPMQ)",
+    terms:
+      "The mushaf text is not copyrightable under PMA 44/2016 Pasal 8(1). Plain text only: no fonts or layout.",
+  },
+  { match: "digitalkhatt", name: "DigitalKhatt", terms: "MIT licence." },
+];
+const scriptLicences = sources.text.script_licenses ?? [];
+const textRows = textSources
+  .map((source) => {
+    const members = scriptLicences.filter((entry) =>
+      (entry.license_url ?? "").includes(source.match),
+    );
+
+    return {
+      ...source,
+      ids: members.map((entry) => entry.script),
+      url: members[0]?.license_url,
+    };
+  })
+  .filter((row) => row.ids.length > 0);
+const knownIds = new Set(textRows.flatMap((row) => row.ids));
+const otherTextIds = scripts.map((script) => script.id).filter((id) => !knownIds.has(id));
+const fontLicences = [...new Set(coverage.fonts.map((font) => font.license))];
 
 const notUsed = [...sources.withheld];
 
@@ -292,21 +348,32 @@ const stats = [
               </tr>
             </thead>
             <tbody>
-              {scripts.map((script) => (
-                <tr>
-                  <td>
-                    <code>{script.id}</code>
-                  </td>
-                  <td>{script.name}</td>
-                  <td>{readingLabel(script)}</td>
-                  <td>{count(script.verses)}</td>
-                  <td class="text-muted-foreground">{verseIdsLabel(script).replaceAll("`", "")}</td>
-                  <td class="whitespace-nowrap">
-                    <a href={script.path} class="link">
-                      quran.json
-                    </a>
-                  </td>
-                </tr>
+              {scriptGroups.map((group) => (
+                <>
+                  <tr>
+                    <th scope="colgroup" colspan="6" class="bg-muted/50 text-[12px] font-semibold">
+                      {group.title}
+                    </th>
+                  </tr>
+                  {group.scripts.map((script) => (
+                    <tr>
+                      <td>
+                        <code>{script.id}</code>
+                      </td>
+                      <td>{script.name}</td>
+                      <td>{readingLabel(script)}</td>
+                      <td>{count(script.verses)}</td>
+                      <td class="text-muted-foreground">
+                        {verseIdsLabel(script).replaceAll("`", "")}
+                      </td>
+                      <td class="whitespace-nowrap">
+                        <a href={script.path} class="link">
+                          quran.json
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </>
               ))}
             </tbody>
           </table>
@@ -398,8 +465,8 @@ const stats = [
         ) : (
           <>
             <p class="doc-prose">
-              Latin-script renderings of the Hafs text. They follow the Hafs reading and numbering,
-              so they are not offered for Warsh, Qalun or al-Duri.
+              {published.length} Latin-script renderings of the Hafs text. They follow the Hafs
+              reading and numbering, so they are not offered for Warsh, Qalun or al-Duri.
             </p>
             <div class="overflow-x-auto rounded-md border">
               <table class="doc-table">
@@ -407,7 +474,7 @@ const stats = [
                   <tr>
                     <th scope="col">Key</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Reading</th>
+                    <th scope="col">Sample, 1:1</th>
                     <th scope="col">Path</th>
                   </tr>
                 </thead>
@@ -417,17 +484,8 @@ const stats = [
                       <td>
                         <code>{editionKey(edition)}</code>
                       </td>
-                      <td>
-                        {edition.name ?? edition.author}
-                        {edition.review && (
-                          <span class="text-muted-foreground block text-xs">{edition.review}</span>
-                        )}
-                      </td>
-                      <td>
-                        {typeof edition.reading === "string"
-                          ? edition.reading
-                          : (edition.reading?.riwayah ?? "hafs")}
-                      </td>
+                      <td>{edition.name ?? edition.author}</td>
+                      <td>{transliterationSample(edition)}</td>
                       <td class="whitespace-nowrap">
                         <a href={`${edition.path}quran.json`} class="link">
                           <code>{edition.path}</code>
@@ -438,6 +496,11 @@ const stats = [
                 </tbody>
               </table>
             </div>
+            {[...new Set(published.map((edition) => edition.review).filter(Boolean))].map(
+              (review) => (
+                <p class="text-muted-foreground text-[13px]">{review}</p>
+              ),
+            )}
           </>
         )}
       </Section>
@@ -493,8 +556,8 @@ const stats = [
 
       <Section id="sources" title="Sources and licences">
         <p class="doc-prose">
-          Dataset licence: {manifest.license.project}. Each source keeps its own terms, listed here
-          and, per file, in{" "}
+          Dataset licence: {manifest.license.project}. Each source keeps its own terms. Detail per
+          file is in{" "}
           <a href="/meta/sources.json" class="link">
             /meta/sources.json
           </a>
@@ -505,66 +568,132 @@ const stats = [
             <thead>
               <tr>
                 <th scope="col">Data</th>
-                <th scope="col">Source</th>
+                <th scope="col">Terms</th>
                 <th scope="col">Licence</th>
-                <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Arabic text</td>
-                <td class="max-w-[28rem]">{manifest.license.text.source}</td>
-                <td>
-                  <a href={manifest.license.text.url} class="link">
-                    terms
-                  </a>
-                </td>
-                <td>{manifest.license.text.status}</td>
-              </tr>
-              {editionLicences.map((entry) => (
+              {textRows.map((row) => (
                 <tr>
-                  <td>Translations ({entry.count})</td>
-                  <td class="text-muted-foreground max-w-[28rem]">{entry.license?.text}</td>
                   <td>
-                    {entry.license?.url ? (
-                      <a href={entry.license.url} class="link">
+                    Arabic: {row.name}
+                    <span class="text-muted-foreground block text-xs">{row.ids.join(", ")}</span>
+                  </td>
+                  <td class="text-muted-foreground max-w-[28rem]">{row.terms}</td>
+                  <td>
+                    {row.url ? (
+                      <a href={row.url} class="link">
                         terms
                       </a>
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </td>
-                  <td>{entry.license?.status}</td>
                 </tr>
               ))}
+              {textRows.length === 0 || otherTextIds.length > 0 ? (
+                <tr>
+                  <td>
+                    Arabic text
+                    {textRows.length > 0 && (
+                      <span class="text-muted-foreground block text-xs">
+                        {otherTextIds.join(", ")}
+                      </span>
+                    )}
+                  </td>
+                  <td class="text-muted-foreground max-w-[28rem]">
+                    {manifest.license.text.source}
+                  </td>
+                  <td>
+                    <a href={manifest.license.text.url} class="link">
+                      terms
+                    </a>
+                  </td>
+                </tr>
+              ) : null}
+              {publicDomain.length > 0 && (
+                <tr>
+                  <td>Public-domain translations ({publicDomain.length})</td>
+                  <td class="text-muted-foreground max-w-[28rem]">
+                    {publicDomain.map(publicDomainLabel).join("; ")}.
+                  </td>
+                  <td>public domain</td>
+                </tr>
+              )}
+              {quranEnc.length > 0 && (
+                <tr>
+                  <td>QuranEnc ({quranEnc.length} editions)</td>
+                  <td class="text-muted-foreground max-w-[28rem]">
+                    Republishing is allowed unmodified, with the publisher and QuranEnc.com credited
+                    and the version stated.
+                  </td>
+                  <td>
+                    <a href={quranEnc[0].license?.url} class="link">
+                      terms
+                    </a>
+                  </td>
+                </tr>
+              )}
+              {clearQuran.length > 0 && (
+                <tr>
+                  <td>ClearQuran ({clearQuran.length})</td>
+                  <td class="text-muted-foreground max-w-[28rem]">
+                    Talal Itani. Keep the files unmodified and credit "Translation by Talal Itani,
+                    ClearQuran.com".
+                  </td>
+                  <td>
+                    <a href={clearQuran[0].license?.url} class="link">
+                      CC BY-ND 4.0
+                    </a>
+                  </td>
+                </tr>
+              )}
+              {otherEditions.length > 0 && (
+                <tr>
+                  <td>Other translations ({otherEditions.length})</td>
+                  <td class="text-muted-foreground max-w-[28rem]">
+                    {otherEditions.map((edition) => edition.author).join("; ")}.
+                  </td>
+                  <td>see /translations/index.json</td>
+                </tr>
+              )}
+              {published.length > 0 && (
+                <tr>
+                  <td>Transliterations ({published.length})</td>
+                  <td class="text-muted-foreground max-w-[28rem]">
+                    Generated by this project from the Hafs text.
+                  </td>
+                  <td>{manifest.license.project}</td>
+                </tr>
+              )}
               {hosts.map((entry) => (
                 <tr>
                   <td>Audio: {entry.host.name}</td>
-                  <td class="text-muted-foreground max-w-[28rem]">{entry.host.license}</td>
+                  <td class="text-muted-foreground max-w-[28rem]">
+                    Linked, not copied. Status: {entry.host.license_status}.
+                  </td>
                   <td>
                     {entry.host.license_url ? (
                       <a href={entry.host.license_url} class="link">
                         terms
                       </a>
-                    ) : (
-                      ""
-                    )}
+                    ) : null}
                   </td>
-                  <td>{entry.host.license_status}</td>
                 </tr>
               ))}
-              {coverage.fonts.map((font) => (
-                <tr>
-                  <td>Font: {font.name}</td>
-                  <td class="text-muted-foreground">{font.source}</td>
-                  <td>
-                    <a href={font.license_file} class="link">
-                      {font.license}
-                    </a>
-                  </td>
-                  <td>granted</td>
-                </tr>
-              ))}
+              <tr>
+                <td>Fonts ({coverage.fonts.length})</td>
+                <td class="text-muted-foreground max-w-[28rem]">
+                  {coverage.fonts.map((font, index) => (
+                    <>
+                      {index > 0 ? ", " : ""}
+                      <a href={font.license_file} class="link">
+                        {font.name}
+                      </a>
+                    </>
+                  ))}
+                  .
+                </td>
+                <td>{fontLicences.join(", ")}</td>
+              </tr>
             </tbody>
           </table>
         </div>
@@ -573,38 +702,13 @@ const stats = [
             <summary class="cursor-pointer font-medium">
               Sources we checked and do not use ({notUsed.length})
             </summary>
-            <div class="mt-2 overflow-x-auto rounded-md border">
-              <table class="doc-table">
-                <thead>
-                  <tr>
-                    <th scope="col">Source</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Why</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {notUsed.map((item) => (
-                    <tr>
-                      <td>
-                        {item.author}
-                        <span class="text-muted-foreground"> ({item.edition})</span>
-                      </td>
-                      <td>{item.status}</td>
-                      <td class="text-muted-foreground">
-                        {item.reason ??
-                          (item.license_url ? (
-                            <a href={item.license_url} class="link">
-                              No redistribution grant
-                            </a>
-                          ) : (
-                            "No redistribution grant"
-                          ))}
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+            <ul class="text-muted-foreground mt-2 list-disc space-y-1 pl-5">
+              {notUsed.map((item) => (
+                <li>
+                  {item.author}: {item.reason ?? "no redistribution grant"}
+                </li>
+              ))}
+            </ul>
           </details>
         )}
       </Section>

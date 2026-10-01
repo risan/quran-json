@@ -124,7 +124,8 @@ function declaredRiwayah(reading: ReadingDeclaration | undefined): string | null
     return reading || null;
   }
 
-  return reading?.riwayah ?? null;
+  // `id` is the machine id the audio index uses for the same reading.
+  return reading?.id ?? reading?.riwayah ?? null;
 }
 
 /**
@@ -542,6 +543,27 @@ export function isBismillah(text: string): boolean {
 }
 
 /**
+ * The bismillah header a chapter needs, from the manifest's `bismillah` field: none for chapter
+ * 9; for chapter 1 only when the source does not number it as verse 1; for the rest only when
+ * the source does not already carry it in verse 1. Null when the script publishes no field.
+ */
+export function bismillahHeader(script: Script, chapterId: number): string | null | undefined {
+  const rule = script.bismillah;
+
+  if (!rule) {
+    return undefined;
+  }
+
+  if (chapterId === 9) {
+    return null;
+  }
+
+  const carried = chapterId === 1 ? rule.numbered_in_fatiha : rule.in_verse_one;
+
+  return carried ? null : rule.text;
+}
+
+/**
  * Whether a chapter opens with the bismillah drawn from the script's own 1:1. Only Hafs-numbered
  * scripts, where 1:1 is the bismillah itself; chapter 1 carries it as verse 1 and chapter 9 has
  * none. Scripts that number differently, or carry it as furniture, are left to their data.
@@ -554,4 +576,40 @@ export function showsOpeningBismillah(script: Script, chapterId: number): boolea
     chapterId !== 9 &&
     chapterFurniture(script, chapterId).length === 0
   );
+}
+
+function languageOf(locale: string | null | undefined): string {
+  return String(locale ?? "")
+    .toLowerCase()
+    .split("-")[0] as string;
+}
+
+/**
+ * The translation a first visit starts with: the first edition in the visitor's language, else
+ * Saheeh International, else the first English edition.
+ */
+export function defaultTranslation(
+  editions: Edition[],
+  locale: string | null | undefined,
+): Edition | undefined {
+  const language = languageOf(locale);
+  const inLanguage = language ? editions.find((edition) => edition.code === language) : undefined;
+  const english = editions.filter((edition) => edition.code === "en");
+  const saheeh = english.find((edition) => /saheeh/i.test(editionKey(edition)));
+
+  return inLanguage ?? saheeh ?? english[0];
+}
+
+/** The transliteration worth offering: Indonesian for an Indonesian locale, else English. */
+export function suggestedTransliteration(
+  editions: Edition[],
+  locale: string | null | undefined,
+): Edition | undefined {
+  const byKey = (key: string) => editions.find((edition) => editionKey(edition) === key);
+
+  if (languageOf(locale) === "id") {
+    return byKey("id-skb") ?? byKey("en") ?? editions[0];
+  }
+
+  return byKey("en") ?? editions[0];
 }

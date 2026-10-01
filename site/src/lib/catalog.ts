@@ -17,6 +17,7 @@ import type {
   ReciterIndex,
   Script,
 } from "./types";
+import { scriptReading } from "../reader/core";
 
 export interface SourcesMeta {
   text: {
@@ -25,6 +26,7 @@ export interface SourcesMeta {
     license: string;
     license_url: string;
     scripts?: string[];
+    script_licenses?: { script: string; status: string; license_url?: string }[];
   };
   editions: { edition: string; path: string; author: string; status: string; license: string }[];
   withheld: {
@@ -127,8 +129,7 @@ export function sortEditions(editions: Edition[]): Edition[] {
   );
 }
 
-/** Script order for the docs: the widely used ones first, the specialist ones last. */
-const SCRIPT_ORDER = [
+const HAFS_ORDER = [
   "uthmani",
   "qpc-hafs",
   "simple",
@@ -136,19 +137,56 @@ const SCRIPT_ORDER = [
   "kemenag",
   "hafs-nastaliq",
   "indopak",
-  "warsh",
-  "qalun",
-  "duri",
+  "uthmani-min",
+  "simple-min",
+  "simple-plain",
 ];
 
-export function orderedScripts(scripts: Script[]): Script[] {
-  const rank = (id: string) => {
-    const index = SCRIPT_ORDER.indexOf(id);
+const OTHER_READING_ORDER = ["warsh", "qalun", "duri"];
 
-    return index === -1 ? SCRIPT_ORDER.length : index;
+export interface ScriptGroup {
+  title: string;
+  scripts: Script[];
+}
+
+/**
+ * Scripts for the docs: Hafs first (the most used first, niche variants last), then the other
+ * readings, then the specialist ones the manifest marks with `group: "specialist"`.
+ */
+export function groupScripts(scripts: Script[]): ScriptGroup[] {
+  const rank = (order: string[], id: string) => {
+    const index = order.indexOf(id);
+
+    return index === -1 ? order.length : index;
   };
+  const specialist = scripts.filter((script) => script.group === "specialist");
+  const regular = scripts.filter((script) => script.group !== "specialist");
+  const hafs = regular
+    .filter((script) => scriptReading(script) === "hafs")
+    .sort((a, b) => rank(HAFS_ORDER, a.id) - rank(HAFS_ORDER, b.id));
+  const other = regular
+    .filter((script) => scriptReading(script) !== "hafs")
+    .sort((a, b) => rank(OTHER_READING_ORDER, a.id) - rank(OTHER_READING_ORDER, b.id));
 
-  return [...scripts].sort((a, b) => rank(a.id) - rank(b.id));
+  return [
+    { title: "Hafs", scripts: hafs },
+    { title: "Other readings", scripts: other },
+    { title: "Specialist readings", scripts: specialist },
+  ].filter((group) => group.scripts.length > 0);
+}
+
+/** The first verse of a transliteration edition, read from its own chapter 1 file. */
+export function transliterationSample(edition: Edition): string | null {
+  const template = edition.files?.chapters ?? `${edition.path}chapters/{1-114}.json`;
+  const path = template.replace("{1-114}", "1").replace(/^\//, "");
+
+  try {
+    const chapter = readJson<{ verses: { transliteration: string }[] }>(resolve(dataRoot, path));
+
+    return chapter.verses[0]?.transliteration ?? null;
+  } catch {
+    return null;
+  }
 }
 
 export function readingLabel(script: Script): string {

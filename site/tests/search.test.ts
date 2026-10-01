@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 
-import { chapterFurniture, isBismillah, showsOpeningBismillah } from "../src/reader/core";
+import {
+  bismillahHeader,
+  chapterFurniture,
+  isBismillah,
+  showsOpeningBismillah,
+} from "../src/reader/core";
 import { neighbour } from "../src/reader/player-logic";
 import { filterChapters, parseVerseTarget } from "../src/reader/search";
 import type { Chapter, Script } from "../src/lib/types";
@@ -63,6 +68,36 @@ describe("opening bismillah", () => {
   it("recognises the bismillah across orthographies", () => {
     expect(isBismillah("بِسۡمِ ٱللَّهِ")).toBe(true);
     expect(isBismillah("ٱلۡحَمۡدُ")).toBe(false);
+  });
+});
+
+describe("bismillah header from the manifest field", () => {
+  const text = "بِسۡمِ";
+  const withRule = (in_verse_one: boolean, numbered_in_fatiha: boolean) =>
+    ({ id: "x", bismillah: { text, in_verse_one, numbered_in_fatiha } }) as Script;
+  const tanzil = withRule(true, true);
+  const warsh = withRule(false, false);
+  const qpc = withRule(false, true);
+
+  it("is never drawn for chapter 9", () => {
+    expect(bismillahHeader(warsh, 9)).toBeNull();
+  });
+
+  it("is drawn for chapter 1 only when the source does not number it", () => {
+    expect(bismillahHeader(warsh, 1)).toBe(text);
+    expect(bismillahHeader(qpc, 1)).toBeNull();
+    expect(bismillahHeader(tanzil, 1)).toBeNull();
+  });
+
+  it("is drawn for chapters 2 to 114 only when verse one does not carry it", () => {
+    expect(bismillahHeader(warsh, 2)).toBe(text);
+    expect(bismillahHeader(warsh, 114)).toBe(text);
+    expect(bismillahHeader(qpc, 2)).toBe(text);
+    expect(bismillahHeader(tanzil, 2)).toBeNull();
+  });
+
+  it("is undefined without the field, so the old behaviour applies", () => {
+    expect(bismillahHeader({ id: "x" } as Script, 2)).toBeUndefined();
   });
 });
 

@@ -4,10 +4,9 @@ import { buttonVariants } from "./ui/button";
 
 interface Props {
   current: "docs" | "reader";
-  wide?: boolean;
 }
 
-const { current, wide = false } = Astro.props;
+const { current } = Astro.props;
 const links = [
   { id: "docs", label: "Docs", href: "/" },
   { id: "reader", label: "Reader", href: "/app/" },
@@ -15,12 +14,7 @@ const links = [
 ---
 
 <header class="bg-background sticky top-0 z-40 h-12 border-b">
-  <div
-    class:list={[
-      "mx-auto flex h-full items-center gap-4 px-4",
-      wide ? "max-w-none" : "max-w-[1120px]",
-    ]}
-  >
+  <div class="flex h-full items-center gap-4 px-4">
     <a href="/" class="font-mono text-sm font-semibold tracking-tight text-foreground no-underline">
       quran-json
     </a>
