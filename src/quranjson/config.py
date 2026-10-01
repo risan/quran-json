@@ -21,18 +21,8 @@ ROOT: Final = Path(__file__).resolve().parents[2]
 #: are offline and reproducible even if an upstream API disappears.
 DATA: Final = ROOT / "data"
 
-#: Frozen v3 artifacts, published to npm and served by jsDelivr. Byte-identical
-#: reference tree; regenerating it must produce a clean `git diff`.
-DIST: Final = ROOT / "dist"
-
 #: New artifact tree, deployed to Cloudflare Pages.
 CDN: Final = ROOT / "cdn"
-
-#: The verse text used by the frozen tree.
-TEXT_EDITION: Final = "ara-quranuthmanienc"
-
-#: `transliteration` is generated like a language but has no chapter directory.
-TRANSLITERATION: Final = "transliteration"
 
 #: The Indonesian standard mushaf served by the Qur'an Kemenag app. Not a Tanzil variant:
 #: it is the Mushaf Standar Indonesia, whose own definition (PMA 44/2016 Pasal 1(2), and
@@ -53,8 +43,8 @@ DIGITALKHATT_SCRIPT: Final = "indopak"
 
 #: Qur'anpedia.net's text identities. Warsh and Qalun are Nafiʿ riwayat. Al-Duri is a
 #: separate riwayah with its own source count. Hafs Nastaliq is a distinct digital Hafs
-#: edition and must not replace the existing Indo-Pak text or imply printed-edition
-#: compatibility. See `quranjson.quranpedia`.
+#: edition, KFGQPC's Nastaleeq text, and does not replace the DigitalKhatt Indo-Pak text.
+#: See `quranjson.quranpedia`.
 WARSH_SCRIPT: Final = "warsh"
 QALUN_SCRIPT: Final = "qalun"
 DURI_SCRIPT: Final = "duri"
@@ -62,38 +52,7 @@ HAFS_NASTALIQ_SCRIPT: Final = "hafs-nastaliq"
 RIWAYAH_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT, DURI_SCRIPT)
 QURANPEDIA_SCRIPTS: Final = (WARSH_SCRIPT, QALUN_SCRIPT, HAFS_NASTALIQ_SCRIPT, DURI_SCRIPT)
 
-#: Order matters: it determines key order in `verses/*.json`.
-LANG_CODES: Final = (
-    None,
-    "bn",
-    "en",
-    "es",
-    "fr",
-    "id",
-    "ru",
-    "sv",
-    "tr",
-    "ur",
-    "zh",
-)
-
-#: Languages that get a verse-level translation in `verses/*.json`.
-#: NOTE: upstream `scripts/build.js` passed `qurans.slice(2)`, which silently skipped
-#: `bn` -- Bengali is absent from every one of the 6,236 verse files it produced.
-#: `LEGACY_VERSE_LANGS` reproduces that bug so the frozen `dist/` tree can be proven
-#: byte-identical; published trees use `VERSE_LANGS` and include Bengali.
-VERSE_LANGS: Final = tuple(lang for lang in LANG_CODES if lang is not None)
-LEGACY_VERSE_LANGS: Final = tuple(LANG_CODES[2:])
-
-DEFAULT_LINK_BASE: Final = "https://cdn.jsdelivr.net/npm/quran-json@{version}/dist/chapters/"
-
-#: Version baked into the frozen `dist/` tree's chapter links. It is the npm package
-#: version that was current when those files were generated; it is NOT a free variable.
-#: Changing it would rewrite every `link` field and break the byte-parity gate.
-LEGACY_VERSION: Final = "3.1.2"
-
-#: Version of the new, corrected dataset generation served from the CDN. It differs from
-#: the frozen tree because it fixes the dropped Bengali translation in every verse file.
+#: Version of the dataset generation served from the CDN.
 DATASET_VERSION: Final = "4.0.0"
 
 Status = Literal["granted", "restricted", "unknown"]
@@ -111,22 +70,6 @@ class License:
     def allows_publication(self) -> bool:
         return self.status == "granted"
 
-
-#: Tanzil hosts translations but grants nothing for them. Its CC-BY-3.0 notice covers
-#: the Arabic *text* only; the Terms of Use on the translations page restrict them to
-#: non-commercial use and forbid redistribution of the list.
-#: https://tanzil.net/trans/  (verified 2026-09-14)
-TANZIL_TRANSLATION = License(
-    status="restricted",
-    text=(
-        "Tanzil translations: 'for non-commercial purposes only. If used otherwise, you "
-        "need to obtain necessary permission from the translator or the publisher.' and "
-        "'Redistributing the following list in another website is not allowed, unless "
-        "direct permission is granted by the Tanzil Project.' The CC-BY-3.0 Tanzil Quran "
-        "text licence covers Tanzil's Arabic text, NOT its translations."
-    ),
-    url="https://tanzil.net/trans/",
-)
 
 #: The one source whose terms grant re-publication on their face.
 #: https://quranenc.com/en/home/api  ("Terms and Policies")
@@ -152,35 +95,6 @@ ITANI = License(
     url="https://blog.clearquran.com/download",
 )
 
-#: Saheeh International. No grant exists and the publisher's domain is gone.
-SAHEEH_INTERNATIONAL = License(
-    status="restricted",
-    text=(
-        "Saheeh International (Umm Muhammad, Dar Abul-Qasim): all rights reserved, no "
-        "redistribution grant found. Both Tanzil (non-commercial, permission required) and "
-        "Quran.com (personal, non-commercial, no compilation) restrict the copies in "
-        "circulation. Written permission from the publisher is required."
-    ),
-    url="https://tanzil.net/trans/",
-)
-
-#: The Arabic text currently shipped. VERIFIED 2026-09-14: the `ara-quranuthmanienc`
-#: edition is itself a copy of `ara-quranacademy`, whose upstream repo states it is
-#: "derived from Tanzil's Uthmani text" with systematic re-encoding (Farsi yeh U+06CC,
-#: U+06E1 sukun, open tanween, tatweel). That upstream carries NO licence, and Tanzil's
-#: licence forbids modification. So this is a modified derivative with no grant -- the
-#: README's "text from The Noble Qur'an Encyclopedia" attribution is not accurate.
-SHIPPED_TEXT = License(
-    status="unknown",
-    text=(
-        "Modified derivative with no grant. The ara-quranuthmanienc edition is a copy of "
-        "ara-quranacademy, which states it is derived from Tanzil's Uthmani text with "
-        "systematic re-encoding; that upstream has no LICENSE file. Tanzil's text licence "
-        "permits verbatim copies only: 'CHANGING IT IS NOT ALLOWED'."
-    ),
-    url="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/ara-quranuthmanienc.json",
-)
-
 #: Tanzil's own text -- the recommended replacement for the shipped derivative. Explicit
 #: CC-BY 3.0 verbatim-redistribution grant. Note: its first ayah of every surah except
 #: At-Tawbah carries the basmala, unlike the text shipped today.
@@ -192,6 +106,22 @@ TANZIL_TEXT = License(
         "this text, but CHANGING IT IS NOT ALLOWED."
     ),
     url="https://tanzil.net/docs/text_license",
+)
+
+#: The notice Tanzil's licence requires "in all verbatim copies of the text, and ...
+#: reproduced appropriately in all files derived from or containing substantial portion of
+#: this text". Published in the manifest and in every Tanzil chapter object.
+TANZIL_NOTICE: Final = (
+    "Tanzil Quran Text. Copyright (C) 2007-2021 Tanzil Project. License: Creative Commons "
+    "Attribution 3.0. This copy of the Quran text is carefully produced, highly verified and "
+    "continuously monitored by a group of specialists in Tanzil Project. TERMS OF USE: "
+    "Permission is granted to copy and distribute verbatim copies of this text, but CHANGING "
+    "IT IS NOT ALLOWED. This Quran text can be used in any website or application, provided "
+    "that its source (Tanzil Project) is clearly indicated, and a link is made to tanzil.net "
+    "to enable users to keep track of changes. This copyright notice shall be included in all "
+    "verbatim copies of the text, and shall be reproduced appropriately in all files derived "
+    "from or containing substantial portion of this text. Please check updates at: "
+    "http://tanzil.net/updates/"
 )
 
 TANZIL_DOWNLOAD = (
@@ -223,7 +153,7 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
         "serves, carrying the Indonesian standard's waqf signs",
     ),
     DIGITALKHATT_SCRIPT: (
-        "Indo-Pak",
+        "Indo-Pak (DigitalKhatt)",
         "DigitalKhatt's Indo-Pak typesetting: subscript alef (U+0656), no alef wasla, "
         "Arabic Extended-B marks",
     ),
@@ -237,9 +167,9 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
         "Qalun ʿan Nafiʿ (Libya, Tunisia), 6,214 ayahs to Nafiʿ's count",
     ),
     HAFS_NASTALIQ_SCRIPT: (
-        "Hafs Nastaliq",
-        "Quranpedia mushaf 3: Hafs text in Nastaliq for parts of Asia; a distinct digital "
-        "edition explicitly described by Quranpedia as not matching the printed edition",
+        "Indo-Pak (KFGQPC Nastaleeq)",
+        "Quranpedia mushaf 3: the Hafs text KFGQPC sets in Nastaleeq for the Indo-Pak "
+        "tradition, numbered as Hafs",
     ),
     DURI_SCRIPT: (
         "al-Duri",
@@ -296,6 +226,16 @@ SCRIPT_MAPPING_COVERAGE_EXCEPTIONS: Final[dict[str, tuple[dict[str, object], ...
 #: Reader-facing identity and audio safety. A mapped riwayah must never inherit Hafs
 #: per-ayah audio merely because some chapter happens to have the same native count.
 SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
+    **{
+        script: {
+            "reading": {
+                "riwayah": "Hafs",
+                "qiraah": "ʿAsim",
+                "verse_numbering": SCRIPT_VERSE_IDS[script],
+            }
+        }
+        for script in (*TANZIL_VARIANTS, KEMENAG_SCRIPT, DIGITALKHATT_SCRIPT)
+    },
     WARSH_SCRIPT: {
         "reading": {
             "riwayah": "Warsh",
@@ -399,9 +339,7 @@ DIGITALKHATT = License(
         "files ... to deal in the Software without restriction, including without limitation "
         "the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or "
         "sell copies of the Software.' The repository's root LICENSE covers the text file "
-        "this dataset parses; there is no separate data licence and no NOTICE file. The "
-        "Indo-Pak rasm itself is DigitalKhatt's own typesetting, not a copy of another "
-        "producer's Indopak data (0 of 6,236 verses shared with the QuranWBW or KFGQPC text)."
+        "this dataset parses; there is no separate data licence and no NOTICE file."
     ),
     url="https://raw.githubusercontent.com/DigitalKhatt/digitalkhatt-js/HEAD/LICENSE",
 )
@@ -440,6 +378,20 @@ SCRIPT_LICENSES: Final[dict[str, License]] = {
     KEMENAG_SCRIPT: KEMENAG_TEXT,
     DIGITALKHATT_SCRIPT: DIGITALKHATT,
     **dict.fromkeys(QURANPEDIA_SCRIPTS, QURANPEDIA),
+}
+
+#: Who to credit for each script, published in its manifest `license` object.
+SCRIPT_ATTRIBUTIONS: Final[dict[str, str]] = {
+    **dict.fromkeys(TANZIL_VARIANTS, "Tanzil Project (https://tanzil.net)"),
+    KEMENAG_SCRIPT: (
+        "Kementerian Agama RI, Lajnah Pentashihan Mushaf Al-Qur'an (https://quran.kemenag.go.id)"
+    ),
+    DIGITALKHATT_SCRIPT: "DigitalKhatt (https://github.com/DigitalKhatt/digitalkhatt-js), MIT",
+    **dict.fromkeys(
+        QURANPEDIA_SCRIPTS,
+        "Qur'anpedia.net (https://quranpedia.net); the dump version is recorded per snapshot "
+        "in /meta/sources.json",
+    ),
 }
 
 #: Verses a script is expected to hold. The Hafs-count scripts all run to 6,236; Nafiʿ's
@@ -481,9 +433,10 @@ SCRIPT_NOTES: Final[dict[str, str]] = {
         "Each verse's `number_in_hafs` gives the Hafs ayah number or numbers it covers."
     ),
     HAFS_NASTALIQ_SCRIPT: (
-        "Hafs Nastaliq is Quranpedia mushaf 3, a separate digital text in Nastaliq. Its source "
-        "description says it does not match the printed edition; the label does not promise "
-        "byte compatibility with Indo-Pak, QuranWBW, or another Hafs product."
+        "Indo-Pak (KFGQPC Nastaleeq) is Quranpedia mushaf 3, the Hafs text in Nastaleeq with "
+        "Hafs verse numbering. Quranpedia flags it as having no page-image pack, which says "
+        "nothing about the text. Spelling conventions differ from the DigitalKhatt Indo-Pak "
+        "script, so the two are not byte-compatible."
     ),
     DURI_SCRIPT: (
         "al-Duri ʿan Abi ʿAmr is a different riwayah, not an orthography: the pinned "
@@ -491,20 +444,6 @@ SCRIPT_NOTES: Final[dict[str, str]] = {
         "the Hafs count; each verse's `number_in_hafs` preserves the source mapping."
     ),
 }
-
-
-#: Chapter metadata snapshotted from the Quran.com API.
-QURAN_COM_METADATA = License(
-    status="restricted",
-    text=(
-        "Quran.com terms: content is 'FOR YOUR PERSONAL, NON-COMMERCIAL USE ONLY' and "
-        "users 'shall not ... use the Service for data mining, scraping, crawling, "
-        "redirecting, or compiling a collection of listings or data for any purpose'. The "
-        "chapter metadata in data/chapters/ is snapshotted for the existing published "
-        "build and is not cleared for re-publication."
-    ),
-    url="https://quran.com/terms-and-conditions",
-)
 
 
 def public_domain(work: str, basis: str, url: str) -> License:
@@ -557,10 +496,10 @@ KRACHKOVSKY = public_domain(
 #: Audio hosts. We publish URL templates and never mirror audio bytes, so these record
 #: the host's own terms for the consumer rather than gating our output.
 MP3QURAN_AUDIO = License(
-    status="granted",
+    status="unknown",
     text=(
-        "mp3quran.net permits copying, publishing and redistribution of its recitations "
-        "with attribution to the site; the reciter's rights are retained."
+        "mp3quran.net states no licence for redistribution that we could find; we link to "
+        "its files and do not copy them."
     ),
     url="https://mp3quran.net/eng/",
 )
@@ -569,9 +508,10 @@ ISLAMIC_NETWORK_AUDIO = License(
     status="granted",
     text=(
         "islamic.network audio is free to redistribute for non-commercial use; each "
-        "recitation's copyright remains with its reciter."
+        "recitation's copyright remains with its reciter. The terms are published at "
+        "alquran.cloud, the project behind the CDN."
     ),
-    url="https://islamic.network/",
+    url="https://alquran.cloud/terms-and-conditions",
 )
 
 EVERYAYAH_AUDIO = License(
@@ -614,104 +554,6 @@ class Edition:
     @property
     def available(self) -> bool:
         return self.availability == "published"
-
-
-#: The editions the frozen `dist/` tree was built from. Slugs are frozen too: changing one
-#: changes the published bytes, so the parity gate pins this list.
-EDITIONS: Final[tuple[Edition, ...]] = (
-    Edition(
-        lang=TRANSLITERATION,
-        slug="ara-quran-la",
-        author="Tanzil.net",
-        source="https://tanzil.net/trans/en.transliteration",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="bn",
-        slug="ben-muhiuddinkhan",
-        author="Muhiuddin Khan",
-        source="https://tanzil.net/trans/bn.bengali",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="en",
-        slug="eng-ummmuhammad",
-        author="Umm Muhammad (Saheeh International)",
-        source="https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions/eng-ummmuhammad.json",
-        license=SAHEEH_INTERNATIONAL,
-    ),
-    Edition(
-        lang="es",
-        slug="spa-muhammadisagarc",
-        author="Muhammad Isa Garcia",
-        source="https://tanzil.net/trans/es.garcia",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="fr",
-        slug="fra-muhammadhamidul",
-        author="Muhammad Hamidullah",
-        source="https://tanzil.net/trans/fr.hamidullah",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="id",
-        slug="ind-indonesianislam",
-        author="Indonesian Islamic Affairs Ministry",
-        source="https://quranenc.com/en/browse/indonesian_affairs/",
-        license=QURANENC,
-    ),
-    Edition(
-        lang="ru",
-        slug="rus-elmirkuliev",
-        author="Elmir Kuliev",
-        source="https://tanzil.net/trans/ru.kuliev",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="sv",
-        slug="swe-knutbernstrom",
-        author="Knut Bernstrom",
-        source="https://tanzil.net/trans/sv.bernstrom",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="tr",
-        slug="tur-diyanetisleri",
-        author="Turkish Directorate of Religious Affairs",
-        source="https://tanzil.net/trans/tr.diyanet",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="ur",
-        slug="urd-abulaalamaududi",
-        author="Abul A'la Maududi",
-        source="https://tanzil.net/trans/ur.maududi",
-        license=TANZIL_TRANSLATION,
-    ),
-    Edition(
-        lang="zh",
-        slug="zho-muhammadmakin",
-        author="Muhammad Makin",
-        source="https://quranenc.com/en/browse/chinese_makin/",
-        license=QURANENC,
-    ),
-)
-
-
-def chapter_list_path(lang: str | None) -> Path:
-    """Path to the committed chapter-list snapshot for ``lang``."""
-    return DATA / "chapters" / f"{'en' if lang in (None, TRANSLITERATION) else lang}.json"
-
-
-def edition_path(lang: str) -> Path:
-    """Path to the committed translation snapshot for ``lang``."""
-    return DATA / "editions" / f"{lang}.json"
-
-
-def text_path() -> Path:
-    """Path to the committed Uthmani text snapshot."""
-    return DATA / "quran.json"
 
 
 def tanzil_text_path(variant: str) -> Path:
@@ -850,32 +692,3 @@ EXTRA_EDITIONS: Final[tuple[Edition, ...]] = (
         license=KRACHKOVSKY,
     ),
 )
-
-
-#: Editions that are ingested but not publishable: their licence is not `granted`, so the
-#: gate keeps them out of `cdn/` and reports them, with the reason, in the withheld lists.
-#: They are published only under `--include-unverified-licenses`, once the rights have
-#: been cleared out of band. Fetching them anyway is deliberate: the snapshot is what
-#: makes the withheld bytes auditable, exactly as the frozen tree's 9 editions are.
-PENDING_EDITIONS: Final[tuple[Edition, ...]] = (
-    Edition(
-        lang="indonesian_kemenag",
-        code="id",
-        slug="ind-kemenag-2019",
-        author="Kementerian Agama RI (Lajnah Pentashihan Mushaf Al-Qur'an)",
-        source=KEMENAG_API,
-        license=KEMENAG_TRANSLATION,
-        kind="kemenag",
-    ),
-    Edition(
-        lang="transliteration_kemenag",
-        slug="ara-kemenag-latin",
-        author="Kementerian Agama RI (Lajnah Pentashihan Mushaf Al-Qur'an)",
-        source=KEMENAG_API,
-        license=KEMENAG_TRANSLITERATION,
-        kind="kemenag",
-    ),
-)
-
-#: Every registered edition, publishable or not -- what the licence report accounts for.
-REGISTERED: Final = (*EDITIONS, *PENDING_EDITIONS)

@@ -7,7 +7,7 @@ fields per ayah -- `arabic`, `translation`, `latin` -- one surah window at a tim
 backend rather than a documented public service: it publishes no terms, and it answers
 **403 unless the request carries the site's own `Origin` header**, which is why that
 header is spelled out here instead of hidden in a config knob. Availability is not a
-licence; the verdicts live in `config` and are reported by `quranjson.review`.
+licence; the verdicts live in `config`.
 
 Licensing, all three items verified first-hand on 2026-09-18 (see `config`):
 

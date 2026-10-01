@@ -1,18 +1,17 @@
 """The licensed dataset generation: Tanzil text and metadata, QuranEnc translations.
 
-These pin the properties that make this generation different from the frozen `dist/`
-tree, including the basmala convention, which is the one change most likely to surprise
-a consumer migrating from the old text.
+These pin the properties of the sources the site is built from, including the basmala
+convention, which is the one thing most likely to surprise a consumer of Tanzil's text.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from quranjson import config
-from quranjson.build import Sources
 from quranjson.cdn import edition_url_key, published_editions
 from quranjson.jsonio import read_json
 
@@ -28,9 +27,32 @@ BASMALA_ASSIMILATED = (
 )
 
 
+class Sources:
+    """The committed snapshots the site is built from, loaded as the pipeline reads them."""
+
+    def __init__(self) -> None:
+        self.text: dict[str, list[dict[str, Any]]] = read_json(config.tanzil_text_path("uthmani"))
+        self.chapters: dict[str | None, list[dict[str, Any]]] = {
+            None: read_json(config.tanzil_chapters_path())["chapters"]
+        }
+        self.editions: dict[str, dict[str, list[dict[str, Any]]]] = {}
+
+        from quranjson.quranenc import load_catalogues, merged_catalogue
+
+        for entry in merged_catalogue(load_catalogues())["translations"]:
+            if entry.get("availability", "published") == "published":
+                self.editions[entry["key"]] = read_json(config.quranenc_path(entry["key"]))
+
+        for edition in config.EXTRA_EDITIONS:
+            self.editions[edition.lang] = read_json(config.extra_edition_path(edition.lang))
+
+    def verses(self, chapter_id: int) -> list[dict[str, Any]]:
+        return self.text[str(chapter_id)]
+
+
 @pytest.fixture(scope="module")
 def licensed() -> Sources:
-    return Sources("licensed")
+    return Sources()
 
 
 def url_of(edition_lang: str) -> str:

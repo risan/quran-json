@@ -29,16 +29,8 @@ jobs:
       - name: type-check the Astro site
         run: npm run check --prefix site
 
-      - name: build the assembled site without touching frozen dist
+      - name: build the assembled site
         run: npm run site -- --no-cdn
-
-      # The published dist/ tree is a public contract. Rebuilding it must not change a
-      # single byte; a failure here means the artefact changed for real consumers.
-      - name: rebuild the frozen tree
-        run: uv run quran-json build
-
-      - name: assert the frozen tree is byte-identical
-        run: git diff --exit-code -- dist/
 
       - name: snapshots and licences are intact
         run: uv run quran-json verify

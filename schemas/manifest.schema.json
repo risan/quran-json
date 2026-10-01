@@ -106,6 +106,8 @@
         "description",
         "verses",
         "verse_ids",
+        "license",
+        "reading",
         "path",
         "chapters"
       ],
@@ -128,6 +130,17 @@
         },
         "verse_ids": {
           "enum": ["hafs", "mapped", "own"]
+        },
+        "license": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "url", "attribution"],
+          "properties": {
+            "status": {"enum": ["granted", "restricted", "unknown"]},
+            "url": {"type": "string", "format": "uri", "minLength": 1},
+            "attribution": {"type": "string", "minLength": 1},
+            "notice": {"type": "string", "minLength": 1}
+          }
         },
         "path": {
           "type": "string",
