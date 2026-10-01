@@ -1,407 +1,645 @@
 ---
-import { Code } from "astro:components";
+import type { ComponentProps } from "astro/types";
+import { Menu, X } from "lucide-react";
 import Base from "../layouts/Base.astro";
-import { chapterPath, chapterUrl, editionKey, loadCatalog } from "../lib/catalog";
+import CodeTabs from "../components/docs/CodeTabs.astro";
+import Section from "../components/docs/Section.astro";
+import Toc from "../components/docs/Toc.astro";
+import { buttonVariants } from "../components/ui/button";
+import {
+  count,
+  editionKey,
+  loadCatalog,
+  orderedScripts,
+  readingLabel,
+  sortEditions,
+  verseIdsLabel,
+} from "../lib/catalog";
 
-const {
-  manifest,
-  chapters,
-  translations,
-  transliterations,
-  reciters,
-  coverage,
-} = loadCatalog();
-const firstScript = manifest.scripts[0];
-const firstTranslation = translations.editions[0];
-const firstChapter = chapters.find((chapter) => chapter.id === 1) ?? chapters[0];
-const firstChapterPath = chapterPath(firstTranslation, firstChapter.id);
-const firstChapterReaderUrl = `${chapterUrl(firstChapter)}?s=${firstScript.id}`;
-const translationLanguages = manifest.translations.languages;
-const sortedTranslations = [...translations.editions].sort((a, b) => {
-  const left = `${a.language}\u0000${a.author}\u0000${editionKey(a)}`;
-  const right = `${b.language}\u0000${b.author}\u0000${editionKey(b)}`;
-  return left.localeCompare(right, "en", { sensitivity: "base", numeric: true });
-});
+const { manifest, translations, transliterations, reciters, coverage, sources } = loadCatalog();
 
-const quickstartCurl = `curl -sS https://quran-json.risanb.com/text/${firstScript.id}/chapters/${firstChapter.id}.json`;
-const quickstartJavaScript = `const response = await fetch(
-  "https://quran-json.risanb.com/text/${firstScript.id}/chapters/${firstChapter.id}.json"
-);
-const chapter = await response.json();
-console.log(chapter.verses);`;
-const joinJavaScript = `const arabic = await fetch(
-  "https://quran-json.risanb.com/text/${firstScript.id}/chapters/${firstChapter.id}.json"
-).then((response) => response.json());
-const translated = await fetch(
-  "https://quran-json.risanb.com${firstChapterPath}"
-).then((response) => response.json());
+const origin = "https://quran-json.risanb.com";
+const scripts = orderedScripts(manifest.scripts);
+const scriptIds = new Set(scripts.map((script) => script.id));
+const editions = sortEditions(translations.editions);
+const english = editions.find((edition) => edition.code === "en") ?? editions[0];
 
-const translatedById = new Map(
-  translated.verses.map((verse) => [verse.id, verse.translation])
-);
-const rows = arabic.verses.map((verse) => ({
+const quickstart: ComponentProps<typeof CodeTabs>["tabs"] = [
+  {
+    label: "curl",
+    lang: "bash",
+    code: `curl -s ${origin}/text/uthmani/chapters/1.json
+curl -s ${origin}${english.path}chapters/1.json`,
+  },
+  {
+    label: "JavaScript",
+    lang: "javascript",
+    code: `const get = (path) => fetch("${origin}" + path).then((r) => r.json());
+
+const arabic = await get("/text/uthmani/chapters/1.json");
+const english = await get("${english.path}chapters/1.json");
+
+// Both files number verses from 1: join on \`id\`.
+const verses = arabic.verses.map((verse, i) => ({
   ...verse,
-  translation: translatedById.get(verse.id),
-}));`;
-const mappedExample = `const duri = await fetch(
-  "https://quran-json.risanb.com/text/duri/chapters/2.json"
-).then((response) => response.json());
+  translation: english.verses[i].translation,
+}));`,
+  },
+  {
+    label: "Python",
+    lang: "python",
+    code: `import requests
 
-const versesCoveringHafs255 = duri.verses.filter((verse) =>
-  verse.number_in_hafs?.includes(255)
-);`;
+def get(path):
+    return requests.get("${origin}" + path, timeout=30).json()
+
+arabic = get("/text/uthmani/chapters/1.json")
+english = get("${english.path}chapters/1.json")
+
+# Both files number verses from 1: join on \`id\`.
+for verse, tr in zip(arabic["verses"], english["verses"]):
+    print(verse["id"], verse["text"], tr["translation"])`,
+  },
+];
+
+const endpoints: [string, string][] = [
+  ["/manifest.json", "Scripts, counts, project licence and attribution."],
+  [
+    "/chapters.json",
+    "The 114 chapters: Arabic name, transliterated name, meaning, type, verse count.",
+  ],
+  ["/text/{script}/quran.json", "Every chapter of one script, as an array."],
+  ["/text/{script}/chapters/{1-114}.json", "One chapter: { id, verses: [{ id, text }] }."],
+  [
+    "/translations/index.json",
+    "Every translation edition: language, translator, version, licence.",
+  ],
+  [
+    "/translations/{code}-{slug}/quran.json",
+    "One edition, all chapters. Verses carry translation and, where the publisher gives one, footnotes.",
+  ],
+  ["/translations/{code}-{slug}/chapters/{1-114}.json", "One edition, one chapter."],
+  ["/transliteration/index.json", "Transliteration editions (see below)."],
+  ["/transliteration/{key}/quran.json", "One transliteration, all chapters."],
+  ["/transliteration/{key}/chapters/{1-114}.json", "One transliteration, one chapter."],
+  ["/audio/reciters.json", "Reciters, hosts and URL templates. Audio is linked, not hosted."],
+  ["/meta/sources.json", "Source, licence and snapshot hash of every dataset."],
+  ["/meta/qa.json", "Corrections applied to upstream text, with evidence."],
+];
+
+const guide: { use: string; ids: string[]; text: string }[] = [
+  { use: "Most apps", ids: ["uthmani"], text: "Madinah mushaf style, Hafs reading." },
+  { use: "Search and matching", ids: ["simple-clean"], text: "No vowel marks." },
+  {
+    use: "South Asia",
+    ids: ["hafs-nastaliq", "indopak"],
+    text: "Nastaliq (KFGQPC) or Indo-Pak naskh (DigitalKhatt).",
+  },
+  { use: "Indonesia", ids: ["kemenag"], text: "Mushaf Standar Indonesia." },
+  { use: "North and West Africa", ids: ["warsh", "qalun"], text: "Readings of Nafi." },
+  { use: "Sudan", ids: ["duri"], text: "al-Duri, reading of Abu Amr." },
+];
+
+const languages = [
+  ...new Map(editions.map((edition) => [edition.language ?? "", edition.code ?? ""])).entries(),
+].sort(([a], [b]) => a.localeCompare(b));
+
+const published = transliterations.editions;
+
+const hosts = reciters
+  ? Object.entries(reciters.hosts).map(([id, host]) => {
+      const entries = reciters.reciters.filter((reciter) => reciter.host === id);
+
+      return {
+        id,
+        host,
+        reciters: entries.length,
+        scope: [...new Set(entries.map((reciter) => reciter.scope))]
+          .map((scope) => (scope === "ayah" ? "per ayah" : "per surah"))
+          .join(", "),
+      };
+    })
+  : [];
+
+// One licence row per distinct grant, so the table stays short however many editions exist.
+const editionLicences = [
+  ...Map.groupBy(
+    editions,
+    (edition) => edition.license?.url ?? edition.license?.text ?? "unknown",
+  ).entries(),
+].map(([url, group]) => ({ url, count: group.length, license: group[0].license }));
+
+const notUsed = [...sources.withheld];
+
+const toc = [
+  { id: "quick-start", label: "Quick start" },
+  { id: "endpoints", label: "Endpoints" },
+  { id: "scripts", label: "Scripts" },
+  { id: "translations", label: "Translations" },
+  { id: "transliteration", label: "Transliteration" },
+  { id: "audio", label: "Audio" },
+  { id: "sources", label: "Sources and licences" },
+  { id: "changes", label: "Changes" },
+];
+
+const stats = [
+  [manifest.scripts.length, "scripts"],
+  [translations.count, "translations"],
+  [manifest.translations.languages, "languages"],
+  [manifest.transliteration.count, "transliterations"],
+] as const;
 ---
 
 <Base
-  title="quran-json — Quran data, clearly published"
-  description={`Readable Quran text and static JSON with ${manifest.scripts.length} scripts, ${translations.count} translations, and chapter-first endpoints.`}
+  current="docs"
+  title="quran-json: Quran text, translations and audio links as static JSON"
+  description={`Quran text in ${manifest.scripts.length} scripts and ${translations.count} translations as static JSON files. No key, no server.`}
 >
-  <section class="hero">
-    <div class="hero-copy">
-      <p class="eyebrow">Quran text + static JSON</p>
-      <h1>Al-Quran</h1>
-      <p>
-        Read a chapter or use a stable JSON path. Arabic editions, translations, and audio
-        references stay simple enough to inspect in a browser or a shell.
-      </p>
-      <div class="actions">
-        <a class="button-link primary" href="/app/">Open the reader <span aria-hidden="true">↗</span></a>
-        <a class="button-link" href={firstChapterReaderUrl}>Read {firstChapter.transliteration} <span aria-hidden="true">↗</span></a>
-        <a class="button-link" href="#quickstart">Fetch one chapter <span aria-hidden="true">↓</span></a>
-      </div>
-      <div class="hero-facts" aria-label="Published data counts">
-        <span><strong>{manifest.scripts.length}</strong> Arabic editions</span>
-        <span><strong>{translations.count}</strong> translations</span>
-        <span><strong>{translationLanguages}</strong> languages</span>
-        <span><strong>{manifest.chapters.count}</strong> chapters</span>
-      </div>
-    </div>
-  </section>
+  <div class="bg-background sticky top-12 z-30 flex h-10 items-center border-b px-4 lg:hidden">
+    <button
+      type="button"
+      data-toc-open
+      class={buttonVariants({ variant: "ghost", size: "sm" }) + " -ml-2.5"}
+    >
+      <Menu className="size-4" aria-hidden="true" />
+      <span class="text-muted-foreground">On this page</span>
+      <span data-toc-current>Quick start</span>
+    </button>
+  </div>
 
-  <section id="quickstart" class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">Start here</p>
-        <h2>One request, one chapter</h2>
-      </div>
-      <p>
-        Chapter files are ordinary JSON. Copy a complete command or paste the JavaScript into a
-        console; no SDK, account, or setup is required.
-      </p>
+  <dialog
+    data-toc-dialog
+    aria-label="On this page"
+    class="bg-background text-foreground m-0 mr-auto h-dvh max-h-none w-64 max-w-[85vw] border-r p-3 backdrop:bg-black/40"
+  >
+    <div class="mb-2 flex items-center justify-between">
+      <span class="text-sm font-semibold">On this page</span>
+      <button
+        type="button"
+        data-toc-close
+        class={buttonVariants({ variant: "ghost", size: "icon-sm" })}
+        aria-label="Close"
+      >
+        <X className="size-4" aria-hidden="true" />
+      </button>
     </div>
-    <div class="quickstart-grid">
-      <article class="code-card">
-        <div class="code-card-heading">
-          <div><span class="number">01</span><h3>Try curl</h3></div>
-          <button class="copy-button" type="button" data-copy={quickstartCurl} aria-label="Copy the curl chapter example">Copy</button>
-        </div>
-        <Code code={quickstartCurl} lang="bash" theme="github-dark" />
-        <p class="copy-status" data-copy-status aria-live="polite"></p>
-        <a class="inline-link" href={`/text/${firstScript.id}/chapters/${firstChapter.id}.json`}>Open the JSON response <span aria-hidden="true">↗</span></a>
-      </article>
-      <article class="code-card">
-        <div class="code-card-heading">
-          <div><span class="number">02</span><h3>Use fetch</h3></div>
-          <button class="copy-button" type="button" data-copy={quickstartJavaScript} aria-label="Copy the JavaScript chapter example">Copy</button>
-        </div>
-        <Code code={quickstartJavaScript} lang="javascript" theme="github-dark" />
-        <p class="copy-status" data-copy-status aria-live="polite"></p>
-      </article>
-    </div>
-    <noscript><p class="noscript-note">The examples remain selectable without JavaScript.</p></noscript>
+    <Toc items={toc} />
+  </dialog>
 
-    <details class="advanced-detail">
-      <summary>Advanced: join a translation by verse id</summary>
-      <div class="advanced-content">
-        <p>
-          Load the two chapter files separately, then join on <code>id</code>. This is optional
-          when you only need Arabic text.
+  <div class="mx-auto max-w-[1120px] px-4 lg:grid lg:grid-cols-[12rem_minmax(0,1fr)] lg:gap-10">
+    <aside class="sticky top-12 hidden h-[calc(100dvh-3rem)] self-start overflow-y-auto py-6 lg:block">
+      <Toc items={toc} />
+    </aside>
+
+    <main class="min-w-0 max-w-[860px] space-y-8 py-6">
+      <div class="space-y-3">
+        <h1 class="text-xl font-semibold">Quran JSON</h1>
+        <p class="doc-prose">
+          The Quran as static JSON files: Arabic text in {manifest.scripts.length} scripts,{" "}
+          {translations.count} translations, and links to recitations. No key, no server; fetch a
+          file.
         </p>
-        <div class="code-card">
-          <div class="code-card-heading">
-            <h3>JavaScript</h3>
-            <button class="copy-button" type="button" data-copy={joinJavaScript} aria-label="Copy the translation join example">Copy</button>
-          </div>
-          <Code code={joinJavaScript} lang="javascript" theme="github-dark" />
-          <p class="copy-status" data-copy-status aria-live="polite"></p>
-        </div>
-      </div>
-    </details>
-  </section>
-
-  <section id="endpoints" class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">The data map</p>
-        <h2>Paths that stay legible</h2>
-      </div>
-      <p>Every endpoint is a static JSON file. Follow a chapter path when you need a small response.</p>
-    </div>
-    <dl class="endpoint-list">
-      <dt><code>/manifest.json</code></dt><dd>Counts, script identity, and catalogue pointers.</dd>
-      <dt><code>/chapters.json</code></dt><dd>Shared metadata for {manifest.chapters.count} chapters.</dd>
-      <dt><code>/text/{'{script}'}/chapters/{'{n}'}.json</code></dt><dd>Arabic text, one chapter at a time.</dd>
-      <dt><code>/translations/index.json</code></dt><dd>Translation editions and their source records.</dd>
-      <dt><code>/translations/{'{edition}'}/chapters/{'{n}'}.json</code></dt><dd>Translation text and source footnotes.</dd>
-      <dt><code>/transliteration/index.json</code></dt><dd>Romanisation availability, including an empty answer.</dd>
-      <dt><code>/audio/reciters.json</code></dt><dd>Host URL templates; audio itself is never copied here.</dd>
-      <dt><code>/meta/sources.json</code></dt><dd>Full provenance, rights notes, and withheld records.</dd>
-    </dl>
-  </section>
-
-  <section id="scripts" class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">Arabic editions</p>
-        <h2>Choose the text first</h2>
-      </div>
-      <p>
-        Names, counts, and verse identity are declared in the manifest. The JSON link in each row
-        opens the complete edition.
-      </p>
-    </div>
-    <div class="table-wrap">
-      <table class="edition-table">
-        <thead><tr><th>Id</th><th>Edition</th><th>Verses</th><th>Identity</th><th>Font</th><th>Data</th></tr></thead>
-        <tbody>
-          {manifest.scripts.map((script) => (
-            <tr>
-              <td class="id-cell"><code>{script.id}</code></td>
-              <td class="name-cell">
-                <strong>{script.name}</strong>
-                <span class="secondary">{script.description}</span>
-                {script.note ? (
-                  <details class="row-details">
-                    <summary>Edition notes</summary>
-                    <p>{script.note}</p>
-                  </details>
-                ) : null}
-              </td>
-              <td class="numeric-cell">{script.verses.toLocaleString()}</td>
-              <td><span class="badge">{script.verse_ids}</span>{script.verse_ids_differ_in?.length ? <span class="secondary">differs in {script.verse_ids_differ_in.join(", ")}</span> : null}</td>
-              <td class="id-cell"><code>{coverage.scripts[script.id]?.default ?? "—"}</code></td>
-              <td class="file-cell"><a href={script.path}>quran.json <span aria-hidden="true">↗</span></a></td>
-            </tr>
+        <dl class="text-muted-foreground flex flex-wrap gap-x-5 gap-y-1 text-[13px]">
+          {stats.map(([value, label]) => (
+            <div class="flex gap-1">
+              <dt class="text-foreground font-medium">{value}</dt>
+              <dd>{label}</dd>
+            </div>
           ))}
-        </tbody>
-      </table>
-    </div>
+        </dl>
+        <div class="flex gap-2">
+          <a href="/app/" class={buttonVariants({ size: "sm" })}>
+            Open reader
+          </a>
+          <a
+            href="https://github.com/risan/quran-json"
+            class={buttonVariants({ variant: "outline", size: "sm" })}
+          >
+            GitHub
+          </a>
+        </div>
+      </div>
 
-    <details class="advanced-detail mapped-detail">
-      <summary>Advanced: mapped readings</summary>
-      <div class="advanced-content">
-        <p>
-          Warsh and Qalun each have 6,214 source verses. Duri has 6,218 source verses and maps
-          each source verse to Hafs with <code>number_in_hafs</code>; its chapter 1 source
-          bismillah is separate furniture, not a numbered verse. Use the declared map instead of
-          array position when pairing a mapped reading with Hafs translation data.
+      <Section id="quick-start" title="Quick start">
+        <p class="doc-prose">
+          Fetch a chapter of Arabic text and a translation, then join them on verse <code>id</code>.
         </p>
-        <div class="code-card">
-          <div class="code-card-heading">
-            <h3>Duri · Hafs lookup</h3>
-            <button class="copy-button" type="button" data-copy={mappedExample} aria-label="Copy the Duri mapping example">Copy</button>
-          </div>
-          <Code code={mappedExample} lang="javascript" theme="github-dark" />
-          <p class="copy-status" data-copy-status aria-live="polite"></p>
-        </div>
-      </div>
-    </details>
-  </section>
+        <CodeTabs label="Fetch chapter 1" tabs={quickstart} />
+      </Section>
 
-  <section id="catalogues" class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">Translations</p>
-        <h2>Find an edition</h2>
-      </div>
-      <p>Search by language, translator, or id. The complete table remains in the HTML for people without JavaScript.</p>
-    </div>
-
-    <div id="translations" class="catalogue-panel" data-translation-table>
-      <div class="catalogue-toolbar">
-        <div class="search-field">
-          <label for="translation-search">Search translations</label>
-          <input id="translation-search" type="search" autocomplete="off" placeholder="Language, name, or id" aria-controls="translation-table" />
-        </div>
-        <button class="button-link clear-button" type="button" data-translation-clear hidden>Clear</button>
-        <p class="catalogue-count" data-translation-count aria-live="polite">{translations.count} translations</p>
-      </div>
-      <noscript><p class="noscript-note">All {translations.count} translations are shown below. Search and paging are optional enhancements.</p></noscript>
-      <div class="table-wrap">
-        <table id="translation-table" class="translation-table">
-          <thead><tr><th>Language</th><th>Edition</th><th>Data</th></tr></thead>
-          <tbody>
-            {sortedTranslations.map((edition) => (
-              <tr data-translation-row data-search={`${edition.language} ${edition.code} ${edition.author} ${edition.edition} ${editionKey(edition)}`.toLowerCase()}>
-                <td class="language-cell" data-label="Language"><span>{edition.language}</span> <code>{edition.code}</code></td>
-                <td class="name-cell" data-label="Edition">
-                  <strong>{edition.author}</strong>
-                  <details class="row-details">
-                    <summary>Edition details</summary>
-                    <p>
-                      {edition.direction ?? "unknown"} · {edition.version ?? "version not listed"} ·
-                      <a href={edition.source}>source</a> ·
-                      <a href={edition.license.url}>licence ({edition.license.status})</a>
-                    </p>
-                  </details>
-                </td>
-                <td class="file-cell" data-label="Data"><a href={`${edition.path}quran.json`}><code>{editionKey(edition)}</code> <span aria-hidden="true">↗</span></a></td>
+      <Section id="endpoints" title="Endpoints">
+        <p class="doc-prose">
+          All files are JSON, served from <code>{origin}</code>, with CORS open to any origin.
+        </p>
+        <div class="overflow-x-auto rounded-md border">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th scope="col">Path</th>
+                <th scope="col">Returns</th>
               </tr>
+            </thead>
+            <tbody>
+              {endpoints.map(([path, description]) => (
+                <tr>
+                  <td class="whitespace-nowrap">
+                    <code>{path}</code>
+                  </td>
+                  <td class="text-muted-foreground">{description}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Section>
+
+      <Section id="scripts" title="Scripts">
+        <p class="doc-prose">Which script should I use?</p>
+        <ul class="space-y-1 text-[13px]">
+          {guide
+            .filter((entry) => entry.ids.some((id) => scriptIds.has(id)))
+            .map((entry) => (
+              <li class="grid grid-cols-[9.5rem_minmax(0,1fr)] gap-x-3 max-sm:block">
+                <span class="font-medium">{entry.use}</span>
+                <span class="text-muted-foreground">
+                  {entry.ids
+                    .filter((id) => scriptIds.has(id))
+                    .map((id, index) => (
+                      <>
+                        {index > 0 ? " or " : ""}
+                        <code class="bg-muted rounded px-1 py-0.5 text-[12px]">{id}</code>
+                      </>
+                    ))}
+                  . {entry.text}
+                </span>
+              </li>
             ))}
-          </tbody>
-        </table>
-      </div>
-      <p class="empty-state" data-translation-empty hidden>No translations match that search. <button type="button" class="inline-button" data-translation-reset>Clear search</button></p>
-      <nav class="catalogue-pagination" data-translation-pagination aria-label="Translation pages">
-        <button type="button" class="button-link" data-translation-previous>Previous</button>
-        <span data-translation-page aria-live="polite"></span>
-        <button type="button" class="button-link" data-translation-next>Next</button>
-      </nav>
-    </div>
+        </ul>
+        <p class="doc-prose">
+          Page layouts such as the 13-, 15- and 16-line mushafs are not texts. Every script here is
+          text; line breaks are yours to choose.
+        </p>
+        <div class="overflow-x-auto rounded-md border">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Reading</th>
+                <th scope="col">Verses</th>
+                <th scope="col">Verse ids</th>
+                <th scope="col">File</th>
+              </tr>
+            </thead>
+            <tbody>
+              {scripts.map((script) => (
+                <tr>
+                  <td>
+                    <code>{script.id}</code>
+                  </td>
+                  <td>{script.name}</td>
+                  <td>{readingLabel(script)}</td>
+                  <td>{count(script.verses)}</td>
+                  <td class="text-muted-foreground">{verseIdsLabel(script).replaceAll("`", "")}</td>
+                  <td class="whitespace-nowrap">
+                    <a href={script.path} class="link">
+                      quran.json
+                    </a>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="doc-prose">
+          Translations are numbered like Hafs. Warsh, Qalun and al-Duri number verses their own way,
+          so each of their verses carries <code>number_in_hafs</code>, the Hafs verse number or
+          numbers it covers.
+        </p>
+      </Section>
 
-    <div id="transliteration" class="catalogue-summary">
-      <h3>Transliteration · {transliterations.count}</h3>
-      <p>
-        No transliteration is published in the safe catalogue. The empty answer and withheld
-        candidate records remain available in <a href="/transliteration/index.json">the catalogue JSON</a>.
-      </p>
-    </div>
-  </section>
+      <Section id="translations" title="Translations">
+        <div data-translations class="space-y-2">
+          <div hidden data-translation-controls class="flex flex-wrap items-center gap-2">
+            <label class="sr-only" for="translation-search">
+              Search translations
+            </label>
+            <input
+              id="translation-search"
+              type="search"
+              data-translation-search
+              placeholder="Search by language, translator or path"
+              class="border-input bg-background placeholder:text-muted-foreground focus-visible:ring-ring h-8 min-w-0 flex-1 rounded-md border px-2.5 text-sm outline-none focus-visible:ring-2 sm:max-w-xs"
+            />
+            <label class="sr-only" for="translation-language">
+              Language
+            </label>
+            <select
+              id="translation-language"
+              data-translation-language
+              class="border-input bg-background focus-visible:ring-ring h-8 rounded-md border px-2 text-sm outline-none focus-visible:ring-2"
+            >
+              <option value="">All languages</option>
+              {languages.map(([language]) => (
+                <option value={language} class="capitalize">
+                  {language}
+                </option>
+              ))}
+            </select>
+            <span
+              class="text-muted-foreground text-[13px]"
+              data-translation-count
+              role="status"
+            ></span>
+          </div>
+          <div class="max-h-[28rem] overflow-auto rounded-md border">
+            <table class="doc-table">
+              <thead class="bg-background sticky top-0">
+                <tr>
+                  <th scope="col">Language</th>
+                  <th scope="col">Translator</th>
+                  <th scope="col">Version</th>
+                  <th scope="col">Path</th>
+                </tr>
+              </thead>
+              <tbody>
+                {editions.map((edition) => (
+                  <tr
+                    data-translation-row
+                    data-language={edition.language}
+                    data-search={`${edition.language} ${edition.code} ${edition.author} ${edition.path}`.toLowerCase()}
+                  >
+                    <td class="whitespace-nowrap capitalize">
+                      {edition.language} <span class="text-muted-foreground">{edition.code}</span>
+                    </td>
+                    <td>{edition.author}</td>
+                    <td class="text-muted-foreground">{edition.version ?? ""}</td>
+                    <td class="whitespace-nowrap">
+                      <a href={`${edition.path}quran.json`} class="link">
+                        <code>{edition.path}</code>
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+                <tr data-translation-empty hidden>
+                  <td colspan="4" class="text-muted-foreground">
+                    No translation matches.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </Section>
 
-  <section id="audio" class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">Audio references</p>
-        <h2>Audio stays a reference</h2>
-      </div>
-      <p>Recitations remain linked by URL template, so the dataset stays small and hosts retain their files.</p>
-    </div>
-    <div class="task-grid">
-      <article class="task"><span class="number">HOSTS</span><h3>{reciters ? Object.keys(reciters.hosts).length : 0} hosts</h3><p>Each host declares its indexing mode and padding rules in the reciter index.</p><a href="/audio/reciters.json">Open reciter index ↗</a></article>
-      <article class="task"><span class="number">REQUESTS</span><h3>Chapter first</h3><p>The reader loads an audio URL only after you choose a reciter and a verse.</p><a href="/app/">Listen in the reader ↗</a></article>
-      <article class="task"><span class="number">SOURCES</span><h3>Attribution travels</h3><p>Host and reciter source records stay beside every public template.</p><a href="/meta/sources.json">Read source records ↗</a></article>
-    </div>
-  </section>
+      <Section id="transliteration" title="Transliteration">
+        {published.length === 0 ? (
+          <p class="doc-prose">None published yet.</p>
+        ) : (
+          <>
+            <p class="doc-prose">
+              Latin-script renderings of the Hafs text. They follow the Hafs reading and numbering,
+              so they are not offered for Warsh, Qalun or al-Duri.
+            </p>
+            <div class="overflow-x-auto rounded-md border">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Key</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Reading</th>
+                    <th scope="col">Path</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {published.map((edition) => (
+                    <tr>
+                      <td>
+                        <code>{editionKey(edition)}</code>
+                      </td>
+                      <td>
+                        {edition.name ?? edition.author}
+                        {edition.review && (
+                          <span class="text-muted-foreground block text-xs">{edition.review}</span>
+                        )}
+                      </td>
+                      <td>
+                        {typeof edition.reading === "string"
+                          ? edition.reading
+                          : (edition.reading?.riwayah ?? "hafs")}
+                      </td>
+                      <td class="whitespace-nowrap">
+                        <a href={`${edition.path}quran.json`} class="link">
+                          <code>{edition.path}</code>
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+      </Section>
 
-  <section id="fonts" class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">Typography</p>
-        <h2>Font coverage</h2>
-      </div>
-      <p>The reader chooses a bundled font that covers every codepoint used by an edition.</p>
-    </div>
-    <div class="table-wrap">
-      <table class="font-table">
-        <thead><tr><th>Script</th><th>Default</th><th>Usable fonts</th></tr></thead>
-        <tbody>
-          {manifest.scripts.map((script) => (
-            <tr><td class="id-cell"><code>{script.id}</code></td><td class="id-cell"><code>{coverage.scripts[script.id]?.default}</code></td><td>{coverage.scripts[script.id]?.usable.join(", ")}</td></tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-    <p class="muted">For measured coverage and source notes, see <a href="/app/fonts.json">fonts.json</a>.</p>
-  </section>
+      <Section id="audio" title="Audio">
+        {reciters ? (
+          <>
+            <p class="doc-prose">
+              Audio is linked, not hosted. <code>/audio/reciters.json</code> lists{" "}
+              {count(reciters.reciters.length)} recordings with URL templates. Per-ayah files follow
+              Hafs verse numbering, so they only fit Hafs scripts. Per-surah files play one whole
+              chapter and need a recording of the same reading as the script.
+            </p>
+            <div class="overflow-x-auto rounded-md border">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Host</th>
+                    <th scope="col">Files</th>
+                    <th scope="col">Recordings</th>
+                    <th scope="col">Licence</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {hosts.map((entry) => (
+                    <tr>
+                      <td>
+                        <a href={entry.host.home} class="link">
+                          {entry.host.name}
+                        </a>
+                      </td>
+                      <td>{entry.scope}</td>
+                      <td>{count(entry.reciters)}</td>
+                      <td>
+                        {entry.host.license_url ? (
+                          <a href={entry.host.license_url} class="link">
+                            {entry.host.license_status}
+                          </a>
+                        ) : (
+                          entry.host.license_status
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        ) : (
+          <p class="doc-prose">This build has no audio index.</p>
+        )}
+      </Section>
 
-  <section id="sources" class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-kicker">Sources</p>
-        <h2>Read the source record</h2>
-      </div>
-      <p>Every edition links to its source and licence. Full provenance, rights notes, and withheld records remain in the machine-readable JSON.</p>
-    </div>
-    <div class="source-links">
-      <a class="button-link primary" href="/meta/sources.json">Open sources and licences <span aria-hidden="true">↗</span></a>
-      <a class="button-link" href="/manifest.json">Open manifest <span aria-hidden="true">↗</span></a>
-      <a class="button-link" href="/translations/index.json">Open translation catalogue <span aria-hidden="true">↗</span></a>
-    </div>
-  </section>
+      <Section id="sources" title="Sources and licences">
+        <p class="doc-prose">
+          Dataset licence: {manifest.license.project}. Each source keeps its own terms, listed here
+          and, per file, in{" "}
+          <a href="/meta/sources.json" class="link">
+            /meta/sources.json
+          </a>
+          .
+        </p>
+        <div class="overflow-x-auto rounded-md border">
+          <table class="doc-table">
+            <thead>
+              <tr>
+                <th scope="col">Data</th>
+                <th scope="col">Source</th>
+                <th scope="col">Licence</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Arabic text</td>
+                <td class="max-w-[28rem]">{manifest.license.text.source}</td>
+                <td>
+                  <a href={manifest.license.text.url} class="link">
+                    terms
+                  </a>
+                </td>
+                <td>{manifest.license.text.status}</td>
+              </tr>
+              {editionLicences.map((entry) => (
+                <tr>
+                  <td>Translations ({entry.count})</td>
+                  <td class="text-muted-foreground max-w-[28rem]">{entry.license?.text}</td>
+                  <td>
+                    {entry.license?.url ? (
+                      <a href={entry.license.url} class="link">
+                        terms
+                      </a>
+                    ) : (
+                      ""
+                    )}
+                  </td>
+                  <td>{entry.license?.status}</td>
+                </tr>
+              ))}
+              {hosts.map((entry) => (
+                <tr>
+                  <td>Audio: {entry.host.name}</td>
+                  <td class="text-muted-foreground max-w-[28rem]">{entry.host.license}</td>
+                  <td>
+                    {entry.host.license_url ? (
+                      <a href={entry.host.license_url} class="link">
+                        terms
+                      </a>
+                    ) : (
+                      ""
+                    )}
+                  </td>
+                  <td>{entry.host.license_status}</td>
+                </tr>
+              ))}
+              {coverage.fonts.map((font) => (
+                <tr>
+                  <td>Font: {font.name}</td>
+                  <td class="text-muted-foreground">{font.source}</td>
+                  <td>
+                    <a href={font.license_file} class="link">
+                      {font.license}
+                    </a>
+                  </td>
+                  <td>granted</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {notUsed.length > 0 && (
+          <details class="text-[13px]">
+            <summary class="cursor-pointer font-medium">
+              Sources we checked and do not use ({notUsed.length})
+            </summary>
+            <div class="mt-2 overflow-x-auto rounded-md border">
+              <table class="doc-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Source</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Why</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {notUsed.map((item) => (
+                    <tr>
+                      <td>
+                        {item.author}
+                        <span class="text-muted-foreground"> ({item.edition})</span>
+                      </td>
+                      <td>{item.status}</td>
+                      <td class="text-muted-foreground">
+                        {item.reason ??
+                          (item.license_url ? (
+                            <a href={item.license_url} class="link">
+                              No redistribution grant
+                            </a>
+                          ) : (
+                            "No redistribution grant"
+                          ))}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        )}
+      </Section>
 
-  <script is:inline>
-    (() => {
-      document.documentElement.classList.add("js");
+      <Section id="changes" title="Changes">
+        <ul class="doc-prose text-muted-foreground list-disc space-y-1 pl-5 text-sm leading-6">
+          <li>A published path is never renamed or removed.</li>
+          <li>
+            Content can be corrected when an upstream source corrects it. Text corrections are
+            logged with evidence in{" "}
+            <a href="/meta/qa.json" class="link">
+              /meta/qa.json
+            </a>
+            ; source versions are in
+            <a href="/meta/sources.json" class="link">
+              /meta/sources.json
+            </a>
+            . Do not assume the bytes at a URL never change.
+          </li>
+          <li>
+            Removed in this release: <code>/app/fonts.json</code>, <code>/assets/*</code> (fonts
+            moved to
+            <code>/fonts/*</code>) and <code>/app/*.js|css</code>. They only served the old pages.
+          </li>
+          <li>
+            The old <code>dist/</code> files stay available from npm <code>quran-json@3.1.2</code>{" "}
+            and the
+            <code>v3.1.2</code> git tag.
+          </li>
+        </ul>
+      </Section>
+    </main>
+  </div>
 
-      const copy = async (text) => {
-        if (!navigator.clipboard?.writeText) throw new Error("Clipboard API unavailable");
-        await navigator.clipboard.writeText(text);
-      };
-
-      const showSelectionFallback = (button, text, status) => {
-        const card = button.closest(".code-card");
-        if (!card) return;
-        let selection = card.querySelector(".copy-fallback");
-        if (!selection) {
-          selection = document.createElement("textarea");
-          selection.className = "copy-fallback";
-          selection.readOnly = true;
-          selection.setAttribute("aria-label", "Code selected for copying");
-          card.append(selection);
-        }
-        selection.value = text;
-        selection.hidden = false;
-        selection.focus();
-        selection.select();
-        if (status) status.textContent = "Clipboard unavailable. Code selected. Press Ctrl+C or ⌘C to copy.";
-      };
-
-      for (const button of document.querySelectorAll("[data-copy]")) {
-        const originalLabel = button.textContent;
-        const status = button.closest(".code-card")?.querySelector("[data-copy-status]");
-        button.addEventListener("click", async () => {
-          try {
-            await copy(button.getAttribute("data-copy") ?? "");
-            button.textContent = "Copied";
-            if (status) status.textContent = "Copied to clipboard.";
-            button.closest(".code-card")?.querySelector(".copy-fallback")?.setAttribute("hidden", "");
-          } catch {
-            button.textContent = "Copy failed";
-            showSelectionFallback(button, button.getAttribute("data-copy") ?? "", status);
-          }
-          window.setTimeout(() => {
-            button.textContent = originalLabel;
-            if (status) status.textContent = "";
-          }, 2400);
-        });
-      }
-
-      const panel = document.querySelector("[data-translation-table]");
-      if (!panel) return;
-      const rows = [...panel.querySelectorAll("[data-translation-row]")];
-      const search = panel.querySelector("#translation-search");
-      const clear = panel.querySelector("[data-translation-clear]");
-      const count = panel.querySelector("[data-translation-count]");
-      const empty = panel.querySelector("[data-translation-empty]");
-      const reset = panel.querySelector("[data-translation-reset]");
-      const pageStatus = panel.querySelector("[data-translation-page]");
-      const previous = panel.querySelector("[data-translation-previous]");
-      const next = panel.querySelector("[data-translation-next]");
-      const pageSize = 12;
-      let page = 1;
-
-      const render = () => {
-        const term = (search?.value ?? "").trim().toLowerCase();
-        const matches = rows.filter((row) => (row.getAttribute("data-search") ?? "").includes(term));
-        const pages = Math.max(1, Math.ceil(matches.length / pageSize));
-        page = Math.min(page, pages);
-        const start = (page - 1) * pageSize;
-        const visible = new Set(matches.slice(start, start + pageSize));
-        rows.forEach((row) => { row.hidden = !visible.has(row); });
-        if (count) count.textContent = matches.length ? `Showing ${start + 1}–${Math.min(start + pageSize, matches.length)} of ${matches.length} translations` : "0 translations";
-        if (empty) empty.hidden = matches.length !== 0;
-        if (pageStatus) pageStatus.textContent = matches.length ? `Page ${page} of ${pages}` : "No pages";
-        if (previous) previous.disabled = page <= 1 || matches.length === 0;
-        if (next) next.disabled = page >= pages || matches.length === 0;
-        if (clear) clear.hidden = term.length === 0;
-      };
-
-      search?.addEventListener("input", () => { page = 1; render(); });
-      clear?.addEventListener("click", () => { if (search) search.value = ""; page = 1; search?.focus(); render(); });
-      reset?.addEventListener("click", () => { if (search) search.value = ""; page = 1; search?.focus(); render(); });
-      previous?.addEventListener("click", () => { page -= 1; render(); });
-      next?.addEventListener("click", () => { page += 1; render(); });
-      render();
-    })();
+  <script>
+    import "../scripts/docs";
   </script>
 </Base>

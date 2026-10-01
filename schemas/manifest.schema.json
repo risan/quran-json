@@ -154,6 +154,14 @@
           "type": "string",
           "minLength": 1
         },
+        "group": {
+          "description": "Optional audience hint. `specialist` marks a reading mostly used by specialists in the qira'at.",
+          "enum": ["specialist"]
+        },
+        "group_note": {
+          "type": "string",
+          "minLength": 1
+        },
         "verse_ids_differ_in": {
           "type": "array",
           "items": {

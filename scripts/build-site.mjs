@@ -11,6 +11,7 @@ const staging = join(root, ".build");
 const data = join(staging, "data");
 const siteOutput = join(staging, "site");
 const assembled = join(staging, "assembled");
+const fontCoverage = join(staging, "fonts.json");
 const writeCdn = !process.argv.includes("--no-cdn");
 
 function run(command, args, options = {}) {
@@ -40,15 +41,26 @@ async function filesUnder(directory, prefix = "") {
   return files;
 }
 
+/**
+ * Astro may add only its own pages, hashed assets, fonts and favicon, and never a path the
+ * data tree already publishes: a page that shadowed `/manifest.json` would silently break
+ * every consumer.
+ */
+function isAllowed(relativePath) {
+  const parts = relativePath.split(sep);
+  return (
+    relativePath === "index.html" ||
+    relativePath === join("app", "index.html") ||
+    relativePath === "favicon.svg" ||
+    ((parts[0] === "_astro" || parts[0] === "fonts") && parts.length > 1)
+  );
+}
+
 async function overlayAstro() {
-  const intentional = new Set(["index.html", join("app", "index.html")]);
-  const astroPrefix = `${join("_astro", "")}${sep}`;
-  const allowed = (relativePath) =>
-    intentional.has(relativePath) || relativePath.startsWith(astroPrefix);
   const outputFiles = await filesUnder(siteOutput);
 
   for (const relativePath of outputFiles) {
-    if (!allowed(relativePath)) {
+    if (!isAllowed(relativePath)) {
       throw new Error(`Astro emitted an unallowlisted file: ${relativePath}`);
     }
   }
@@ -58,9 +70,7 @@ async function overlayAstro() {
     const target = join(assembled, relativePath);
     try {
       await stat(target);
-      if (!intentional.has(relativePath)) {
-        throw new Error(`Astro output collides with an existing data path: ${relativePath}`);
-      }
+      throw new Error(`Astro output collides with an existing data path: ${relativePath}`);
     } catch (error) {
       if (error.code !== "ENOENT") throw error;
     }
@@ -72,15 +82,18 @@ async function overlayAstro() {
 await rm(staging, { recursive: true, force: true });
 await mkdir(staging, { recursive: true });
 
-run("uv", ["run", "quran-json", "cdn", "--out", data], {
-  env: { UV_CACHE_DIR: process.env.UV_CACHE_DIR ?? join(root, ".cache", "uv") },
-});
+const uvEnv = { UV_CACHE_DIR: process.env.UV_CACHE_DIR ?? join(root, ".cache", "uv") };
+run("uv", ["run", "quran-json", "cdn", "--out", data], { env: uvEnv });
+
+// Outside the data tree on purpose: the report feeds the site build and is never published.
+run("uv", ["run", "quran-json", "fonts", "--data", data, "--out", fontCoverage], { env: uvEnv });
 
 run("npm", ["run", "build"], {
   cwd: site,
   env: {
     ASTRO_TELEMETRY_DISABLED: "1",
     QURAN_JSON_SITE_DATA: data,
+    QURAN_JSON_FONTS: fontCoverage,
     XDG_CONFIG_HOME: process.env.XDG_CONFIG_HOME ?? join(root, ".cache", "config"),
   },
 });

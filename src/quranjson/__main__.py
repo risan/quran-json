@@ -86,6 +86,18 @@ def probe() -> None:
         )
 
 
+@app.command()
+def fonts(
+    data: Annotated[Path, typer.Option("--data", help="A generated data tree (`cdn --out`).")],
+    out: Annotated[Path, typer.Option("--out", "-o", help="Where to write the coverage JSON.")],
+) -> None:
+    """Measure the bundled Arabic fonts against every script; fail if one is uncovered."""
+    from .web import write_coverage
+
+    report = write_coverage(data, out)
+    typer.echo(f"font coverage for {len(report['scripts'])} scripts written to {out}")
+
+
 def main() -> None:
     app()
 
