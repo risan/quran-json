@@ -145,7 +145,9 @@ export function readingSlug(text: string | null | undefined): string | null {
     [/hafs/, "hafs"],
     [/warsh/, "warsh"],
     [/qal+o+n|qalun/, "qalun"],
-    [/d[ou]+ri|doori/, "duri"],
+    // al-Duri narrates from two readers; al-Kisaʾi's must never match Abu ʿAmr's text.
+    [/kisa/, "duri-kisai"],
+    [/d[ou]+ri|doori/, "duri-abu-amr"],
     [/shu?bah|shuba/, "shubah"],
     [/bazz?i/, "bazzi"],
     [/qunbul/, "qunbul"],

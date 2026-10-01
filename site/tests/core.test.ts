@@ -269,7 +269,7 @@ describe("transliteration reading identity", () => {
     expect(scriptReading(indopak)).toBe("hafs");
     expect(scriptReading(warsh)).toBe("warsh");
     expect(scriptReading(script({ id: "mystery", verse_ids: "mapped" }))).toBe("mystery");
-    expect(scriptReading(duri)).toBe("duri");
+    expect(scriptReading(duri)).toBe("duri-abu-amr");
     expect(scriptReading(hafsNastaliq)).toBe("hafs");
   });
 
@@ -292,8 +292,11 @@ describe("reading slugs", () => {
     expect(readingSlug("Rewayat Hafs A'n Assem - Murattal")).toBe("hafs");
     expect(readingSlug("Rewayat Warsh A'n Nafi'")).toBe("warsh");
     expect(readingSlug("Rewayat Qalon A'n Nafi'")).toBe("qalun");
-    expect(readingSlug("al-Duri")).toBe("duri");
-    expect(readingSlug("Douri")).toBe("duri");
+    expect(readingSlug("al-Duri")).toBe("duri-abu-amr");
+    expect(readingSlug("Douri")).toBe("duri-abu-amr");
+    expect(readingSlug("duri-abu-amr")).toBe("duri-abu-amr");
+    expect(readingSlug("duri-kisai")).toBe("duri-kisai");
+    expect(readingSlug("Rewayat Aldori A'n Al-Kisa'i")).toBe("duri-kisai");
     expect(readingSlug("")).toBeNull();
     expect(readingSlug(undefined)).toBeNull();
   });
@@ -449,7 +452,7 @@ describe("reading id", () => {
       reading: { id: "duri-abu-amr", riwayah: "al-Duri" },
     });
 
-    expect(scriptReading(declared)).toBe("duri");
+    expect(scriptReading(declared)).toBe("duri-abu-amr");
     expect(scriptReading(script({ id: "x", verse_ids: "mapped", reading: { id: "warsh" } }))).toBe(
       "warsh",
     );
