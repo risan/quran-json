@@ -13,12 +13,7 @@ Layout, all unversioned::
     /transliteration/{key}/quran.json
     /transliteration/{key}/chapters/{1-114}.json
     /audio/reciters.json
-    /index.html                                     the documentation page
-    /assets/{base,docs}.css, /assets/site.js
-    /assets/fonts/{amiri,scheherazade-new,noto-naskh-arabic}-regular.woff2
-    /app/index.html                                 the reader app
-    /app/{app,api,store,ui,audio}.js, /app/app.css
-    /app/fonts.json                                 measured font coverage
+    (the HTML pages, /_astro/* and /fonts/* are added by `npm run site`)
     /_headers
 
 Three deliberate choices, each reversing an earlier one:
@@ -97,7 +92,7 @@ _HEADERS = """\
 /audio/*
   Cache-Control: public, max-age=3600
 
-/assets/fonts/*
+/fonts/*
   Cache-Control: public, max-age=31536000, immutable
 
 /_astro/*

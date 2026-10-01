@@ -63,7 +63,7 @@ def test_data_paths_are_cached_for_a_day_and_revalidated_in_the_background() -> 
 
 
 def test_only_hashed_build_output_and_fonts_are_immutable() -> None:
-    for path in ("/_astro/index.abc123.js", "/assets/fonts/amiri-regular.woff2"):
+    for path in ("/_astro/index.abc123.js", "/fonts/amiri-regular.woff2"):
         assert _effective_headers(path)["Cache-Control"] == IMMUTABLE_CACHE, path
 
     for path in ("/text/uthmani/quran.json", "/translations/en-pickthall/quran.json"):
