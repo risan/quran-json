@@ -1,0 +1,56 @@
+[
+  {
+    "path": "data/quranenc/moore_rwwad.json",
+    "detected_at": "2026-10-01T10:42:46+00:00",
+    "kind": "records",
+    "records": 6236,
+    "changed": 2616,
+    "codepoint_delta": {
+      "added": [
+        "U+1E63 LATIN SMALL LETTER S WITH DOT BELOW x2",
+        "U+0024 DOLLAR SIGN x1",
+        "U+00FB LATIN SMALL LETTER U WITH CIRCUMFLEX x1",
+        "U+1E6F LATIN SMALL LETTER T WITH LINE BELOW x1",
+        "U+0160 LATIN CAPITAL LETTER S WITH CARON x1",
+        "U+0199 LATIN SMALL LETTER K WITH HOOK x1"
+      ],
+      "removed": [
+        "U+0071 LATIN SMALL LETTER Q x2",
+        "U+00B5 MICRO SIGN x2",
+        "U+00E0 LATIN SMALL LETTER A WITH GRAVE x1",
+        "U+00EE LATIN SMALL LETTER I WITH CIRCUMFLEX x1"
+      ]
+    }
+  },
+  {
+    "path": "data/quranenc/vietnamese_rwwad.json",
+    "detected_at": "2026-10-01T10:42:46+00:00",
+    "kind": "records",
+    "records": 6236,
+    "changed": 122,
+    "codepoint_delta": {
+      "added": [],
+      "removed": []
+    }
+  },
+  {
+    "path": "data/quranenc/korean_hamid.json",
+    "detected_at": "2026-10-01T10:42:46+00:00",
+    "kind": "records",
+    "records": 6236,
+    "changed": 9,
+    "codepoint_delta": {
+      "added": [
+        "U+D759 HANGUL SYLLABLE HEULG x2"
+      ],
+      "removed": [
+        "U+005C REVERSE SOLIDUS x16",
+        "U+0043 LATIN CAPITAL LETTER C x8",
+        "U+0067 LATIN SMALL LETTER G x5",
+        "U+0044 LATIN CAPITAL LETTER D x2",
+        "U+0071 LATIN SMALL LETTER Q x2",
+        "U+0098 ? x1"
+      ]
+    }
+  }
+]
