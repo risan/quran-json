@@ -96,6 +96,15 @@ export function parseReaderHash(rawHash: string | null | undefined): ParsedHash 
   };
 }
 
+/**
+ * A linked verse only counts when the loaded chapter has it. Chapter lengths differ between
+ * scripts (Duri 67 has 31 verses, Hafs 30), so this runs again whenever the chapter or script
+ * changes. Returns null when the verse is absent.
+ */
+export function settleVerse(verse: number | null, verseCount: number): number | null {
+  return verse !== null && verse >= 1 && verse <= verseCount ? verse : null;
+}
+
 export function readerHash(chapter: number, verse?: number | null): string {
   return `#/${chapter}${verse ? `:${verse}` : ""}`;
 }

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import type { Chapter, Reciter, ReciterIndex, Script } from "@/lib/types";
 import { audioAvailability, audioUrl, globalOffsets } from "./audio";
-import { neighbour } from "./player-logic";
+import { neighbour, recordingChanged } from "./player-logic";
 
 /** What is loaded in the player. `verse` is null for a whole-surah file. */
 export interface Playing {
@@ -21,8 +21,15 @@ export interface AudioOptions {
   onChapterChange: (chapter: number) => void;
 }
 
+/** The recording that is actually loaded, which can differ from the reciter selected now. */
+export interface Recording {
+  scriptId: string;
+  reciter: Reciter | null;
+}
+
 export interface AudioControls {
   playing: Playing | null;
+  recording: Recording | null;
   isPlaying: boolean;
   error: string | null;
   /** `use` supplies a reciter chosen a moment ago, before the options have re-rendered. */
@@ -40,6 +47,8 @@ export function useAudio(options: AudioOptions): AudioControls {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const latest = useRef(options);
   const playingRef = useRef<Playing | null>(null);
+  const recordingRef = useRef<Recording | null>(null);
+  const [recording, setRecordingState] = useState<Recording | null>(null);
   const [playing, setPlayingState] = useState<Playing | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -51,6 +60,11 @@ export function useAudio(options: AudioOptions): AudioControls {
   const setPlaying = useCallback((value: Playing | null) => {
     playingRef.current = value;
     setPlayingState(value);
+  }, []);
+
+  const setRecording = useCallback((value: Recording | null) => {
+    recordingRef.current = value;
+    setRecordingState(value);
   }, []);
 
   const start = useCallback(
@@ -67,6 +81,8 @@ export function useAudio(options: AudioOptions): AudioControls {
       if (!audio) {
         return;
       }
+
+      setRecording({ scriptId: script.id, reciter });
 
       if (!reciter || !index) {
         setPlaying({ chapter, verse });
@@ -115,7 +131,7 @@ export function useAudio(options: AudioOptions): AudioControls {
         }
       }
     },
-    [setPlaying],
+    [setPlaying, setRecording],
   );
 
   const verseCount = useCallback(
@@ -222,12 +238,26 @@ export function useAudio(options: AudioOptions): AudioControls {
     audio?.pause();
     audio?.removeAttribute("src");
     setPlaying(null);
+    setRecording(null);
     setError(null);
     setIsPlaying(false);
-  }, [setPlaying]);
+  }, [setPlaying, setRecording]);
+
+  // Changing the script or the reciter changes the recording: stop rather than keep playing the
+  // old one under the new name.
+  const selected = { scriptId: options.script.id, reciter: options.reciter };
+
+  useEffect(() => {
+    if (recordingChanged(recordingRef.current, selected)) {
+      close();
+    }
+    // `selected` is rebuilt every render; its parts are the real dependencies.
+    // oxlint-disable-next-line react-hooks/exhaustive-deps
+  }, [selected.scriptId, selected.reciter?.id, selected.reciter?.url, close]);
 
   return {
     playing,
+    recording,
     isPlaying,
     error,
     play: (chapter, verse, use) => void start(chapter, verse, use),

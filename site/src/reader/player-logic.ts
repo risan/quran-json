@@ -25,3 +25,24 @@ export function neighbour(
 
   return { chapter, verse: direction === 1 ? 1 : verseCounts(chapter) };
 }
+
+/** The recording a player holds: one script (so one reading) and one reciter. */
+export interface RecordingIdentity {
+  scriptId: string;
+  reciter: { id: string; url: string } | null;
+}
+
+export function recordingKey({ scriptId, reciter }: RecordingIdentity): string {
+  return [scriptId, reciter?.id ?? "", reciter?.url ?? ""].join("|");
+}
+
+/**
+ * Whether what is loaded no longer matches what is selected. The loaded audio belongs to the
+ * old recording, so the player stops instead of labelling it with the new reciter.
+ */
+export function recordingChanged(
+  loaded: RecordingIdentity | null,
+  selected: RecordingIdentity,
+): boolean {
+  return loaded !== null && recordingKey(loaded) !== recordingKey(selected);
+}

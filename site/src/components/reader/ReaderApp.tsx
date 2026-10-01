@@ -15,6 +15,7 @@ import {
   parseReaderHash,
   readerHash,
   resolveFont,
+  settleVerse,
   type MergedVerse,
   type ReaderPrefs,
 } from "@/reader/core";
@@ -77,6 +78,7 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [reciterIndex, setReciterIndex] = useState<ReciterIndex | null>(null);
   const [reciterError, setReciterError] = useState<string | null>(null);
+  const routeRef = useRef(route);
   const noticeTimer = useRef<number | undefined>(undefined);
 
   const script = boot.scripts.find((entry) => entry.id === prefs.script) ?? boot.scripts[0];
@@ -103,6 +105,10 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
     window.location.hash = readerHash(target, verse);
   }, []);
 
+  useEffect(() => {
+    routeRef.current = route;
+  });
+
   // Routing: the hash is the source of truth for what is on screen.
   useEffect(() => {
     if (!location.hash || parseReaderHash(location.hash).params.size > 0) {
@@ -115,6 +121,11 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
 
       if (!known) {
         notify("That link names a surah that does not exist.");
+        history.replaceState(
+          null,
+          "",
+          readerHash(routeRef.current.chapter, routeRef.current.verse),
+        );
 
         return;
       }
@@ -163,19 +174,19 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
   }, [chapter]);
 
   // Once a chapter is on screen: remember it, validate a linked verse, and scroll to it.
-  const readyKey = view ? view.chapterId : null;
+  const readyKey = view ? `${view.chapterId}:${view.scriptId}` : null;
 
   useEffect(() => {
     if (readyKey === null || !view) {
       return;
     }
 
-    let verse = route.verse;
+    const verse = settleVerse(route.verse, view.verses.length);
 
-    if (verse && verse > view.verses.length) {
-      notify(`Verse ${verse} is not in ${script.name}'s ${chapter.transliteration}.`);
+    if (route.verse !== null && verse === null) {
+      notify(`Verse ${route.verse} is not in ${script.name}'s ${chapter.transliteration}.`);
       history.replaceState(null, "", readerHash(chapter.id));
-      verse = null;
+      setRoute({ chapter: chapter.id, verse: null });
     }
 
     setPrefs((previous) => ({ ...previous, resume: { chapter: chapter.id, verse: verse ?? 1 } }));
@@ -230,14 +241,6 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
     repeat: prefs.repeat,
     onChapterChange: go,
   });
-
-  // A recording belongs to one reading: stop when the script (and so the reading) changes.
-  const scriptId = script.id;
-  const closeAudio = audio.close;
-
-  useEffect(() => {
-    closeAudio();
-  }, [scriptId, closeAudio]);
 
   const startPlayback = useCallback(
     async (chapterId: number, verse: number | null) => {
@@ -461,7 +464,7 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
 
         {playing ? (
           <AudioBar
-            reciter={reciter}
+            reciter={audio.recording?.reciter ?? null}
             playing={playing}
             isPlaying={audio.isPlaying}
             error={audio.error}
