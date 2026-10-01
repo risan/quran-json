@@ -98,6 +98,24 @@ def fonts(
     typer.echo(f"font coverage for {len(report['scripts'])} scripts written to {out}")
 
 
+@app.command()
+def crosscheck(
+    script: Annotated[
+        list[str] | None,
+        typer.Option("--script", help="Script to check; repeat for several (default: all)."),
+    ] = None,
+    refresh: Annotated[bool, typer.Option("--refresh", help="Download witnesses again.")] = False,
+) -> None:
+    """Compare the text snapshots with independent witnesses (needs the network)."""
+    from . import crosscheck as checker
+
+    unknown = sorted(set(script or []) - set(checker.SCRIPTS))
+    if unknown:
+        raise typer.BadParameter(f"unknown script: {', '.join(unknown)}")
+
+    raise typer.Exit(checker.run(script or list(checker.SCRIPTS), refresh=refresh))
+
+
 def main() -> None:
     app()
 

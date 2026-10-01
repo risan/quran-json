@@ -1,6 +1,6 @@
 # Cross-check results
 
-Output of `uv run python scripts/crosscheck.py` (module `quranjson.crosscheck`, decision D14),
+Output of `uv run quran-json crosscheck` (module `quranjson.crosscheck`, decision D14),
 run on 2026-10-01 against the committed snapshots. Witnesses are downloaded into
 `.cache/crosscheck/`; residual vocalised differences are in `.cache/crosscheck/<script>.tsv`
 (not committed). Reproduce with the same command (network needed; not part of CI).

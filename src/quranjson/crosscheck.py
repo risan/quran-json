@@ -17,16 +17,14 @@ many units agree at three levels:
 Every witness lists its ancestry. Agreement between two copies of the same origin proves that
 nobody corrupted the copy; it says nothing about an error in the origin.
 
-Run it with ``uv run python scripts/crosscheck.py [--script uthmani ...]``.
+Run it with ``uv run quran-json crosscheck [--script uthmani ...]``.
 """
 
 from __future__ import annotations
 
-import argparse
 import difflib
 import gzip
 import re
-import sys
 import unicodedata
 from collections import Counter, defaultdict
 from collections.abc import Callable, Sequence
@@ -47,7 +45,6 @@ __all__ = [
     "WITNESSES",
     "Report",
     "compare",
-    "main",
     "raw_key",
     "skeleton_key",
     "strip_basmala",
@@ -1030,26 +1027,3 @@ def run(
         out(f"  residual differences: {write_residuals(script, reports, cache_dir)}\n")
 
     return 1 if unavailable else 0
-
-
-def main(argv: Sequence[str] | None = None) -> int:
-    """Command-line entry point shared by ``scripts/crosscheck.py`` and the CLI."""
-    parser = argparse.ArgumentParser(
-        prog="crosscheck",
-        description="Compare our text snapshots with independent witnesses (needs the network).",
-    )
-    parser.add_argument(
-        "--script",
-        action="append",
-        choices=list(SCRIPTS),
-        help="script to check; repeat for several (default: all)",
-    )
-    parser.add_argument("--refresh", action="store_true", help="download witnesses again")
-    parser.add_argument("--cache-dir", type=Path, default=CACHE_DIR)
-    args = parser.parse_args(argv)
-
-    return run(args.script or list(SCRIPTS), cache_dir=args.cache_dir, refresh=args.refresh)
-
-
-if __name__ == "__main__":  # pragma: no cover
-    sys.exit(main())
