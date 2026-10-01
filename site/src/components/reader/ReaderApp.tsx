@@ -499,6 +499,7 @@ export default function ReaderApp({ boot }: { boot: ReaderBoot }) {
         open={searchOpen}
         onOpenChange={setSearchOpen}
         chapters={boot.chapters}
+        script={script}
         onGo={go}
       />
 

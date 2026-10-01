@@ -41,6 +41,17 @@ describe("chapter search", () => {
     expect(parseVerseTarget("2:287", chapters)).toBeNull();
     expect(parseVerseTarget("3:1", chapters)).toBeNull();
   });
+
+  it("uses the selected script's own chapter counts", () => {
+    const mulk = [{ id: 67, name: "الملك", total_verses: 30 }] as Chapter[];
+    const duri = { id: "duri", native_chapter_counts: { "67": 31 } } as unknown as Script;
+    const warsh = { id: "warsh", native_chapter_counts: { "2": 285 } } as unknown as Script;
+
+    expect(parseVerseTarget("67:31", mulk, duri)).toEqual({ chapter: 67, verse: 31 });
+    expect(parseVerseTarget("67:31", mulk)).toBeNull();
+    expect(parseVerseTarget("2:286", chapters, warsh)).toBeNull();
+    expect(parseVerseTarget("2:285", chapters, warsh)).toEqual({ chapter: 2, verse: 285 });
+  });
 });
 
 describe("opening bismillah", () => {

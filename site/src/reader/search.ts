@@ -1,6 +1,7 @@
 /** Chapter search for the surah list and the command palette. */
 
-import type { Chapter } from "@/lib/types";
+import type { Chapter, Script } from "@/lib/types";
+import { nativeChapterCount } from "./core";
 
 /** Arabic diacritics, tatweel, Quranic marks and extended marks: stripped before matching. */
 const ARABIC_MARKS = /[ـً-ٰٟۖ-ۭ࣓-ࣿ]/g;
@@ -49,8 +50,15 @@ export interface VerseTarget {
   verse: number;
 }
 
-/** `2:255`, `2.255` or `2 255` as a verse that exists, else null. */
-export function parseVerseTarget(query: string, chapters: Chapter[]): VerseTarget | null {
+/**
+ * `2:255`, `2.255` or `2 255` as a verse that exists in the selected script, else null. Warsh,
+ * Qalun, al-Duri and al-Susi number some chapters differently, so their own counts decide.
+ */
+export function parseVerseTarget(
+  query: string,
+  chapters: Chapter[],
+  script?: Script | null,
+): VerseTarget | null {
   const match = /^\s*(\d{1,3})\s*[:.\s]\s*(\d{1,3})\s*$/.exec(query);
 
   if (!match) {
@@ -60,7 +68,14 @@ export function parseVerseTarget(query: string, chapters: Chapter[]): VerseTarge
   const chapter = chapters.find((entry) => entry.id === Number(match[1]));
   const verse = Number(match[2]);
 
-  if (!chapter || verse < 1 || verse > chapter.total_verses) {
+  if (!chapter) {
+    return null;
+  }
+
+  const count =
+    nativeChapterCount(script, chapter.id, chapter.total_verses) ?? chapter.total_verses;
+
+  if (verse < 1 || verse > count) {
     return null;
   }
 

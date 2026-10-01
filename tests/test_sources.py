@@ -126,6 +126,23 @@ def test_added_chapter_is_reported_as_drift() -> None:
     assert _summarise_change(before, after)["changed"] == 2
 
 
+def test_catalogue_drift_names_the_changed_keys() -> None:
+    before = {"translations": [{"key": "english_rwwad", "version": "1.0.18"}], "count": 1}
+    after = {"translations": [{"key": "english_rwwad", "version": "1.0.19"}], "count": 1}
+
+    assert _summarise_change(before, after) == {
+        "kind": "object",
+        "changed_keys": ["translations"],
+    }
+
+
+def test_audio_manifest_drift_names_the_changed_keys() -> None:
+    before = {"recitations": [{"id": "Alafasy_64kbps"}], "source": "everyayah"}
+    after = {"recitations": [{"id": "Alafasy_128kbps"}], "source": "everyayah"}
+
+    assert _summarise_change(before, after)["changed_keys"] == ["recitations"]
+
+
 def test_chapter_list_drift_is_counted() -> None:
     before = [{"id": 1, "translation": "a"}, {"id": 2, "translation": "b"}]
     after = [{"id": 1, "translation": "a"}, {"id": 2, "translation": "c"}]

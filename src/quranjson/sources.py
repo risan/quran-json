@@ -366,7 +366,7 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
     text-bearing snapshots the character-level delta is recorded too, because a
     re-encoded orthography is the failure mode that actually bites.
     """
-    if isinstance(old, dict) and isinstance(new, dict):
+    if _is_verse_table(old) and _is_verse_table(new):
         changed = total = 0
         before_text: Counter[str] = Counter()
         after_text: Counter[str] = Counter()
@@ -406,7 +406,22 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
             "changed": changed + abs(len(old) - len(new)),
         }
 
+    if isinstance(old, dict) and isinstance(new, dict):
+        keys = sorted(set(old) | set(new))
+        return {
+            "kind": "object",
+            "changed_keys": [key for key in keys if old.get(key) != new.get(key)],
+        }
+
     return {"kind": "opaque", "changed": int(old != new)}
+
+
+def _is_verse_table(value: Any) -> bool:
+    """A chapter-keyed snapshot: `{"1": [verse, ...], ...}`, as opposed to a catalogue."""
+    if not isinstance(value, dict) or not value:
+        return False
+
+    return all(key.isdigit() and isinstance(verses, list) for key, verses in value.items())
 
 
 def _changed_verses(old: dict[str, Any], new: dict[str, Any]) -> list[str]:

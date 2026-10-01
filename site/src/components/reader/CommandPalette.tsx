@@ -10,19 +10,20 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
-import type { Chapter } from "@/lib/types";
+import type { Chapter, Script } from "@/lib/types";
 import { filterChapters, parseVerseTarget } from "@/reader/search";
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   chapters: Chapter[];
+  script: Script;
   onGo: (chapter: number, verse?: number) => void;
 }
 
-export function CommandPalette({ open, onOpenChange, chapters, onGo }: Props) {
+export function CommandPalette({ open, onOpenChange, chapters, script, onGo }: Props) {
   const [query, setQuery] = useState("");
-  const verse = parseVerseTarget(query, chapters);
+  const verse = parseVerseTarget(query, chapters, script);
   const matches = filterChapters(chapters, query);
 
   function go(chapter: number, target?: number) {
