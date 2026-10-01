@@ -881,14 +881,11 @@ def sources_manifest(
         "transliteration": {
             "status": "published" if transliterations else "withheld",
             "reason": (
-                "Published under the verdicts recorded in the review record."
+                ""
                 if transliterations
-                else "No transliteration with a redistribution grant: Qur'an Kemenag's is of "
-                "unknown status and Tanzil's is restricted. The review record states what "
-                "would unblock each."
+                else "No transliteration with a redistribution grant is published yet."
             ),
             "index": "/transliteration/index.json",
-            "review": "data/meta/licensing-review.json",
         },
         "editions": [
             {

@@ -403,9 +403,7 @@ DIGITALKHATT = License(
         "files ... to deal in the Software without restriction, including without limitation "
         "the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or "
         "sell copies of the Software.' The repository's root LICENSE covers the text file "
-        "this dataset parses; there is no separate data licence and no NOTICE file. The "
-        "Indo-Pak rasm itself is DigitalKhatt's own typesetting, not a copy of another "
-        "producer's Indopak data (0 of 6,236 verses shared with the QuranWBW or KFGQPC text)."
+        "this dataset parses; there is no separate data licence and no NOTICE file."
     ),
     url="https://raw.githubusercontent.com/DigitalKhatt/digitalkhatt-js/HEAD/LICENSE",
 )

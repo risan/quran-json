@@ -7,7 +7,7 @@ from typing import Annotated
 
 import typer
 
-from . import audio, config, licensing, review, sources
+from . import audio, config, sources
 from .build import build_tree
 from .cdn import build_site
 
@@ -81,37 +81,6 @@ def cdn(
         typer.echo(f"withheld (no redistribution grant): {violation}")
 
     typer.echo(f"built site {out}")
-
-
-@app.command()
-def licenses(
-    write: Annotated[
-        bool,
-        typer.Option("--write", help="Also refresh data/meta/licensing-review.json."),
-    ] = False,
-) -> None:
-    """Print the redistribution status of every edition and audio host."""
-    typer.echo(licensing.report())
-    typer.echo("")
-    typer.echo("audio hosts:")
-    for host, spec in audio.AUDIO_HOSTS.items():
-        license_ = spec["license"]
-        typer.echo(f"{license_.status:<11} {host:<17} {license_.url}")
-
-    typer.echo("")
-    typer.echo("transliteration candidates (none publishable yet):")
-    for entry in review.CANDIDATES:
-        if entry.kind == "transliteration":
-            typer.echo(f"{entry.status:<11} {entry.name}")
-            if entry.blocker:
-                typer.echo(f"            blocker: {entry.blocker}")
-
-    if write:
-        from .jsonio import write_json
-
-        target = config.DATA / "meta" / "licensing-review.json"
-        write_json(target, review.review_manifest(), pretty=True)
-        typer.echo(f"wrote {target.relative_to(config.ROOT)}")
 
 
 @app.command()

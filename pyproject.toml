@@ -36,11 +36,6 @@ target-version = "py312"
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
 
-[tool.ruff.lint.per-file-ignores]
-# The review record is a set of verbatim quotes from rights holders -- Arabic, Indonesian,
-# Turkish, Malay. RUF001 reads a Turkish dotless ı as a mistyped Latin i; it is neither.
-"src/quranjson/review.py" = ["RUF001"]
-
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"

@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from quranjson import config, licensing, review
+from quranjson import config, licensing
 
 
 def test_publishable_languages_are_only_the_granted_ones() -> None:
@@ -81,67 +81,3 @@ def test_report_marks_each_edition() -> None:
     assert lines["en"] == "BLOCKED"
     assert lines["id"] == "OK"
     assert lines["zh"] == "OK"
-
-
-# --- the licensing review record ----------------------------------------------
-
-
-def test_every_reviewed_source_carries_evidence() -> None:
-    for entry in review.CANDIDATES:
-        assert entry.license_url.startswith("https://"), entry.name
-        assert entry.evidence.strip(), entry.name
-        assert entry.status in {"granted", "restricted", "unknown"}, entry.name
-        assert entry.kind in {"text", "translation", "transliteration", "audio"}, entry.name
-
-
-def test_no_transliteration_source_is_publishable() -> None:
-    """The exhaustive search found no transliteration with a rights-holder grant.
-
-    If this ever fails, a grant was obtained: update config.EDITIONS and the gate
-    together, and say so in the README.
-    """
-    candidates = [entry for entry in review.CANDIDATES if entry.kind == "transliteration"]
-
-    assert candidates, "the transliteration review went missing"
-    assert {entry.status for entry in candidates} == {"restricted", "unknown"}
-    assert len(candidates) >= 5, "the transliteration review must stay exhaustive"
-
-    transliteration = next(
-        edition for edition in config.EDITIONS if edition.lang == config.TRANSLITERATION
-    )
-    assert transliteration.redistributable is False
-
-    for entry in candidates:
-        if entry.status != "granted":
-            assert entry.blocker, f"{entry.name} must say what would unblock it"
-
-
-def test_review_manifest_lists_what_is_published() -> None:
-    manifest = review.review_manifest()
-
-    assert manifest["sources"]
-    assert "75" in manifest["published"]["quranenc"]
-    assert {entry["lang"] for entry in manifest["published"]["extra"]} == {
-        "english_itani",
-        "english_itani_allah",
-        "english_pickthall",
-        "english_yusuf_ali",
-        "english_palmer",
-        "english_sale",
-        "russian_sablukov",
-        "russian_krachkovsky",
-    }
-    assert "unknown` is not permission" in manifest["note"]
-
-
-def test_granted_reviews_match_the_publishable_editions() -> None:
-    """A `granted` verdict must correspond to something we actually publish."""
-    published = {edition.lang for edition in config.EDITIONS if edition.redistributable}
-    granted_translations = {
-        entry.name
-        for entry in review.CANDIDATES
-        if entry.status == "granted" and entry.kind == "translation"
-    }
-
-    assert published == {"id", "zh"}
-    assert granted_translations, "QuranEnc should be recorded as granted"

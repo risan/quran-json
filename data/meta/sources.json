@@ -2273,7 +2273,7 @@
     "path": "data/digitalkhatt/quran.json",
     "url": "https://raw.githubusercontent.com/DigitalKhatt/digitalkhatt-js/HEAD/apps/site-angular/src/app/services/quran_text_indopak_15.ts",
     "source": "DigitalKhatt/digitalkhatt-js (Indo-Pak, 15-line)",
-    "license": "MIT (DigitalKhatt/digitalkhatt-js): 'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files ... to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.' The repository's root LICENSE covers the text file this dataset parses; there is no separate data licence and no NOTICE file. The Indo-Pak rasm itself is DigitalKhatt's own typesetting, not a copy of another producer's Indopak data (0 of 6,236 verses shared with the QuranWBW or KFGQPC text).",
+    "license": "MIT (DigitalKhatt/digitalkhatt-js): 'Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files ... to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software.' The repository's root LICENSE covers the text file this dataset parses; there is no separate data licence and no NOTICE file.",
     "license_status": "granted",
     "license_url": "https://raw.githubusercontent.com/DigitalKhatt/digitalkhatt-js/HEAD/LICENSE",
     "sha256": "cd4901ed2b9d47038379a3b0e81e767988663ee6d4516a9832eb98335927b85d",
