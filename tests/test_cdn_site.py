@@ -48,32 +48,36 @@ def test_every_path_is_cors_readable() -> None:
     assert "Access-Control-Allow-Origin: *" in _HEADERS
 
 
-def test_data_paths_are_cached_immutably() -> None:
-    """Data paths carry no version, so immutable caching rests on the no-rewrite promise.
+DATA_CACHE = "public, max-age=86400, stale-while-revalidate=604800"
+IMMUTABLE_CACHE = "public, max-age=31536000, immutable"
 
-    Text and translations are each cached for a year; if that promise is broken, a
-    consumer keeps the old bytes for as long as their browser holds them. The font files of
-    the bundled Arabic faces are cached the same way and on the same terms: a font file that
-    changes content would have to arrive under a new name.
+
+def test_data_paths_are_cached_for_a_day_and_revalidated_in_the_background() -> None:
+    """Data keeps its path but may receive upstream corrections, so it is not immutable.
+
+    A stale copy may be served for a week while the CDN revalidates, so a correction reaches
+    consumers within a day for fresh requests without a hard failure for the rest.
     """
-    for rule in ("/text/*", "/translations/*", "/transliteration/*", "/assets/fonts/*"):
-        block = _HEADERS.split(rule, 1)[1].split("\n\n", 1)[0]
-        assert "max-age=31536000" in block, rule
-        assert "immutable" in block, rule
+    for family in ("text", "translations", "transliteration"):
+        assert _effective_headers(f"/{family}/x/quran.json")["Cache-Control"] == DATA_CACHE
 
 
-def test_catalogue_indexes_revalidate_while_edition_payloads_remain_immutable() -> None:
-    """Exact catalogue rules detach the inherited immutable wildcard cache.
+def test_only_hashed_build_output_and_fonts_are_immutable() -> None:
+    for path in ("/_astro/index.abc123.js", "/assets/fonts/amiri-regular.woff2"):
+        assert _effective_headers(path)["Cache-Control"] == IMMUTABLE_CACHE, path
 
-    Before the exception existed, both index paths inherited the wildcard year-long cache;
-    an updated edition list could therefore remain hidden behind a stale browser/CDN copy.
-    The payloads retain the immutable policy because their unversioned paths are promised
-    never to be rewritten.
+    for path in ("/text/uthmani/quran.json", "/translations/en-pickthall/quran.json"):
+        assert "immutable" not in _effective_headers(path)["Cache-Control"], path
+
+
+def test_catalogue_indexes_revalidate_sooner_than_edition_payloads() -> None:
+    """Exact catalogue rules detach the inherited wildcard cache.
+
+    An updated edition list must not stay hidden behind a day-old copy, so the two indexes
+    revalidate after a minute while the payloads under them keep the one-day policy.
     """
     for family in ("translations", "transliteration"):
-        assert _effective_headers(f"/{family}/quran.json")["Cache-Control"] == (
-            "public, max-age=31536000, immutable"
-        )
+        assert _effective_headers(f"/{family}/quran.json")["Cache-Control"] == DATA_CACHE
         assert _effective_headers(f"/{family}/index.json")["Cache-Control"] == (
             "public, max-age=60, must-revalidate"
         )

@@ -32,9 +32,12 @@ Three deliberate choices, each reversing an earlier one:
 *   **Translations carry no Arabic.** Embedding the text in every edition duplicated one
     1.7 MB corpus 83 times -- 105 MB, a fifth of the deployment.
 
-Because paths are unversioned, ``_headers`` caches the data immutably on the strength of a
-promise: a published path is never renamed, removed, or rewritten. Adding a script, an
-edition, or a chapter is fine; changing one is not.
+Because paths are unversioned, a published path is never renamed or removed. Its content may
+receive upstream corrections (Quranpedia's licence requires keeping copies current); they are
+logged in `/meta/qa.json` and, for a new upstream release, in the source version recorded in
+`/meta/sources.json`. So ``_headers`` caches data for a day and lets a stale copy be served
+for a week while it revalidates, rather than caching it immutably. Only the hashed
+`/_astro/*` build output and the font files are immutable.
 
 Only editions with a verified redistribution grant are published; see
 `quranjson.licensing`.
@@ -75,17 +78,17 @@ _HEADERS = """\
   X-Content-Type-Options: nosniff
 
 /text/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /translations/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /translations/index.json
   ! Cache-Control
   Cache-Control: public, max-age=60, must-revalidate
 
 /transliteration/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
 
 /transliteration/index.json
   ! Cache-Control
@@ -95,6 +98,9 @@ _HEADERS = """\
   Cache-Control: public, max-age=3600
 
 /assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/_astro/*
   Cache-Control: public, max-age=31536000, immutable
 """
 
