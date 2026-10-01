@@ -9,34 +9,34 @@ The pipeline has four layers, each a plain function over the previous one:
 
 1. **Tokenise** -- a verse becomes words; waqf marks are lifted to word-level flags. A mark may
    sit at the start of the *next* token in Kemenag text, but it belongs to the previous word.
-2. **Phoneme layer** -- each word is read in connected Hafs recitation into a list of phone
-   strings (see "Phones" below). Cross-word rules (hamzat al-wasl joining, idgham, iqlab)
-   run over the whole verse.
+2. **Phoneme layer** -- each word is read in connected Hafs recitation into a list of phones
+   (see "Phones"). Cross-word rules (hamzat al-wasl joining, idgham, iqlab) then run over the
+   whole verse.
 3. **Pause layer** -- at the verse end and at a pausal waqf mark the word is read as if
    stopped on: final short vowel dropped, tanwin dropped (fatha tanwin becomes a long a),
    ta marbuta becomes h.
-4. **Renderers** -- table-driven. Every renderer reads the same phones.
+4. **Renderers** -- table-driven (`SCHEMES`). Every renderer reads the same phones.
 
 Phones
 ------
-A phone is one of: a consonant key (`b t th j H kh d dh r z s sh S D T Z ` gh f q k l m n h w
-y '`, where capitals are the emphatics and `` ` `` is ayn), a short vowel `a i u`, a long
-vowel `A I U`, the imala vowel `E`, the article boundary `-`, or `TA_MARBUTA`.
+A phone is a short string: a consonant (`b t th j H kh d dh r z s sh S D T Z gh f q k l m n h
+w y`, where the capitals are the emphatics), the hamza `'`, the ayn (a backtick), a short
+vowel `a i u`, a long vowel `A I U`, the imala vowel `E`, the article boundary `-`, or one of
+the two symbols `TA_MARBUTA` and `PLURAL_WAW`.
 
 Hafs exceptions
 ---------------
-The Kemenag text writes each of them as a dedicated mark, so each is a mark rule rather than a
-verse list. `HAFS_EXCEPTIONS` names every one of them with its verse, and the golden tests
-pin each verse.
+The Kemenag text writes each of them as a dedicated mark, so each is a mark rule rather than
+a verse list. `HAFS_EXCEPTIONS` names every one with its verses, and the golden tests pin each.
 
-* imala (11:41 `majreh\u0101`): a dagger alif carrying U+06EA is read as the vowel `E`.
-* ishmam (12:11 `ta'mann\u0101`): U+06EB is lip rounding, which has no Latin letter; ignored.
-* tashil (41:44 `a'a'jamiyyun`): U+06EC is a softened hamza, which has no Latin letter; ignored.
+* imala (11:41 majraha): a dagger alef carrying U+06EA is read as the vowel `E`.
+* ishmam (12:11 ta'manna): U+06EB is lip rounding, which has no Latin letter; ignored.
+* tashil (41:44 a'a'jamiyyun): U+06EC is a softened hamza, which has no Latin letter; ignored.
 * sakta (18:1, 36:52, 75:27, 83:14): U+06DC is a silence without breath. It breaks the flow
   (no joining, no idgham) but keeps every vowel, and is drawn as an ellipsis.
 * small sin (2:245, 7:69, 52:37): a sad carrying U+06E3 is read as sin.
-* complete idgham `nakhlukkum` (77:20) and `bi'sa lismu` (49:11) follow from the written
-  shadda and the written lam vowel; they are pinned by tests only.
+* complete idgham nakhlukkum (77:20) and bi'sa lismu (49:11) follow from the written shadda
+  and the written lam vowel; they are pinned by tests only.
 """
 
 from __future__ import annotations
@@ -154,38 +154,38 @@ TA_MARBUTA: Final = "ta*"
 PLURAL_WAW: Final = "W"
 
 CONSONANTS: Final[Mapping[str, str]] = {
-    "\u0628": "b",
-    "\u062a": "t",
-    "\u062b": "th",
-    "\u062c": "j",
-    "\u062d": "H",
-    "\u062e": "kh",
-    "\u062f": "d",
-    "\u0630": "dh",
-    "\u0631": "r",
-    "\u0632": "z",
-    "\u0633": "s",
-    "\u0634": "sh",
-    SAD: "S",
-    "\u0636": "D",
-    "\u0637": "T",
-    "\u0638": "Z",
-    "\u0639": AYN,
-    "\u063a": "gh",
-    "\u0641": "f",
-    "\u0642": "q",
-    "\u0643": "k",
-    LAM: "l",
-    "\u0645": "m",
-    "\u0646": "n",
-    "\u0647": "h",
-    WAW: "w",
-    YEH: "y",
-    "\u0621": HAMZA,
-    "\u0623": HAMZA,
-    "\u0625": HAMZA,
-    "\u0624": HAMZA,
-    "\u0626": HAMZA,
+    "\u0628": "b",  # beh
+    "\u062a": "t",  # teh
+    "\u062b": "th",  # theh
+    "\u062c": "j",  # jeem
+    "\u062d": "H",  # hah
+    "\u062e": "kh",  # khah
+    "\u062f": "d",  # dal
+    "\u0630": "dh",  # thal
+    "\u0631": "r",  # reh
+    "\u0632": "z",  # zain
+    "\u0633": "s",  # seen
+    "\u0634": "sh",  # sheen
+    "\u0635": "S",  # sad
+    "\u0636": "D",  # dad
+    "\u0637": "T",  # tah
+    "\u0638": "Z",  # zah
+    "\u0639": AYN,  # ain
+    "\u063a": "gh",  # ghain
+    "\u0641": "f",  # feh
+    "\u0642": "q",  # qaf
+    "\u0643": "k",  # kaf
+    "\u0644": "l",  # lam
+    "\u0645": "m",  # meem
+    "\u0646": "n",  # noon
+    "\u0647": "h",  # heh
+    "\u0648": "w",  # waw
+    "\u064a": "y",  # yeh
+    "\u0621": HAMZA,  # hamza
+    "\u0623": HAMZA,  # alef with hamza above
+    "\u0625": HAMZA,  # alef with hamza below
+    "\u0624": HAMZA,  # waw with hamza above
+    "\u0626": HAMZA,  # yeh with hamza above
 }
 SHORT_VOWELS: Final = frozenset("aiu")
 LONG_VOWELS: Final = frozenset("AIUE")
@@ -209,20 +209,20 @@ WASL_NOUN_STEMS: Final = frozenset(
 
 # The name of each letter that opens a chapter, as the phones of its spoken name.
 LETTER_NAMES: Final[Mapping[str, tuple[str, ...]]] = {
-    ALEF: (HAMZA, "a", "l", "i", "f"),
-    LAM: ("l", "A", "m"),
-    "\u0645": ("m", "I", "m"),
-    "\u0631": ("r", "A"),
-    SAD: ("S", "A", "d"),
-    "\u0643": ("k", "A", "f"),
-    "\u0647": ("h", "A"),
-    YEH: ("y", "A"),
-    "\u0639": (AYN, "a", "y", "n"),
-    "\u0637": ("T", "A"),
-    "\u0633": ("s", "I", "n"),
-    "\u062d": ("H", "A"),
-    "\u0642": ("q", "A", "f"),
-    "\u0646": ("n", "U", "n"),
+    "\u0627": (HAMZA, "a", "l", "i", "f"),  # alef
+    "\u0644": ("l", "A", "m"),  # lam
+    "\u0645": ("m", "I", "m"),  # meem
+    "\u0631": ("r", "A"),  # reh
+    "\u0635": ("S", "A", "d"),  # sad
+    "\u0643": ("k", "A", "f"),  # kaf
+    "\u0647": ("h", "A"),  # heh
+    "\u064a": ("y", "A"),  # yeh
+    "\u0639": (AYN, "a", "y", "n"),  # ain
+    "\u0637": ("T", "A"),  # tah
+    "\u0633": ("s", "I", "n"),  # seen
+    "\u062d": ("H", "A"),  # hah
+    "\u0642": ("q", "A", "f"),  # qaf
+    "\u0646": ("n", "U", "n"),  # noon
 }
 
 #: Every Hafs exception the generator hand-codes, with the verse that shows it.
@@ -455,8 +455,8 @@ class WordReader:
             self._lengthen_preceding_fatha()
 
     def _read_madda_alef(self, index: int) -> None:
-        """An alef with a maddah lengthens a preceding fatha, follows a plural waw silently, or
-        is a hamza with a long a."""
+        """An alef with a maddah: it lengthens a preceding fatha, is silent after a long u (the
+        alef of a plural waw), and otherwise is a hamza with a long a."""
         previous = self._previous_vowel()
 
         if index > 0 and previous == "a":
@@ -802,6 +802,7 @@ class _StopMarks:
 
 def _add_written_noon(word: Word) -> None:
     """A small noon at the start of the next word is the tanwin written as vowel plus noon."""
+    # A word that already ends in tanwin gets nothing more: the noon is then only a marker.
     if word.ends_in_tanwin:
         return
 

@@ -34,6 +34,7 @@ A verse that needs more than one excuse takes the first of the order above.
 
 from __future__ import annotations
 
+import difflib
 import hashlib
 import re
 import unicodedata
@@ -186,6 +187,30 @@ class Mismatch:
     @property
     def key(self) -> str:
         return f"{self.chapter}:{self.verse}"
+
+    def differences(self, *, context: int = 8, limit: int = 3) -> list[tuple[str, str]]:
+        """The first few places the two normalised strings differ, as (reference, generated).
+
+        Each side shows the differing characters between `context` characters of what they
+        share, so a report line is readable without printing the whole verse.
+        """
+        matcher = difflib.SequenceMatcher(None, self.reference, self.generated, autojunk=False)
+        found: list[tuple[str, str]] = []
+
+        for tag, start_a, end_a, start_b, end_b in matcher.get_opcodes():
+            if tag == "equal":
+                continue
+
+            before = self.reference[max(0, start_a - context) : start_a]
+            after = self.reference[end_a : end_a + context]
+            found.append(
+                (
+                    f"{before}[{self.reference[start_a:end_a]}]{after}",
+                    f"{before}[{self.generated[start_b:end_b]}]{after}",
+                )
+            )
+
+        return found[:limit]
 
 
 def load_snapshot() -> Mapping[str, Sequence[Mapping[str, Any]]]:
@@ -415,11 +440,10 @@ def write_report(path: Path) -> None:
         lines += [f"## {name} ({counts[name]})", ""]
 
         for item in [entry for entry in found if entry.category == name][:EXAMPLES_PER_CLASS]:
-            lines += [
-                f"* {item.key}",
-                f"  * reference: `{item.reference}`",
-                f"  * generated: `{item.generated}`",
-            ]
+            lines.append(f"* {item.key}")
+
+            for reference, generated in item.differences():
+                lines.append(f"  * reference `{reference}`, generated `{generated}`")
 
         lines.append("")
 
