@@ -6,11 +6,9 @@ interface Props {
   title: string;
   description: string;
   current: "docs" | "reader";
-  /** The reader fills the width; the docs sit in a centred column. */
-  wide?: boolean;
 }
 
-const { title, description, current, wide = false } = Astro.props;
+const { title, description, current } = Astro.props;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 ---
 
@@ -43,7 +41,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
     </script>
   </head>
   <body>
-    <Header current={current} wide={wide} />
+    <Header current={current} />
     <slot />
   </body>
 </html>
