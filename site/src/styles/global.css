@@ -160,7 +160,7 @@
   }
 
   .doc-table {
-    @apply w-full border-collapse text-left text-[13px];
+    @apply w-full min-w-[34rem] border-collapse text-left text-[13px];
   }
 
   .doc-table th {

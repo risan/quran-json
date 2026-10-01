@@ -341,7 +341,9 @@ const stats = [
             >
               <option value="">All languages</option>
               {languages.map(([language]) => (
-                <option value={language}>{language}</option>
+                <option value={language} class="capitalize">
+                  {language}
+                </option>
               ))}
             </select>
             <span
@@ -367,7 +369,7 @@ const stats = [
                     data-language={edition.language}
                     data-search={`${edition.language} ${edition.code} ${edition.author} ${edition.path}`.toLowerCase()}
                   >
-                    <td class="whitespace-nowrap">
+                    <td class="whitespace-nowrap capitalize">
                       {edition.language} <span class="text-muted-foreground">{edition.code}</span>
                     </td>
                     <td>{edition.author}</td>
