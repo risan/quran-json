@@ -55,6 +55,32 @@
           "format": "uri",
           "minLength": 1
         },
+        "language": {
+          "type": "string",
+          "pattern": "^[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "reading": {
+          "description": "The riwayah the romanisation was generated for. A reader offers it only when the selected script has the same reading.",
+          "enum": ["hafs", "warsh", "qalun", "duri"]
+        },
+        "verse_ids": {
+          "description": "The verse numbering the entry ids follow. It is never remapped to another reading's numbering.",
+          "enum": ["hafs", "warsh", "qalun", "duri"]
+        },
+        "method": {
+          "description": "How the romanisation was produced.",
+          "type": "string",
+          "minLength": 1
+        },
+        "review": {
+          "description": "The review status of the romanisation, shown to readers verbatim.",
+          "type": "string",
+          "minLength": 1
+        },
         "license": {
           "$ref": "#/$defs/license"
         },
