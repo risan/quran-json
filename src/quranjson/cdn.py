@@ -154,9 +154,12 @@ def _script_chapters(script: str) -> list[dict[str, Any]]:
 
     snapshot: dict[str, list[dict[str, Any]]] = read_json(_script_snapshot_path(script))
 
+    notice = {"notice": config.TANZIL_NOTICE} if script in config.TANZIL_VARIANTS else {}
+
     return [
         {
             "id": int(chapter),
+            **notice,
             "verses": [
                 {
                     "id": int(verse["verse"]),
@@ -504,6 +507,7 @@ def build_site(
                 "description": config.SCRIPT_LABELS[script][1],
                 "verses": counts.get(script, 0),
                 "verse_ids": config.SCRIPT_VERSE_IDS[script],
+                "license": _script_license(script),
                 "path": f"/text/{script}/quran.json",
                 "chapters": f"/text/{script}/chapters/{{1-{CHAPTER_COUNT}}}.json",
                 **({"note": config.SCRIPT_NOTES[script]} if script in config.SCRIPT_NOTES else {}),
@@ -601,6 +605,18 @@ def build_site(
     )
 
     (out_dir / "_headers").write_text(_HEADERS, encoding="utf-8")
+
+
+def _script_license(script: str) -> dict[str, str]:
+    """The licence object published beside a script, with Tanzil's notice where required."""
+    license_ = config.SCRIPT_LICENSES[script]
+
+    return {
+        "status": license_.status,
+        "url": license_.url,
+        "attribution": config.SCRIPT_ATTRIBUTIONS[script],
+        **({"notice": config.TANZIL_NOTICE} if script in config.TANZIL_VARIANTS else {}),
+    }
 
 
 def _catalogue_metadata() -> dict[str, dict[str, Any]]:

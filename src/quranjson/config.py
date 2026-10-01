@@ -47,8 +47,8 @@ DIGITALKHATT_SCRIPT: Final = "indopak"
 
 #: Qur'anpedia.net's text identities. Warsh and Qalun are Nafiʿ riwayat. Al-Duri is a
 #: separate riwayah with its own source count. Hafs Nastaliq is a distinct digital Hafs
-#: edition and must not replace the existing Indo-Pak text or imply printed-edition
-#: compatibility. See `quranjson.quranpedia`.
+#: edition, KFGQPC's Nastaleeq text, and does not replace the DigitalKhatt Indo-Pak text.
+#: See `quranjson.quranpedia`.
 WARSH_SCRIPT: Final = "warsh"
 QALUN_SCRIPT: Final = "qalun"
 DURI_SCRIPT: Final = "duri"
@@ -112,6 +112,20 @@ TANZIL_TEXT = License(
     url="https://tanzil.net/docs/text_license",
 )
 
+#: The notice Tanzil's licence requires "in all verbatim copies of the text, and ...
+#: reproduced appropriately in all files derived from or containing substantial portion of
+#: this text". Published in the manifest and in every Tanzil chapter object.
+TANZIL_NOTICE: Final = (
+    "Tanzil Quran Text. Copyright (C) 2007-2021 Tanzil Project. License: Creative Commons "
+    "Attribution 3.0. Permission is granted to copy and distribute verbatim copies of this "
+    "text, but CHANGING IT IS NOT ALLOWED. This Quran text can be used in any website or "
+    "application, provided its source (Tanzil.net) is clearly indicated, and a link is made "
+    "to tanzil.net to enable users to keep track of changes. This copyright notice shall be "
+    "included in all verbatim copies of the text, and shall be reproduced appropriately in "
+    "all files derived from or containing substantial portion of this text. "
+    "https://tanzil.net/docs/text_license"
+)
+
 TANZIL_DOWNLOAD = (
     "https://tanzil.net/pub/download/index.php?quranType={variant}&outType=txt-2&agree=true"
 )
@@ -141,7 +155,7 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
         "serves, carrying the Indonesian standard's waqf signs",
     ),
     DIGITALKHATT_SCRIPT: (
-        "Indo-Pak",
+        "Indo-Pak (DigitalKhatt)",
         "DigitalKhatt's Indo-Pak typesetting: subscript alef (U+0656), no alef wasla, "
         "Arabic Extended-B marks",
     ),
@@ -155,9 +169,9 @@ SCRIPT_LABELS: Final[dict[str, tuple[str, str]]] = {
         "Qalun ʿan Nafiʿ (Libya, Tunisia), 6,214 ayahs to Nafiʿ's count",
     ),
     HAFS_NASTALIQ_SCRIPT: (
-        "Hafs Nastaliq",
-        "Quranpedia mushaf 3: Hafs text in Nastaliq for parts of Asia; a distinct digital "
-        "edition explicitly described by Quranpedia as not matching the printed edition",
+        "Indo-Pak (KFGQPC Nastaleeq)",
+        "Quranpedia mushaf 3: the Hafs text KFGQPC sets in Nastaleeq for the Indo-Pak "
+        "tradition, numbered as Hafs",
     ),
     DURI_SCRIPT: (
         "al-Duri",
@@ -214,6 +228,16 @@ SCRIPT_MAPPING_COVERAGE_EXCEPTIONS: Final[dict[str, tuple[dict[str, object], ...
 #: Reader-facing identity and audio safety. A mapped riwayah must never inherit Hafs
 #: per-ayah audio merely because some chapter happens to have the same native count.
 SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
+    **{
+        script: {
+            "reading": {
+                "riwayah": "Hafs",
+                "qiraah": "ʿAsim",
+                "verse_numbering": SCRIPT_VERSE_IDS[script],
+            }
+        }
+        for script in (*TANZIL_VARIANTS, KEMENAG_SCRIPT, DIGITALKHATT_SCRIPT)
+    },
     WARSH_SCRIPT: {
         "reading": {
             "riwayah": "Warsh",
@@ -358,6 +382,20 @@ SCRIPT_LICENSES: Final[dict[str, License]] = {
     **dict.fromkeys(QURANPEDIA_SCRIPTS, QURANPEDIA),
 }
 
+#: Who to credit for each script, published in its manifest `license` object.
+SCRIPT_ATTRIBUTIONS: Final[dict[str, str]] = {
+    **dict.fromkeys(TANZIL_VARIANTS, "Tanzil Project (https://tanzil.net)"),
+    KEMENAG_SCRIPT: (
+        "Kementerian Agama RI, Lajnah Pentashihan Mushaf Al-Qur'an (https://quran.kemenag.go.id)"
+    ),
+    DIGITALKHATT_SCRIPT: "DigitalKhatt (https://github.com/DigitalKhatt/digitalkhatt-js), MIT",
+    **dict.fromkeys(
+        QURANPEDIA_SCRIPTS,
+        "Qur'anpedia.net (https://quranpedia.net); the dump version is recorded per snapshot "
+        "in /meta/sources.json",
+    ),
+}
+
 #: Verses a script is expected to hold. The Hafs-count scripts all run to 6,236; Nafiʿ's
 #: two riwayat do not, and flattening them to 6,236 would mean merging or splitting ayahs.
 #: The per-script total is published in `manifest.json`, so the divergence is visible to a
@@ -397,9 +435,10 @@ SCRIPT_NOTES: Final[dict[str, str]] = {
         "Each verse's `number_in_hafs` gives the Hafs ayah number or numbers it covers."
     ),
     HAFS_NASTALIQ_SCRIPT: (
-        "Hafs Nastaliq is Quranpedia mushaf 3, a separate digital text in Nastaliq. Its source "
-        "description says it does not match the printed edition; the label does not promise "
-        "byte compatibility with Indo-Pak, QuranWBW, or another Hafs product."
+        "Indo-Pak (KFGQPC Nastaleeq) is Quranpedia mushaf 3, the Hafs text in Nastaleeq with "
+        "Hafs verse numbering. Quranpedia flags it as having no page-image pack, which says "
+        "nothing about the text. Spelling conventions differ from the DigitalKhatt Indo-Pak "
+        "script, so the two are not byte-compatible."
     ),
     DURI_SCRIPT: (
         "al-Duri ʿan Abi ʿAmr is a different riwayah, not an orthography: the pinned "
@@ -459,10 +498,10 @@ KRACHKOVSKY = public_domain(
 #: Audio hosts. We publish URL templates and never mirror audio bytes, so these record
 #: the host's own terms for the consumer rather than gating our output.
 MP3QURAN_AUDIO = License(
-    status="granted",
+    status="unknown",
     text=(
-        "mp3quran.net permits copying, publishing and redistribution of its recitations "
-        "with attribution to the site; the reciter's rights are retained."
+        "mp3quran.net states no licence for redistribution that we could find; we link to "
+        "its files and do not copy them."
     ),
     url="https://mp3quran.net/eng/",
 )
@@ -471,9 +510,10 @@ ISLAMIC_NETWORK_AUDIO = License(
     status="granted",
     text=(
         "islamic.network audio is free to redistribute for non-commercial use; each "
-        "recitation's copyright remains with its reciter."
+        "recitation's copyright remains with its reciter. The terms are published at "
+        "alquran.cloud, the project behind the CDN."
     ),
-    url="https://islamic.network/",
+    url="https://alquran.cloud/terms-and-conditions",
 )
 
 EVERYAYAH_AUDIO = License(
