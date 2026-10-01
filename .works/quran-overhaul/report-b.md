@@ -27,7 +27,6 @@ lint, fmt:check, check, vitest (40 tests), site build, `uv run pytest` (127), ru
 - `npm run dev`: no dev data middleware was written; reader data fetches are same-origin or `PUBLIC_QURAN_JSON_DATA_BASE` (needs a CORS-enabled data server). Use the assembled build for local testing.
 - Audio playback itself (sound) was not verified; only that the correct URL is requested.
 - Transliteration UI is untested against real data (the index has 0 entries); covered by unit tests only.
-- `_headers` in cdn.py still has an immutable rule for `/assets/fonts/*`; fonts are now `/fonts/*` (cdn.py/_headers belongs to Track A).
 - Docs mobile contents is a native `<dialog>` sheet, not a React Sheet (keeps docs JS-free). The reader's mobile surah button lives in the toolbar, not the header.
 - Opening bismillah is drawn only for Hafs-numbered scripts (from the script's own 1:1), chapters other than 1 and 9; Duri uses manifest furniture.
 - `components/ui/scroll-area.tsx` produces an astro-check hint (generated file).
