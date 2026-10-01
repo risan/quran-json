@@ -79,7 +79,9 @@ def test_every_manifest_script_declares_its_licence_and_reading(cdn_tree: Path) 
         assert license_["url"].startswith("https://"), script["id"]
         assert license_["attribution"].strip(), script["id"]
         assert ("notice" in license_) == (script["id"] in config.TANZIL_VARIANTS), script["id"]
-        assert set(script["reading"]) == {"riwayah", "qiraah", "verse_numbering"}, script["id"]
+        assert set(script["reading"]) == {"id", "riwayah", "qiraah", "verse_numbering"}, script[
+            "id"
+        ]
         assert script["reading"]["verse_numbering"] == script["verse_ids"], script["id"]
 
     hafs = {script["id"]: script["reading"] for script in manifest["scripts"]}["uthmani"]

@@ -96,7 +96,7 @@ _MP3QURAN_READINGS: dict[str, str] = {
     "Rewayat Warsh A'n Nafi' Men Tariq Abi Baker Alasbahani": "warsh",
     "Rewayat Qalon A'n Nafi'": "qalun",
     "Rewayat Qalon A'n Nafi' Men Tariq Abi Nasheet": "qalun",
-    "Rewayat Aldori A'n Abi Amr": "duri",
+    "Rewayat Aldori A'n Abi Amr": "duri-abu-amr",
     "Rewayat Assosi A'n Abi Amr": "susi",
     "Sho'bah A'n Asim": "shubah",
     "Rewayat Albizi A'n Ibn Katheer": "bazzi",
@@ -117,7 +117,7 @@ _MP3QURAN_READINGS: dict[str, str] = {
 #: global Hafs ayah number 1-6236, are taken as Hafs.
 _ISLAMIC_NETWORK_MARKERS: dict[str, str] = {
     "qaloon": "qalun",
-    "doori": "duri",
+    "doori": "duri-abu-amr",
     "shubah": "shubah",
     "soosi": "susi",
     "kasaaee": "abu-al-harith",

@@ -279,6 +279,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     **{
         script: {
             "reading": {
+                "id": "hafs",
                 "riwayah": "Hafs",
                 "qiraah": "ʿAsim",
                 "verse_numbering": SCRIPT_VERSE_IDS[script],
@@ -288,6 +289,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     },
     WARSH_SCRIPT: {
         "reading": {
+            "id": "warsh",
             "riwayah": "Warsh",
             "qiraah": "Nafiʿ",
             "verse_numbering": "mapped",
@@ -296,6 +298,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     },
     QALUN_SCRIPT: {
         "reading": {
+            "id": "qalun",
             "riwayah": "Qalun",
             "qiraah": "Nafiʿ",
             "verse_numbering": "mapped",
@@ -304,6 +307,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     },
     DURI_SCRIPT: {
         "reading": {
+            "id": "duri-abu-amr",
             "riwayah": "al-Duri",
             "qiraah": "Abu ʿAmr",
             "verse_numbering": "mapped",
@@ -312,6 +316,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     },
     SUSI_SCRIPT: {
         "reading": {
+            "id": "susi",
             "riwayah": "al-Susi",
             "qiraah": "Abu ʿAmr",
             "verse_numbering": "mapped",
@@ -320,6 +325,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     },
     SHUBAH_SCRIPT: {
         "reading": {
+            "id": "shubah",
             "riwayah": "Shuʿbah",
             "qiraah": "ʿAsim",
             "verse_numbering": "hafs",
@@ -329,6 +335,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     },
     HAFS_NASTALIQ_SCRIPT: {
         "reading": {
+            "id": "hafs",
             "riwayah": "Hafs",
             "qiraah": "ʿAsim",
             "verse_numbering": "hafs",
@@ -337,6 +344,7 @@ SCRIPT_READING_IDENTITIES: Final[dict[str, dict[str, object]]] = {
     },
     QPC_HAFS_SCRIPT: {
         "reading": {
+            "id": "hafs",
             "riwayah": "Hafs",
             "qiraah": "ʿAsim",
             "verse_numbering": "hafs",
@@ -447,6 +455,13 @@ SCRIPT_IDS: Final = (
     KEMENAG_SCRIPT,
     DIGITALKHATT_SCRIPT,
     *QURANPEDIA_SCRIPTS,
+)
+#: Scripts whose verse 1:1 is the basmala as a numbered verse. In every other script the
+#: basmala is unnumbered furniture or absent from the text altogether.
+BISMILLAH_NUMBERED_SCRIPTS: Final = (
+    *TANZIL_VARIANTS,
+    KEMENAG_SCRIPT,
+    *NATIVE_HAFS_QURANPEDIA_SCRIPTS,
 )
 SCRIPT_LICENSES: Final[dict[str, License]] = {
     **dict.fromkeys(TANZIL_VARIANTS, TANZIL_TEXT),
