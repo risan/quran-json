@@ -408,10 +408,8 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
 
     if isinstance(old, dict) and isinstance(new, dict):
         keys = sorted(set(old) | set(new))
-        return {
-            "kind": "object",
-            "changed_keys": [key for key in keys if old.get(key) != new.get(key)],
-        }
+        changed_keys = [key for key in keys if old.get(key) != new.get(key)]
+        return {"kind": "object", "changed": len(changed_keys), "changed_keys": changed_keys}
 
     return {"kind": "opaque", "changed": int(old != new)}
 

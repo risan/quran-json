@@ -132,8 +132,10 @@ def test_catalogue_drift_names_the_changed_keys() -> None:
 
     assert _summarise_change(before, after) == {
         "kind": "object",
+        "changed": 1,
         "changed_keys": ["translations"],
     }
+    assert _summarise_change(before, before)["changed"] == 0
 
 
 def test_audio_manifest_drift_names_the_changed_keys() -> None:
