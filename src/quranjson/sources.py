@@ -23,7 +23,7 @@ from . import config, qa
 from .http import Fetcher
 from .jsonio import read_json, write_json
 
-__all__ = ["FetchTask", "fetch_all", "tasks", "verify_snapshots"]
+__all__ = ["FetchTask", "check_all", "fetch_all", "tasks", "verify_snapshots"]
 
 EDITION_BASE: Final = "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions"
 
@@ -373,6 +373,64 @@ def _validate_source_payload(task: FetchTask, raw: bytes) -> None:
         )
 
 
+def _download(task: FetchTask, client: Fetcher) -> Any:
+    """Fetch one upstream and reshape it into snapshot form, without writing anything."""
+    if task.gather is not None:
+        return task.gather(client)
+
+    raw = client.get_bytes(task.url)
+    _validate_source_payload(task, raw)
+
+    return _normalise(raw, task.transform, task.parse)
+
+
+def check_all(*, fetcher: Fetcher | None = None) -> list[str]:
+    """Compare every upstream with its committed snapshot, writing nothing.
+
+    Returns one line per snapshot that differs or could not be checked; empty means every
+    snapshot is current. Manually reviewed snapshots (``refresh`` off) have no upstream
+    payload to compare and are skipped.
+    """
+    owned = fetcher is None
+    client = fetcher or Fetcher()
+    findings: list[str] = []
+
+    try:
+        for task in tasks():
+            if not task.refresh:
+                continue
+
+            if not task.path.exists():
+                findings.append(f"MISSING {task.rel}: no committed snapshot for {task.url}")
+                continue
+
+            try:
+                payload = _download(task, client)
+            except Exception as error:
+                findings.append(f"ERROR   {task.rel}: {type(error).__name__}: {error}")
+                continue
+
+            # Compare as JSON, the form the snapshot is stored in.
+            committed = read_json(task.path)
+            upstream = orjson.loads(orjson.dumps(payload))
+
+            if upstream == committed:
+                continue
+
+            summary = _summarise_change(committed, upstream)
+            detail = (
+                f"{summary['changed']} of {summary['records']} records differ"
+                if summary.get("changed") and "records" in summary
+                else "content differs"
+            )
+            findings.append(f"CHANGED {task.rel}: {detail} ({task.url})")
+    finally:
+        if owned:
+            client.close()
+
+    return findings
+
+
 def fetch_all(
     *,
     force: bool = False,
@@ -405,12 +463,7 @@ def fetch_all(
                 previous_sha = (
                     sha256(task.path.read_bytes()).hexdigest() if previous is not None else None
                 )
-                if task.gather is not None:
-                    payload = task.gather(client)
-                else:
-                    raw = client.get_bytes(task.url)
-                    _validate_source_payload(task, raw)
-                    payload = _normalise(raw, task.transform, task.parse)
+                payload = _download(task, client)
                 summary = _summarise_change(previous, payload) if previous is not None else None
 
                 write_json(task.path, payload, pretty=not task.compact)

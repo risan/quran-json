@@ -1,0 +1,25 @@
+name: upstream
+
+# Quranpedia's licence requires keeping copies current, and every other upstream can be
+# corrected too. This compares each upstream with the committed snapshots once a week and
+# fails when any differ; a maintainer then runs `uv run quran-json fetch --force`, reviews
+# the diff, and records any text correction in data/meta/qa.json.
+on:
+  schedule:
+    - cron: "17 5 * * 1"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
+
+      - run: uv sync --locked
+
+      - name: compare upstream with the committed snapshots
+        run: uv run quran-json fetch --check

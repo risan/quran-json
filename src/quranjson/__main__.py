@@ -36,8 +36,28 @@ def fetch(
     force: Annotated[
         bool, typer.Option("--force", help="Re-download snapshots that already exist.")
     ] = False,
+    check: Annotated[
+        bool,
+        typer.Option(
+            "--check",
+            help="Compare upstream with the committed snapshots without writing; "
+            "exit 1 if any differ.",
+        ),
+    ] = False,
 ) -> None:
     """Refresh the committed upstream snapshots and the provenance manifest."""
+    if check:
+        findings = sources.check_all()
+
+        for finding in findings:
+            typer.echo(finding)
+
+        if findings:
+            raise typer.Exit(code=1)
+
+        typer.echo("upstream matches the committed snapshots")
+        return
+
     records = sources.fetch_all(force=force)
     typer.echo(f"manifest covers {len(records)} snapshots")
 
