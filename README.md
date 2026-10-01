@@ -36,8 +36,8 @@ operations (10M/month free) and only returns CORS headers for pre-configured ori
 parses natively.
 
 Two limits matter. **Files: 20,000 per Worker version** on the free plan, 100,000 on paid;
-the current safe profile contains 11,760 files and the explicit published profile contains
-11,988. **Size: 25 MiB per file**; the largest generated payload is about 5.8 MiB.
+the current tree, with 130 translations, contains 16,359 files. **Size: 25 MiB per file**;
+the largest generated payload is about 13 MiB (the Bengali Zakaria translation, with footnotes).
 
 The published origin uses the safe rights-gated profile. The explicit
 `--include-unverified-licenses` profile remains available for an operator who has separately
@@ -289,7 +289,7 @@ do not permit redistribution.
 |---|---|---|
 | Arabic text | Re-encoded derivative, no upstream license | **Twelve scripts**: six Tanzil (CC-BY 3.0, verbatim), the Indonesian standard mushaf from Qur'an Kemenag, DigitalKhatt's Indo-Pak text (MIT), Qur'anpedia.net's Warsh and Qalun (granted with attribution + version), Quranpedia's Hafs Nastaliq, and al-Duri |
 | Chapter metadata | Quran.com API (personal, non-commercial) | **Tanzil `quran-data.xml`**, CC-BY 3.0 |
-| Translations | 11, mostly Tanzil (redistribution not permitted) | **90** in the safe profile: 82 QuranEnc editions (75 canonical + 7 complete supplemental) and 8 public-domain / author-granted editions. The one incomplete supplemental edition is withheld. The explicit unverified-licence profile adds Qur'an Kemenag's Indonesian translation for **91** |
+| Translations | 11, mostly Tanzil (redistribution not permitted) | **130**: 118 QuranEnc editions (75 canonical + 43 complete supplemental) and 12 public-domain / author-granted editions. The three incomplete supplemental editions (Korean Rowwad, Circassian Rowwad, English Waleed) are withheld. The explicit unverified-licence profile adds Qur'an Kemenag's Indonesian translation for **131** |
 | Transliteration | Yes (Tanzil) | **0** in the safe profile. The explicit unverified-licence profile publishes **1**, Qur'an Kemenag's romanisation, labelled `unknown` (see below) |
 | Per-surah audio | none | 159 editions (Islamic Network), 288 (MP3Quran) |
 | Basmala | Only in 1:1 | Embedded in ayah 1 of every surah except 9 (Tanzil); unnumbered source furniture in `indopak`, `warsh`, `qalun`, and al-Duri chapter 1, whose Al-Fatiha labels are therefore represented by each source's own metadata |
@@ -328,10 +328,11 @@ the evidence behind each.
 ### What "public domain" means here
 
 A **public-domain (PD)** work has no copyright owner left — the term expired, so anyone may
-copy, modify, and redistribute it with no permission and no conditions. The four English
-classics qualify because their authors died long enough ago, under the life-plus-70-years
-rule used across most jurisdictions: Sale (d.1736), Palmer (d.1882), Pickthall (d.1936) and
-Yusuf Ali (d.1953).
+copy, modify, and redistribute it with no permission and no conditions. The English
+classics, two Urdu translations and a Dutch one qualify because their translators died long
+enough ago, under the life-plus-70-years rule used across most jurisdictions: Sale (d.1736),
+Palmer (d.1882), Rodwell (d.1900), Pickthall (d.1936) and Yusuf Ali (d.1953); Ahmed Raza Khan
+(d.1921) and Mahmud ul Hasan (d.1920); Salomo Keyzer (d.1868).
 
 **They are supplements, not replacements.** The *modern* reputable English translations
 this project can legally ship already do ship — Rowwad, Noor/Saheeh International and
@@ -360,12 +361,16 @@ restored by `quranjson.qa`, which also **fails the build if upstream ever repair
 itself**, so the patch cannot rot into a double-correction. The record is published at
 `/meta/qa.json`.
 
+Keyzer's Dutch text arrived with the leading letters of sixteen mystic-letter verses lost
+(2:1 read just *"M"* for *"A. L. M."*). Each is restored from **Project Gutenberg #19786**,
+anchored at the start of the verse so a repaired verse cannot match twice.
+
 | Source | Status | Evidence |
 |---|---|---|
 | **Tanzil text & metadata** | ✅ Granted | CC-BY 3.0: *"Permission is granted to copy and distribute verbatim copies of this text, but CHANGING IT IS NOT ALLOWED."* — <https://tanzil.net/docs/text_license> |
-| **Public-domain English translations** — Sale 1734, Palmer 1880, Pickthall 1930, Yusuf Ali 1934 | ✅ Granted | Out of copyright by the death of the author (Sale d.1736, Palmer d.1882, Pickthall d.1936, Yusuf Ali d.1953). Each verified verse-numbered and complete |
+| **Public-domain translations** — Sale 1734, Palmer 1880, Rodwell 1861, Pickthall 1930, Yusuf Ali 1934 (English); Ahmed Raza Khan's *Kanzul Iman* 1911 and Mahmud ul Hasan 1909 (Urdu); Keyzer 1860 (Dutch) | ✅ Granted | Out of copyright by the death of the translator (Sale d.1736, Palmer d.1882, Rodwell d.1900, Pickthall d.1936, Yusuf Ali d.1953, Ahmed Raza Khan d.1921, Mahmud ul Hasan d.1920, Keyzer d.1868). Each verified verse-numbered and complete; the source and the death-year citation are in each edition's licence text |
 | **ClearQuran (Talal Itani)** | ✅ Granted | *"free to use, share, and distribute — including in commercial projects — with no permission or authorization required"* under CC BY-ND 4.0 — <https://blog.clearquran.com/download>. Fetched from the translator's own verse-by-verse archive, not a packager |
-| **QuranEnc translations** (82 published: 75 canonical + 7 complete supplemental) | ✅ Granted | *"Contents of the translations can be downloaded and re-published"* under 7 conditions: verbatim, credit publisher + QuranEnc.com, state the version, keep transcripts, no inappropriate advertising — <https://quranenc.com/en/home/api>. One incomplete supplemental archive (Korean Rowwad) is withheld |
+| **QuranEnc translations** (118 published: 75 canonical + 43 complete supplemental) | ✅ Granted | *"Contents of the translations can be downloaded and re-published"* under 7 conditions: verbatim, credit publisher + QuranEnc.com, state the version, keep transcripts, no inappropriate advertising — <https://quranenc.com/en/home/api>. Four supplemental editions have no SQLite archive and are fetched surah by surah from QuranEnc's API (`belarusian_krivtsov`, `chinese_suliman_modern`, `oromo_rwwad`, `zulu_adel`). Three incomplete editions (Korean Rowwad, Circassian Rowwad, English Waleed) are withheld |
 | **Qur'an Kemenag text** (`kemenag`) | ✅ Granted | Minister of Religious Affairs Regulation 44/2016, Pasal 8(1): *"Teks Mushaf Al-Qur'an tidak memiliki hak cipta"*, and Copyright Law 28/2014, Pasal 42(e), which removes copyright from a *kitab suci*. Pasal 8(2) keeps the publisher's rights in the calligraphy, the tanda baca/tajwid/qira'at apparatus and the ornaments, so this project takes only the plain UTF-8 text — no fonts, no mushaf layout, no ornaments — <https://jdih.kemenag.go.id/regulation-download/penerbitan-pentashihan-dan-peredaran-mushaf-al-qur%27an> |
 | **DigitalKhatt Indo-Pak text** (`indopak`) | ✅ Granted | MIT at the repository root: *"Permission is hereby granted, free of charge… to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies"*. The repository's own LICENSE covers the text file; there is no separate data licence, and the sibling `indopakfont`'s OFL is a *font* grant, which never reaches text — <https://github.com/DigitalKhatt/digitalkhatt-js/blob/main/LICENSE> |
 | **Qur'anpedia.net Warsh, Qalun, Hafs Nastaliq and al-Duri** (`warsh`, `qalun`, `hafs-nastaliq`, `duri`) | ✅ Granted, with conditions | *"Free to use inside apps, websites, bots, and research tools — no attribution required… Republishing this data — in full or in part — as a downloadable database or dataset requires: (1) crediting Qur'anpedia.net as the source with a link, and (2) stating this dump's version."* This is a downloadable dataset, so both are met: the credit is in `manifest.json` and below, and each exact dump version is in `meta/sources.json` (2026-09-18 for mushafs 4/7; 2026-09-20 for mushafs 3/6). The same licence requires keeping a copy current and makes outdated text the distributor's responsibility, which is why `fetch --force` re-checks upstream — <https://api.quranpedia.net/dumps/LICENSE.md> |
