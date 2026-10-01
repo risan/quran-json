@@ -26,9 +26,11 @@ import {
   editionKey,
   resolveFont,
   scriptReading,
+  suggestedTransliteration,
   usableFonts,
   type ReaderPrefs,
 } from "@/reader/core";
+import { pickDefaultReciter } from "@/reader/audio";
 import { Combobox, type ComboboxItem } from "./Combobox";
 
 interface Props {
@@ -117,19 +119,23 @@ export function SettingsSheet({
       keywords: `${edition.language} ${edition.code} ${editionKey(edition)}`,
     }));
 
-  const reciterItems: ComboboxItem[] = reciters.map((reciter) => ({
-    value: reciter.id,
-    label: reciter.name,
-    hint: [
-      reciter.scope === "ayah" ? "per ayah" : "per surah",
-      reciter.bitrate_kbps ? `${reciter.bitrate_kbps} kbps` : null,
-    ]
-      .filter(Boolean)
-      .join(" · "),
-    group: reciterIndex?.hosts[reciter.host]?.name ?? reciter.host,
-    keywords: `${reciter.recitation ?? ""} ${reciter.host}`,
-  }));
-  const selectedReciter = reciters.find((reciter) => reciter.id === prefs.reciter);
+  const reciterItems: ComboboxItem[] = [...reciters]
+    .sort((a, b) => Number(b.scope === "ayah") - Number(a.scope === "ayah"))
+    .map((reciter) => ({
+      value: reciter.id,
+      label: reciter.name,
+      hint: [
+        reciterIndex?.hosts[reciter.host]?.name ?? reciter.host,
+        reciter.bitrate_kbps ? `${reciter.bitrate_kbps} kbps` : null,
+      ]
+        .filter(Boolean)
+        .join(" · "),
+      group: reciter.scope === "ayah" ? "Per-ayah" : "Whole chapter",
+      keywords: `${reciter.recitation ?? ""} ${reciter.host}`,
+    }));
+  const selectedReciter =
+    reciters.find((reciter) => reciter.id === prefs.reciter) ?? pickDefaultReciter(reciters);
+  const suggested = suggestedTransliteration(transliterations, navigator.language);
 
   const editionByKey = (key: string): Edition | undefined =>
     boot.translations.find((edition) => editionKey(edition) === key);
@@ -244,11 +250,27 @@ export function SettingsSheet({
           <Field
             label="Transliteration"
             note={
-              transliterations.length === 0
-                ? "None published yet."
-                : !hafs
-                  ? "Transliteration is generated from the Hafs reading, so it is off for this script."
-                  : selectedTransliteration?.review
+              transliterations.length === 0 ? (
+                "None published yet."
+              ) : !hafs ? (
+                "Transliteration is generated from the Hafs reading, so it is off for this script."
+              ) : (
+                <>
+                  {(selectedTransliteration ?? suggested)?.review}
+                  {!selectedTransliteration && suggested ? (
+                    <>
+                      {" "}
+                      <button
+                        type="button"
+                        className="underline"
+                        onClick={() => onChange({ transliteration: editionKey(suggested) })}
+                      >
+                        Turn on {suggested.name ?? suggested.author}
+                      </button>
+                    </>
+                  ) : null}
+                </>
+              )
             }
           >
             {transliterations.length === 0 ? null : (

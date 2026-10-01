@@ -4,11 +4,12 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetDescription, SheetTitle } from "@/components/ui/sheet";
 import { Skeleton } from "@/components/ui/skeleton";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import type { ReaderBoot, Reciter, ReciterIndex } from "@/lib/types";
-import { recitersForScript } from "@/reader/audio";
+import type { ReaderBoot, ReciterIndex } from "@/lib/types";
+import { pickDefaultReciter, recitersForScript } from "@/reader/audio";
 import {
   MAX_TRANSLATIONS,
   applyLinkParams,
+  defaultTranslation,
   editionKey,
   normalizePrefs,
   parseReaderHash,
@@ -40,12 +41,9 @@ function initialState(boot: ReaderBoot): {
 } {
   const parsed = parseReaderHash(location.hash);
   const saved = loadStoredPrefs();
-  // A first visit reads with an English translation rather than bare Arabic.
-  const english = boot.translations.find((edition) => edition.code === "en");
-  const stored = normalizePrefs(
-    saved ?? { translations: english ? [editionKey(english)] : [] },
-    boot,
-  );
+  // A first visit reads with a translation in the visitor's language rather than bare Arabic.
+  const first = defaultTranslation(boot.translations, navigator.language);
+  const stored = normalizePrefs(saved ?? { translations: first ? [editionKey(first)] : [] }, boot);
   const prefs = applyLinkParams(stored, parsed.params, boot);
   const known = boot.chapters.some((chapter) => chapter.id === parsed.chapter);
   const chapter = known ? (parsed.chapter as number) : (prefs.resume?.chapter ?? 1);
@@ -66,15 +64,6 @@ function scrollToVerse(verse: number | null) {
   } else {
     window.scrollTo({ top: 0, behavior: "instant" });
   }
-}
-
-function pickDefaultReciter(playable: Reciter[]): Reciter | null {
-  return (
-    playable.find((reciter) => reciter.scope === "ayah" && /alafasy.*128/i.test(reciter.id)) ??
-    playable.find((reciter) => reciter.scope === "ayah") ??
-    playable[0] ??
-    null
-  );
 }
 
 export default function ReaderApp({ boot }: { boot: ReaderBoot }) {

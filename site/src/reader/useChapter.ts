@@ -10,6 +10,7 @@ import type {
 import { api } from "./data";
 import {
   alignsWithHafs,
+  bismillahHeader,
   canJoinWithHafs,
   chapterFurniture,
   editionKey,
@@ -82,7 +83,9 @@ async function loadChapter({
     (edition) => editionKey(edition) === transliterationKey,
   );
   const romanisationWanted = transliterationApplies(script, romanisationEdition, chapterId);
-  const opensWithBismillah = showsOpeningBismillah(script, chapterId);
+  const declaredHeader = bismillahHeader(script, chapterId);
+  const opensWithBismillah =
+    declaredHeader === undefined && showsOpeningBismillah(script, chapterId);
 
   const optionalRequests: Promise<OptionalResult>[] = wanted.map((edition) =>
     api
@@ -179,7 +182,13 @@ async function loadChapter({
     })),
   });
 
-  const opening = chapterFurniture(script, chapterId);
+  // A published `bismillah` field replaces the furniture and the 1:1 inference.
+  const opening =
+    declaredHeader === undefined
+      ? chapterFurniture(script, chapterId)
+      : declaredHeader
+        ? [declaredHeader]
+        : [];
   const bismillah = bismillahSource?.verses[0]?.text;
 
   if (opensWithBismillah && bismillah && isBismillah(bismillah)) {
