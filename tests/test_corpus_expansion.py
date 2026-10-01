@@ -82,6 +82,9 @@ def test_incomplete_korean_stays_out_of_public_bytes(cdn_tree: Path) -> None:
     assert "korean_rwwad" not in published
     assert withheld["korean_rwwad"]["availability"] == "withheld"
     assert "1,955 empty" in withheld["korean_rwwad"]["reason"]
+    assert "1,000 empty" in withheld["circassian_rwwad"]["reason"]
+    assert "3,753 empty" in withheld["english_waleed"]["reason"]
+    assert {"circassian_rwwad", "english_waleed"} & published == set()
     assert not (cdn_tree / "translations" / "ko-rwwad").exists()
 
 

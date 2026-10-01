@@ -38,6 +38,8 @@ class Correction:
     restored: str
     evidence: str
     kind: Literal["translation", "script"] = "translation"
+    #: The defect is the start of the verse, so a repaired verse cannot match it again.
+    at_start: bool = False
 
     def key(self) -> str:
         return f"{self.lang} {self.chapter}:{self.verse}"
@@ -109,6 +111,46 @@ def _kemenag_spacing_corrections() -> tuple[Correction, ...]:
     )
 
 
+#: Project Gutenberg #19786 prints Salomo Keyzer's Dutch Koran. The upstream snapshot (Tanzil's
+#: `nl.keyzer`) lost the leading letters of the mystic-letter verses, leaving "M" for
+#: "A. L. M." at 2:1. Gutenberg gives the full opening for each one.
+GUTENBERG_DUTCH: Final = "https://www.gutenberg.org/ebooks/19786"
+
+_KEYZER_OPENINGS: Final = (
+    (2, "M", "A. L. M."),
+    (3, "M", "A. L. M."),
+    (7, "M. S", "A. L. M. S."),
+    (12, "R. Dit zijn teekens", "E. L. R. Dit zijn teekens"),
+    (13, "M. R. Ziehier", "A. L. M. R. Ziehier"),
+    (14, "R. Dit boek", "E. L. R. Dit boek"),
+    (15, "R. Dit zijn de teekens", "E. L. R. Dit zijn de teekens"),
+    (19, "Y. A. S", "C. H. Y. A. S."),
+    (20, "H", "T. H."),
+    (26, "M", "T. S. M."),
+    (27, "Dit zijn de teekenen van den Koran", "T. S. Dit zijn de teekenen van den Koran"),
+    (28, "M", "T. S. M."),
+    (29, "M", "A. L. M."),
+    (30, "M", "A. L. M."),
+    (31, "M", "A. L. M."),
+    (32, "M", "A. L. M."),
+)
+
+KEYZER_CORRECTIONS: Final[tuple[Correction, ...]] = tuple(
+    Correction(
+        lang="dutch_keyzer",
+        chapter=chapter,
+        verse=1,
+        defective=defective,
+        restored=restored,
+        evidence=(
+            f"{GUTENBERG_DUTCH} opens chapter {chapter} with '{restored}'; the upstream "
+            f"snapshot begins '{defective}', the leading letters lost."
+        ),
+        at_start=True,
+    )
+    for chapter, defective, restored in _KEYZER_OPENINGS
+)
+
 CORRECTIONS: Final[tuple[Correction, ...]] = (
     Correction(
         lang="english_yusuf_ali",
@@ -123,6 +165,7 @@ CORRECTIONS: Final[tuple[Correction, ...]] = (
         ),
     ),
     *_kemenag_spacing_corrections(),
+    *KEYZER_CORRECTIONS,
 )
 
 
@@ -153,7 +196,12 @@ def apply_corrections(
             if item["verse"] != correction.verse:
                 continue
             text = item["text"]
-            if correction.defective not in text:
+            present = (
+                text.startswith(correction.defective)
+                if correction.at_start
+                else correction.defective in text
+            )
+            if not present:
                 raise ValueError(
                     f"{correction.key()}: defective fragment absent, upstream may have "
                     f"changed -- re-derive the correction. Got: {text[:120]!r}"
