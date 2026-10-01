@@ -346,7 +346,9 @@ export function mergeChapter({
 }: MergeInput): MergedVerse[] {
   const aligned = alignsWithHafs(script, chapterId) && canJoinWithHafs(script, arabic.verses);
   const showRomanisation =
-    aligned && romanisation !== null && transliterationApplies(script, romanisation.edition, chapterId);
+    aligned &&
+    romanisation !== null &&
+    transliterationApplies(script, romanisation.edition, chapterId);
 
   return arabic.verses.map((verse) => {
     const merged: MergedVerse = { ...verse };
@@ -475,7 +477,8 @@ export function normalizePrefs(raw: unknown, catalogue: BootCatalogue): ReaderPr
         : null,
     reciter: typeof state.reciter === "string" ? state.reciter : null,
     font:
-      typeof state.font === "string" && usableFonts(catalogue.coverage, script?.id ?? null).includes(state.font)
+      typeof state.font === "string" &&
+      usableFonts(catalogue.coverage, script?.id ?? null).includes(state.font)
         ? state.font
         : "auto",
     size: Number.isFinite(size)
@@ -519,4 +522,36 @@ export function applyLinkParams(
   }
 
   return normalizePrefs(raw, catalogue);
+}
+
+/** Unnumbered text a script's source puts before a chapter's verses (Duri's bismillah). */
+export function chapterFurniture(script: Script, chapterId: number): string[] {
+  return (script.chapter_furniture ?? [])
+    .filter(
+      (item) =>
+        item.chapter === chapterId && item.position === "before-verses" && item.numbered === false,
+    )
+    .map((item) => item.text);
+}
+
+const COMBINING_MARKS = /[ـً-ٰٟۖ-ۭ࣓-ࣿ\s]/g;
+
+/** Whether verse text is the bismillah, read off its letters across the orthographies. */
+export function isBismillah(text: string): boolean {
+  return text.replace(COMBINING_MARKS, "").startsWith("بسم");
+}
+
+/**
+ * Whether a chapter opens with the bismillah drawn from the script's own 1:1. Only Hafs-numbered
+ * scripts, where 1:1 is the bismillah itself; chapter 1 carries it as verse 1 and chapter 9 has
+ * none. Scripts that number differently, or carry it as furniture, are left to their data.
+ */
+export function showsOpeningBismillah(script: Script, chapterId: number): boolean {
+  return (
+    script.verse_ids === "hafs" &&
+    scriptReading(script) === "hafs" &&
+    chapterId !== 1 &&
+    chapterId !== 9 &&
+    chapterFurniture(script, chapterId).length === 0
+  );
 }

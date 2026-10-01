@@ -58,7 +58,10 @@ export function audioAvailability(script: Script, reciter: Reciter): AudioAvaila
   const reading = recordingReading(reciter);
 
   if (reading !== identity.reading) {
-    return { ok: false, reason: `This recording is ${reading}; ${script.name} is ${identity.reading}.` };
+    return {
+      ok: false,
+      reason: `This recording is ${reading}; ${script.name} is ${identity.reading}.`,
+    };
   }
 
   if (reciter.scope === "surah") {

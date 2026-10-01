@@ -19,9 +19,21 @@ import type {
 } from "./types";
 
 export interface SourcesMeta {
-  text: { source: string; status: string; license: string; license_url: string; scripts?: string[] };
+  text: {
+    source: string;
+    status: string;
+    license: string;
+    license_url: string;
+    scripts?: string[];
+  };
   editions: { edition: string; path: string; author: string; status: string; license: string }[];
-  withheld: { edition: string; author: string; status: string; license_url?: string; reason?: string }[];
+  withheld: {
+    edition: string;
+    author: string;
+    status: string;
+    license_url?: string;
+    reason?: string;
+  }[];
 }
 
 export interface SiteCatalog {
@@ -36,11 +48,15 @@ export interface SiteCatalog {
 
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
 
-const dataRoot = resolve(process.env.QURAN_JSON_SITE_DATA ?? resolve(repositoryRoot, ".build/data"));
+const dataRoot = resolve(
+  process.env.QURAN_JSON_SITE_DATA ?? resolve(repositoryRoot, ".build/data"),
+);
 
 // The coverage report is written outside the data tree (it is never published), so its path
 // is handed over explicitly by `scripts/build-site.mjs`.
-const fontsPath = resolve(process.env.QURAN_JSON_FONTS ?? resolve(repositoryRoot, ".build/fonts.json"));
+const fontsPath = resolve(
+  process.env.QURAN_JSON_FONTS ?? resolve(repositoryRoot, ".build/fonts.json"),
+);
 
 function readJson<T>(path: string): T {
   return JSON.parse(readFileSync(path, "utf8")) as T;
@@ -60,7 +76,9 @@ export function loadCatalog(): SiteCatalog {
     chapters: readJson<Chapter[]>(resolve(dataRoot, "chapters.json")),
     translations: readJson<Catalogue>(resolve(dataRoot, "translations/index.json")),
     transliterations: readJson<Catalogue>(resolve(dataRoot, "transliteration/index.json")),
-    reciters: manifest.audio ? readJson<ReciterIndex>(resolve(dataRoot, "audio/reciters.json")) : null,
+    reciters: manifest.audio
+      ? readJson<ReciterIndex>(resolve(dataRoot, "audio/reciters.json"))
+      : null,
     coverage: readJson<FontCoverage>(fontsPath),
     sources: readJson<SourcesMeta>(resolve(dataRoot, "meta/sources.json")),
   };

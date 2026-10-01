@@ -1,0 +1,25 @@
+---
+import ReaderApp from "../../components/reader/ReaderApp";
+import Base from "../../layouts/Base.astro";
+import { loadCatalog, readerBoot } from "../../lib/catalog";
+
+const boot = readerBoot(loadCatalog());
+---
+
+<Base
+  current="reader"
+  wide
+  title="Reader · quran-json"
+  description="Read the Quran in any published script with translations, transliteration and audio."
+>
+  <noscript>
+    <p class="text-muted-foreground p-4 text-sm">
+      The reader needs JavaScript. The data is plain JSON: see the{" "}
+      <a href="/" class="link">
+        docs
+      </a>
+      .
+    </p>
+  </noscript>
+  <ReaderApp client:only="react" boot={boot} />
+</Base>

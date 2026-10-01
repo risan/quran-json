@@ -34,7 +34,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site);
             mode = saved;
           }
         } catch (error) {}
-        var dark = mode === "dark" || (mode === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
+        var dark =
+          mode === "dark" ||
+          (mode === "system" && matchMedia("(prefers-color-scheme: dark)").matches);
         document.documentElement.classList.toggle("dark", dark);
         document.documentElement.dataset.theme = mode;
       })();

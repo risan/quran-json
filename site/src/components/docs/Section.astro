@@ -9,7 +9,9 @@ const { id, title } = Astro.props;
 
 <section id={id} aria-labelledby={`${id}-title`} class="space-y-3">
   <h2 id={`${id}-title`} class="text-[15px] font-semibold">
-    <a href={`#${id}`} class="text-foreground no-underline hover:underline">{title}</a>
+    <a href={`#${id}`} class="text-foreground no-underline hover:underline">
+      {title}
+    </a>
   </h2>
   <slot />
 </section>

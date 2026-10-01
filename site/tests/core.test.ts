@@ -302,9 +302,9 @@ describe("reading slugs", () => {
     expect(scriptIdentity(warsh).perAyah).toBe(false);
     expect(scriptIdentity(duri).perAyah).toBe(false);
     expect(scriptIdentity(hafsNastaliq).perAyah).toBe(true);
-    expect(scriptIdentity(script({ id: "x", verse_ids: "hafs", audio: { per_ayah: false } })).perAyah).toBe(
-      false,
-    );
+    expect(
+      scriptIdentity(script({ id: "x", verse_ids: "hafs", audio: { per_ayah: false } })).perAyah,
+    ).toBe(false);
   });
 });
 
