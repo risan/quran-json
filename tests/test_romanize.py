@@ -442,6 +442,24 @@ def test_the_report_lists_counts_and_at_most_fifty_examples_per_class(
         assert section.count("\n* ") <= validation.EXAMPLES_PER_CLASS
 
 
+def test_the_report_lists_every_non_matching_verse_with_its_class(
+    snapshot: Mapping[str, Sequence[Mapping[str, Any]]],
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    chosen = {key: snapshot[key] for key in ("2", "3", "4")}
+    monkeypatch.setattr(validation, "load_snapshot", lambda: chosen)
+    report = tmp_path / "report.md"
+    romanize.write_report(report)
+    text = report.read_text(encoding="utf-8")
+    found = list(validation.mismatches(chosen))
+    table = text.split("| verse | class |\n|---|---|\n")[1].strip().splitlines()
+
+    assert len(found) > validation.EXAMPLES_PER_CLASS
+    assert table == [f"| {item.key} | {item.category} |" for item in found]
+    assert f"## Every non-matching verse ({len(found)})" in text
+
+
 # -- comparison helpers -------------------------------------------------------------------------
 
 

@@ -106,6 +106,17 @@ def fonts(
     typer.echo(f"font coverage for {len(report['scripts'])} scripts written to {out}")
 
 
+@app.command(name="romanize-report")
+def romanize_report(
+    out: Annotated[Path, typer.Option("--out", "-o", help="Where to write the markdown report.")],
+) -> None:
+    """Write the transliteration disagreement report: every non-matching verse and its class."""
+    from .romanize_validation import write_report
+
+    write_report(out)
+    typer.echo(f"romanize report written to {out}")
+
+
 @app.command()
 def crosscheck(
     script: Annotated[
