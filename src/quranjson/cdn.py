@@ -185,7 +185,9 @@ def _kemenag_chapters() -> list[dict[str, Any]]:
     The snapshot also holds the ministry's translation and transliteration, which are
     protected and never published; only the text is covered by a grant.
     """
-    snapshot: dict[str, list[dict[str, Any]]] = read_json(config.kemenag_path())
+    # The committed snapshot stays exactly as the upstream served it; its recorded spacing slips
+    # are restored here, and the build fails if upstream has already fixed one of them.
+    snapshot = qa.apply_corrections(config.KEMENAG_SCRIPT, read_json(config.kemenag_path()))
 
     return [
         {
