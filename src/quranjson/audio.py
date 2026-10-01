@@ -71,11 +71,58 @@ AUDIO_HOSTS: dict[str, dict[str, Any]] = {
 }
 
 EVERYAYAH_MANIFEST = "https://everyayah.com/data/recitations.js"
+EVERYAYAH_DIRECTORY = "https://everyayah.com/data/"
 MP3QURAN_MANIFEST = "https://mp3quran.net/api/v3/reciters?language=eng"
 ISLAMIC_NETWORK_BY_AYAH = "https://cdn.islamic.network/quran/info/by-ayah/info.json"
 ISLAMIC_NETWORK_BY_SURAH = "https://cdn.islamic.network/quran/info/by-surah/info.json"
 
 _BITRATE = re.compile(r"(\d+)")
+
+#: Which reading a recording is in, and whether its per-ayah numbering is known to be the
+#: Hafs one. A client must not build a per-ayah URL for a script whose reading or numbering
+#: differs from the recording's: a Warsh text addressed with Hafs ayah numbers plays the wrong
+#: verse. `unknown` means the host does not say, never "probably Hafs".
+READING_UNKNOWN = "unknown"
+
+#: EveryAyah folders that carry a spoken translation, not a recitation of the Arabic.
+_EVERYAYAH_TRANSLATION_PREFIXES = ("English/", "MultiLanguage/", "translations/")
+
+#: MP3Quran names every moshaf "<riwayah> - <style>". The riwayah half maps to a reading id;
+#: the ids equal the script ids in `config` where this project publishes the text.
+_MP3QURAN_READINGS: dict[str, str] = {
+    "Rewayat Hafs A'n Assem": "hafs",
+    "Rewayat Warsh A'n Nafi'": "warsh",
+    "Rewayat Warsh A'n Nafi' Men Tariq Alazraq": "warsh",
+    "Rewayat Warsh A'n Nafi' Men Tariq Abi Baker Alasbahani": "warsh",
+    "Rewayat Qalon A'n Nafi'": "qalun",
+    "Rewayat Qalon A'n Nafi' Men Tariq Abi Nasheet": "qalun",
+    "Rewayat Aldori A'n Abi Amr": "duri-abu-amr",
+    "Rewayat Assosi A'n Abi Amr": "susi",
+    "Sho'bah A'n Asim": "shubah",
+    "Rewayat Albizi A'n Ibn Katheer": "bazzi",
+    "Rewayat Qunbol A'n Ibn Katheer": "qunbul",
+    "Rewayat Albizi and Qunbol A'n Ibn Katheer": "bazzi-qunbul",
+    "Rewayat Khalaf A'n Hamzah": "khalaf",
+    "Rewayat AlDorai A'n Al-Kisa'ai": "duri-kisai",
+    "Rewayat Rowis and Rawh A'n Yakoob Al Hadrami": "ruways-rawh",
+    "Ibn Thakwan A'n Ibn Amer": "ibn-dhakwan",
+    "Hesham A'n Abi A'mer": "hisham",
+    "Ibn Jammaz A'n Abi Ja'far": "ibn-jammaz",
+}
+
+#: Islamic Network states a non-Hafs reading in the edition's identifier and in its name,
+#: for example `ar.aliabdurrahmanalhuthaifyqaloon`. An Arabic edition with no such marker is
+#: not thereby Hafs: Maghribi reciters whose MP3Quran recordings are Warsh appear unmarked.
+#: Only the per-ayah editions, a curated set of well-known Hafs reciters whose files carry the
+#: global Hafs ayah number 1-6236, are taken as Hafs.
+_ISLAMIC_NETWORK_MARKERS: dict[str, str] = {
+    "qaloon": "qalun",
+    "doori": "duri-abu-amr",
+    "shubah": "shubah",
+    "soosi": "susi",
+    "kasaaee": "abu-al-harith",
+}
+_ISLAMIC_NETWORK_TRANSLATION_MARKERS = ("traduit",)
 
 
 def _recitations(payload: Any) -> dict[str, Any]:
@@ -95,6 +142,55 @@ def _recitations(payload: Any) -> dict[str, Any]:
     ]
 
     return {"ayah_count": payload["ayahCount"], "recitations": recitations}
+
+
+def mp3quran_reading(recitation: str) -> str:
+    """The reading id for an MP3Quran moshaf name, or `unknown` when it names none.
+
+    `Almusshaf Al Mojawwad` and `Almusshaf Al Mo'lim` are styles of mushaf, not riwayat, so
+    they stay unknown instead of being assumed Hafs.
+    """
+    riwayah = " ".join(recitation.split(" - ")[0].split())
+
+    return _MP3QURAN_READINGS.get(riwayah, READING_UNKNOWN)
+
+
+def _everyayah_identity(folder: str) -> dict[str, Any]:
+    """Reading, content and verse numbering of one EveryAyah folder."""
+    if folder.startswith(_EVERYAYAH_TRANSLATION_PREFIXES):
+        return {"reading": READING_UNKNOWN, "content": "translation", "verse_ids": None}
+
+    if folder.startswith("warsh/"):
+        # Warsh numbers some surahs differently from Hafs and nobody has checked these
+        # folders' file numbering against it, so no per-ayah URL may be built from Hafs ids.
+        return {"reading": "warsh", "content": "recitation", "verse_ids": None}
+
+    return {"reading": "hafs", "content": "recitation", "verse_ids": "hafs"}
+
+
+def _islamic_network_identity(edition: str, scope: str) -> dict[str, Any]:
+    """Reading, content and (per-ayah) verse numbering of one Islamic Network edition."""
+    reading = READING_UNKNOWN
+    content = "recitation"
+
+    if not edition.startswith("ar.") or any(
+        marker in edition for marker in _ISLAMIC_NETWORK_TRANSLATION_MARKERS
+    ):
+        content = "translation"
+    else:
+        marker = next((name for name in _ISLAMIC_NETWORK_MARKERS if name in edition), None)
+
+        if marker is not None:
+            reading = _ISLAMIC_NETWORK_MARKERS[marker]
+        elif scope == "ayah":
+            reading = "hafs"
+
+    identity: dict[str, Any] = {"reading": reading, "content": content}
+
+    if scope == "ayah":
+        identity["verse_ids"] = "hafs" if reading == "hafs" else None
+
+    return identity
 
 
 def _mp3quran(payload: Any) -> dict[str, Any]:
@@ -169,6 +265,16 @@ def audio_tasks() -> list[FetchTask]:
             license=config.ISLAMIC_NETWORK_AUDIO,
             transform=_directory_inventory,
         ),
+        # Folders that answer HTTP 200 on everyayah.com but are missing from its own
+        # `recitations.js`. Reviewed by hand, so a refresh never overwrites it.
+        FetchTask(
+            path=config.DATA / "audio" / "everyayah_unlisted.json",
+            url=EVERYAYAH_DIRECTORY,
+            source=AUDIO_HOSTS[EVERYAYAH]["name"],
+            license=config.EVERYAYAH_AUDIO,
+            refresh=False,
+            source_metadata={"manual_registration": True, "manifest": EVERYAYAH_MANIFEST},
+        ),
     ]
 
 
@@ -200,13 +306,14 @@ def _host_entry(host: str) -> dict[str, Any]:
 def build_audio_index(out_dir: Path, *, pretty: bool = False) -> dict[str, Any]:
     """Write `reciters.json` describing every audio edition we can point consumers at."""
     everyayah = read_json(config.DATA / "audio" / "everyayah.json")
+    everyayah_unlisted = read_json(config.DATA / "audio" / "everyayah_unlisted.json")
     mp3quran = read_json(config.DATA / "audio" / "mp3quran.json")
     by_ayah = read_json(config.DATA / "audio" / "islamic_network_by_ayah.json")
     by_surah = read_json(config.DATA / "audio" / "islamic_network_by_surah.json")
 
     reciters: list[dict[str, Any]] = []
 
-    for entry in everyayah["recitations"]:
+    for entry in [*everyayah["recitations"], *everyayah_unlisted["recitations"]]:
         reciters.append(
             {
                 "id": f"{EVERYAYAH}/{entry['id']}",
@@ -214,6 +321,7 @@ def build_audio_index(out_dir: Path, *, pretty: bool = False) -> dict[str, Any]:
                 "name": entry["name"],
                 "bitrate_kbps": entry["bitrate_kbps"],
                 "scope": "ayah",
+                **_everyayah_identity(entry["id"]),
                 "url": AUDIO_HOSTS[EVERYAYAH]["template"].replace("{reciter}", entry["id"]),
             }
         )
@@ -227,6 +335,8 @@ def build_audio_index(out_dir: Path, *, pretty: bool = False) -> dict[str, Any]:
                 "recitation": entry["recitation"],
                 "surah_total": entry["surah_total"],
                 "scope": "surah",
+                "reading": mp3quran_reading(entry["recitation"]),
+                "content": "recitation",
                 "url": AUDIO_HOSTS[MP3QURAN]["template"].replace("{reciter}", entry["server"]),
             }
         )
@@ -240,6 +350,7 @@ def build_audio_index(out_dir: Path, *, pretty: bool = False) -> dict[str, Any]:
                     "name": edition,
                     "bitrate_kbps": int(bitrate),
                     "scope": "ayah",
+                    **_islamic_network_identity(edition, "ayah"),
                     "ayah_files": count,
                     "url": AUDIO_HOSTS[ISLAMIC_NETWORK]["template"]
                     .replace("{bitrate}", bitrate)
@@ -256,6 +367,7 @@ def build_audio_index(out_dir: Path, *, pretty: bool = False) -> dict[str, Any]:
                     "name": edition,
                     "bitrate_kbps": int(bitrate),
                     "scope": "surah",
+                    **_islamic_network_identity(edition, "surah"),
                     "surah_files": count,
                     "url": AUDIO_HOSTS[ISLAMIC_NETWORK]["surah_template"]
                     .replace("{bitrate}", bitrate)

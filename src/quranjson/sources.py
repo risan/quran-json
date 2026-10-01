@@ -8,9 +8,10 @@ provenance (URL, sha256, fetch time, license) in `data/meta/sources.json`.
 from __future__ import annotations
 
 import json
+import re
 import unicodedata
 from collections import Counter
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from hashlib import sha256
@@ -23,10 +24,10 @@ from . import config, qa
 from .http import Fetcher
 from .jsonio import read_json, write_json
 
-__all__ = ["FetchTask", "fetch_all", "tasks", "verify_snapshots"]
+__all__ = ["FetchTask", "check_all", "fetch_all", "tasks", "verify_snapshots"]
 
-CHAPTERS_SOURCE: Final = "api.quran.com v4"
-CHAPTERS_BASE: Final = "https://api.quran.com/api/v4/chapters"
+#: A refresh that changes more verses than this is summarised by count only.
+MAX_LISTED_VERSES: Final = 100
 
 EDITION_BASE: Final = "https://cdn.jsdelivr.net/gh/fawazahmed0/quran-api@1/editions"
 
@@ -69,21 +70,6 @@ class FetchTask:
         return str(self.path.relative_to(config.ROOT))
 
 
-def _chapter_list(payload: dict[str, Any]) -> list[dict[str, Any]]:
-    """Reshape the quran.com chapter list into the snapshot format."""
-    return [
-        {
-            "id": chapter["id"],
-            "name": chapter["name_arabic"],
-            "transliteration": chapter["name_simple"],
-            "translation": chapter["translated_name"]["name"],
-            "type": "meccan" if chapter["revelation_place"] == "makkah" else "medinan",
-            "total_verses": chapter["verses_count"],
-        }
-        for chapter in payload["chapters"]
-    ]
-
-
 def _group_by_chapter(payload: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
     """Reshape a flat verse list into `{chapter: [verses]}` -- `_.groupBy` equivalent."""
     grouped: dict[str, list[dict[str, Any]]] = {}
@@ -92,55 +78,57 @@ def _group_by_chapter(payload: dict[str, Any]) -> dict[str, list[dict[str, Any]]
     return grouped
 
 
+#: Editions whose upstream text ends clauses with `[n]` markers that point at footnotes the
+#: snapshot does not carry. The markers are not the translator's text, so they are removed.
+FOOTNOTE_MARKER_EDITIONS: Final = frozenset({"urdu_mahmudulhasan"})
+
+#: A bracketed number (`\d` covers Persian digits), optionally `n/m`. Upstream mangles a few:
+#: either bracket may face the wrong way, and an alif stands in for a digit.
+#: Bracketed words (the translator's glosses) do not match.
+_FOOTNOTE_MARKER: Final = re.compile(r"\s*[\[\]][\d/\u0627]+[\]\[]")
+
+#: One marker lost its brackets and sits inside a word (72:2); digits are never the text.
+_STRAY_DIGIT: Final = re.compile(r"\d")
+
+#: Pinned upstream bytes for a public-domain text served from a host we cannot always reach
+#: (tanzil.net's TLS certificate expired in 2026), so a later refetch cannot change it silently.
+PINNED_EXTRA_SOURCES: Final = {
+    "urdu_kanzuliman": "b946a4072c9dd2ca2e302283b78b8c3e47a7ff98a90c8da6ff663a33703af801",
+}
+
+
+def strip_footnote_markers(
+    grouped: dict[str, list[dict[str, Any]]],
+) -> dict[str, list[dict[str, Any]]]:
+    """Remove dangling `[n]` footnote markers from every verse, in place."""
+    for verses in grouped.values():
+        for verse in verses:
+            text = _STRAY_DIGIT.sub("", _FOOTNOTE_MARKER.sub("", verse["text"])).strip()
+            # 4:171 opens with the remains of a marker whose number is lost.
+            if text.startswith("[") and "]" not in text:
+                text = text[1:].lstrip()
+
+            verse["text"] = text
+
+    return grouped
+
+
 def _qa_transform(lang: str) -> Callable[[dict[str, Any]], dict[str, list[dict[str, Any]]]]:
     """Group a flat edition into chapters, then restore known upstream defects."""
 
     def transform(payload: dict[str, Any]) -> dict[str, list[dict[str, Any]]]:
-        return qa.apply_corrections(lang, _group_by_chapter(payload))
+        grouped = _group_by_chapter(payload)
+        if lang in FOOTNOTE_MARKER_EDITIONS:
+            strip_footnote_markers(grouped)
+
+        return qa.apply_corrections(lang, grouped)
 
     return transform
 
 
-def tasks(*, langs: tuple[str, ...] | None = None) -> list[FetchTask]:
-    """Every snapshot the build depends on, optionally restricted to ``langs``."""
-    selected = set(langs) if langs is not None else None
-
-    out: list[FetchTask] = [
-        FetchTask(
-            path=config.text_path(),
-            url=f"{EDITION_BASE}/{config.TEXT_EDITION}.json",
-            source="quranenc.com via fawazahmed0/quran-api",
-            license=config.SHIPPED_TEXT,
-        )
-    ]
-
-    for lang in config.LANG_CODES:
-        if lang is None:
-            continue
-        if selected is not None and lang not in selected:
-            continue
-        out.append(
-            FetchTask(
-                path=config.chapter_list_path(lang),
-                url=f"{CHAPTERS_BASE}?language={lang}",
-                source=CHAPTERS_SOURCE,
-                license=config.QURAN_COM_METADATA,
-                transform=_chapter_list,
-            )
-        )
-
-    for edition in config.EDITIONS:
-        if selected is not None and edition.lang not in selected:
-            continue
-        out.append(
-            FetchTask(
-                path=config.edition_path(edition.lang),
-                url=f"{EDITION_BASE}/{edition.slug}.json",
-                source=edition.source,
-                license=edition.license,
-                transform=_group_by_chapter,
-            )
-        )
+def tasks() -> list[FetchTask]:
+    """Every snapshot the build depends on."""
+    out: list[FetchTask] = []
 
     from .audio import audio_tasks
 
@@ -149,13 +137,17 @@ def tasks(*, langs: tuple[str, ...] | None = None) -> list[FetchTask]:
     return out
 
 
-def licensed_tasks() -> list[FetchTask]:
-    """Snapshots for the licensed dataset generation: Tanzil, QuranEnc, Qur'an Kemenag.
+def _selected(task: FetchTask, only: Sequence[str] | None) -> bool:
+    """Whether a task is in scope: no filter selects everything, else a path prefix match."""
+    return not only or any(task.rel.startswith(prefix) for prefix in only)
 
-    These are the sources whose grants actually cover redistribution, as opposed to the
-    re-encoded derivative the frozen `dist/` tree was built from. Qur'an Kemenag is the
-    exception in kind rather than in treatment: only its text is publishable, so the
-    snapshot is fetched and its three verdicts travel with it into the provenance file.
+
+def licensed_tasks() -> list[FetchTask]:
+    """Snapshots for the published text, translations and scripts.
+
+    Qur'an Kemenag is the exception in kind rather than in treatment: only its text is
+    publishable, so the snapshot is fetched and its three verdicts travel with it into the
+    provenance file.
     """
     from . import quranenc, tanzil
 
@@ -216,6 +208,7 @@ def licensed_tasks() -> list[FetchTask]:
 
     parsers = {
         "clearquran": clearquran.parse_verse_files,
+        "tanzil": tanzil.parse_text,
         "quranenc": None,  # handled by the QuranEnc catalogue pass above
     }
 
@@ -230,6 +223,7 @@ def licensed_tasks() -> list[FetchTask]:
                 parse=parsers.get(kind),
                 transform=None if kind != "quran-api" else _qa_transform(edition.lang),
                 compact=True,
+                source_sha256=PINNED_EXTRA_SOURCES.get(edition.lang),
             )
         )
 
@@ -241,10 +235,18 @@ def licensed_tasks() -> list[FetchTask]:
                 url=entry["database_url"],
                 source=f"quranenc.com/{entry['key']} v{entry['version']}",
                 license=config.QURANENC,
+                # An edition without an archive is crawled surah by surah.
                 parse=(
-                    quranenc.parse_complete_translation_allow_empty
+                    None
+                    if entry.get("ingest") == "api"
+                    else quranenc.parse_complete_translation_allow_empty
                     if entry.get("allow_empty")
                     else quranenc.parse_complete_translation
+                ),
+                gather=(
+                    quranenc.api_gatherer(entry["key"], allow_empty=bool(entry.get("allow_empty")))
+                    if entry.get("ingest") == "api"
+                    else None
                 ),
                 compact=True,
                 source_sha256=entry.get("archive_sha256"),
@@ -261,6 +263,7 @@ def licensed_tasks() -> list[FetchTask]:
                     ),
                     "terms_url": quranenc.TERMS_URL,
                     **({"manual_registration": True} if entry.get("manual_registration") else {}),
+                    **({"ingest": "api"} if entry.get("ingest") == "api" else {}),
                     **(
                         {
                             "availability": entry["availability"],
@@ -352,9 +355,7 @@ def _normalise(
     if transform is not None:
         return transform(payload)
 
-    if "chapters" in payload:
-        return _chapter_list(payload)
-    return _group_by_chapter(payload)
+    return payload
 
 
 def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
@@ -365,7 +366,7 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
     text-bearing snapshots the character-level delta is recorded too, because a
     re-encoded orthography is the failure mode that actually bites.
     """
-    if isinstance(old, dict) and isinstance(new, dict):
+    if _is_verse_table(old) and _is_verse_table(new):
         changed = total = 0
         before_text: Counter[str] = Counter()
         after_text: Counter[str] = Counter()
@@ -386,6 +387,9 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
 
         summary: dict[str, Any] = {"kind": "records", "records": total, "changed": changed}
 
+        if 0 < changed <= MAX_LISTED_VERSES:
+            summary["changed_verses"] = _changed_verses(old, new)
+
         if changed:
             summary["codepoint_delta"] = {
                 "added": _rare_codepoints(before_text, after_text),
@@ -402,7 +406,32 @@ def _summarise_change(old: Any, new: Any) -> dict[str, Any]:
             "changed": changed + abs(len(old) - len(new)),
         }
 
+    if isinstance(old, dict) and isinstance(new, dict):
+        keys = sorted(set(old) | set(new))
+        changed_keys = [key for key in keys if old.get(key) != new.get(key)]
+        return {"kind": "object", "changed": len(changed_keys), "changed_keys": changed_keys}
+
     return {"kind": "opaque", "changed": int(old != new)}
+
+
+def _is_verse_table(value: Any) -> bool:
+    """A chapter-keyed snapshot: `{"1": [verse, ...], ...}`, as opposed to a catalogue."""
+    if not isinstance(value, dict) or not value:
+        return False
+
+    return all(key.isdigit() and isinstance(verses, list) for key, verses in value.items())
+
+
+def _changed_verses(old: dict[str, Any], new: dict[str, Any]) -> list[str]:
+    """`chapter:verse` of every record that differs, for a small refresh."""
+    out: list[str] = []
+
+    for key in sorted(old, key=int):
+        for before, after in zip(old[key], new.get(key, []), strict=False):
+            if before != after:
+                out.append(f"{key}:{before.get('verse', '?')}")
+
+    return out
 
 
 def _rare_codepoints(reference: Counter[str], subject: Counter[str]) -> list[str]:
@@ -431,17 +460,76 @@ def _validate_source_payload(task: FetchTask, raw: bytes) -> None:
         )
 
 
+def _download(task: FetchTask, client: Fetcher) -> Any:
+    """Fetch one upstream and reshape it into snapshot form, without writing anything."""
+    if task.gather is not None:
+        return task.gather(client)
+
+    raw = client.get_bytes(task.url)
+    _validate_source_payload(task, raw)
+
+    return _normalise(raw, task.transform, task.parse)
+
+
+def check_all(*, fetcher: Fetcher | None = None, only: Sequence[str] | None = None) -> list[str]:
+    """Compare every upstream with its committed snapshot, writing nothing.
+
+    Returns one line per snapshot that differs or could not be checked; empty means every
+    snapshot is current. Manually reviewed snapshots (``refresh`` off) have no upstream
+    payload to compare and are skipped.
+    """
+    owned = fetcher is None
+    client = fetcher or Fetcher()
+    findings: list[str] = []
+
+    try:
+        for task in tasks():
+            if not task.refresh or not _selected(task, only):
+                continue
+
+            if not task.path.exists():
+                findings.append(f"MISSING {task.rel}: no committed snapshot for {task.url}")
+                continue
+
+            try:
+                payload = _download(task, client)
+            except Exception as error:
+                findings.append(f"ERROR   {task.rel}: {type(error).__name__}: {error}")
+                continue
+
+            # Compare as JSON, the form the snapshot is stored in.
+            committed = read_json(task.path)
+            upstream = orjson.loads(orjson.dumps(payload))
+
+            if upstream == committed:
+                continue
+
+            summary = _summarise_change(committed, upstream)
+            detail = (
+                f"{summary['changed']} of {summary['records']} records differ"
+                if summary.get("changed") and "records" in summary
+                else "content differs"
+            )
+            findings.append(f"CHANGED {task.rel}: {detail} ({task.url})")
+    finally:
+        if owned:
+            client.close()
+
+    return findings
+
+
 def fetch_all(
     *,
     force: bool = False,
-    langs: tuple[str, ...] | None = None,
     fetcher: Fetcher | None = None,
+    only: Sequence[str] | None = None,
 ) -> list[dict[str, Any]]:
     """Download every missing snapshot and refresh the provenance manifest.
 
     Existing files are kept unless ``force`` is set, so the build stays reproducible.
-    With ``force``, any snapshot whose content changed is recorded in
-    ``data/meta/drift.json`` before it is replaced.
+    With ``force``, any snapshot whose content changed is appended to
+    ``data/meta/drift.json`` before it is replaced. ``only`` limits the refresh to snapshots
+    whose repo-relative path starts with one of the given prefixes.
     """
     drift: list[dict[str, Any]] = []
     owned = fetcher is None
@@ -451,9 +539,11 @@ def fetch_all(
         # Two passes: the QuranEnc catalogue is itself a snapshot, and the per-translation
         # tasks only exist once it has been fetched. The second pass picks those up.
         for _ in range(2):
-            selected = tasks(langs=langs)
+            selected = tasks()
             pending = [
-                task for task in selected if task.refresh and (force or not task.path.exists())
+                task
+                for task in selected
+                if task.refresh and _selected(task, only) and (force or not task.path.exists())
             ]
 
             if not pending:
@@ -464,12 +554,7 @@ def fetch_all(
                 previous_sha = (
                     sha256(task.path.read_bytes()).hexdigest() if previous is not None else None
                 )
-                if task.gather is not None:
-                    payload = task.gather(client)
-                else:
-                    raw = client.get_bytes(task.url)
-                    _validate_source_payload(task, raw)
-                    payload = _normalise(raw, task.transform, task.parse)
+                payload = _download(task, client)
                 summary = _summarise_change(previous, payload) if previous is not None else None
 
                 write_json(task.path, payload, pretty=not task.compact)
@@ -490,9 +575,11 @@ def fetch_all(
             client.close()
 
     if drift:
-        write_json(config.DATA / "meta" / "drift.json", drift, pretty=True)
+        drift_path = config.DATA / "meta" / "drift.json"
+        history = read_json(drift_path) if drift_path.exists() else []
+        write_json(drift_path, [*history, *drift], pretty=True)
 
-    records = [_record(task) for task in tasks(langs=langs)]
+    records = [_record(task) for task in tasks()]
     write_json(config.DATA / "meta" / "sources.json", records, pretty=True)
     qa.write_manifest()
     return records

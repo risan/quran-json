@@ -5,8 +5,8 @@
   // it must be built in the same run. CORS and the caching rules come from the generated
   // _headers file inside that directory, which Workers static assets parses natively.
   //
-  // Paths carry no version, so the immutable caching in _headers rests on a promise:
-  // published paths are never renamed, removed, or rewritten.
+  // Paths carry no version: a published path is never renamed or removed, but its content
+  // may receive upstream corrections, so _headers caches data for a day, not immutably.
   "name": "quran-json",
   "compatibility_date": "2026-09-14",
   "assets": {

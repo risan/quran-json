@@ -364,7 +364,7 @@
       "key": "vietnamese_rwwad",
       "lang": "vi",
       "direction": "ltr",
-      "version": "1.0.8",
+      "version": "1.0.9",
       "title": "Vietnamese Translation - Rowwad Translation Center",
       "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
       "database_url": "https://quranenc.com/downloads/sqlite/vietnamese_rwwad.zip"
@@ -643,7 +643,7 @@
       "key": "moore_rwwad",
       "lang": "mos",
       "direction": "ltr",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "title": "Moore Translation - Rowwad Translation Center",
       "description": "Translated by the team of the Rowwad Translation Center, in cooperation with the Rabwah Dawah Association, the Islamic Content Service Association in Languages, and the IslamHouse.com website.",
       "database_url": "https://quranenc.com/downloads/sqlite/moore_rwwad.zip"

@@ -1,7 +1,8 @@
 """Qur'anpedia.net's text dumps.
 
-The repository carries four distinct Quranpedia texts: the two Maghribi riwayat Warsh and
-Qalun, Hafs Nastaliq (mushaf 3), and al-Duri (mushaf 6). A different reading changes the
+The repository carries seven distinct Quranpedia texts: the two Maghribi riwayat Warsh and
+Qalun, Hafs Nastaliq (mushaf 3), al-Duri (mushaf 6), KFGQPC's Uthmanic Hafs (mushaf 2) and the
+specialist readings Shuʿbah (9) and al-Susi (10). A different reading changes the
 consonants and vowels of the text and, in places, where one ayah ends and the next begins.
 The Nastaliq text is a distinct digital edition even though its reading is Hafs; it must not
 replace the existing Indo-Pak text or imply byte compatibility with a printed edition.
@@ -45,6 +46,9 @@ MOUNT: Final[dict[str, int]] = {
     "qalun": 7,
     "hafs-nastaliq": 3,
     "duri": 6,
+    "qpc-hafs": 2,
+    "shubah": 9,
+    "susi": 10,
 }
 
 #: Pinned counts after parsing each dump. The al-Duri count is intentionally not copied from
@@ -54,32 +58,49 @@ VERSE_COUNT: Final[dict[str, int]] = {
     "qalun": 6214,
     "hafs-nastaliq": 6236,
     "duri": 6218,
+    "qpc-hafs": 6236,
+    "shubah": 6236,
+    "susi": 6217,
 }
 
 #: Source-faithful exceptions to a complete Hafs join. Al-Duri's first chapter carries the
 #: source's seven rows but maps to Hafs 2..7 with the final row covering Hafs 7 again; adding
 #: Hafs 1 would fabricate a join. The verse map remains published for auditability.
-MAPPING_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {"duri": (1,)}
+MAPPING_DIVERGENCE: Final[dict[str, tuple[int, ...]]] = {"duri": (1,), "susi": (1,)}
+
+#: Not published, and why. al-Bazzi (mushaf 5) and Qunbul (mushaf 8), both ʿan Ibn Kathir,
+#: carry the same defect: in Al-Jinn (72) the source map is non-monotonic and its last ayah
+#: maps to Hafs 2, which cannot be a join. They fail the mapping gate, and repairing the map
+#: here would be inventing a numbering the source does not state.
+SKIPPED: Final[dict[str, str]] = {
+    "bazzi": "mushaf 5: Al-Jinn (72) number_in_hafs is non-monotonic, last ayah maps to Hafs 2",
+    "qunbul": "mushaf 8: Al-Jinn (72) number_in_hafs is non-monotonic, last ayah maps to Hafs 2",
+}
 
 #: Raw archive identity from the Quranpedia manifest fetched with the committed snapshots.
 #: A refresh must update this table deliberately rather than silently replacing a text.
 DUMP_METADATA: Final[dict[str, dict[str, Any]]] = {
     "warsh": {
         "mushaf_id": 4,
-        "name": "Warsh",
-        "dump_version": "2026-09-18",
+        "name": "مصحف ورش",
+        "dump_version": "2026-09-29",
+        "archive_sha256": "af5fbabbd69c34c5ac60c31d65ef37bde64b54fe499939942cbc6a662a7ca51d",
+        "archive_bytes": 422507,
+        "bismillah": "بِسْمِ اِ۬للَّهِ اِ۬لرَّحْمَٰنِ اِ۬لرَّحِيمِ ",
     },
     "qalun": {
         "mushaf_id": 7,
-        "name": "Qalun",
-        "dump_version": "2026-09-18",
+        "name": "مصحف قالون",
+        "dump_version": "2026-09-30",
+        "archive_sha256": "ebb01c297e2fe4e2eaa6bdf903cc3c0b7c59bd0bf54c47d82906d873d966b80f",
+        "archive_bytes": 418528,
+        "bismillah": "بِسْمِ اِ۬للَّهِ اِ۬لرَّحْمَٰنِ اِ۬لرَّحِيمِ",
     },
     "hafs-nastaliq": {
         "mushaf_id": 3,
         "name": "مصحف حفص نستعليق",
-        "dump_version": "2026-09-20",
-        "built_at": "2026-09-20T03:46:39+00:00",
-        "archive_sha256": "fbec857dd613946604fd4c004d7322778ecf1c058c46080e30702e9bf9959b02",
+        "dump_version": "2026-09-30",
+        "archive_sha256": "46e39149452c3da020b56372a33832f55d81ce7a306a0a338b0b904c0cbed103",
         "archive_bytes": 395980,
         "description": "مصحف حفص نستعليق — not matching the printed edition",
         "bismillah": "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ \u0600",
@@ -87,12 +108,47 @@ DUMP_METADATA: Final[dict[str, dict[str, Any]]] = {
     "duri": {
         "mushaf_id": 6,
         "name": "مصحف الدوري",
-        "dump_version": "2026-09-20",
-        "built_at": "2026-09-20T03:46:42+00:00",
-        "archive_sha256": "f6024036b0040afea6af7973abd78b883ab2a0837ae72f6360b69e597c53999a",
+        "dump_version": "2026-09-30",
+        "archive_sha256": "c9432307e197bae97ff54d36be89e6ab0d08ffa9ffc2364e4f626000f7b32302",
         "archive_bytes": 421957,
         "description": "مصحف الدوري — al-Duri from Abu Amr, own source numbering",
         "bismillah": "بِسۡمِ اِ۬للَّهِ اِ۬لرَّحۡمَٰنِ اِ۬لرَّحِيمِ ",
+    },
+    "qpc-hafs": {
+        "mushaf_id": 2,
+        "name": "مصحف حفص نسخة نصية",
+        "dump_version": "2026-09-30",
+        "archive_sha256": "af546911a592c7b8a5a35b668c0f885d7b37b52536c5032bd6fb2b42c5819f33",
+        "archive_bytes": 414537,
+        "description": (
+            "المصحف الكريم برواية حفص عن عاصم بالخط العثماني من إصدار مجمع الملك فهد "
+            "لطباعة المصحف الشريف، غير موافق للمطبوع"
+        ),
+        "bismillah": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+    },
+    "shubah": {
+        "mushaf_id": 9,
+        "name": "مصحف شعبة",
+        "dump_version": "2026-09-30",
+        "archive_sha256": "24856d89627b6d9f35da525f98935d551e2bc49ca3ccf9107784172e920bbdae",
+        "archive_bytes": 414588,
+        "description": (
+            "المصحف الكريم برواية شعبة عن عاصم بالخط العثماني من إصدار مجمع الملك فهد "
+            "لطباعة المصحف الشريف، نسخة موافقة للمطبوع"
+        ),
+        "bismillah": "بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ",
+    },
+    "susi": {
+        "mushaf_id": 10,
+        "name": "مصحف السوسي",
+        "dump_version": "2026-10-01",
+        "archive_sha256": "9bf54a7e2b87ba0a062f6e46aca25179a3cedffc5bf35fcc9bbb8a47f084fdac",
+        "archive_bytes": 420794,
+        "description": (
+            "المصحف الكريم برواية السوسي عن أبي عمر بالخط العثماني من إصدار مجمع الملك فهد "
+            "لطباعة المصحف الشريف، غير موافق للمطبوع"
+        ),
+        "bismillah": "بِسۡمِ اِ۬للَّهِ اِ۬لرَّحۡمَٰنِ اِ۬لرَّحِيمِ",
     },
 }
 
@@ -130,9 +186,9 @@ def _validate_mapping(
                 raise ValueError(
                     f"quranpedia: invalid number_in_hafs at {chapter}:{verse['verse']}"
                 )
-            if script == "hafs-nastaliq" and numbers != [verse["verse"]]:
+            if script in config.NATIVE_HAFS_QURANPEDIA_SCRIPTS and numbers != [verse["verse"]]:
                 raise ValueError(
-                    f"quranpedia: Hafs Nastaliq map is not native at {chapter}:{verse['verse']}"
+                    f"quranpedia: {script} map is not native at {chapter}:{verse['verse']}"
                 )
             if not all(isinstance(number, int) for number in numbers):
                 raise ValueError(

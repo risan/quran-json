@@ -106,6 +106,9 @@
         "description",
         "verses",
         "verse_ids",
+        "license",
+        "reading",
+        "bismillah",
         "path",
         "chapters"
       ],
@@ -129,6 +132,22 @@
         "verse_ids": {
           "enum": ["hafs", "mapped", "own"]
         },
+        "license": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["status", "url", "attribution"],
+          "properties": {
+            "status": {"enum": ["granted", "restricted", "unknown"]},
+            "url": {"type": "string", "format": "uri", "minLength": 1},
+            "attribution": {"type": "string", "minLength": 1},
+            "notice": {"type": "string", "minLength": 1},
+            "version": {
+              "description": "The upstream dump version, stated where the source's licence requires it (Quranpedia).",
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
         "path": {
           "type": "string",
           "pattern": "^/text/[a-z0-9-]+/quran\\.json$"
@@ -138,6 +157,14 @@
           "pattern": "^/text/[a-z0-9-]+/chapters/\\{1-114\\}\\.json$"
         },
         "note": {
+          "type": "string",
+          "minLength": 1
+        },
+        "group": {
+          "description": "Optional audience hint. `specialist` marks a reading mostly used by specialists in the qira'at.",
+          "enum": ["specialist"]
+        },
+        "group_note": {
           "type": "string",
           "minLength": 1
         },
@@ -185,11 +212,41 @@
         "reading": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["riwayah", "qiraah", "verse_numbering"],
+          "required": ["id", "riwayah", "qiraah", "verse_numbering"],
           "properties": {
+            "id": {
+              "description": "Stable machine id of the reading. The `reading` values in /audio/reciters.json use the same ids, so a recording matches a script only when the ids are equal.",
+              "enum": ["hafs", "warsh", "qalun", "duri-abu-amr", "susi", "shubah"]
+            },
             "riwayah": {"type": "string", "minLength": 1},
             "qiraah": {"type": "string", "minLength": 1},
             "verse_numbering": {"enum": ["hafs", "mapped", "own"]}
+          }
+        },
+        "bismillah": {
+          "description": "Where this script keeps the basmala.",
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["text", "in_verse_one", "numbered_in_fatiha"],
+          "properties": {
+            "text": {
+              "description": "The basmala in this script's own orthography.",
+              "type": "string",
+              "minLength": 1
+            },
+            "in_verse_one": {
+              "description": "True when verse 1 of chapters 2 to 114, except 9, begins with the basmala in this script's text. Tanzil's chapters 95 and 97 differ from `text` by a shadda only.",
+              "type": "boolean"
+            },
+            "numbered_in_fatiha": {
+              "description": "True when verse 1:1 is the basmala as a numbered verse.",
+              "type": "boolean"
+            },
+            "source": {
+              "description": "Where the text comes from when this script's verses do not carry it.",
+              "type": "string",
+              "minLength": 1
+            }
           }
         },
         "audio": {

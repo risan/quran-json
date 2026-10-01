@@ -1,0 +1,58 @@
+{
+  "checked": "2026-10-01",
+  "method": "The listing at https://everyayah.com/data/ (a directory index, 83 top-level folders plus the English/, MultiLanguage/, translations/ and warsh/ subfolders) was compared with recitations.js; every unlisted folder was tested with HEAD on 001001.mp3 and 114006.mp3.",
+  "recitations": [
+    {
+      "id": "Minshawy_Teacher_128kbps",
+      "name": "Minshawy Teacher",
+      "bitrate_kbps": 128,
+      "checks": {
+        "001001": [
+          200,
+          140573
+        ],
+        "114006": [
+          200,
+          139319
+        ]
+      }
+    },
+    {
+      "id": "Nabil_Rifa3i_48kbps",
+      "name": "Nabil Rifa3i",
+      "bitrate_kbps": 48,
+      "checks": {
+        "001001": [
+          200,
+          24382
+        ],
+        "114006": [
+          200,
+          35037
+        ]
+      }
+    }
+  ],
+  "not_added": [
+    {
+      "folder": "Abu%20Bakr%20Ash-Shaatree_128kbps",
+      "reason": "same byte sizes for 001001 and 114006 as the listed Abu_Bakr_Ash-Shaatree_128kbps (an alias)"
+    },
+    {
+      "folder": "Saood%20bin%20Ibraaheem%20Ash-Shuraym_128kbps",
+      "reason": "same byte sizes for 001001 and 114006 as the listed Saood_ash-Shuraym_128kbps (an alias)"
+    },
+    {
+      "folder": "English/Ibrahim_Walk_192kbps_TEST",
+      "reason": "same byte sizes for 001001 and 114006 as the listed English/Sahih_Intnl_Ibrahim_Walk_192kbps (a test copy)"
+    },
+    {
+      "folder": "translations/bosnian/besim_korkut_ajet_po_ajet_audio",
+      "reason": "same byte sizes for 001001 and 114006 as the listed translations/besim_korkut_ajet_po_ajet (an alias)"
+    },
+    {
+      "folder": "MultiLanguage/Shaatree_Walk_64kbps",
+      "reason": "listed in the directory but answers 404 for 001001.mp3 and 114006.mp3"
+    }
+  ]
+}

@@ -5,15 +5,13 @@ QuranWBW/Quran.com Indopak text (QUL resources 55/59) carries "Sadaqa-e-Jaria pu
 only ... DO NOT SELL, MANIPULATE, DISTRIBUTE WITHOUT CREDITS", and Quran Foundation's
 developer terms forbid redistributing QF Content; KFGQPC's Indopak/Nastaleeq reach us
 only through mirrors whose own licence covers the packaging. Verified 2026-09-18 against
-each rights holder's own page -- see `quranjson.review`.
+each rights holder's own page.
 
 This file is different in kind. It is DigitalKhatt's own typesetting, published in
 `DigitalKhatt/digitalkhatt-js` under the repository's MIT licence
 (https://github.com/DigitalKhatt/digitalkhatt-js/blob/main/LICENSE, "Permission is hereby
 granted, free of charge ... without restriction"). The project is sponsored by Tarteel,
-but the licence is the repository's own, and the text is not a copy of anyone else's
-Indopak data: measured against the QuranWBW text and the KFGQPC text, it shares **0 of
-6,236** verses with either.
+but the licence is the repository's own.
 
 **The source is a printed page, not a verse array.** The file is `quran_text_indopak_15`:
 610 page groups of 15 lines (the first two are 8, the classic Indo-Pak opening spread),
@@ -57,7 +55,7 @@ import re
 import unicodedata
 from typing import Any, Final
 
-__all__ = ["RAW_URL", "SNAPSHOT_URL", "VERSE_COUNT", "parse_text"]
+__all__ = ["BISMILLAH", "RAW_URL", "SNAPSHOT_URL", "VERSE_COUNT", "parse_text"]
 
 #: The text, as published in DigitalKhatt's app source. `HEAD` rather than a pinned SHA:
 #: the snapshot is what the build reads, and `quran-json fetch --force` records drift.
@@ -86,6 +84,11 @@ DELIMITER: Final = re.compile(
 
 #: Rendering controls: the grapheme joiner, zero-width and bidi marks, and the BOM.
 CONTROLS: Final = re.compile("[\u034f\u200b-\u200f\u202a-\u202e\ufeff]")
+
+#: The basmala as the source prints it: an unnumbered line (ending in a bare `۝`) under the
+#: header of every surah. It is read only to be recorded in the manifest; `parse_text` checks
+#: that surah 1 still prints exactly this, and drops it from the verses.
+BISMILLAH: Final = "بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ"
 
 DIGITS: Final = {chr(0x660 + digit): str(digit) for digit in range(10)}
 
@@ -164,6 +167,8 @@ def parse_text(raw: bytes) -> dict[str, list[dict[str, Any]]]:
 
             if digits:
                 verses[_number(digits)] = _clean(body) + _clean(marker.group(3))
+            elif index == 1 and _clean(body) != BISMILLAH:  # pragma: no cover - shape change
+                raise ValueError(f"digitalkhatt: surah 1 no longer prints the basmala: {body!r}")
 
             # Everything up to the next space after the marker's trailing marks belongs to
             # the marker. Anything else means the reading below is wrong.

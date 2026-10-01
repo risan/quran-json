@@ -12,35 +12,48 @@ import pytest
 from quranjson import config, quranenc, quranpedia, sources, tanzil
 from quranjson.clearquran import parse_verse_files
 from quranjson.jsonio import read_json
-from quranjson.sources import _chapter_list, _group_by_chapter, _summarise_change
+from quranjson.sources import _group_by_chapter, _summarise_change
 
-
-def test_chapter_list_reshape_drops_unused_api_fields() -> None:
-    payload = {
-        "chapters": [
-            {
-                "id": 1,
-                "name_arabic": "\u0627\u0644\u0641\u0627\u062a\u062d\u0629",
-                "name_simple": "Al-Fatihah",
-                "translated_name": {"name": "The Opener", "language_name": "english"},
-                "revelation_place": "makkah",
-                "verses_count": 7,
-                "bismillah_pre": False,
-                "pages": [1, 1],
-            }
-        ]
-    }
-
-    assert _chapter_list(payload) == [
-        {
-            "id": 1,
-            "name": "\u0627\u0644\u0641\u0627\u062a\u062d\u0629",
-            "transliteration": "Al-Fatihah",
-            "translation": "The Opener",
-            "type": "meccan",
-            "total_verses": 7,
-        }
-    ]
+A2B_QURANENC_KEYS = {
+    "ankobambara_foudi",
+    "belarusian_krivtsov",
+    "bosnian_korkut",
+    "bulgarian_translation",
+    "chichewa_betala",
+    "chinese_mayolong",
+    "chinese_suliman_modern",
+    "dagbani_ghatubo",
+    "dari_badkhashani",
+    "french_hameedullah",
+    "georgian_rwwad",
+    "german_aburida",
+    "greek_rwwad",
+    "hebrew_darussalam",
+    "iranun_sarro",
+    "kannada_bashir",
+    "kazakh_altai",
+    "kurdish_salahuddin",
+    "kurmanji_ismail",
+    "luganda_foundation",
+    "luhya_center",
+    "malagasy_rwwad",
+    "marathi_ansari",
+    "nepali_central",
+    "oromo_rwwad",
+    "pashto_sarfaraz",
+    "pashto_zakaria",
+    "russian_aboadel",
+    "shona_institute",
+    "swahili_abubakr",
+    "tajik_khawaja",
+    "thai_complex",
+    "uzbek_sadiq",
+    "vietnamese_hassan",
+    "yaw_silika",
+    "zulu_adel",
+    "circassian_rwwad",
+    "english_waleed",
+}
 
 
 def test_verse_grouping_preserves_chapter_and_verse_order() -> None:
@@ -111,6 +124,25 @@ def test_added_chapter_is_reported_as_drift() -> None:
     after = {"1": [{"verse": 1}], "2": [{"verse": 1}, {"verse": 2}]}
 
     assert _summarise_change(before, after)["changed"] == 2
+
+
+def test_catalogue_drift_names_the_changed_keys() -> None:
+    before = {"translations": [{"key": "english_rwwad", "version": "1.0.18"}], "count": 1}
+    after = {"translations": [{"key": "english_rwwad", "version": "1.0.19"}], "count": 1}
+
+    assert _summarise_change(before, after) == {
+        "kind": "object",
+        "changed": 1,
+        "changed_keys": ["translations"],
+    }
+    assert _summarise_change(before, before)["changed"] == 0
+
+
+def test_audio_manifest_drift_names_the_changed_keys() -> None:
+    before = {"recitations": [{"id": "Alafasy_64kbps"}], "source": "everyayah"}
+    after = {"recitations": [{"id": "Alafasy_128kbps"}], "source": "everyayah"}
+
+    assert _summarise_change(before, after)["changed_keys"] == ["recitations"]
 
 
 def test_chapter_list_drift_is_counted() -> None:
@@ -268,16 +300,20 @@ def test_quranenc_supplemental_catalogue_is_explicit_and_fail_closed() -> None:
     quranenc.validate_catalogue(catalogue)
 
     keys = {entry["key"] for entry in catalogue["translations"]}
-    assert keys == {
-        "bengali_zakaria",
-        "bengali_rwwad",
-        "malay_basumayyah",
-        "russian_rwwad",
-        "korean_hamid",
-        "korean_rwwad",
-        "italian_rwwad",
-        "ukrainian_yakubovych",
-    }
+    assert (
+        keys
+        == {
+            "bengali_zakaria",
+            "bengali_rwwad",
+            "malay_basumayyah",
+            "russian_rwwad",
+            "korean_hamid",
+            "korean_rwwad",
+            "italian_rwwad",
+            "ukrainian_yakubovych",
+        }
+        | A2B_QURANENC_KEYS
+    )
     withheld = next(entry for entry in catalogue["translations"] if entry["key"] == "korean_rwwad")
     assert withheld["availability"] == "withheld"
     assert withheld["allow_empty"] is True
@@ -442,3 +478,17 @@ def test_clearquran_parser_rejects_empty_verse_text() -> None:
 
     with pytest.raises(ValueError, match="empty verse"):
         parse_verse_files(_clearquran_archive(verses))
+
+
+def test_a_small_change_lists_its_verses() -> None:
+    before = {
+        "1": [{"verse": 1, "text": "a"}],
+        "2": [{"verse": 1, "text": "a"}, {"verse": 2, "text": "b"}],
+    }
+    after = {
+        "1": [{"verse": 1, "text": "a"}],
+        "2": [{"verse": 1, "text": "a"}, {"verse": 2, "text": "c"}],
+    }
+
+    assert _summarise_change(before, after)["changed_verses"] == ["2:2"]
+    assert "changed_verses" not in _summarise_change(before, before)

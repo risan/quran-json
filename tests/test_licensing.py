@@ -1,147 +1,108 @@
 """The licence gate.
 
-Regression guard for the defect this gate was built for: the shipped `dist/` tree carries
-Saheeh International under a licence label that belongs to Tanzil's Arabic *text*. Any
-change that silently re-permits a restricted edition fails here.
+Any change that silently publishes an edition without a verified grant fails here.
 """
 
 from __future__ import annotations
 
+import dataclasses
+from pathlib import Path
+
 import pytest
 
-from quranjson import config, licensing, review
+from quranjson import audio, cdn, config, licensing
+from quranjson.jsonio import read_json
 
 
-def test_publishable_languages_are_only_the_granted_ones() -> None:
-    assert licensing.publishable_languages() == ("id", "zh")
+def test_every_published_edition_is_granted_and_documented() -> None:
+    editions = cdn.published_editions()
 
+    assert editions
 
-def test_every_edition_declares_a_status_and_a_licence_url() -> None:
-    for edition in config.EDITIONS:
-        assert edition.license.status in {"granted", "restricted", "unknown"}
+    for edition in editions:
+        assert edition.redistributable, edition.lang
         assert edition.license.url.startswith("https://"), edition.lang
         assert edition.license.text.strip(), edition.lang
 
 
-def test_saheeh_international_is_flagged_as_not_redistributable() -> None:
-    """It is copyrighted, the publisher is gone, and neither upstream grants reuse."""
-    english = next(edition for edition in config.EDITIONS if edition.lang == "en")
-
-    assert english.author.startswith("Umm Muhammad")
-    assert english.license is config.SAHEEH_INTERNATIONAL
-    assert english.license.status == "restricted"
-    assert english.redistributable is False
-
-
-def test_tanzil_translations_are_not_treated_as_covered_by_the_text_licence() -> None:
-    for edition in config.EDITIONS:
-        if edition.license is config.TANZIL_TRANSLATION:
-            assert edition.redistributable is False, edition.lang
-
-    assert config.TANZIL_TEXT.status == "granted"
-    assert config.TANZIL_TRANSLATION.status == "restricted"
-    assert config.SHIPPED_TEXT.status == "unknown"
-
-
-def test_blocked_lists_every_withheld_edition() -> None:
-    blocked = {violation.lang for violation in licensing.blocked()}
-
-    assert blocked == {
-        config.TRANSLITERATION,
-        "bn",
-        "en",
-        "es",
-        "fr",
-        "ru",
-        "sv",
-        "tr",
-        "ur",
-        # Ingested from Qur'an Kemenag but not cleared: a protected translation and a
-        # romanisation nobody has granted rights to.
-        "indonesian_kemenag",
-        "transliteration_kemenag",
-    }
-
-
-def test_require_publishable_refuses_a_restricted_language() -> None:
-    with pytest.raises(licensing.LicenseError) as error:
-        licensing.require_publishable(["en"])
-
-    assert "en" in str(error.value)
-
-
-def test_require_publishable_allows_granted_languages() -> None:
-    licensing.require_publishable(["id", "zh"])
-
-
-def test_report_marks_each_edition() -> None:
-    report = licensing.report()
-    lines = {line.split()[1]: line.split()[0] for line in report.splitlines()}
-
-    assert lines["en"] == "BLOCKED"
-    assert lines["id"] == "OK"
-    assert lines["zh"] == "OK"
-
-
-# --- the licensing review record ----------------------------------------------
-
-
-def test_every_reviewed_source_carries_evidence() -> None:
-    for entry in review.CANDIDATES:
-        assert entry.license_url.startswith("https://"), entry.name
-        assert entry.evidence.strip(), entry.name
-        assert entry.status in {"granted", "restricted", "unknown"}, entry.name
-        assert entry.kind in {"text", "translation", "transliteration", "audio"}, entry.name
-
-
-def test_no_transliteration_source_is_publishable() -> None:
-    """The exhaustive search found no transliteration with a rights-holder grant.
-
-    If this ever fails, a grant was obtained: update config.EDITIONS and the gate
-    together, and say so in the README.
-    """
-    candidates = [entry for entry in review.CANDIDATES if entry.kind == "transliteration"]
-
-    assert candidates, "the transliteration review went missing"
-    assert {entry.status for entry in candidates} == {"restricted", "unknown"}
-    assert len(candidates) >= 5, "the transliteration review must stay exhaustive"
-
-    transliteration = next(
-        edition for edition in config.EDITIONS if edition.lang == config.TRANSLITERATION
+def test_require_publishable_refuses_an_edition_without_a_grant() -> None:
+    granted = config.EXTRA_EDITIONS[0]
+    restricted = dataclasses.replace(
+        granted,
+        lang="english_unlicensed",
+        license=dataclasses.replace(granted.license, status="restricted"),
     )
-    assert transliteration.redistributable is False
 
-    for entry in candidates:
-        if entry.status != "granted":
-            assert entry.blocker, f"{entry.name} must say what would unblock it"
+    with pytest.raises(licensing.LicenseError) as error:
+        licensing.require_publishable([granted, restricted])
 
-
-def test_review_manifest_lists_what_is_published() -> None:
-    manifest = review.review_manifest()
-
-    assert manifest["sources"]
-    assert "75" in manifest["published"]["quranenc"]
-    assert {entry["lang"] for entry in manifest["published"]["extra"]} == {
-        "english_itani",
-        "english_itani_allah",
-        "english_pickthall",
-        "english_yusuf_ali",
-        "english_palmer",
-        "english_sale",
-        "russian_sablukov",
-        "russian_krachkovsky",
-    }
-    assert "unknown` is not permission" in manifest["note"]
+    assert "english_unlicensed" in str(error.value)
+    assert granted.lang not in str(error.value)
 
 
-def test_granted_reviews_match_the_publishable_editions() -> None:
-    """A `granted` verdict must correspond to something we actually publish."""
-    published = {edition.lang for edition in config.EDITIONS if edition.redistributable}
-    granted_translations = {
-        entry.name
-        for entry in review.CANDIDATES
-        if entry.status == "granted" and entry.kind == "translation"
-    }
+def test_require_publishable_allows_granted_editions() -> None:
+    licensing.require_publishable(cdn.published_editions())
 
-    assert published == {"id", "zh"}
-    assert granted_translations, "QuranEnc should be recorded as granted"
+
+def test_tanzil_text_is_granted_and_no_script_is_published_without_a_grant() -> None:
+    assert config.TANZIL_TEXT.status == "granted"
+
+    for script in config.SCRIPT_IDS:
+        assert config.SCRIPT_LICENSES[script].allows_publication, script
+
+
+def test_tanzil_notice_is_in_every_tanzil_chapter_object_and_nowhere_else(
+    cdn_tree: Path,
+) -> None:
+    for script in config.SCRIPT_IDS:
+        expected = config.TANZIL_NOTICE if script in config.TANZIL_VARIANTS else None
+        whole = read_json(cdn_tree / "text" / script / "quran.json")
+
+        assert isinstance(whole, list), script
+        assert [chapter.get("notice") for chapter in whole] == [expected] * 114, script
+
+        for chapter in (1, 9, 114):
+            single = read_json(cdn_tree / "text" / script / "chapters" / f"{chapter}.json")
+
+            assert single.get("notice") == expected, f"{script} {chapter}"
+
+
+def test_every_manifest_script_declares_its_licence_and_reading(cdn_tree: Path) -> None:
+    manifest = read_json(cdn_tree / "manifest.json")
+
+    assert [script["id"] for script in manifest["scripts"]] == list(config.SCRIPT_IDS)
+
+    for script in manifest["scripts"]:
+        license_ = script["license"]
+
+        assert license_["status"] == "granted", script["id"]
+        assert license_["url"].startswith("https://"), script["id"]
+        assert license_["attribution"].strip(), script["id"]
+        assert ("notice" in license_) == (script["id"] in config.TANZIL_VARIANTS), script["id"]
+        assert set(script["reading"]) == {"id", "riwayah", "qiraah", "verse_numbering"}, script[
+            "id"
+        ]
+        assert script["reading"]["verse_numbering"] == script["verse_ids"], script["id"]
+
+    hafs = {script["id"]: script["reading"] for script in manifest["scripts"]}["uthmani"]
+
+    assert hafs["riwayah"] == "Hafs"
+    assert hafs["qiraah"] == "ʿAsim"
+
+
+def test_the_indo_pak_scripts_are_named_by_their_source(cdn_tree: Path) -> None:
+    scripts = {script["id"]: script for script in read_json(cdn_tree / "manifest.json")["scripts"]}
+
+    assert scripts["hafs-nastaliq"]["name"] == "Indo-Pak (KFGQPC Nastaleeq)"
+    assert scripts["indopak"]["name"] == "Indo-Pak (DigitalKhatt)"
+    assert "printed edition" not in scripts["hafs-nastaliq"]["description"]
+    assert "0 of 6,236" not in config.DIGITALKHATT.text
+    assert config.DIGITALKHATT.status == "granted"
+
+
+def test_audio_hosts_state_what_is_known_about_their_terms() -> None:
+    assert audio.AUDIO_HOSTS[audio.MP3QURAN]["license"].status == "unknown"
+    assert audio.AUDIO_HOSTS[audio.ISLAMIC_NETWORK]["license"].url == (
+        "https://alquran.cloud/terms-and-conditions"
+    )
+    assert audio.AUDIO_HOSTS[audio.ISLAMIC_NETWORK]["cors"] is False

@@ -1,0 +1,10 @@
+{
+  "printWidth": 100,
+  "ignorePatterns": [
+    "dist/**",
+    ".astro/**",
+    "**/*.astro",
+    "src/components/ui/**",
+    "package-lock.json"
+  ]
+}

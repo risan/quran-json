@@ -1,8 +1,7 @@
 # Published data schemas
 
-These Draft 2020-12 JSON Schemas describe the current CDN wire contract. They are
-deliberately separate from the legacy `dist/` package: the schemas document the generated
-site under `cdn/` and do not change or regenerate that frozen tree.
+These Draft 2020-12 JSON Schemas describe the CDN wire contract: the generated site under
+`cdn/`.
 
 | Schema | Published path or payload |
 | --- | --- |

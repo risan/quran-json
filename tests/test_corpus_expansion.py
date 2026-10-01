@@ -73,19 +73,19 @@ def test_supplemental_translations_are_complete_except_explicit_korean_candidate
     )
 
 
-def test_default_and_explicit_override_keep_incomplete_korean_out_of_public_bytes(
-    cdn_tree: Path, cdn_override_tree: Path
-) -> None:
-    for tree in (cdn_tree, cdn_override_tree):
-        catalogue = jsonio.read_json(tree / "translations" / "index.json")
-        published = {entry["edition"] for entry in catalogue["editions"]}
-        withheld = {entry["edition"]: entry for entry in catalogue["withheld"]}
+def test_incomplete_korean_stays_out_of_public_bytes(cdn_tree: Path) -> None:
+    catalogue = jsonio.read_json(cdn_tree / "translations" / "index.json")
+    published = {entry["edition"] for entry in catalogue["editions"]}
+    withheld = {entry["edition"]: entry for entry in catalogue["withheld"]}
 
-        assert published >= PUBLISHABLE_NEW_TRANSLATIONS
-        assert "korean_rwwad" not in published
-        assert withheld["korean_rwwad"]["availability"] == "withheld"
-        assert "1,955 empty" in withheld["korean_rwwad"]["reason"]
-        assert not (tree / "translations" / "ko-rwwad").exists()
+    assert published >= PUBLISHABLE_NEW_TRANSLATIONS
+    assert "korean_rwwad" not in published
+    assert withheld["korean_rwwad"]["availability"] == "withheld"
+    assert "1,955 empty" in withheld["korean_rwwad"]["reason"]
+    assert "1,000 empty" in withheld["circassian_rwwad"]["reason"]
+    assert "3,753 empty" in withheld["english_waleed"]["reason"]
+    assert {"circassian_rwwad", "english_waleed"} & published == set()
+    assert not (cdn_tree / "translations" / "ko-rwwad").exists()
 
 
 def test_manifest_declares_new_reading_identities_and_native_counts(cdn_tree: Path) -> None:

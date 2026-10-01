@@ -1,18 +1,17 @@
 """The licensed dataset generation: Tanzil text and metadata, QuranEnc translations.
 
-These pin the properties that make this generation different from the frozen `dist/`
-tree, including the basmala convention, which is the one change most likely to surprise
-a consumer migrating from the old text.
+These pin the properties of the sources the site is built from, including the basmala
+convention, which is the one thing most likely to surprise a consumer of Tanzil's text.
 """
 
 from __future__ import annotations
 
 from pathlib import Path
+from typing import Any
 
 import pytest
 
 from quranjson import config
-from quranjson.build import Sources
 from quranjson.cdn import edition_url_key, published_editions
 from quranjson.jsonio import read_json
 
@@ -28,9 +27,32 @@ BASMALA_ASSIMILATED = (
 )
 
 
+class Sources:
+    """The committed snapshots the site is built from, loaded as the pipeline reads them."""
+
+    def __init__(self) -> None:
+        self.text: dict[str, list[dict[str, Any]]] = read_json(config.tanzil_text_path("uthmani"))
+        self.chapters: dict[str | None, list[dict[str, Any]]] = {
+            None: read_json(config.tanzil_chapters_path())["chapters"]
+        }
+        self.editions: dict[str, dict[str, list[dict[str, Any]]]] = {}
+
+        from quranjson.quranenc import load_catalogues, merged_catalogue
+
+        for entry in merged_catalogue(load_catalogues())["translations"]:
+            if entry.get("availability", "published") == "published":
+                self.editions[entry["key"]] = read_json(config.quranenc_path(entry["key"]))
+
+        for edition in config.EXTRA_EDITIONS:
+            self.editions[edition.lang] = read_json(config.extra_edition_path(edition.lang))
+
+    def verses(self, chapter_id: int) -> list[dict[str, Any]]:
+        return self.text[str(chapter_id)]
+
+
 @pytest.fixture(scope="module")
 def licensed() -> Sources:
-    return Sources("licensed")
+    return Sources()
 
 
 def url_of(edition_lang: str) -> str:
@@ -127,9 +149,13 @@ def test_every_published_translation_is_complete(licensed: Sources) -> None:
         "korean_hamid",
         "italian_rwwad",
         "ukrainian_yakubovych",
+        "english_rodwell",
+        "urdu_kanzuliman",
+        "urdu_mahmudulhasan",
+        "dutch_keyzer",
     }
 
-    assert len(licensed.editions) == 90
+    assert len(licensed.editions) == 130
     assert expected <= set(licensed.editions)
 
     for key, chapters in licensed.editions.items():
@@ -169,7 +195,7 @@ def test_public_domain_verdicts_state_their_basis() -> None:
     for edition in config.EXTRA_EDITIONS:
         if edition.license.status != "granted":
             continue
-        if edition.kind != "quran-api":
+        if edition.kind not in {"quran-api", "tanzil"}:
             continue
 
         assert edition.license.text.startswith("Public domain."), edition.lang
@@ -196,10 +222,10 @@ def test_published_manifest_declares_every_edition_as_granted(cdn_tree: Path) ->
 
     assert manifest["text"]["status"] == "granted"
     assert manifest["text"]["scripts"] == list(config.SCRIPT_IDS)
-    assert manifest["transliteration"]["status"] == "withheld"
+    assert manifest["transliteration"]["status"] == "published"
 
     editions = manifest["editions"]
-    assert len(editions) == 90
+    assert len(editions) == 130
     assert {entry["status"] for entry in editions} == {"granted"}
 
     # QuranEnc condition 3: state the version of a republished translation.
@@ -241,7 +267,7 @@ def test_footnotes_travel_with_the_verse(licensed: Sources, cdn_tree: Path) -> N
 
 
 def test_every_published_edition_has_a_whole_and_a_per_chapter_file(cdn_tree: Path) -> None:
-    """One edition is reachable whole or chapter by chapter, for all 90."""
+    """One edition is reachable whole or chapter by chapter, for all 130."""
     for edition in published_editions():
         base = cdn_tree / "translations" / edition_url_key(edition)
 

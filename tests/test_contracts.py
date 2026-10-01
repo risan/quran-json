@@ -159,29 +159,19 @@ def test_default_generated_tree_validates_manifest_catalogues_and_layers(cdn_tre
         "transliteration-catalogue.schema.json",
         transliteration=True,
     )
-    assert transliterations["count"] == 0
-    assert manifest["transliteration"]["count"] == 0
-
-
-def test_explicit_override_generated_transliteration_validates(cdn_override_tree: Path) -> None:
-    """The override remains available for an explicit rights decision.
-
-    This fixture is session-scoped with the existing gate tests, so schema checks do not
-    trigger a full CDN render for every assertion.
-    """
-    catalogue = read_json(cdn_override_tree / "transliteration" / "index.json")
-    _assert_catalogue(catalogue, "transliteration-catalogue.schema.json", transliteration=True)
-    assert catalogue["count"] == 1
-
-    key = catalogue["editions"][0]["path"].split("/")[2]
-    _assert_layer(
-        read_json(cdn_override_tree / "transliteration" / key / "quran.json"),
-        "transliteration.schema.json",
-    )
-    _assert_layer(
-        read_json(cdn_override_tree / "transliteration" / key / "chapters" / "1.json"),
-        "transliteration.schema.json",
-    )
+    assert transliterations["count"] == 3
+    assert manifest["transliteration"]["count"] == 3
+    for edition in transliterations["editions"]:
+        key = edition["path"].split("/")[2]
+        _assert_layer(
+            read_json(cdn_tree / "transliteration" / key / "quran.json"),
+            "transliteration.schema.json",
+        )
+        for chapter in range(1, CHAPTER_COUNT + 1):
+            _assert_layer(
+                read_json(cdn_tree / "transliteration" / key / "chapters" / f"{chapter}.json"),
+                "transliteration.schema.json",
+            )
 
 
 def test_malformed_catalogue_and_alignment_fixtures_fail_contract_checks(cdn_tree: Path) -> None:
@@ -278,6 +268,7 @@ def test_manifest_points_to_the_same_catalogues_that_were_validated(cdn_tree: Pa
 
     scripts = {script["id"]: script for script in manifest["scripts"]}
     assert scripts[config.DURI_SCRIPT]["reading"] == {
+        "id": "duri-abu-amr",
         "riwayah": "al-Duri",
         "qiraah": "Abu ʿAmr",
         "verse_numbering": "mapped",
@@ -297,6 +288,7 @@ def test_manifest_points_to_the_same_catalogues_that_were_validated(cdn_tree: Pa
         }
     ]
     assert scripts[config.HAFS_NASTALIQ_SCRIPT]["reading"] == {
+        "id": "hafs",
         "riwayah": "Hafs",
         "qiraah": "ʿAsim",
         "verse_numbering": "hafs",
