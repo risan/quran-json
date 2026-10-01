@@ -124,7 +124,7 @@ the same tree), and none of them carry a version.
 | `transliteration/index.json` | The romanisation catalogue, with its licence status per entry |
 | `transliteration/{key}/quran.json` | The whole Quran in one romanisation |
 | `transliteration/{key}/chapters/{1-114}.json` | One chapter in one romanisation |
-| `audio/reciters.json` | 595 recitations across 3 hosts, as URL templates, with each host's `indexing_mode`, `surah_pad` and `ayah_pad` |
+| `audio/reciters.json` | 597 recitations across 3 hosts, as URL templates, with each host's `indexing_mode`, `surah_pad` and `ayah_pad`. Every recording declares its `reading` (`hafs`, `warsh`, `qalun`, … or `unknown`) and `content` (`recitation` or `translation`); per-ayah recordings also carry `verse_ids` (`hafs`, or `null` where the numbering is unverified, as for the three Warsh folders) |
 | `meta/sources.json` | Provenance and license for everything published |
 | `meta/qa.json` | Transcription corrections applied to upstream sources |
 

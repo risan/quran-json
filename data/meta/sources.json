@@ -44,6 +44,21 @@
     "revision": "e20bba6abe2cc37f77f5aae5266f39cc55b9ca77"
   },
   {
+    "path": "data/audio/everyayah_unlisted.json",
+    "url": "https://everyayah.com/data/",
+    "source": "EveryAyah",
+    "license": "everyayah.com states no licence: its license, terms and readme paths all return 404 and the homepage carries no matching terms. Treated as unknown -- we link to the files rather than redistribute them.",
+    "license_status": "unknown",
+    "license_url": "https://everyayah.com/data/",
+    "sha256": "9d327a3ee76f84d5500e0f343f7fda0decccdb14c6e517dc3c617e7eec00d76f",
+    "bytes": 1783,
+    "revision": "",
+    "source_metadata": {
+      "manual_registration": true,
+      "manifest": "https://everyayah.com/data/recitations.js"
+    }
+  },
+  {
     "path": "data/tanzil/uthmani.json",
     "url": "https://tanzil.net/pub/download/index.php?quranType=uthmani&outType=txt-2&agree=true",
     "source": "tanzil.net",
