@@ -41,6 +41,7 @@ pin each verse.
 
 from __future__ import annotations
 
+import unicodedata
 from collections.abc import Iterator, Mapping, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -54,7 +55,6 @@ __all__ = [
     "HAFS_EXCEPTIONS",
     "RENDERERS",
     "build_editions",
-    "romanize_chapters",
     "romanize_verse",
     "write_report",
 ]
@@ -1191,8 +1191,9 @@ def _is_diphthong_end(index: int, phones: Sequence[str], next_first: str | None)
 
 
 def _capitalise(text: str) -> str:
+    """Capitalise the first letter; the ayn and hamza modifier letters are not letters here."""
     for index, character in enumerate(text):
-        if character.isalpha():
+        if character.isalpha() and unicodedata.category(character) != "Lm":
             return text[:index] + character.upper() + text[index + 1 :]
 
     return text
@@ -1206,8 +1207,10 @@ def _capitalise(text: str) -> str:
 def romanize_verse(text: str, renderer: str, *, chapter: int, verse: int) -> str:
     """Romanise one verse of Hafs text.
 
-    `chapter` and `verse` identify the verse in Hafs numbering. They are required so that a
-    verse-specific rule can never be applied to the wrong reading.
+    `chapter` and `verse` are the Hafs ids. Every exception is driven by a mark the text
+    writes, so they are only validated today; they stay in the signature so a verse-specific
+    rule can be added without changing a caller, and so a caller cannot forget which
+    numbering the text is in.
     """
     if renderer not in SCHEMES:
         raise ValueError(f"unknown renderer {renderer!r}; expected one of {RENDERERS}")
@@ -1218,38 +1221,37 @@ def romanize_verse(text: str, renderer: str, *, chapter: int, verse: int) -> str
     return render(speak(verse_words(text)), SCHEMES[renderer])
 
 
-def romanize_chapters(
-    snapshot: Mapping[str, Sequence[Mapping[str, Any]]], renderer: str
-) -> list[dict[str, Any]]:
-    """114 chapter objects, each with its verses' `id` and `transliteration`."""
-    return [
-        {
-            "id": int(chapter),
-            "verses": [
-                {
-                    "id": int(verse["verse"]),
-                    "transliteration": romanize_verse(
-                        verse["text"],
-                        renderer,
-                        chapter=int(chapter),
-                        verse=int(verse["verse"]),
-                    ),
-                }
-                for verse in sorted(verses, key=lambda item: int(item["verse"]))
-            ],
-        }
-        for chapter, verses in sorted(snapshot.items(), key=lambda item: int(item[0]))
-    ]
-
-
 def build_editions(
     snapshot: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
 ) -> dict[str, list[dict[str, Any]]]:
-    """Every renderer's chapters, generated from the Kemenag snapshot."""
+    """Every renderer's 114 chapter objects, generated from the Kemenag snapshot.
+
+    Each chapter holds its verses' Hafs `id` and `transliteration`. A verse is read once
+    and rendered three times.
+    """
     if snapshot is None:
         snapshot = read_json(config.kemenag_path())
 
-    return {renderer: romanize_chapters(snapshot, renderer) for renderer in RENDERERS}
+    editions: dict[str, list[dict[str, Any]]] = {renderer: [] for renderer in RENDERERS}
+
+    for chapter, verses in sorted(snapshot.items(), key=lambda item: int(item[0])):
+        chapter_verses: dict[str, list[dict[str, Any]]] = {renderer: [] for renderer in RENDERERS}
+
+        for record in sorted(verses, key=lambda item: int(item["verse"])):
+            spoken = speak(verse_words(record["text"]))
+
+            for renderer in RENDERERS:
+                chapter_verses[renderer].append(
+                    {
+                        "id": int(record["verse"]),
+                        "transliteration": render(spoken, SCHEMES[renderer]),
+                    }
+                )
+
+        for renderer in RENDERERS:
+            editions[renderer].append({"id": int(chapter), "verses": chapter_verses[renderer]})
+
+    return editions
 
 
 _REVIEW_NOTE: Final = "machine-generated; not yet reviewed by a qualified reader"

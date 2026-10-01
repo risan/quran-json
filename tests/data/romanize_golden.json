@@ -1,0 +1,395 @@
+[
+  {
+    "rule": "al-fatiha 1",
+    "verses": [
+      {
+        "chapter": 1,
+        "verse": 1,
+        "id-skb": "Bismillāhir-raḥmānir-raḥīm.",
+        "en": "Bismillāhir-raḥmānir-raḥīm",
+        "en-simple": "Bismillaahir-rahmaanir-raheem"
+      },
+      {
+        "chapter": 1,
+        "verse": 2,
+        "id-skb": "Al-ḥamdu lillāhi rabbil-‘ālamīn.",
+        "en": "Al-ḥamdu lillāhi rabbil-ʿālamīn",
+        "en-simple": "Al-hamdu lillaahi rabbil-`aalameen"
+      },
+      {
+        "chapter": 1,
+        "verse": 3,
+        "id-skb": "Ar-raḥmānir-raḥīm.",
+        "en": "Ar-raḥmānir-raḥīm",
+        "en-simple": "Ar-rahmaanir-raheem"
+      },
+      {
+        "chapter": 1,
+        "verse": 4,
+        "id-skb": "Māliki yaumid-dīn.",
+        "en": "Māliki yawmid-dīn",
+        "en-simple": "Maaliki yawmid-deen"
+      },
+      {
+        "chapter": 1,
+        "verse": 5,
+        "id-skb": "Iyyāka na‘budu wa iyyāka nasta‘īn.",
+        "en": "Iyyāka naʿbudu waʾiyyāka nastaʿīn",
+        "en-simple": "Iyyaaka na`budu wa'iyyaaka nasta`een"
+      },
+      {
+        "chapter": 1,
+        "verse": 6,
+        "id-skb": "Ihdinaṣ-ṣirāṭal-mustaqīm.",
+        "en": "Ihdinaṣ-ṣirāṭal-mustaqīm",
+        "en-simple": "Ihdinas-siraatal-mustaqeem"
+      },
+      {
+        "chapter": 1,
+        "verse": 7,
+        "id-skb": "Ṣirāṭal-lażīna an‘amta ‘alaihim gairil-magḍūbi ‘alaihim walaḍ-ḍāllīn.",
+        "en": "Ṣirāṭal-ladhīna anʿamta ʿalayhim ghayril-maghḍūbi ʿalayhim walaḍ-ḍāllīn",
+        "en-simple": "Siraatal-ladheena an`amta `alayhim ghayril-maghdoobi `alayhim walad-daalleen"
+      }
+    ]
+  },
+  {
+    "rule": "muqattaat alif lam mim",
+    "verses": [
+      {
+        "chapter": 2,
+        "verse": 1,
+        "id-skb": "Alif lām mīm.",
+        "en": "Alif lām mīm",
+        "en-simple": "Alif laam meem"
+      }
+    ]
+  },
+  {
+    "rule": "muqattaat kaf ha ya ayn sad",
+    "verses": [
+      {
+        "chapter": 19,
+        "verse": 1,
+        "id-skb": "Kāf hā yā ‘ain ṣād.",
+        "en": "Kāf hā yā ʿayn ṣād",
+        "en-simple": "Kaaf haa yaa `ayn saad"
+      }
+    ]
+  },
+  {
+    "rule": "muqattaat ya sin",
+    "verses": [
+      {
+        "chapter": 36,
+        "verse": 1,
+        "id-skb": "Yā sīn.",
+        "en": "Yā sīn",
+        "en-simple": "Yaa seen"
+      }
+    ]
+  },
+  {
+    "rule": "mu'anaqa pair",
+    "verses": [
+      {
+        "chapter": 2,
+        "verse": 2,
+        "id-skb": "Żālikal-kitābu lā raiba fīh, hudal lil-muttaqīn.",
+        "en": "Dhālikal-kitābu lā rayba fīh, hudal lil-muttaqīn",
+        "en-simple": "Dhaalikal-kitaabu laa rayba feeh, hudal lil-muttaqeen"
+      }
+    ]
+  },
+  {
+    "rule": "lam of Allah and sun letter",
+    "verses": [
+      {
+        "chapter": 112,
+        "verse": 1,
+        "id-skb": "Qul huwallāhu aḥad.",
+        "en": "Qul huwallāhu aḥad",
+        "en-simple": "Qul huwallaahu ahad"
+      },
+      {
+        "chapter": 112,
+        "verse": 2,
+        "id-skb": "Allāhuṣ-ṣamad.",
+        "en": "Allāhuṣ-ṣamad",
+        "en-simple": "Allaahus-samad"
+      },
+      {
+        "chapter": 112,
+        "verse": 3,
+        "id-skb": "Lam yalid walam yūlad.",
+        "en": "Lam yalid walam yūlad",
+        "en-simple": "Lam yalid walam yoolad"
+      },
+      {
+        "chapter": 112,
+        "verse": 4,
+        "id-skb": "Walam yakul lahū kufuwan aḥad.",
+        "en": "Walam yakul lahū kufuwan aḥad",
+        "en-simple": "Walam yakul lahoo kufuwan ahad"
+      }
+    ]
+  },
+  {
+    "rule": "ayat al-kursi",
+    "verses": [
+      {
+        "chapter": 2,
+        "verse": 255,
+        "id-skb": "Allāhu lā ilāha illā huw, al-ḥayyul-qayyūm, lā ta'khużuhū sinatuw walā naum, lahū mā fis-samāwāti wamā fil-arḍ, man żal-lażī yasyfa‘u ‘indahū illā bi'iżnih, ya‘lamu mā baina aidīhim wamā khalfahum, walā yuḥīṭūna bisyai'im min ‘ilmihī illā bimā syā', wasi‘a kursiyyuhus-samāwāti wal-arḍ, walā ya'ūduhū ḥifẓuhumā, wahuwal-‘aliyyul-‘aẓīm.",
+        "en": "Allāhu lā ilāha illā huw, al-ḥayyul-qayyūm, lā taʾkhudhuhū sinatuw walā nawm, lahū mā fis-samāwāti wamā fil-arḍ, man dhal-ladhī yashfaʿu ʿindahū illā biʾidhnih, yaʿlamu mā bayna aydīhim wamā khalfahum, walā yuḥīṭūna bishayʾim min ʿilmihī illā bimā shāʾ, wasiʿa kursiyyuhus-samāwāti wal-arḍ, walā yaʾūduhū ḥifẓuhumā, wahuwal-ʿaliyyul-ʿaẓīm",
+        "en-simple": "Allaahu laa ilaaha illaa huw, al-hayyul-qayyoom, laa ta'khudhuhoo sinatuw walaa nawm, lahoo maa fis-samaawaati wamaa fil-ard, man dhal-ladhee yashfa`u `indahoo illaa bi'idhnih, ya`lamu maa bayna aydeehim wamaa khalfahum, walaa yuheetoona bishay'im min `ilmihee illaa bimaa shaa', wasi`a kursiyyuhus-samaawaati wal-ard, walaa ya'ooduhoo hifzuhumaa, wahuwal-`aliyyul-`azeem"
+      }
+    ]
+  },
+  {
+    "rule": "idgham with ghunna",
+    "verses": [
+      {
+        "chapter": 2,
+        "verse": 8,
+        "id-skb": "Waminan-nāsi may yaqūlu āmannā billāhi wabil-yaumil-ākhiri wamā hum bimu'minīn.",
+        "en": "Waminan-nāsi may yaqūlu āmannā billāhi wabil-yawmil-ākhiri wamā hum bimuʾminīn",
+        "en-simple": "Waminan-naasi may yaqoolu aamannaa billaahi wabil-yawmil-aakhiri wamaa hum bimu'mineen"
+      },
+      {
+        "chapter": 2,
+        "verse": 269,
+        "id-skb": "Yu'til-ḥikmata may yasyā', wamay yu'tal-ḥikmata faqad ūtiya khairan kaṡīrā, wamā yażżakkaru illā ulul-albāb.",
+        "en": "Yuʾtil-ḥikmata may yashāʾ, wamay yuʾtal-ḥikmata faqad ūtiya khayran kathīrā, wamā yadhdhakkaru illā ulul-albāb",
+        "en-simple": "Yu'til-hikmata may yashaa', wamay yu'tal-hikmata faqad ootiya khayran katheeraa, wamaa yadhdhakkaru illaa ulul-albaab"
+      }
+    ]
+  },
+  {
+    "rule": "idgham without ghunna",
+    "verses": [
+      {
+        "chapter": 7,
+        "verse": 69,
+        "id-skb": "Awa‘ajibtum an jā'akum żikrum mir rabbikum ‘alā rajulim minkum liyunżirakum, ważkurū iż ja‘alakum khulafā'a mim ba‘di qaumi nūḥiw wazādakum fil-khalqi basṭah, fażkurū ālā'allāhi la‘allakum tufliḥūn.",
+        "en": "Awaʿajibtum an jāʾakum dhikrum mir rabbikum ʿalā rajulim minkum liyundhirakum, wadhkurū idh jaʿalakum khulafāʾa mim baʿdi qawmi nūḥiw wazādakum fil-khalqi basṭah, fadhkurū ālāʾallāhi laʿallakum tufliḥūn",
+        "en-simple": "Awa`ajibtum an jaa'akum dhikrum mir rabbikum `alaa rajulim minkum liyundhirakum, wadhkuroo idh ja`alakum khulafaa'a mim ba`di qawmi noohiw wazaadakum fil-khalqi bastah, fadhkuroo aalaa'allaahi la`allakum tuflihoon"
+      }
+    ]
+  },
+  {
+    "rule": "tanwin idgham before waw",
+    "verses": [
+      {
+        "chapter": 2,
+        "verse": 7,
+        "id-skb": "Khatamallāhu ‘alā qulūbihim wa‘alā sam‘ihim, wa‘alā abṣārihim gisyāwatuw walahum ‘ażābun ‘aẓīm.",
+        "en": "Khatamallāhu ʿalā qulūbihim waʿalā samʿihim, waʿalā abṣārihim ghishāwatuw walahum ʿadhābun ʿaẓīm",
+        "en-simple": "Khatamallaahu `alaa quloobihim wa`alaa sam`ihim, wa`alaa absaarihim ghishaawatuw walahum `adhaabun `azeem"
+      },
+      {
+        "chapter": 13,
+        "verse": 11,
+        "id-skb": "Lahū mu‘aqqibātum mim baini yadaihi wamin khalfihī yaḥfaẓūnahū min amrillāh, innallāha lā yugayyiru mā biqaumin ḥattā yugayyirū mā bi'anfusihim, wa iżā arādallāhu biqaumin sū'an falā maradda lah, wamā lahum min dūnihī miw wāl.",
+        "en": "Lahū muʿaqqibātum mim bayni yadayhi wamin khalfihī yaḥfaẓūnahū min amrillāh, innallāha lā yughayyiru mā biqawmin ḥattā yughayyirū mā biʾanfusihim, waʾidhā arādallāhu biqawmin sūʾan falā maradda lah, wamā lahum min dūnihī miw wāl",
+        "en-simple": "Lahoo mu`aqqibaatum mim bayni yadayhi wamin khalfihee yahfazoonahoo min amrillaah, innallaaha laa yughayyiru maa biqawmin hattaa yughayyiroo maa bi'anfusihim, wa'idhaa araadallaahu biqawmin soo'an falaa maradda lah, wamaa lahum min doonihee miw waal"
+      }
+    ]
+  },
+  {
+    "rule": "iqlab",
+    "verses": [
+      {
+        "chapter": 4,
+        "verse": 58,
+        "id-skb": "Innallāha ya'murukum an tu'addul-amānāti ilā ahlihā wa iżā ḥakamtum bainan-nāsi an taḥkumū bil-‘adl, innallāha ni‘immā ya‘iẓukum bih, innallāha kāna samī‘am baṣīrā.",
+        "en": "Innallāha yaʾmurukum an tuʾaddul-amānāti ilā ahlihā waʾidhā ḥakamtum baynan-nāsi an taḥkumū bil-ʿadl, innallāha niʿimmā yaʿiẓukum bih, innallāha kāna samīʿam baṣīrā",
+        "en-simple": "Innallaaha ya'murukum an tu'addul-amaanaati ilaa ahlihaa wa'idhaa hakamtum baynan-naasi an tahkumoo bil-`adl, innallaaha ni`immaa ya`izukum bih, innallaaha kaana samee`am baseeraa"
+      },
+      {
+        "chapter": 36,
+        "verse": 52,
+        "id-skb": "Qālū yāwailanā mam ba‘aṡanā mim marqadinā… hāżā mā wa‘adar-raḥmānu waṣadaqal-mursalūn.",
+        "en": "Qālū yāwaylanā mam baʿathanā mim marqadinā… hādhā mā waʿadar-raḥmānu waṣadaqal-mursalūn",
+        "en-simple": "Qaaloo yaawaylanaa mam ba`athanaa mim marqadinaa... haadhaa maa wa`adar-rahmaanu wasadaqal-mursaloon"
+      }
+    ]
+  },
+  {
+    "rule": "tanwin written as vowel and small noon",
+    "verses": [
+      {
+        "chapter": 7,
+        "verse": 8,
+        "id-skb": "Wal-waznu yauma'iżinil-ḥaqq, faman ṡaqulat mawāzīnuhū fa ulā'ika humul-mufliḥūn.",
+        "en": "Wal-waznu yawmaʾidhinil-ḥaqq, faman thaqulat mawāzīnuhū faʾulāʾika humul-mufliḥūn",
+        "en-simple": "Wal-waznu yawma'idhinil-haqq, faman thaqulat mawaazeenuhoo fa'ulaa'ika humul-muflihoon"
+      }
+    ]
+  },
+  {
+    "rule": "verse-initial shadda",
+    "verses": [
+      {
+        "chapter": 3,
+        "verse": 106,
+        "id-skb": "Yauma tabyaḍḍu wujūhuw wataswaddu wujūh, fa ammal-lażīnaswaddat wujūhuhum, a kafartum ba‘da īmānikum fażūqul-‘ażāba bimā kuntum takfurūn.",
+        "en": "Yawma tabyaḍḍu wujūhuw wataswaddu wujūh, faʾammal-ladhīnaswaddat wujūhuhum, a kafartum baʿda īmānikum fadhūqul-ʿadhāba bimā kuntum takfurūn",
+        "en-simple": "Yawma tabyaddu wujoohuw wataswaddu wujooh, fa'ammal-ladheenaswaddat wujoohuhum, a kafartum ba`da eemaanikum fadhooqul-`adhaaba bimaa kuntum takfuroon"
+      }
+    ]
+  },
+  {
+    "rule": "plural waw alif",
+    "verses": [
+      {
+        "chapter": 3,
+        "verse": 20,
+        "id-skb": "Fa in ḥājjūka faqul aslamtu wajhiya lillāhi wamanittaba‘an, waqul lillażīna ūtul-kitāba wal-ummiyyīna a'aslamtum, fa in aslamū faqadihtadau, wa in tawallau fa innamā ‘alaikal-balāg, wallāhu baṣīrum bil-‘ibād.",
+        "en": "Faʾin ḥājjūka faqul aslamtu wajhiya lillāhi wamanittabaʿan, waqul lilladhīna ūtul-kitāba wal-ummiyyīna aʾaslamtum, faʾin aslamū faqadihtadaw, waʾin tawallaw faʾinnamā ʿalaykal-balāgh, wallāhu baṣīrum bil-ʿibād",
+        "en-simple": "Fa'in haajjooka faqul aslamtu wajhiya lillaahi wamanittaba`an, waqul lilladheena ootul-kitaaba wal-ummiyyeena a'aslamtum, fa'in aslamoo faqadihtadaw, wa'in tawallaw fa'innamaa `alaykal-balaagh, wallaahu baseerum bil-`ibaad"
+      }
+    ]
+  },
+  {
+    "rule": "ta marbuta and tanwin at pause",
+    "verses": [
+      {
+        "chapter": 2,
+        "verse": 245,
+        "id-skb": "Man żal-lażī yuqriḍullāha qarḍan ḥasanan fayuḍā‘ifahū lahū aḍ‘āfan kaṡīrah, wallāhu yaqbiḍu wayabsuṭ, wa ilaihi turja‘ūn.",
+        "en": "Man dhal-ladhī yuqriḍullāha qarḍan ḥasanan fayuḍāʿifahū lahū aḍʿāfan kathīrah, wallāhu yaqbiḍu wayabsuṭ, waʾilayhi turjaʿūn",
+        "en-simple": "Man dhal-ladhee yuqridullaaha qardan hasanan fayudaa`ifahoo lahoo ad`aafan katheerah, wallaahu yaqbidu wayabsut, wa'ilayhi turja`oon"
+      }
+    ]
+  },
+  {
+    "rule": "imala",
+    "verses": [
+      {
+        "chapter": 11,
+        "verse": 41,
+        "id-skb": "Waqālarkabū fīhā bismillāhi majrêhā wamursāhā, inna rabbī lagafūrur raḥīm.",
+        "en": "Waqālarkabū fīhā bismillāhi majrēhā wamursāhā, inna rabbī laghafūrur raḥīm",
+        "en-simple": "Waqaalarkaboo feehaa bismillaahi majrayhaa wamursaahaa, inna rabbee laghafoorur raheem"
+      }
+    ]
+  },
+  {
+    "rule": "ishmam",
+    "verses": [
+      {
+        "chapter": 12,
+        "verse": 11,
+        "id-skb": "Qālū yā abānā mā laka lā ta'mannā ‘alā yūsufa wa innā lahū lanāṣiḥūn.",
+        "en": "Qālū yāʾabānā mā laka lā taʾmannā ʿalā yūsufa waʾinnā lahū lanāṣiḥūn",
+        "en-simple": "Qaaloo yaa'abaanaa maa laka laa ta'mannaa `alaa yoosufa wa'innaa lahoo lanaasihoon"
+      }
+    ]
+  },
+  {
+    "rule": "sakta",
+    "verses": [
+      {
+        "chapter": 18,
+        "verse": 1,
+        "id-skb": "Al-ḥamdu lillāhil-lażī anzala ‘alā ‘abdihil-kitāba walam yaj‘al lahū ‘iwajā.",
+        "en": "Al-ḥamdu lillāhil-ladhī anzala ʿalā ʿabdihil-kitāba walam yajʿal lahū ʿiwajā",
+        "en-simple": "Al-hamdu lillaahil-ladhee anzala `alaa `abdihil-kitaaba walam yaj`al lahoo `iwajaa"
+      },
+      {
+        "chapter": 75,
+        "verse": 27,
+        "id-skb": "Waqīla man… rāq.",
+        "en": "Waqīla man… rāq",
+        "en-simple": "Waqeela man... raaq"
+      },
+      {
+        "chapter": 83,
+        "verse": 14,
+        "id-skb": "Kallā bal… rāna ‘alā qulūbihim mā kānū yaksibūn.",
+        "en": "Kallā bal… rāna ʿalā qulūbihim mā kānū yaksibūn",
+        "en-simple": "Kallaa bal... raana `alaa quloobihim maa kaanoo yaksiboon"
+      }
+    ]
+  },
+  {
+    "rule": "tashil",
+    "verses": [
+      {
+        "chapter": 41,
+        "verse": 44,
+        "id-skb": "Walau ja‘alnāhu qur'ānan a‘jamiyyal laqālū laulā fuṣṣilat āyātuh, a'a‘jamiyyuw wa‘arabiyy, qul huwa lillażīna āmanū hudaw wasyifā', wal-lażīna lā yu'minūna fī āżānihim waqruw wahuwa ‘alaihim ‘amā, ulā'ika yunādauna mim makānim ba‘īd.",
+        "en": "Walaw jaʿalnāhu qurʾānan aʿjamiyyal laqālū lawlā fuṣṣilat āyātuh, aʾaʿjamiyyuw waʿarabiyy, qul huwa lilladhīna āmanū hudaw washifāʾ, wal-ladhīna lā yuʾminūna fī ādhānihim waqruw wahuwa ʿalayhim ʿamā, ulāʾika yunādawna mim makānim baʿīd",
+        "en-simple": "Walaw ja`alnaahu qur'aanan a`jamiyyal laqaaloo lawlaa fussilat aayaatuh, a'a`jamiyyuw wa`arabiyy, qul huwa lilladheena aamanoo hudaw washifaa', wal-ladheena laa yu'minoona fee aadhaanihim waqruw wahuwa `alayhim `amaa, ulaa'ika yunaadawna mim makaanim ba`eed"
+      }
+    ]
+  },
+  {
+    "rule": "bi'sa lismu",
+    "verses": [
+      {
+        "chapter": 49,
+        "verse": 11,
+        "id-skb": "Yā ayyuhal-lażīna āmanū lā yaskhar qaumum min qaumin ‘asā ay yakūnū khairam minhum walā nisā'um min nisā'in ‘asā ay yakunna khairam minhunn, walā talmizū anfusakum walā tanābazū bil-alqāb, bi'salismul-fusūqu ba‘dal-īmān, wamal lam yatub fa ulā'ika humuẓ-ẓālimūn.",
+        "en": "Yāʾayyuhal-ladhīna āmanū lā yaskhar qawmum min qawmin ʿasā ay yakūnū khayram minhum walā nisāʾum min nisāʾin ʿasā ay yakunna khayram minhunn, walā talmizū anfusakum walā tanābazū bil-alqāb, biʾsalismul-fusūqu baʿdal-īmān, wamal lam yatub faʾulāʾika humuẓ-ẓālimūn",
+        "en-simple": "Yaa'ayyuhal-ladheena aamanoo laa yaskhar qawmum min qawmin `asaa ay yakoonoo khayram minhum walaa nisaa'um min nisaa'in `asaa ay yakunna khayram minhunn, walaa talmizoo anfusakum walaa tanaabazoo bil-alqaab, bi'salismul-fusooqu ba`dal-eemaan, wamal lam yatub fa'ulaa'ika humuz-zaalimoon"
+      }
+    ]
+  },
+  {
+    "rule": "complete idgham",
+    "verses": [
+      {
+        "chapter": 77,
+        "verse": 20,
+        "id-skb": "Alam nakhlukkum mim mā'im mahīn.",
+        "en": "Alam nakhlukkum mim māʾim mahīn",
+        "en-simple": "Alam nakhlukkum mim maa'im maheen"
+      }
+    ]
+  },
+  {
+    "rule": "small sin",
+    "verses": [
+      {
+        "chapter": 52,
+        "verse": 37,
+        "id-skb": "Am ‘indahum khazā'inu rabbika am humul-musaiṭirūn.",
+        "en": "Am ʿindahum khazāʾinu rabbika am humul-musayṭirūn",
+        "en-simple": "Am `indahum khazaa'inu rabbika am humul-musaytiroon"
+      }
+    ]
+  },
+  {
+    "rule": "pausal alif",
+    "verses": [
+      {
+        "chapter": 33,
+        "verse": 10,
+        "id-skb": "Iż jā'ūkum min fauqikum wamin asfala minkum wa iż zāgatil-abṣāru wabalagatil-qulūbul-ḥanājira wataẓunnūna billāhiẓ-ẓunūnā.",
+        "en": "Idh jāʾūkum min fawqikum wamin asfala minkum waʾidh zāghatil-abṣāru wabalaghatil-qulūbul-ḥanājira wataẓunnūna billāhiẓ-ẓunūnā",
+        "en-simple": "Idh jaa'ookum min fawqikum wamin asfala minkum wa'idh zaaghatil-absaaru wabalaghatil-quloobul-hanaajira watazunnoona billaahiz-zunoonaa"
+      },
+      {
+        "chapter": 76,
+        "verse": 4,
+        "id-skb": "Innā a‘tadnā lil-kāfirīna salāsila wa aglālaw wasa‘īrā.",
+        "en": "Innā aʿtadnā lil-kāfirīna salāsila waʾaghlālaw wasaʿīrā",
+        "en-simple": "Innaa a`tadnaa lil-kaafireena salaasila wa'aghlaalaw wasa`eeraa"
+      }
+    ]
+  },
+  {
+    "rule": "tatweel dagger",
+    "verses": [
+      {
+        "chapter": 6,
+        "verse": 5,
+        "id-skb": "Faqad każżabū bil-ḥaqqi lammā jā'ahum, fasaufa ya'tīhim ambā'u mā kānū bihī yastahzi'ūn.",
+        "en": "Faqad kadhdhabū bil-ḥaqqi lammā jāʾahum, fasawfa yaʾtīhim ambāʾu mā kānū bihī yastahziʾūn",
+        "en-simple": "Faqad kadhdhaboo bil-haqqi lammaa jaa'ahum, fasawfa ya'teehim ambaa'u maa kaanoo bihee yastahzi'oon"
+      }
+    ]
+  }
+]
