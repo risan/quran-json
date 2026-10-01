@@ -214,6 +214,18 @@ def apply_corrections(
     return grouped
 
 
+def corrected_kemenag() -> dict[str, list[dict[str, Any]]]:
+    """The Kemenag snapshot with its recorded spacing slips restored.
+
+    The committed file stays exactly as upstream served it. Everything that publishes or
+    derives from the Kemenag text reads it through here, so the published script and the
+    generated transliterations are built from the same bytes.
+    """
+    snapshot: dict[str, list[dict[str, Any]]] = jsonio.read_json(config.kemenag_path())
+
+    return apply_corrections(config.KEMENAG_SCRIPT, snapshot)
+
+
 def manifest() -> dict[str, Any]:
     """Machine-readable record of every applied correction."""
     return {

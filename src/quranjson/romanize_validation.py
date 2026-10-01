@@ -44,8 +44,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Final
 
-from . import config
-from .jsonio import read_json
+from . import qa
 from .romanize import (
     ARTICLE_BOUNDARY,
     SCHEMES,
@@ -214,9 +213,7 @@ class Mismatch:
 
 
 def load_snapshot() -> Mapping[str, Sequence[Mapping[str, Any]]]:
-    snapshot: Mapping[str, Sequence[Mapping[str, Any]]] = read_json(config.kemenag_path())
-
-    return snapshot
+    return qa.corrected_kemenag()
 
 
 def _generated(record: Mapping[str, Any], chapter: int, verse: int) -> str:

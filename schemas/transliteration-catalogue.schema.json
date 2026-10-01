@@ -31,6 +31,12 @@
       "required": [
         "path",
         "edition",
+        "language",
+        "name",
+        "reading",
+        "verse_ids",
+        "method",
+        "review",
         "author",
         "source",
         "license",

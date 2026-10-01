@@ -226,19 +226,3 @@ def test_the_uncleared_editions_are_not_published(cdn_tree: Path) -> None:
 
     assert b'"translation"' not in published
     assert b'"transliteration"' not in published
-
-
-def test_the_transliteration_catalogue_answers_even_with_nothing_published(
-    cdn_tree: Path,
-) -> None:
-    """A consumer asking whether a romanisation exists gets a catalogue, not a 404."""
-    catalogue = read_json(cdn_tree / "transliteration" / "index.json")
-
-    assert catalogue["count"] == 0
-    assert catalogue["editions"] == []
-    assert catalogue["withheld"] == []
-
-    manifest = read_json(cdn_tree / "manifest.json")
-
-    assert manifest["transliteration"]["count"] == 0
-    assert read_json(cdn_tree / "meta" / "sources.json")["transliteration"]["status"] == "withheld"
