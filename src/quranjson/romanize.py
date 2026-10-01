@@ -1161,15 +1161,17 @@ def _hamza_follows_prefix(index: int, phones: Sequence[str], scheme: Scheme) -> 
     """Kemenag spaces off a vowelled hamza after the prefix `wa`, `fa` or `ya`.
 
     It writes `fa'tu` for a hamza with sukun, and spaces or apostrophes the rest about
-    equally (`fa in` against `fa'in`); the spaced form is the majority.
+    equally (`fa in` against `fa'in`); the spaced form is the majority. The vocative `yā`
+    is spaced in every scheme: `Yā ayyuhā` is also the usual English form.
     """
-    if not scheme.space_before_prefixed_hamza or index != 2:
+    if index != 2 or len(phones) < 4 or phones[3] not in VOWELS:
         return False
 
-    if len(phones) < 4 or phones[3] not in VOWELS:
-        return False
+    vocative = phones[0] == "y" and phones[1] == "A"
+    if vocative:
+        return True
 
-    return (phones[0] in ("w", "f") and phones[1] == "a") or (phones[0] == "y" and phones[1] == "A")
+    return scheme.space_before_prefixed_hamza and phones[0] in ("w", "f") and phones[1] == "a"
 
 
 def _is_diphthong_end(index: int, phones: Sequence[str], next_first: str | None) -> bool:
