@@ -54,7 +54,8 @@ Nothing in these runs points at a wrong word in any script.
 | `indopak` | skeleton 6,219/6,229 verses against KFGQPC Nastaleeq | alef spelling (full vs dagger alef) and hamza seats; 10 verses (the research's L4 count for the same pair was 6,219/6,236, which includes the 7 Al-Fatiha verses left out here) |
 | `hafs-nastaliq` | byte-identical to a fresh Quranpedia dump; skeleton 100% against KFGQPC via fawazahmed0 | encoding of Nastaleeq marks only |
 | `warsh`, `qalun`, `duri` | byte-identical to fresh Quranpedia dumps; skeleton 114/114 chapters against KFGQPC via fawazahmed0 | vocalised 76%, 84%, 39% of chapters against the mirror: yeh in place of hamza-on-yeh (ئ vs ي, 20 in Warsh) and other mark encodings in the mirror, not letter differences |
-| `qpc-hafs` | skipped: no snapshot yet | add the snapshot (D2) and rerun; witnesses are already registered |
+| `shubah`, `susi` | byte-identical to fresh Quranpedia dumps; skeleton 114/114 chapters against KFGQPC via fawazahmed0 | vocalised 97% and 42% of chapters: the mirror's encoding of small high marks (592 U+06ED vs U+065C in Susi) |
+| `qpc-hafs` | byte-identical to Quranpedia mushaf 2; skeleton 100% and vocalised 6,234/6,236 against KFGQPC Hafs v13 via fawazahmed0 | two dabt encodings (2:72 hamza with sukun vs U+0654; 11:41 small high mark U+06EA vs U+065C), see `qpc-hafs.tsv`; reproduces the research's 6,234/6,236 |
 
 Independence: every witness other than Wikisource descends from Tanzil or KFGQPC (the table
 printed under each script says which). Agreement proves nobody corrupted a copy; it cannot
@@ -71,13 +72,13 @@ detect an error made by KFGQPC or Tanzil themselves.
   here has two additions (Farsi yeh and related letters, and the space after an open tanween);
   one verse moved.
 - The research's 6,234/6,236 for Quranpedia mushaf 2 vs the fawazahmed0 KFGQPC copy compared
-  the two witnesses with each other; this tool compares each witness with our snapshot, so
-  that figure is not reproduced.
+  the two witnesses with each other. This tool compares witnesses with our snapshots, but
+  `qpc-hafs` is that same Quranpedia text, so its fawazahmed0 row reproduces 6,234/6,236.
 - Raw counts differ by one in places (alquran.cloud 1,876 vs 1,877) because the research's L0
   also removed zero-width characters and tatweel; raw here does not.
 - Not ported: the published-site check (`tanzil_verbatim.py` also fetched chapters from
   quran-json.risanb.com), the QuranWBW Indopak comparison (its licence forbids redistribution
-  and its data lives in git history), the four specialist riwayat (not shipped), the Quranpedia
+  and its data lives in git history), the Bazzi and Qunbul riwayat (not shipped yet), the Quranpedia
   changes feed, and the Kemenag word-segmentation and `updated_at` analysis.
 - tanzil.net's certificate was expired when this was run (as in the research), so its two
   witnesses are fetched without certificate verification; they only feed a read-only comparison.
@@ -278,7 +279,45 @@ faw-qurandoori         chapter       114    6.1%      39.4%    100.0%        1  
           1  [0621 0652] -> [0654]
   residual differences: <repo>/.cache/crosscheck/duri.tsv
 
+## shubah
+witness                unit     compared     raw  vocalised  skeleton  spacing  chapters = skeleton
+---------------------------------------------------------------------------------------------------
+qp-9                   verse        6236  100.0%     100.0%    100.0%        0        114/114      
+faw-quranshouba        chapter       114    6.1%      97.3%    100.0%       35        114/114      
+  qp-9: Quranpedia mushaf 9 (Shu'bah). Ancestry: KFGQPC Shu'bah via Quranpedia; same origin as the fawazahmed0 copy. Our shubah snapshot is this dump: a refresh check.
+    identical units raw/skeleton/vocalised of 6236: 6236/6236/6236
+  faw-quranshouba: KFGQPC Shu'bah (fawazahmed0 ara-quranshouba). Ancestry: KFGQPC Shu'bah via the fawazahmed0 mirror on jsDelivr; renumbered to Hafs, so chapter level only.
+    identical units raw/skeleton/vocalised of 114: 7/114/111
+          3  [064E] -> []
+          1  [0621 0652] -> [0654]
+  residual differences: <repo>/.cache/crosscheck/shubah.tsv
+
+## susi
+witness                unit     compared     raw  vocalised  skeleton  spacing  chapters = skeleton
+---------------------------------------------------------------------------------------------------
+qp-10                  verse        6217  100.0%     100.0%    100.0%        0        114/114      
+faw-quransoosi         chapter       114    6.1%      42.1%    100.0%        2        114/114      
+  qp-10: Quranpedia mushaf 10 (al-Susi). Ancestry: KFGQPC Soosi via Quranpedia; same origin as the fawazahmed0 copy. Our susi snapshot is this dump: a refresh check.
+    identical units raw/skeleton/vocalised of 6217: 6217/6217/6217
+  faw-quransoosi: KFGQPC Soosi (fawazahmed0 ara-quransoosi). Ancestry: KFGQPC Soosi via the fawazahmed0 mirror on jsDelivr; renumbered to Hafs, so chapter level only.
+    identical units raw/skeleton/vocalised of 114: 7/114/48
+        592  [06ED] -> [065C]
+          3  [064E] -> []
+          1  [06ED] -> [06EA]
+          1  [] -> [0651]
+  residual differences: <repo>/.cache/crosscheck/susi.tsv
+
 ## qpc-hafs
-  skipped: no snapshot at <repo>/data/quranpedia/qpc-hafs.json
+witness                unit     compared     raw  vocalised  skeleton  spacing  chapters = skeleton
+---------------------------------------------------------------------------------------------------
+qp-2                   verse        6236  100.0%     100.0%    100.0%        0        114/114      
+faw-quranuthmanihaf    verse        6236   40.1%      99.9%    100.0%        5        114/114      
+  qp-2: Quranpedia mushaf 2 (KFGQPC Hafs). Ancestry: KFGQPC Hafs v13 via Quranpedia; same origin as the fawazahmed0 copy (vocalised 6,234/6,236 identical to it in the research).
+    identical units raw/skeleton/vocalised of 6236: 6236/6236/6236
+  faw-quranuthmanihaf: KFGQPC Hafs Uthmanic (fawazahmed0 ara-quranuthmanihaf). Ancestry: KFGQPC Hafs v13, Uthmanic script via the fawazahmed0 mirror on jsDelivr
+    identical units raw/skeleton/vocalised of 6236: 2506/6236/6234
+          1  [0621 0652] -> [0654]
+          1  [06EA] -> [065C]
+  residual differences: <repo>/.cache/crosscheck/qpc-hafs.tsv
 
 ```

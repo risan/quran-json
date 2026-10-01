@@ -527,6 +527,16 @@ def _witnesses() -> dict[str, Witness]:
             + "; verse numbers renumbered to Hafs, so chapter level only.",
         ),
         _faw(
+            "quranshouba",
+            "KFGQPC Shu'bah (fawazahmed0 ara-quranshouba)",
+            _KFGQPC_VIA_FAW.format(what="Shu'bah") + "; renumbered to Hafs, so chapter level only.",
+        ),
+        _faw(
+            "quransoosi",
+            "KFGQPC Soosi (fawazahmed0 ara-quransoosi)",
+            _KFGQPC_VIA_FAW.format(what="Soosi") + "; renumbered to Hafs, so chapter level only.",
+        ),
+        _faw(
             "qurandoori",
             "KFGQPC Doori (fawazahmed0 ara-qurandoori)",
             _KFGQPC_VIA_FAW.format(what="Doori v8")
@@ -571,6 +581,20 @@ def _witnesses() -> dict[str, Witness]:
             "Quranpedia mushaf 7 (Qalun)",
             _KFGQPC_VIA_QP.format(what="Qaloon v8")
             + ". Our qalun snapshot is this dump: a refresh check.",
+            numbering="own",
+        ),
+        _quranpedia(
+            9,
+            "Quranpedia mushaf 9 (Shu'bah)",
+            _KFGQPC_VIA_QP.format(what="Shu'bah")
+            + ". Our shubah snapshot is this dump: a refresh check.",
+            numbering="own",
+        ),
+        _quranpedia(
+            10,
+            "Quranpedia mushaf 10 (al-Susi)",
+            _KFGQPC_VIA_QP.format(what="Soosi")
+            + ". Our susi snapshot is this dump: a refresh check.",
             numbering="own",
         ),
         _quranpedia(
@@ -659,6 +683,18 @@ SCRIPTS: Final[dict[str, Script]] = {
             numbering="own",
         ),
         Script("duri", _quranpedia_path("duri"), ("qp-6", "faw-qurandoori"), numbering="own"),
+        Script(
+            "shubah",
+            _quranpedia_path("shubah"),
+            ("qp-9", "faw-quranshouba"),
+            numbering="own",
+        ),
+        Script(
+            "susi",
+            _quranpedia_path("susi"),
+            ("qp-10", "faw-quransoosi"),
+            numbering="own",
+        ),
         Script(
             "qpc-hafs",
             _quranpedia_path("qpc-hafs"),
