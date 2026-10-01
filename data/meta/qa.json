@@ -9,6 +9,134 @@
       "defective": "game well within reach of game well within reach of",
       "restored": "game well within reach of",
       "evidence": "https://www.gutenberg.org/ebooks/16955 reads 'a little matter of game well within reach of your hands and your lances'; the upstream snapshot repeats the fragment 'game well within reach of', a duplication artefact."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 2,
+      "verse": 1,
+      "defective": "M",
+      "restored": "A. L. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 2 with 'A. L. M.'; the upstream snapshot begins 'M', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 3,
+      "verse": 1,
+      "defective": "M",
+      "restored": "A. L. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 3 with 'A. L. M.'; the upstream snapshot begins 'M', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 7,
+      "verse": 1,
+      "defective": "M. S",
+      "restored": "A. L. M. S.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 7 with 'A. L. M. S.'; the upstream snapshot begins 'M. S', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 12,
+      "verse": 1,
+      "defective": "R. Dit zijn teekens",
+      "restored": "E. L. R. Dit zijn teekens",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 12 with 'E. L. R. Dit zijn teekens'; the upstream snapshot begins 'R. Dit zijn teekens', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 13,
+      "verse": 1,
+      "defective": "M. R. Ziehier",
+      "restored": "A. L. M. R. Ziehier",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 13 with 'A. L. M. R. Ziehier'; the upstream snapshot begins 'M. R. Ziehier', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 14,
+      "verse": 1,
+      "defective": "R. Dit boek",
+      "restored": "E. L. R. Dit boek",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 14 with 'E. L. R. Dit boek'; the upstream snapshot begins 'R. Dit boek', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 15,
+      "verse": 1,
+      "defective": "R. Dit zijn de teekens",
+      "restored": "E. L. R. Dit zijn de teekens",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 15 with 'E. L. R. Dit zijn de teekens'; the upstream snapshot begins 'R. Dit zijn de teekens', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 19,
+      "verse": 1,
+      "defective": "Y. A. S",
+      "restored": "C. H. Y. A. S.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 19 with 'C. H. Y. A. S.'; the upstream snapshot begins 'Y. A. S', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 20,
+      "verse": 1,
+      "defective": "H",
+      "restored": "T. H.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 20 with 'T. H.'; the upstream snapshot begins 'H', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 26,
+      "verse": 1,
+      "defective": "M",
+      "restored": "T. S. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 26 with 'T. S. M.'; the upstream snapshot begins 'M', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 27,
+      "verse": 1,
+      "defective": "Dit zijn de teekenen van den Koran",
+      "restored": "T. S. Dit zijn de teekenen van den Koran",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 27 with 'T. S. Dit zijn de teekenen van den Koran'; the upstream snapshot begins 'Dit zijn de teekenen van den Koran', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 28,
+      "verse": 1,
+      "defective": "M",
+      "restored": "T. S. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 28 with 'T. S. M.'; the upstream snapshot begins 'M', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 29,
+      "verse": 1,
+      "defective": "M",
+      "restored": "A. L. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 29 with 'A. L. M.'; the upstream snapshot begins 'M', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 30,
+      "verse": 1,
+      "defective": "M",
+      "restored": "A. L. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 30 with 'A. L. M.'; the upstream snapshot begins 'M', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 31,
+      "verse": 1,
+      "defective": "M",
+      "restored": "A. L. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 31 with 'A. L. M.'; the upstream snapshot begins 'M', the leading letters lost."
+    },
+    {
+      "lang": "dutch_keyzer",
+      "chapter": 32,
+      "verse": 1,
+      "defective": "M",
+      "restored": "A. L. M.",
+      "evidence": "https://www.gutenberg.org/ebooks/19786 opens chapter 32 with 'A. L. M.'; the upstream snapshot begins 'M', the leading letters lost."
     }
   ]
 }
