@@ -46,7 +46,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, cast
 
-from . import config, licensing, qa, web
+from . import config, licensing, qa
 from .jsonio import read_json, write_json
 
 __all__ = [
@@ -550,8 +550,6 @@ def build_site(
     counts: dict[str, int] = {}
     native_counts: dict[str, dict[str, int]] = {}
     furniture_by_script: dict[str, list[dict[str, Any]]] = {}
-    corpora: dict[str, list[str]] = {}
-    samples: dict[str, str] = {}
 
     for script in scripts:
         text = _script_chapters(script)
@@ -562,15 +560,9 @@ def build_site(
             native_counts[script] = differing
         _write_jsonl_dir(out_dir / "text" / script, text, pretty=pretty)
 
-        # Kept for two measured outputs: the font coverage report, which needs every
-        # codepoint the script uses, and the documentation page's per-script sample, which
-        # is one verse rendered in that script's default font.
         furniture = _chapter_furniture(script)
         if furniture:
             furniture_by_script[script] = furniture
-        corpora[script] = [verse["text"] for chapter in text for verse in chapter["verses"]]
-        corpora[script].extend(item["text"] for item in furniture)
-        samples[script] = _chapter(text, 112)["verses"][0]["text"]
 
     # What was actually published, so nothing published is also listed as withheld.
     published_langs = {edition.lang for edition in (*editions, *transliterations)}
@@ -743,29 +735,10 @@ def build_site(
     )
     write_json(out_dir / "meta" / "qa.json", qa.manifest(), pretty=pretty)
 
-    reciters = None
     if audio:
         from .audio import build_audio_index
 
-        reciters = build_audio_index(out_dir / "audio", pretty=pretty)
-
-    # The page and the app are measured against the published bytes, not against a
-    # hand-maintained copy of them: coverage comes from the scripts just rendered, and the
-    # documentation's rows from the catalogues just written.
-    coverage = web.font_coverage(corpora, names=[chapter["name"] for chapter in chapters])
-    web.write_site_assets(out_dir, coverage)
-    web.write_docs(
-        out_dir,
-        web.docs_context(
-            manifest=manifest,
-            translations=translations_manifest,
-            transliterations=transliteration_manifest,
-            reciters=reciters,
-            coverage=coverage,
-            chapters=chapters,
-            samples=samples,
-        ),
-    )
+        build_audio_index(out_dir / "audio", pretty=pretty)
 
     (out_dir / "_headers").write_text(_HEADERS, encoding="utf-8")
 

@@ -28,10 +28,6 @@ DIST: Final = ROOT / "dist"
 #: New artifact tree, deployed to Cloudflare Pages.
 CDN: Final = ROOT / "cdn"
 
-#: Hand-written site assets: the documentation page, the reader app, and the Arabic fonts
-#: the scripts in `data/` are rendered with. `cdn/` is generated from `data/` plus this.
-WEB: Final = ROOT / "web"
-
 #: The verse text used by the frozen tree.
 TEXT_EDITION: Final = "ara-quranuthmanienc"
 
